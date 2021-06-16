@@ -1,4 +1,4 @@
-name: Nighlty Publish
+name: Nightly Publish
 
 on:
   push:
@@ -88,7 +88,7 @@ jobs:
           }
         shell: pwsh
 
-      - name: Deploy Nighlty Release
+      - name: Deploy Nightly Release
         uses: WebFreak001/deploy-nightly@v1.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
