@@ -2,10 +2,15 @@
 	// See https://go.microsoft.com/fwlink/?LinkId=827846
 	// for the documentation about the extensions.json format
 	"recommendations": [
-		"armitxes.sqf",
-		"senfo.sqflint",
-    "eelislynne.sqf-wiki",
+		"matthewthorning.align-vertically",
+		"me-dutour-mathieu.vscode-github-actions",
+		"github.vscode-pull-request-github",
+		"eamodio.gitlens",
+		"billw2011.sqf-debugger",
     "smith.sqf-formatter",
-    "eamodio.gitlens"
+		"armitxes.sqf",
+    "eelislynne.sqf-wiki",
+		"senfo.sqflint",
+		"redhat.vscode-yaml"
 	]
 }
