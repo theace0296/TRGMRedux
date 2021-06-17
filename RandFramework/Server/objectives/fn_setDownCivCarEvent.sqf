@@ -72,8 +72,8 @@ if (count _nearestRoads > 0) then {
         //_mainVeh setVehicleLock "LOCKED";
         _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call fnc_AddToDirection);
         _mainVeh setDir _mainVehDirection;
-        //_smoke = createvehicle ["test_EmptyObjectForSmoke",getpos _mainVeh,[],0,"CAN_COLLIDE"];
-        //_smoke setpos getpos _mainVeh;
+        //_smoke = createvehicle ["test_EmptyObjectForSmoke",([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos),[],0,"CAN_COLLIDE"];
+        //_smoke setpos ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
         clearItemCargoGlobal _mainVeh;
 
         _expl1 = nil;
@@ -109,21 +109,21 @@ if (count _nearestRoads > 0) then {
         };
 
         if (!(isNil "IsTraining")) then {
-            _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], getPos _mainVeh];
+            _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
             _markerEventMedi setMarkerShape "ICON";
             _markerEventMedi setMarkerType "hd_dot";
             _markerEventMedi setMarkerText "Stranded Civ";
         }
         else {
             if (false) then { //will never show this for broken down civ! (only here if need to test)
-                _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], getPos _mainVeh];
+                _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
                 _markerEventMedi setMarkerShape "ICON";
                 _markerEventMedi setMarkerType "hd_dot";
                 _markerEventMedi setMarkerText "Distress Signal";
             };
         };
 
-        _vehPos = getPos _mainVeh;
+        _vehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
         _backOfVehArea = _vehPos getPos [10,([_mainVehDirection,selectRandom[170,180,190]] call fnc_AddToDirection)];
         //_direction is direction of road
         //_mainVehDirection is direction of first veh
@@ -176,8 +176,8 @@ if (count _nearestRoads > 0) then {
                 _downedCiv setUnitPos "UP";
             };
             if (!_bWaveDone) then {
-                _nearUnits = nearestObjects [(getPos _downedCiv), ["Man","Car","Helicopter"], 100];
-                //(driver ((nearestObjects [(getPos box1), ["car"], 20]) select 0)) in switchableUnits
+                _nearUnits = nearestObjects [([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), ["Man","Car","Helicopter"], 100];
+                //(driver ((nearestObjects [([box1] call TRGM_GLOBAL_fnc_getRealPos), ["car"], 20]) select 0)) in switchableUnits
                   {
                       if ((driver _x) in switchableUnits || (driver _x) in playableUnits) then {
                           _bWaveDone = true;
@@ -218,7 +218,7 @@ if (count _nearestRoads > 0) then {
               if (_bWaveDone) then {
                   //_bIsTrap
                   if (_bIsTrap) then {
-                      _nearUnits = nearestObjects [(getPos _downedCiv), ["Man"], 10];
+                      _nearUnits = nearestObjects [([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), ["Man"], 10];
                       {
                           if ((driver _x) in switchableUnits || (driver _x) in playableUnits || !(alive _downedCiv)) then {
                               _bWaiting = false;

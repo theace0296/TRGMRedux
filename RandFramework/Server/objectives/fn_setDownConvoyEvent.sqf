@@ -111,7 +111,7 @@ if (count _nearestRoads > 0) then {
                 };
 
                 if (!(isNil "IsTraining")) then {
-                    _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], getPos _mainVeh];
+                    _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
                     _markerEventMedi setMarkerShape "ICON";
                     _markerEventMedi setMarkerType "hd_dot";
                     _markerEventMedi setMarkerText "Ambushed Friendly Convoy";
@@ -119,7 +119,7 @@ if (count _nearestRoads > 0) then {
                 else {
                     //if (random 1 < .25) then {
                     //if (true) then {
-                        _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], getPos _mainVeh];
+                        _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
                         _markerEventMedi setMarkerShape "ICON";
                         _markerEventMedi setMarkerType "hd_dot";
                         _markerEventMedi setMarkerText "Distress Signal";
@@ -133,8 +133,8 @@ if (count _nearestRoads > 0) then {
             _mainVeh = _this select 0;
             while{ (alive _mainVeh)} do {
 
-                _flareposX = getPos _mainVeh select 0;
-                _flareposY = getPos _mainVeh select 1;
+                _flareposX = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos) select 0;
+                _flareposY = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos) select 1;
                 _flare1 = "F_40mm_red" createvehicle [_flareposX+20,_flareposY+20, 250]; _flare1 setVelocity [0,0,-10];
 
                 sleep selectRandom [600];
@@ -148,7 +148,7 @@ if (count _nearestRoads > 0) then {
     if (isnil "fncMedicalParamedicLight") then {
         fncMedicalParamedicLight = {
             params ["_downedCivMedic"];
-            _medicLight = "#lightpoint" createVehicle getpos _downedCivMedic;
+            _medicLight = "#lightpoint" createVehicle ([_downedCivMedic] call TRGM_GLOBAL_fnc_getRealPos);
             _medicLight setLightColor [255, 255, 255]; //red
             _medicLight setLightBrightness 0.03;
             _medicLight setLightAmbient [0.5,0.5,0.8];
@@ -161,7 +161,7 @@ if (count _nearestRoads > 0) then {
             [_mainVeh] remoteExec ["fncMedicalFlashLights", 0, true];
 
 
-            _vehPos = getPos _mainVeh;
+            _vehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
             _backOfVehArea = _vehPos getPos [5,([_mainVehDirection,floor(random 360)] call fnc_AddToDirection)];
             //_direction is direction of road
             //_mainVehDirection is direction of first veh
@@ -177,7 +177,7 @@ if (count _nearestRoads > 0) then {
             _downedCivDirection = (floor(random 360));
             _downedCiv setDir (_downedCivDirection);
             _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
-            _bloodPool1 = createVehicle [selectRandom _bloodPools, getpos _downedCiv, [], 0, "CAN_COLLIDE"];
+            _bloodPool1 = createVehicle [selectRandom _bloodPools, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "CAN_COLLIDE"];
             _bloodPool1 setDir (floor(random 360));
             if (true) then {
                 _trialDir = (floor(random 360));
@@ -244,7 +244,7 @@ if (count _nearestRoads > 0) then {
 
                 //_RequestedMedicalItems
 
-                _downedCiv2 = _group createUnit [selectRandom (call FriendlyCheckpointUnits),getpos _downedCivMedic2,[],2,"NONE"];
+                _downedCiv2 = _group createUnit [selectRandom (call FriendlyCheckpointUnits),([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"];
                 _downedCiv2 playmove "Acts_CivilTalking_2";
                 _downedCiv2 disableAI "anim";
                 _downedCiv2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
@@ -272,10 +272,10 @@ if (count _nearestRoads > 0) then {
                 _downedCiv3 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
             };
 
-            _rubbish1 = createVehicle [selectRandom TRGM_VAR_MedicalMessItems, getpos _downedCiv, [], 1.5, "CAN_COLLIDE"];
+            _rubbish1 = createVehicle [selectRandom TRGM_VAR_MedicalMessItems, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 1.5, "CAN_COLLIDE"];
             _rubbish1 setDir (floor(random 360));
 
-            _rubbish2 = createVehicle [selectRandom TRGM_VAR_MedicalMessItems, getpos _downedCiv, [], 1.5, "CAN_COLLIDE"];
+            _rubbish2 = createVehicle [selectRandom TRGM_VAR_MedicalMessItems, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 1.5, "CAN_COLLIDE"];
             _rubbish2 setDir (floor(random 360));
 
 

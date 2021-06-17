@@ -101,7 +101,7 @@ if (count _nearestRoads > 0) then {
             clearItemCargoGlobal _mainVeh;
 
             if (_showMarker) then {
-                _markerstrcache = createMarker [format ["IEDLoc%1",_eventLocationPos select 0],getPos _mainVeh];
+                _markerstrcache = createMarker [format ["IEDLoc%1",_eventLocationPos select 0],([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
                 _markerstrcache setMarkerShape "ICON";
                 if (_bIsTrap) then {
                     _markerstrcache setMarkerText localize "STR_TRGM2_IEDMarkerText";
@@ -182,7 +182,7 @@ if (count _nearestRoads > 0) then {
                                         sleep 1;
                                         //BOOM
                                         _type = selectRandom ["Bomb_03_F","Missile_AA_04_F","M_Mo_82mm_AT_LG","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo"];
-                                          _li_aaa = _type createVehicle (getPos _thisVeh);
+                                          _li_aaa = _type createVehicle ([_thisVeh] call TRGM_GLOBAL_fnc_getRealPos);
                                         _li_aaa setDamage 1;
                                         sleep 1;
                                         _thisVeh setVariable ["isDefused",true, true];
@@ -233,7 +233,7 @@ if (count _nearestRoads > 0) then {
                 };
 
                 _allowAPTraps = true;
-                _mainVehPos = getPos _mainVeh;
+                _mainVehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
                 {
                     if (_x distance _mainVehPos < 800) then {
                         _allowAPTraps = false;
@@ -242,7 +242,7 @@ if (count _nearestRoads > 0) then {
                 if (random 1 < .33 && _allowAPTraps) then {
                     _minesPlaced = false;
                     _iCountMines = 20;
-                    _mainVehPos = getPos _mainVeh;
+                    _mainVehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
                     while {_iCountMines > 0} do {
 
                         _xPos = (_mainVehPos select 0)-40;
@@ -290,7 +290,7 @@ if (count _nearestRoads > 0) then {
                             if (((driver _x) in switchableUnits || (driver _x) in playableUnits) && (alive _mainVeh)) then {
                                 if (true) then {
                                     _type = selectRandom ["Bomb_03_F","Missile_AA_04_F","M_Mo_82mm_AT_LG","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo"];
-                                    _li_aaa = _type createVehicle (getPos _mainVeh);
+                                    _li_aaa = _type createVehicle ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
                                     _li_aaa setDamage 1;
                                     _mainVeh setVariable ["isDefused",true, true];
                                     [localize "STR_TRGM2_IEDOmteresting"] call TRGM_GLOBAL_fnc_notifyGlobal;

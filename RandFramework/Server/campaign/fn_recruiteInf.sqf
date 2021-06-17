@@ -4,7 +4,7 @@ _params params ["_unitClass","_unitRole"];
 
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
-//TRGM_VAR_CampaignRecruitUnitRifleman createUnit [getPos player, group player];
+//TRGM_VAR_CampaignRecruitUnitRifleman createUnit [[player] call TRGM_GLOBAL_fnc_getRealPos, group player];
 
 //YEAH_fnc_whatever = call TRGM_GLOBAL_fnc_countSpentPoints;
 //_currentSpentPoints = call YEAH_fnc_whatever;
@@ -13,7 +13,7 @@ _currentSpentPoints = call TRGM_GLOBAL_fnc_countSpentPoints;
 //plus 1 is an initial allowance
 if (_currentSpentPoints < (TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints + 1)) then {
 
-    _SpawnedUnit = (group player createUnit [_unitClass, getPos player, [], 10, "NONE"]);
+    _SpawnedUnit = (group player createUnit [_unitClass, [player] call TRGM_GLOBAL_fnc_getRealPos, [], 10, "NONE"]);
     addSwitchableUnit _SpawnedUnit;
     player doFollow player; //seemed because player has no units to start, when you add one, the player has "Stop" under his name and no units follow him
     _SpawnedUnit setVariable ["RepCost", 0.5, true];

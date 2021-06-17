@@ -7,7 +7,7 @@ while {(!isNull player) and (al_snowstorm_om)} do
 {
     if (pos_p=="open") then
     {
-        _alias_local_fog = "#particlesource" createVehicleLocal (getpos player);
+        _alias_local_fog = "#particlesource" createVehicleLocal ([player] call TRGM_GLOBAL_fnc_getRealPos);
         _alias_local_fog setParticleCircle [10,[3,3,0]];
         _alias_local_fog setParticleRandom [2,[0.25,0.25,0],[1,1,0],1,1,[0,0,0,0.1],0,0];
         _alias_local_fog setParticleParams [["\A3\data_f\cl_basic",1,0,1],"","Billboard",1,8,[0,0,0],[-1,-1,0],3,10.15,7.9,0.03,[5,10,10],[[0.5,0.5,0.5,0],[0.5,0.5,0.5,0.1],[1,1,1,0]],[1],1, 0,"","",player];
@@ -17,7 +17,7 @@ while {(!isNull player) and (al_snowstorm_om)} do
     };
     if (pos_p=="player_car") then
     {
-        _alias_local_fog = "#particlesource" createVehicleLocal (getpos player);
+        _alias_local_fog = "#particlesource" createVehicleLocal ([player] call TRGM_GLOBAL_fnc_getRealPos);
         _alias_local_fog setParticleCircle [30,[3,3,0]];
         _alias_local_fog setParticleRandom [0,[0.25,0.25,0],[1,1,0],1,1,[0,0,0,0.1],0,0];
         _alias_local_fog setParticleParams [["\A3\data_f\cl_basic",1,0,1],"","Billboard",1,4,[0,0,0],[-1,-1,0],3,10.15,7.9,0.03,[5,10,20],[[0.5,0.5,0.5,0],[0.5,0.5,0.5,0.1],[1,1,1,0]],[1],1, 0,"","",player];
@@ -27,7 +27,7 @@ while {(!isNull player) and (al_snowstorm_om)} do
     };
     if (pos_p=="in_da_house") then
     {
-        _alias_local_fog = "#particlesource" createVehicleLocal (getpos player);
+        _alias_local_fog = "#particlesource" createVehicleLocal ([player] call TRGM_GLOBAL_fnc_getRealPos);
         _alias_local_fog setParticleCircle [raza_snow,[3,3,0]];
         _alias_local_fog setParticleRandom [0,[0.25,0.25,0],[1,1,0],1,1,[0,0,0,0.1],0,0];
         _alias_local_fog setParticleParams [["\A3\data_f\cl_basic",1,0,1],"","Billboard",1,4,[0,0,0],[-1,-1,0],3,10.15,7.9,0.03,[5,10,20],[[0.5,0.5,0.5,0],[0.5,0.5,0.5,0.1],[1,1,1,0]],[1],1, 0,"","",player];

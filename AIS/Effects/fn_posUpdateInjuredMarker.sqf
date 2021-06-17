@@ -19,7 +19,7 @@ _marker = _unit getVariable ["ais_unitMarker", Nil];
 
 if (!isNil "_marker") then {
     if (_unit getVariable ["ais_unconscious", false]) then {
-        _marker setMarkerPosLocal (getPos _unit);
+        _marker setMarkerPosLocal ([_unit] call TRGM_GLOBAL_fnc_getRealPos);
 
         _acc_time = diag_tickTime + 5;
         [{diag_tickTime > (_this select 1)}, {[_this select 0] call AIS_Effects_fnc_posUpdateInjuredMarker}, [_unit, _acc_time]] call AIS_Core_fnc_waitUntilAndExecute;

@@ -5,7 +5,7 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
 _bFired = false;
 
 while {alive _thisCiv && !_bFired} do {
-    _nearestunits = nearestObjects [getPos _thisCiv,["Man"],10];
+    _nearestunits = nearestObjects [([_thisCiv] call TRGM_GLOBAL_fnc_getRealPos),["Man"],10];
 
     {
         if ((_x in playableunits)) then {

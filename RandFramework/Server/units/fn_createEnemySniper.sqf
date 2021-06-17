@@ -21,7 +21,7 @@ for "_i" from 1 to 20 do {
         _pos = [_targetPos, _maxRange, 200, _minHeight, _targetPos] call TRGM_SERVER_fnc_findOverwatchOverride;
         //_pos = [_targetPos, _maxRange, 200, _minHeight, _targetPos] call BIS_fnc_findOverwatch;
         _spawnedUnit setPos _pos;
-        _direction = [getpos _spawnedUnit, _targetPos] call BIS_fnc_DirTo;
+        _direction = [([_spawnedUnit] call TRGM_GLOBAL_fnc_getRealPos), _targetPos] call BIS_fnc_DirTo;
         //[str(_direction)] call TRGM_GLOBAL_fnc_notify;
         _spawnedUnit setDir _direction;
         _spawnedUnit setFormDir _direction;
@@ -31,7 +31,7 @@ for "_i" from 1 to 20 do {
         //Sign_Arrow_Large_Green_F
         //_defi = "Sign_Arrow_Large_Green_F" createVehicle _lodPos;
         _cansee = [objNull, "VIEW"] checkVisibility [eyePos _spawnedUnit, eyePos _spawnedTempTarget];
-        _direction2 = [getpos player, getpos _spawnedUnit] call BIS_fnc_DirTo;
+        _direction2 = [([player] call TRGM_GLOBAL_fnc_getRealPos), ([_spawnedUnit] call TRGM_GLOBAL_fnc_getRealPos)] call BIS_fnc_DirTo;
         //player setpos _pos;
         //player setDir _direction2;
         if (_cansee > 0) then {

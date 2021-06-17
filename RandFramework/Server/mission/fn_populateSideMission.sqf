@@ -97,29 +97,29 @@ if (_sideType isEqualTo 4) then { //if mission is informat, then dont be walkig 
 //if (true) then {
 if (TRGM_VAR_AllowAOFires && _selectRandomW && !_bThisMissionCivsOnly) then {
     //"test_EmptyObjectForFireBig" createVehicle position board2;
-    _fireRootx = getPos _sideMainBuilding select 0;
-    _fireRooty = getPos _sideMainBuilding select 1;
+    _fireRootx = ([_sideMainBuilding] call TRGM_GLOBAL_fnc_getRealPos) select 0;
+    _fireRooty = ([_sideMainBuilding] call TRGM_GLOBAL_fnc_getRealPos) select 1;
 
     _firePos1 = [_fireRootx+5+(floor random 15),_fireRooty+5+(floor random 15)];
     _objFlame1 = "test_EmptyObjectForFireBig" createVehicle _firePos1;
-    if (isOnRoad _firePos1) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle getPos _objFlame1;};
+    if (isOnRoad _firePos1) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle ([_objFlame1] call TRGM_GLOBAL_fnc_getRealPos);};
 
     if (_selectRandomW) then {
         _firePos2 = [_fireRootx-5-(floor random 15),_fireRooty-5-(floor random 15)];
         _objFlame2 = "test_EmptyObjectForFireBig" createVehicle _firePos2;
-        if (isOnRoad _firePos2) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle getPos _objFlame2;};
+        if (isOnRoad _firePos2) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle ([_objFlame2] call TRGM_GLOBAL_fnc_getRealPos);};
     };
 
     if (_selectRandomW) then {
         _firePos3 = [_fireRootx+5+(floor random 15),_fireRooty-5-(floor random 15)];
         _objFlame3 = "test_EmptyObjectForFireBig" createVehicle _firePos3;
-        if (isOnRoad _firePos3) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle getPos _objFlame3;};
+        if (isOnRoad _firePos3) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle ([_objFlame3] call TRGM_GLOBAL_fnc_getRealPos);};
 
     };
     if (_selectRandomW) then {
         _firePos4 = [_fireRootx-5-(floor random 15),_fireRooty+5+(floor random 15)];
         _objFlame4 = "test_EmptyObjectForFireBig" createVehicle _firePos4;
-        if (isOnRoad _firePos4) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle getPos _objFlame4;};
+        if (isOnRoad _firePos4) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle ([_objFlame4] call TRGM_GLOBAL_fnc_getRealPos);};
     };
 };
 

@@ -12,7 +12,7 @@
 
 params ["_unit"];
 private _target = _unit getVariable "ais_DragDrop_Torso";
-private _pos = getPos _target;
+private _pos = [_target] call TRGM_GLOBAL_fnc_getRealPos;
 
 _unit setVariable ["ais_DragDrop_Torso", objNull];
 _target setVariable ["ais_DragDrop_Player", objNull, true];

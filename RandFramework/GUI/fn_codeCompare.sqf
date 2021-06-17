@@ -36,7 +36,7 @@ if (_compare && _isWireCut) then {
     playSound "button_wrong";
     sleep 1;
     _BOOM = "Bomb_03_F"
-    createVehicleLocal(getPos _thisBomb);
+    createVehicleLocal([_thisBomb] call TRGM_GLOBAL_fnc_getRealPos);
     _BOOM setDamage 1;
     deleteVehicle _thisBomb;
     closeDialog 0;

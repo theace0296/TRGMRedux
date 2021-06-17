@@ -21,7 +21,7 @@ else {
             params ["_player", "_caller", "_actionId", "_arguments"];
             _arguments params ["_target"];
             detach _target;
-            _target setPos [getPos _target select 0, getPos _target select 1];
+            _target setPos [([_target] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_target] call TRGM_GLOBAL_fnc_getRealPos) select 1];
             _target setVectorUp surfaceNormal position _target;
             _target allowDamage true;
             _player removeAction _actionId;

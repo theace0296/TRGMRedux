@@ -40,7 +40,7 @@ if (_compare) then {
         //ARMED = true;
         playSound "button_wrong";
         sleep 1;
-        _BOOM = "Bomb_03_F" createVehicleLocal (getPos _thisBomb);
+        _BOOM = "Bomb_03_F" createVehicleLocal ([_thisBomb] call TRGM_GLOBAL_fnc_getRealPos);
         _BOOM setDamage 1;
         deleteVehicle _thisBomb;
         closeDialog 0;
@@ -51,7 +51,7 @@ if (_compare) then {
     //ARMED = true;
     playSound "button_wrong";
     sleep 1;
-    _BOOM = "Bomb_03_F" createVehicleLocal (getPos _thisBomb);
+    _BOOM = "Bomb_03_F" createVehicleLocal ([_thisBomb] call TRGM_GLOBAL_fnc_getRealPos);
     _BOOM setDamage 1;
     deleteVehicle _thisBomb;
     closeDialog 0;

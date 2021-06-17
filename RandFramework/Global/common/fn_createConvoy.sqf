@@ -55,7 +55,7 @@ if !(_hvtUnitClass isEqualTo "") then {
 
     if !(_hvtVehClass isEqualTo "") then { // Does HVT get a special vehicle?
         _index = _finalGroup find _hvtVehicle;
-        _pos = getpos _hvtVehicle;
+        _pos = [_hvtVehicle] call TRGM_GLOBAL_fnc_getRealPos;
         _dir = getdir _hvtVehicle;
         _driverClass = typeOf(driver _hvtVehicle);
 
@@ -106,7 +106,7 @@ if !(_hvtUnitClass isEqualTo "") then {
     _thisVehicle = _x;
     for [{private _i = 0}, {_i < (_thisVehicle emptyPositions "Cargo")}, {_i = _i + 1}] do {
         _unitTypeIndex = [_i, 8] select (_i > 8);
-        _convoyUnit = _group createUnit [[call sTeamleader, call sMachineGunMan, call sATMan, call sMedic, call sAAMan, call sEngineer, call sGrenadier, call sSniper, call sRifleman] select _unitTypeIndex, [(getPos _thisVehicle) select 0, ((getPos _thisVehicle) select 1) + 5, 0], [], 0, "NONE"];
+        _convoyUnit = _group createUnit [[call sTeamleader, call sMachineGunMan, call sATMan, call sMedic, call sAAMan, call sEngineer, call sGrenadier, call sSniper, call sRifleman] select _unitTypeIndex, [([_thisVehicle] call TRGM_GLOBAL_fnc_getRealPos) select 0, (([_thisVehicle] call TRGM_GLOBAL_fnc_getRealPos) select 1) + 5, 0], [], 0, "NONE"];
         _convoyUnit assignAsCargo _thisVehicle;
         _convoyUnit moveInCargo _thisVehicle;
     };

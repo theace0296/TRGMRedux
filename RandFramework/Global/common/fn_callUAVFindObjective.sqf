@@ -7,7 +7,7 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
     //TRGM_VAR_AODetails select 0
     _sTargetName = format["objInformant%1",(TRGM_VAR_AODetails select 0) select 0];
     _officerObject = missionNamespace getVariable [_sTargetName , objNull];
-    _targetPos = getPos _officerObject;
+    _targetPos = [_officerObject] call TRGM_GLOBAL_fnc_getRealPos;
 
     //HEREE  If pos is zero or target is not alive, show message saying that... and fail task too if target not supose to be dead??
     if (!(alive _officerObject) || _targetPos select 0 isEqualTo 0) then {

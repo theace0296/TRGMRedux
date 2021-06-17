@@ -120,7 +120,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     [_guardUnit3, ["This is our friendly agent!","{[""This is our target""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
 
     sleep 1;
-    [_hvtLzPos, getPos _guardUnit1,_guardUnit1,_mainHVT,_guardUnit3,_hvtGroup,_hvtGuardGroup,_iTaskIndex] spawn { //spawn script so we can have timer that will action our mission movements without pausing the main initialisation process
+    [_hvtLzPos, [_guardUnit1] call TRGM_GLOBAL_fnc_getRealPos,_guardUnit1,_mainHVT,_guardUnit3,_hvtGroup,_hvtGuardGroup,_iTaskIndex] spawn { //spawn script so we can have timer that will action our mission movements without pausing the main initialisation process
         params ["_hvtLzPos", "_meetingPos", "_guardUnit1", "_mainHVT", "_guardUnit3", "_hvtGroup", "_hvtGuardGroup", "_iTaskIndex"];
 
         waitUntil {sleep 2; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_PlayersHaveLeftStartingArea};
@@ -194,7 +194,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _guardUnit3 allowDamage true;
 
         _mrkMeetingHVTMarker = nil;
-        _mrkMeetingHVTMarker = createMarker [format["HVT%1",_iTaskIndex], getPos _hvtChopper];
+        _mrkMeetingHVTMarker = createMarker [format["HVT%1",_iTaskIndex], [_hvtChopper] call TRGM_GLOBAL_fnc_getRealPos];
         _mrkMeetingHVTMarker setMarkerShape "ICON";
         _mrkMeetingHVTMarker setMarkerType "o_inf";
         _mrkMeetingHVTMarker setMarkerText format["HVT %1",name(_mainHVT)];
@@ -202,7 +202,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _hvtChopper = _this select 0;
             _mrkMeetingHVTMarker = _this select 1;
             while {alive _hvtChopper} do {
-                _mrkMeetingHVTMarker setMarkerPos (getPos _hvtChopper);
+                _mrkMeetingHVTMarker setMarkerPos ([_hvtChopper] call TRGM_GLOBAL_fnc_getRealPos);
                 sleep 1;
             };
         };
@@ -218,7 +218,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _hvtGuardGroup setSpeedMode "FULL";
         _hvtGuardGroup setBehaviour "CARELESS";
 
-        _wpHvtMeet1 = _hvtGroup addWaypoint [getPos _mainHVT, 0];
+        _wpHvtMeet1 = _hvtGroup addWaypoint [[_mainHVT] call TRGM_GLOBAL_fnc_getRealPos, 0];
         _wpHvtMeet2 = _hvtGroup addWaypoint [_hvtLzPos, 1];
         _wpHvtMeet3 = _hvtGroup addWaypoint [_hvtLzPos, 2];
         _wpHvtMeet4 = _hvtGroup addWaypoint [_hvtLzPos, 3];
@@ -302,7 +302,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                     (_this select 0) enableAI "anim";
                     group (_this select 0) setSpeedMode "FULL";
                     group (_this select 0) setBehaviour "CARELESS";
-                    _smoker = "SmokeShellRed" createVehicle (getpos _guardUnit1);
+                    _smoker = "SmokeShellRed" createVehicle ([_guardUnit1] call TRGM_GLOBAL_fnc_getRealPos);
                     _smoker setDamage 1;
                     sleep 20;
                    };
@@ -319,7 +319,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                     (_this select 0) enableAI "anim";
                     group (_this select 0) setSpeedMode "FULL";
                     group (_this select 0) setBehaviour "CARELESS";
-                    _smoker = "SmokeShellRed" createVehicle (getpos _guardUnit1);
+                    _smoker = "SmokeShellRed" createVehicle ([_guardUnit1] call TRGM_GLOBAL_fnc_getRealPos);
                     _smoker setDamage 1;
                     sleep 20;
                    };
@@ -365,8 +365,8 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         [_guardUnit3] joinSilent (_hvtGroup);
 
-        _wpHvtLeaveMeet1 = _hvtGroup addWaypoint [getPos _hvtChopper, 0];
-        _wpHvtLeaveMeet2 = _hvtGroup addWaypoint [getPos _hvtChopper, 0];
+        _wpHvtLeaveMeet1 = _hvtGroup addWaypoint [[_hvtChopper] call TRGM_GLOBAL_fnc_getRealPos, 0];
+        _wpHvtLeaveMeet2 = _hvtGroup addWaypoint [[_hvtChopper] call TRGM_GLOBAL_fnc_getRealPos, 0];
         [_hvtGroup, 1] setWaypointType "GETIN";
         _wpHvtLeaveMeet2 = _hvtGroup addWaypoint [[0,0,100], 0];
         _hvtGroup setBehaviour "CARELESS";

@@ -203,7 +203,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [_sMessageTwo] call TRGM_GLOBAL_fnc_notifyGlobal;
 
         _mrkMeetingHVTMarker = nil;
-        _mrkMeetingHVTMarker = createMarker [format["HVT%1",_iTaskIndex], getPos _hvtVehicle];
+        _mrkMeetingHVTMarker = createMarker [format["HVT%1",_iTaskIndex], [_hvtVehicle] call TRGM_GLOBAL_fnc_getRealPos];
         _mrkMeetingHVTMarker setMarkerShape "ICON";
         _mrkMeetingHVTMarker setMarkerType "o_inf";
         _mrkMeetingHVTMarker setMarkerText format["HVT %1",name(_mainHVT)];
@@ -212,7 +212,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _hvtVehicle = _this select 1;
             _mrkMeetingHVTMarker = _this select 2;
             while {alive _hvtVehicle && alive _mainHVT} do {
-                _mrkMeetingHVTMarker setMarkerPos (getPos _hvtVehicle);
+                _mrkMeetingHVTMarker setMarkerPos ([_hvtVehicle] call TRGM_GLOBAL_fnc_getRealPos);
                 sleep 5;
             };
         };
@@ -246,11 +246,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                     deleteVehicle _mainHVTTrigger;
                 };
                 _mainHVTTrigger = nil;
-                _mainHVTTrigger = createTrigger ["EmptyDetector", getPos _mainHVT];
+                _mainHVTTrigger = createTrigger ["EmptyDetector", [_mainHVT] call TRGM_GLOBAL_fnc_getRealPos];
                 _mainHVTTrigger setVariable ["DelMeOnNewCampaignDay",true];
                 _mainHVTTrigger setTriggerArea [1250, 1250, 0, false];
                 _mainHVTTrigger setTriggerActivation [TRGM_VAR_FriendlySideString, format["%1 D", TRGM_VAR_EnemySideString], true];
-                _mainHVTTrigger setTriggerStatements ["this && {(time - TRGM_VAR_TimeSinceLastSpottedAction) > (call TRGM_GETTER_fnc_iGetSpottedDelay)}", format["nul = [%1, %2, %3, thisTrigger, thisList] spawn TRGM_GLOBAL_fnc_callNearbyPatrol;",getPos _mainHVT,_iTaskIndex, _bIsMainObjective], ""];
+                _mainHVTTrigger setTriggerStatements ["this && {(time - TRGM_VAR_TimeSinceLastSpottedAction) > (call TRGM_GETTER_fnc_iGetSpottedDelay)}", format["nul = [%1, %2, %3, thisTrigger, thisList] spawn TRGM_GLOBAL_fnc_callNearbyPatrol;",[_mainHVT] call TRGM_GLOBAL_fnc_getRealPos,_iTaskIndex, _bIsMainObjective], ""];
                 _mainHVT setVariable ["TRGM_VAR_hvtTrigger", _mainHVTTrigger, true];
                 sleep 30;
             };

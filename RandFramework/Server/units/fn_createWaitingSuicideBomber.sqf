@@ -38,11 +38,11 @@ if (count _nearestHidingPlaces > 5) then {
         if (floor(damage _objMilUnit) > 0) then {
             _bWaiting = false;
         };
-          _nearUnits = nearestObjects [(getPos _objMilUnit), ["Man"], 10];
+          _nearUnits = nearestObjects [([_objMilUnit] call TRGM_GLOBAL_fnc_getRealPos), ["Man"], 10];
           {
               if (_x in switchableUnits || _x in playableUnits) then {
                   _bWaiting = false;
-                _unitPos = getPos _x;
+                _unitPos = ([_x] call TRGM_GLOBAL_fnc_getRealPos);
               };
           } forEach _nearUnits;
 
@@ -51,7 +51,7 @@ if (count _nearestHidingPlaces > 5) then {
               if (_x in switchableUnits || _x in playableUnits) then {
 
                       _bWaiting = false;
-                      _unitPos = getPos _x;
+                      _unitPos = ([_x] call TRGM_GLOBAL_fnc_getRealPos);
               };
           } forEach _nearUnits;
           if (_bWaiting) then {
@@ -63,17 +63,17 @@ if (count _nearestHidingPlaces > 5) then {
     };
 
     //after the wait, get the units pos again and move to it
-    _nearUnits = nearestObjects [(getPos _objMilUnit), ["Man"], 10];
+    _nearUnits = nearestObjects [([_objMilUnit] call TRGM_GLOBAL_fnc_getRealPos), ["Man"], 10];
     {
         if (_x in switchableUnits || _x in playableUnits) then {
-            _unitPos = getPos _x;
+            _unitPos = ([_x] call TRGM_GLOBAL_fnc_getRealPos);
         };
     } forEach _nearUnits;
 
     _nearUnits = nearestObjects [_triggerArea, ["Man"], _triggerSize];
     {
         if (_x in switchableUnits || _x in playableUnits) then {
-                _unitPos = getPos _x;
+                _unitPos = ([_x] call TRGM_GLOBAL_fnc_getRealPos);
         };
     } forEach _nearUnits;
 

@@ -96,7 +96,7 @@ _IEDType = "CAR";
                                         sleep 1;
                                         //BOOM
                                         _type = selectRandom ["Bomb_03_F","Missile_AA_04_F","M_Mo_82mm_AT_LG","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo"];
-                                          _li_aaa = _type createVehicle (getPos _thisVeh);
+                                          _li_aaa = _type createVehicle ([_thisVeh] call TRGM_GLOBAL_fnc_getRealPos);
                                         _li_aaa setDamage 1;
                                         sleep 1;
                                         _thisVeh setVariable ["isDefused",true, true];

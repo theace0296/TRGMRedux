@@ -35,7 +35,7 @@ if (primaryWeapon _healer != "") then {
     sleep 0.5;
 };
 
-_healer setPos (getPos _injured);    // avoid to move the injured a few metres away
+_healer setPos ([_injured] call TRGM_GLOBAL_fnc_getRealPos);    // avoid to move the injured a few metres away
 [_healer, "medicStart"] remoteExec ['playAction', 0];
 
 _healer stop true;

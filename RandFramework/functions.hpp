@@ -118,6 +118,7 @@ class TRGM_GLOBAL {
         class enemyAirSupport {};
         class fireAOFlares {};
         class fireIllumFlares {};
+        class getRealPos {};
         class hideTerrainObjects {};
         class initAmmoBox {};
         class isAceLoaded {};

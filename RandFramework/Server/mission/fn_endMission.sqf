@@ -1,7 +1,7 @@
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
 _mrkHQPos = getMarkerPos "mrkHQ";
-_AOCampPos = getPos endMissionBoard2;
+_AOCampPos = ([endMissionBoard2] call TRGM_GLOBAL_fnc_getRealPos);
 bAllAtBase2 = ({(alive _x)&&((_x distance _mrkHQPos < 500)||(_x distance _AOCampPos < 500))} count (call BIS_fnc_listPlayers)) isEqualTo ({ (alive _x) } count (call BIS_fnc_listPlayers));
 
 if !(TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted) then {

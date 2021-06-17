@@ -3,12 +3,12 @@ if (_fnc_scriptName != _fnc_scriptNameParent) then { //Reduce RPT Spam for this 
     format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 };
 
-_currentManPos = getPos _objMan;
+_currentManPos = ([_objMan] call TRGM_GLOBAL_fnc_getRealPos);
 
 //[_objManName] call TRGM_GLOBAL_fnc_notify;
 //sleep 2;
 _MoveType = selectRandom ["Man","OpenArea"];
-_WalkToPos = getPos _objMan;
+_WalkToPos = ([_objMan] call TRGM_GLOBAL_fnc_getRealPos);
 
 //sleep 3;
 if (_MoveType isEqualTo "OpenArea") then {

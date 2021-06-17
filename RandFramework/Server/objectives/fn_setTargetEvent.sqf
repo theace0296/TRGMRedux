@@ -91,7 +91,7 @@ if (!_isCache && count _nearestRoads > 0) then {
         //if not within 200 of main AO, then have patrol, and guards, if over 1k, then chance of checkpoint to
 
 
-        if (_posOfAO distance (getPos _mainVeh) > 150 ) then {
+        if (_posOfAO distance (([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos) > 150 ) then {
 
             if (_showMarker) then {
                 //here, make circle, and random
@@ -110,7 +110,7 @@ if (!_isCache && count _nearestRoads > 0) then {
                 _markerstrcache setMarkerType "hd_dot";
             };
 
-            _posOfTarget = getPos _mainVeh;
+            _posOfTarget = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
 
             ["Mission Events: Target 6", true] call TRGM_GLOBAL_fnc_log;
 
@@ -211,7 +211,7 @@ if (_isCache) then {
         };
         _mainVeh setPosATL (selectRandom _allBuildingPos);
 
-        _posCache = getPos _mainVeh;
+        _posCache = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
 
         if (_showMarker) then {
             _markerstrcache = createMarker [format ["IEDLoc%1",_posCache select 0],_posCache];
@@ -313,9 +313,9 @@ if (!_objectiveCreated) then {
         _mainVeh = _objTarget;
     };
 
-    _posObj = getPos _mainVeh;
+    _posObj = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
 
-    if (_posOfAO distance (getPos _mainVeh) > 150 ) then {
+    if (_posOfAO distance ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos) > 150 ) then {
 
         if (true) then { //if we failed the above trying to find a pos, then if we place in random place, just show marker
             _markerstrcache = createMarker [format ["IEDLoc%1",_posObj select 0],_posObj];

@@ -58,7 +58,7 @@ if (!_isSmallEffect) then {
 
 // Start leaves
     if (_test) then {hint "Start leaves";};
-    _leaves_p  = "#particlesource" createVehicleLocal (getpos vehicle player);
+    _leaves_p  = "#particlesource" createVehicleLocal ([vehicle player] call TRGM_GLOBAL_fnc_getRealPos);
     _leaves_p attachto [vehicle player];
     _leaves_p setParticleRandom [0, [10, 10, 7], [4, 4, 5], 2, 0.1, [0, 0, 0, 0.5], 1, 1];
     _leaves_p setParticleCircle [100, [0, 0, 0]];
@@ -157,7 +157,7 @@ if (!_isSmallEffect) then {
 
 // Add particle effect
 
-    _particles = "#particlesource" createVehicleLocal (getpos vehicle player);
+    _particles = "#particlesource" createVehicleLocal ([vehicle player] call TRGM_GLOBAL_fnc_getRealPos);
     _particles attachto [vehicle player];
     _particles setParticleCircle [15, [0, 0, 0]];
     _particles setParticleRandom [10, [0.25, 0.25, 0], [1, 1, 0], 1, 1, [0, 0, 0, 0.1], 0, 0.01];

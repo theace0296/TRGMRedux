@@ -130,13 +130,13 @@ if (typeName sCivilian != "ARRAY") then {sCivilian = [sCivilian]};
 private _airTransClassName = selectRandom ((call SupplySupportChopperOptions) select {_x call TRGM_GLOBAL_fnc_isTransport});
 if (!isNil "chopper1" && {_airTransClassName != typeOf chopper1}) then {
     {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
-    chopper1 = createVehicle [_airTransClassName, getPos heliPad1, [], 0, "NONE"];
+    chopper1 = createVehicle [_airTransClassName, ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "NONE"];
     createVehicleCrew chopper1;
     crew vehicle chopper1 joinSilent createGroup WEST;
     chopper1 setVehicleVarName "chopper1";
     publicVariable "chopper1";
     chopper1 allowDamage false;
-    chopper1 setPos getPos heliPad1;
+    chopper1 setPos ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos);
     chopper1 setVelocity [0, 0, 0];
     chopper1 setdamage 0;
     chopper1 engineOn false;
@@ -154,19 +154,19 @@ if (!isNil "chopper1" && {_airTransClassName != typeOf chopper1}) then {
     private _totalTurrets = [_airTransClassName, true] call BIS_fnc_allTurrets;
     {chopper1 lockTurret [_x, true]} forEach _totalTurrets;
     { doStop _x; } forEach crew chopper1;
-    chopper1 setPos getPos heliPad1;
+    chopper1 setPos ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos);
 };
 
 private _airSupClassName = selectRandom (call FriendlyChopper);
 if (!isNil "chopper2" && {_airSupClassName != typeOf chopper2}) then {
     {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
-    chopper2 = createVehicle [_airSupClassName, getPos airSupportHeliPad, [], 0, "NONE"];
+    chopper2 = createVehicle [_airSupClassName, ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "NONE"];
     createVehicleCrew chopper2;
     crew vehicle chopper2 joinSilent createGroup WEST;
     chopper2 setVehicleVarName "chopper2";
     publicVariable "chopper2";
     chopper2 allowDamage false;
-    chopper2 setPos getPos airSupportHeliPad;
+    chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
     chopper2 setVelocity [0, 0, 0];
     chopper2 setdamage 0;
     chopper2 engineOn false;
@@ -177,7 +177,7 @@ if (!isNil "chopper2" && {_airSupClassName != typeOf chopper2}) then {
     private _totalTurrets = [_airSupClassName, true] call BIS_fnc_allTurrets;
     {chopper2 lockTurret [_x, true]} forEach _totalTurrets;
     { doStop _x; } forEach crew chopper2;
-    chopper2 setPos getPos airSupportHeliPad;
+    chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
     chopper2 allowDamage true;
 };
 

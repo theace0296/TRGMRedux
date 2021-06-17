@@ -19,7 +19,7 @@ if (player distance getMarkerPos "MrkHQ" > TRGM_VAR_SaveZoneRadius) then {
     if (_killer != player) then {
         TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["KILLER IS NOT THE PLAYER, Killer: %1 - %2", _killer, name _killer];
         TRGM_VAR_KilledPlayers pushBack getPlayerUID player;
-        TRGM_VAR_KilledPositions pushBack [getPlayerUID player,getPos Player];
+        TRGM_VAR_KilledPositions pushBack [getPlayerUID player,[player] call TRGM_GLOBAL_fnc_getRealPos];
         publicVariable "TRGM_VAR_KilledPlayers";
         publicVariable "TRGM_VAR_KilledPositions";
 

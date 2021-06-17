@@ -55,7 +55,7 @@ if (TRGM_VAR_iAllowNVG isEqualTo 2) then {
     call TRGM_GLOBAL_fnc_nvScript;
 };
 
-_trg = createTrigger["EmptyDetector", getPos player];
+_trg = createTrigger["EmptyDetector", [player] call TRGM_GLOBAL_fnc_getRealPos];
 _trg setTriggerActivation["ALPHA", "PRESENT", true];
 _trg setTriggerText "Illuminate your position for 5 mins (eta 60 seconds)";
 _trg setTriggerStatements["this", "[player] spawn TRGM_GLOBAL_fnc_fireIllumFlares;", ""];

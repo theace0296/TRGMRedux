@@ -8,7 +8,7 @@ HQBuilding = "Land_Cargo_HQ_V1_F" createVehicle _pos;
 HQBuilding setVehicleVarName "HQBuilding";
 HQBuilding allowDamage false;
 publicVariable "HQBuilding";
-private _HQpos = getPos HQBuilding;
+private _HQpos = ([HQBuilding] call TRGM_GLOBAL_fnc_getRealPos);
 TRGM_VAR_spawnedObjectsArray = [[_HQpos, sizeOf "Land_Cargo_HQ_V1_F"]];
 bAllAtBase = false; publicVariable "bAllAtBase";
 
@@ -90,7 +90,7 @@ private _object_spawn = {
     _object enableSimulation _enableSim;
     _object setpos [_newx, _newy, _newz];
     _object setdamage 0;
-    TRGM_VAR_spawnedObjectsArray pushBack [getPos _object, sizeOf _name];
+    TRGM_VAR_spawnedObjectsArray pushBack [([_object] call TRGM_GLOBAL_fnc_getRealPos), sizeOf _name];
     _object;
 };
 
@@ -106,7 +106,7 @@ private _building_spawn = {
     _building allowdamage false;
     _building setpos _safePos;
     _building setdamage 0;
-    TRGM_VAR_spawnedObjectsArray pushBack [getPos _building, sizeOf _name];
+    TRGM_VAR_spawnedObjectsArray pushBack [([_building] call TRGM_GLOBAL_fnc_getRealPos), sizeOf _name];
     _building;
 };
 
@@ -131,7 +131,7 @@ private _helo_spawn = {
     private _totalTurrets = [_name, true] call BIS_fnc_allTurrets;
     {_helo lockTurret [_x, true]} forEach _totalTurrets;
     { doStop _x; } forEach crew _helo;
-    TRGM_VAR_spawnedObjectsArray pushBack [getPos _helo, sizeOf _name];
+    TRGM_VAR_spawnedObjectsArray pushBack [([_helo] call TRGM_GLOBAL_fnc_getRealPos), sizeOf _name];
     _helo;
 };
 
@@ -203,7 +203,7 @@ heliPad1 allowdamage false;
 heliPad1 setdamage 0;
 heliPad1 setVehicleVarName "heliPad1";
 publicVariable "heliPad1";
-transportChopper = createMarker ["transportChopper", getPos chopper1];
+transportChopper = createMarker ["transportChopper", ([chopper1] call TRGM_GLOBAL_fnc_getRealPos)];
 "transportChopper" setMarkerShape "ICON";
 "transportChopper" setMarkerType "b_air";
 "transportChopper" setMarkerColor "ColorBlue";
@@ -281,7 +281,7 @@ supReqSupply setvariable ["BIS_fnc_initModules_disableAutoActivation",true];
 publicVariable "supReqSupply";
 
 supReqTrans = (group (missionNamespace getvariable ["BIS_functions_mainscope",objnull])) createUnit ["SupportProvider_Transport",[0,0,0],[],0,"CAN_COLLIDE"];
-supReqTrans setPos getPos chopper1;
+supReqTrans setPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
 supReqTrans setVehicleVarName "supReqTrans";
 supReqTrans setvariable ["BIS_fnc_initModules_disableAutoActivation",true];
 publicVariable "supReqTrans";

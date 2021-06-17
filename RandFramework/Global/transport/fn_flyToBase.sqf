@@ -45,7 +45,7 @@ if (!isTouchingGround chopper2) then {
     {
         deleteWaypoint _x
     } foreach waypoints group _escortPilot;
-    _escortFlyToWaypoint = (group driver chopper2) addWaypoint [getPos airSupportHeliPad,0,0];
+    _escortFlyToWaypoint = (group driver chopper2) addWaypoint [[airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos,0,0];
     _escortFlyToWaypoint setWaypointType "MOVE";
     _escortFlyToWaypoint setWaypointSpeed "FULL";
     _escortFlyToWaypoint setWaypointBehaviour "CARELESS";

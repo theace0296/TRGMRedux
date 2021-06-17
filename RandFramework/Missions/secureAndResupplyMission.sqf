@@ -125,14 +125,14 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [_flag] spawn {
             private _thisFlag = _this select 0;
             while {missionNamespace getVariable['SupplyDropped_%1', 0] < 2} do {
-                [true, getPos _thisFlag] spawn TRGM_SERVER_fnc_alertNearbyUnits;
+                [true, [_thisFlag] call TRGM_GLOBAL_fnc_getRealPos] spawn TRGM_SERVER_fnc_alertNearbyUnits;
                 sleep 60;
             };
         };
 
-        [EAST, _flag getRelPos[5000, random 360], getPos _flag, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
+        [EAST, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
-        [EAST, _flag getRelPos[5000, random 360], getPos _flag, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
+        [EAST, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
 
         (format[localize "STR_TRGM2_MinUntilSupplyChopperInArea", "5:00"]) call TRGM_GLOBAL_fnc_notifyGlobal;
@@ -178,7 +178,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [_heloGroup, 0] setWaypointSpeed "FULL";
         [_heloGroup, 0] setWaypointBehaviour "COMBAT";
 
-        private _v1wp2 = _heloGroup addWaypoint[getPos _flag, 0];
+        private _v1wp2 = _heloGroup addWaypoint[[_flag] call TRGM_GLOBAL_fnc_getRealPos, 0];
         [_heloGroup, 1] setWaypointStatements["true", "airDropHelo1 flyInHeight 200; "];
         [_heloGroup, 1] setWaypointSpeed "FULL";
 
@@ -195,21 +195,21 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         private _supplyObjectDummy = "B_supplyCrate_f"
         createVehicle[0, 0, 200];
         _supplyObjectDummy allowDamage false;
-        _supplyObjectDummy setPos[getPos _flag select 0, getPos _flag select 1, 200];
+        _supplyObjectDummy setPos[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 200];
 
         waitUntil {
             sleep 2;
-            getPos _supplyObjectDummy select 2 < 75
+            ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 < 75
         };
 
         private _para = "B_Parachute_02_F"
-        createVehicle[getPos _flag select 0, getPos _flag select 1, 100];
+        createVehicle[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 100];
         _supplyObjectDummy attachTo[_para, [0, 0, -1]];
-        _para setPos[getPos _flag select 0, getPos _flag select 1, 100];
+        _para setPos[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 100];
 
         waitUntil {
             sleep 2;
-            getPos _supplyObjectDummy select 2 >= 0 && getPos _supplyObjectDummy select 2 <= 1
+            ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 >= 0 && ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 <= 1
         };
 
         detach _supplyObjectDummy;
@@ -240,9 +240,9 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             sleep 2;
             !TRGM_VAR_dropCrate;
         };
-        [EAST, _flag getRelPos[5000, random 360], getPos _flag, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
+        [EAST, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
-        [EAST, _flag getRelPos[5000, random 360], getPos _flag, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
+        [EAST, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
 
         (format[localize "STR_TRGM2_MinUntilSupplyChopperInArea", "5:00"]) call TRGM_GLOBAL_fnc_notifyGlobal;
@@ -284,7 +284,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [_heloGroup, 0] setWaypointSpeed "FULL";
         [_heloGroup, 0] setWaypointBehaviour "COMBAT";
 
-        _v1wp2 = _heloGroup addWaypoint[getPos _flag, 0];
+        _v1wp2 = _heloGroup addWaypoint[[_flag] call TRGM_GLOBAL_fnc_getRealPos, 0];
         [_heloGroup, 1] setWaypointStatements["true", "airDropHelo2 flyInHeight 200; "];
         [_heloGroup, 1] setWaypointSpeed "FULL";
 
@@ -301,21 +301,21 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _supplyObjectDummy = "B_supplyCrate_f"
         createVehicle[0, 0, 200];
         _supplyObjectDummy allowDamage false;
-        _supplyObjectDummy setPos[getPos _flag select 0, getPos _flag select 1, 200];
+        _supplyObjectDummy setPos[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 200];
 
         waitUntil {
             sleep 2;
-            getPos _supplyObjectDummy select 2 < 75
+            ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 < 75
         };
 
         _para = "B_Parachute_02_F"
-        createVehicle[getPos _flag select 0, getPos _flag select 1, 100];
+        createVehicle[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 100];
         _supplyObjectDummy attachTo[_para, [0, 0, -1]];
-        _para setPos[getPos _flag select 0, getPos _flag select 1, 100];
+        _para setPos[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 100];
 
         waitUntil {
             sleep 2;
-            getPos _supplyObjectDummy select 2 >= 0 && getPos _supplyObjectDummy select 2 <= 1
+            ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 >= 0 && ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 <= 1
         };
 
         detach _supplyObjectDummy;

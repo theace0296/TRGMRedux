@@ -131,7 +131,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         };
     },[_bombSerialNumber,_missionBombWire,_missionBombCODE]]] remoteExec ["addAction", 0, true];
 
-    _markerstrBombInf = createMarker [format ["BombInfLoc%1",(getPos _objInformant) select 0],getPos _objInformant];
+    _markerstrBombInf = createMarker [format ["BombInfLoc%1",([_objInformant] call TRGM_GLOBAL_fnc_getRealPos) select 0],[_objInformant] call TRGM_GLOBAL_fnc_getRealPos];
     _markerstrBombInf setMarkerShape "ICON";
     _markerstrBombInf setMarkerType "hd_dot";
     _markerstrBombInf setMarkerText localize "STR_TRGM2_BombMissionInformantMarker";
@@ -139,7 +139,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     if ((_objInformant distance [_centralAO_x,_centralAO_y]) > 500 && random 1 < .25) then {
         if (random 1 < .50) then {
             _thisAreaRange = 20;
-            _checkPointGuidePos = getPos _objInformant;
+            _checkPointGuidePos = [_objInformant] call TRGM_GLOBAL_fnc_getRealPos;
             _flatPosSentry = nil;
             _flatPosSentry = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
             if (_flatPosSentry select 0 > 0) then {
@@ -153,7 +153,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             };
         }
         else {
-            [getPos _objInformant,200,250] spawn TRGM_SERVER_fnc_createWaitingAmbush;
+            [[_objInformant] call TRGM_GLOBAL_fnc_getRealPos,200,250] spawn TRGM_SERVER_fnc_createWaitingAmbush;
         };
     };
 

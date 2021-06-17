@@ -42,7 +42,7 @@ _SpottedUnits = _thisThisList select { alive _x && isPlayer _x };
 if (_SpottedUnits isEqualTo []) exitWith {};
 
 _SpottedUnit = selectRandom _SpottedUnits;
-_SpottedUnitPos = getPos _SpottedUnit;
+_SpottedUnitPos = [_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos;
 
 //so trigger will only be active for one second... inside this class we how many times its been called agasint the sideindex to decide if we continue (each side has its own trigger, so will be called multiple times if players sptted in multiple areas)
 //two counters, one to count if to use reinforcments/air support etc... and the other to make sure we dont call patrol to move to pos every second (need to give the patrol at least 30 seconds to move before relocate waypoints)
@@ -289,11 +289,11 @@ if (_SpottedUnitCount > 0) then {
                 _SpotterFound = false;
                 _Spotter = nil;
                 {
-                    if ((getPos _SpottedUnit distance getPos _x) < 55 && side _x isEqualTo east) then {
+                    if ((([_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos) distance ([_x] call TRGM_GLOBAL_fnc_getRealPos)) < 55 && side _x isEqualTo east) then {
                         _bAllowMortar = false; //enemy units are too close to spotted unit to call mortar
                     }
                     else {
-                        if (!_SpotterFound && (getPos _SpottedUnit distance getPos _x) > 55 && side _x isEqualTo East) then {
+                        if (!_SpotterFound && (([_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos) distance ([_x] call TRGM_GLOBAL_fnc_getRealPos)) > 55 && side _x isEqualTo East) then {
 
                             _cansee = [objNull, "VIEW"] checkVisibility [eyePos _x, eyePos _SpottedUnit];
                             // if (TRGM_VAR_bDebugMode) then {[format["POW4 %1",_cansee]] call TRGM_GLOBAL_fnc_notify;};
@@ -306,7 +306,7 @@ if (_SpottedUnitCount > 0) then {
                                 _Spotter = _x;
                                 if (TRGM_VAR_bDebugMode) then {
                                     _test = nil;
-                                    _test = createMarker [format["SpotterMrk%1%2%3",getPos _x select 0,getPos _x select 1,selectRandom[1,2,3,4,5]], getPos _x];
+                                    _test = createMarker [format["SpotterMrk%1%2%3",([_x] call TRGM_GLOBAL_fnc_getRealPos) select 0,([_x] call TRGM_GLOBAL_fnc_getRealPos) select 1,selectRandom[1,2,3,4,5]], ([_x] call TRGM_GLOBAL_fnc_getRealPos)];
                                     _test setMarkerShape "ICON";
                                     _test setMarkerType "hd_dot";
                                     _test setMarkerText "SPOTTER";
@@ -323,13 +323,13 @@ if (_SpottedUnitCount > 0) then {
                     _Spotter call BIS_fnc_ambientAnim__terminate;
                     _Spotter playMoveNow "Acts_listeningToRadio_loop";
                     _Spotter disableAI "anim";
-                    _startPos = getPos _SpottedUnit;
+                    _startPos = [_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos;
                     //if (TRGM_VAR_bDebugMode) then {[format["spottedStartPos: %1",str(_startPos)]] call TRGM_GLOBAL_fnc_notify;};
                     sleep 7;
                     if (alive(_Spotter)) then {
                         _Spotter enableAI "anim";
                         _Spotter playMoveNow "Acts_listeningToRadio_out";
-                        _endPos = getPos _SpottedUnit;
+                        _endPos = [_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos;
                         _dDistance = _startPos distance _endPos;
                         //if (TRGM_VAR_bDebugMode) then {[format["spottedEndPos: %1 - Distance:%2 - PlayersNear:%3 - Chance:%4",str(_endPos), str(_dDistance),str(_nearplayercount),str(_ChancesOfFireMortar)]] call TRGM_GLOBAL_fnc_notify;};
                         if (_dDistance < 7 && _bAllowMortar) then {
@@ -370,21 +370,21 @@ if (_SpottedUnitCount > 0) then {
                 //EnemyBaseChopper set waypoint to spotted location then AO then RTB
                 //GETIN NEAREST
                 //EnemyBaseChopperPilot
-                _EnemyBaseChopperWP0 = group TRGM_VAR_EnemyBaseChopperPilot addWaypoint [getPos TRGM_VAR_EnemyBaseChopperPilot,0,1];
+                _EnemyBaseChopperWP0 = group TRGM_VAR_EnemyBaseChopperPilot addWaypoint [[TRGM_VAR_EnemyBaseChopperPilot] call TRGM_GLOBAL_fnc_getRealPos,0,1];
                 _EnemyBaseChopperWP0 setWaypointType "GETIN NEAREST";
                 _EnemyBaseChopperWP0 setWaypointSpeed "FULL";
 
-                _EnemyBaseChopperWP1 = group TRGM_VAR_EnemyBaseChopperPilot addWaypoint [getPos _SpottedUnit,0,1];
+                _EnemyBaseChopperWP1 = group TRGM_VAR_EnemyBaseChopperPilot addWaypoint [[_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos,0,1];
                 _EnemyBaseChopperWP1 setWaypointType "SENTRY";
                 _EnemyBaseChopperWP1 setWaypointSpeed "LIMITED";
                 _EnemyBaseChopperWP1 setWaypointBehaviour "AWARE";
 
-                _EnemyBaseChopperWP1 = group TRGM_VAR_EnemyBaseChopperPilot addWaypoint [getPos _SpottedUnit,0,1];
+                _EnemyBaseChopperWP1 = group TRGM_VAR_EnemyBaseChopperPilot addWaypoint [[_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos,0,1];
                 _EnemyBaseChopperWP1 setWaypointType "MOVE";
                 _EnemyBaseChopperWP1 setWaypointSpeed "LIMITED";
                 _EnemyBaseChopperWP1 setWaypointBehaviour "AWARE";
 
-                _EnemyBaseChopperWP1 = group TRGM_VAR_EnemyBaseChopperPilot addWaypoint [getPos TRGM_VAR_baseHeliPad,0,2];
+                _EnemyBaseChopperWP1 = group TRGM_VAR_EnemyBaseChopperPilot addWaypoint [[TRGM_VAR_baseHeliPad] call TRGM_GLOBAL_fnc_getRealPos,0,2];
                 _EnemyBaseChopperWP1 setWaypointType "MOVE";
                 _EnemyBaseChopperWP1 setWaypointSpeed "FULL";
                 _EnemyBaseChopperWP1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];

@@ -277,17 +277,17 @@ if (_PosFound) then {
             _Tent1 setDir (floor(random 360));
 
             _flatPos2 = nil;
-            _flatPos2 = [getPos _Tent1 , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos,_behindBlockPos],"Land_TentA_F"] call TRGM_GLOBAL_fnc_findSafePos;
+            _flatPos2 = [([_Tent1] call TRGM_GLOBAL_fnc_getRealPos) , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos,_behindBlockPos],"Land_TentA_F"] call TRGM_GLOBAL_fnc_findSafePos;
             _Tent2 = "Land_TentA_F" createVehicle _flatPos2;
             _Tent2 setDir (floor(random 360));
 
             _flatPos3 = nil;
-            _flatPos3 = [getPos _Tent1 , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos,_behindBlockPos],"Campfire_burning_F"] call TRGM_GLOBAL_fnc_findSafePos;
+            _flatPos3 = [([_Tent1] call TRGM_GLOBAL_fnc_getRealPos) , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos,_behindBlockPos],"Campfire_burning_F"] call TRGM_GLOBAL_fnc_findSafePos;
             _Tent3 = "Campfire_burning_F" createVehicle _flatPos2;
             _Tent3 setDir (floor(random 360));
 
             _flatPos4 = nil;
-            _flatPos4 = [getPos _Tent1 , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos,_behindBlockPos],"Land_WoodPile_F"] call TRGM_GLOBAL_fnc_findSafePos;
+            _flatPos4 = [([_Tent1] call TRGM_GLOBAL_fnc_getRealPos) , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos,_behindBlockPos],"Land_WoodPile_F"] call TRGM_GLOBAL_fnc_findSafePos;
             _Tent4 = "Land_WoodPile_F" createVehicle _flatPos2;
             _Tent4 setDir (floor(random 360));
 

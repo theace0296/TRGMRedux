@@ -4,7 +4,7 @@ _isCampaign = (TRGM_VAR_iMissionParamType isEqualTo 5);
 
 
 _mrkHQPos = getMarkerPos "mrkHQ";
-_AOCampPos = getPos endMissionBoard2;
+_AOCampPos = ([endMissionBoard2] call TRGM_GLOBAL_fnc_getRealPos);
 bAllAtBase2 = ({(alive _x)&&((_x distance _mrkHQPos < 500)||(_x distance _AOCampPos < 500))} count (call BIS_fnc_listPlayers)) isEqualTo ({ (alive _x) } count (call BIS_fnc_listPlayers));
 
 

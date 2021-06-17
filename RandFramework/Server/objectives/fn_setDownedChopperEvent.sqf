@@ -139,7 +139,7 @@ if (str(_flatPos) != "[0,0,0]") then {
     _downedCivDirection = (floor(random 360));
     _downedCiv setDir (_downedCivDirection);
     _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
-    _bloodPool1 = createVehicle [selectRandom _bloodPools, getpos _downedCiv, [], 0, "CAN_COLLIDE"];
+    _bloodPool1 = createVehicle [selectRandom _bloodPools, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "CAN_COLLIDE"];
     _bloodPool1 setDir (floor(random 360));
     [_downedCiv, ["Talk to wounded guy",{["Please get me back to base!!"] call TRGM_GLOBAL_fnc_notify;},[_downedCiv]]] remoteExec ["addAction", 0, true];
     if (true) then {
@@ -172,8 +172,8 @@ if (str(_flatPos) != "[0,0,0]") then {
         _downedCiv = _this select 0;
         while{ (alive _downedCiv)} do {
 
-            _flareposX = getPos _downedCiv select 0;
-            _flareposY = getPos _downedCiv select 1;
+            _flareposX = ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos) select 0;
+            _flareposY = ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos) select 1;
             _flare1 = "F_40mm_red" createvehicle [_flareposX+20,_flareposY+20, 250]; _flare1 setVelocity [0,0,-10];
 
             //_downedCiv say3D selectRandom WoundedSounds;
@@ -184,7 +184,7 @@ if (str(_flatPos) != "[0,0,0]") then {
 
 
     if (!(isNil "IsTraining")) then {
-        _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], getPos _downedCiv];
+        _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos)];
         _markerEventMedi setMarkerShape "ICON";
         _markerEventMedi setMarkerType "hd_dot";
         _markerEventMedi setMarkerText "Crash Site";
@@ -192,7 +192,7 @@ if (str(_flatPos) != "[0,0,0]") then {
     else {
         //if (random 1 < .25) then {
         //if (true) then {
-            _markerEventMedi = createMarker [format["_markerEventRescue%1",(floor(random 360))], getPos _downedCiv];
+            _markerEventMedi = createMarker [format["_markerEventRescue%1",(floor(random 360))], ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos)];
             _markerEventMedi setMarkerShape "ICON";
             _markerEventMedi setMarkerType "hd_dot";
             _markerEventMedi setMarkerText "Distress Signal";

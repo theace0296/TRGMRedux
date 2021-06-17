@@ -46,18 +46,18 @@ if (_bAllow) then {
     sleep 3;
 
     //tp trtansport choppers to base
-    //"transportChopper" setMarkerPos getPos chopper1;
+    //"transportChopper" setMarkerPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
     //airSupportHeliPad
     //heliPad1
     _escortPilot1 = driver chopper1;
     {
         deleteWaypoint _x
     } foreach waypoints group _escortPilot1;
-    chopper1 setVariable ["baseLZ", getPos heliPad1, true];
+    chopper1 setVariable ["baseLZ", ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos), true];
     [chopper1] spawn TRGM_GLOBAL_fnc_flyToBase;
-    chopper1 setPos getPos heliPad1;
-    chopper2 setPos getPos airSupportHeliPad;
-    "transportChopper" setMarkerPos getPos chopper1;
+    chopper1 setPos ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos);
+    chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
+    "transportChopper" setMarkerPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
     chopper1 engineOn false;
     chopper2 engineOn false;
     _escortPilot = driver chopper2;

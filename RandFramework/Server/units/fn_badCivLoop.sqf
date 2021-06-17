@@ -39,7 +39,7 @@ while {alive _badCiv && !_bFired} do {
             };
         };
 
-    } forEach (nearestObjects [getPos _badCiv,["Man"],10]);
+    } forEach (nearestObjects [([_badCiv] call TRGM_GLOBAL_fnc_getRealPos),["Man"],10]);
     sleep 2;
 };
 

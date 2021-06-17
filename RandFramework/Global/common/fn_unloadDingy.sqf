@@ -3,9 +3,9 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
 
 _dingy = selectRandom TRGM_VAR_FriendlyFastResponseDingy createVehicle [0,0,0];
 _flatPos = nil;
-_flatPos = [getPos _target, 5, 10, 5, 2, 0.5, 0,[],[[0,0,0],[0,0,0]], _dingy] call TRGM_GLOBAL_fnc_findSafePos;
+_flatPos = [[_target] call TRGM_GLOBAL_fnc_getRealPos, 5, 10, 5, 2, 0.5, 0,[],[[0,0,0],[0,0,0]], _dingy] call TRGM_GLOBAL_fnc_findSafePos;
 if (str(_flatPos) isEqualTo "[0,0,0]") then {
-    _flatPos = [getPos _target, 5, 8, 5, 0, 0.5, 0,[],[[0,0,0],[0,0,0]], _dingy] call TRGM_GLOBAL_fnc_findSafePos;
+    _flatPos = [[_target] call TRGM_GLOBAL_fnc_getRealPos, 5, 8, 5, 0, 0.5, 0,[],[[0,0,0],[0,0,0]], _dingy] call TRGM_GLOBAL_fnc_findSafePos;
     if (str(_flatPos) isEqualTo "[0,0,0]") then {
         [(localize "STR_TRGM2_UnloadDingy_NoArea")] call TRGM_GLOBAL_fnc_notify;
         deleteVehicle _dingy;

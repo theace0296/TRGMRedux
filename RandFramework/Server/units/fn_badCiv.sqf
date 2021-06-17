@@ -65,7 +65,7 @@ if (isServer) then { // only do once -> on the serer
                     };
                 };
 
-            } forEach (nearestObjects [getPos _thisCiv,["Man"],10]);
+            } forEach (nearestObjects [([_thisCiv] call TRGM_GLOBAL_fnc_getRealPos),["Man"],10]);
 
             sleep 2;
         };

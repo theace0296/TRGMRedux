@@ -95,11 +95,11 @@ _waypointIndex = 0;
 if (!_airEscort) then {
     _iSaftyCount = 500;
     _bHalfWayWaypoint = false;
-    _DirAtoB = [getPos _vehicle, _destinationPosition] call BIS_fnc_DirTo;
+    _DirAtoB = [[_vehicle] call TRGM_GLOBAL_fnc_getRealPos, _destinationPosition] call BIS_fnc_DirTo;
     _AvoidZonePos = TRGM_VAR_ObjectivePossitions select 0;
 
     if (! isNil "_AvoidZonePos" ) then {
-        _stepPos = getPos _vehicle;
+        _stepPos = [_vehicle] call TRGM_GLOBAL_fnc_getRealPos;
         _stepDistLeft = _vehicle distance _destinationPosition;
         _bEndSteps = false;
         while {!_bEndSteps && _iSaftyCount > 0} do {
