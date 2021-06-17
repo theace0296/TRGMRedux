@@ -137,7 +137,7 @@ class Params
         title = "Enable Debugging Mode"; // Param name visible in the list
         values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
         texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 1; // Default value; must be listed in 'values' array, otherwise 0 is used
+        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
         // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
     };
     class ResetMissionSettings

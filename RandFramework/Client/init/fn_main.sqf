@@ -66,7 +66,8 @@ call TRGM_CLIENT_fnc_endCamera;
 sleep 3;
 
 if (!isDedicated && {(!isNull TRGM_VAR_AdminPlayer && str player isEqualTo "sl") || (TRGM_VAR_AdminPlayer isEqualTo player)}) then {
-    if (TRGM_VAR_iMissionParamType != 5) then {    //if isCampaign, dont allow to select AO
+    if (call TRGM_GETTER_fnc_bIsCampaign) then {    //if isCampaign, dont allow to select AO
+    
         if (call TRGM_GETTER_fnc_bManualAOPlacement) then {
             mrkAoSelect1 = nil;
             mrkAoSelect2 = nil;
@@ -80,7 +81,7 @@ if (!isDedicated && {(!isNull TRGM_VAR_AdminPlayer && str player isEqualTo "sl")
                 ["mrkAoSelect1",  TRGM_VAR_Mission1Loc, "ICON", "ColorRed", [1,1], "AO 1"] call AIS_Core_fnc_createLocalMarker;
             };
 
-            if (TRGM_VAR_iMissionParamType isEqualTo 0 || TRGM_VAR_iMissionParamType isEqualTo 4 || TRGM_VAR_iMissionParamType isEqualTo 11) then {
+            if (call TRGM_GETTER_fnc_bHasThreeChoosableAOLocations) then {
                 titleText[localize "STR_TRGM2_tele_SelectPositionAO2", "PLAIN"];
                 openMap true;
                 onMapSingleClick "TRGM_VAR_Mission2Loc = _pos; publicVariable 'TRGM_VAR_Mission2Loc'; openMap false; onMapSingleClick ''; true;";

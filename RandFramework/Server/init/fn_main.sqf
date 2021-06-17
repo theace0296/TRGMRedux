@@ -366,7 +366,7 @@ if (TRGM_VAR_iAllowNVG isEqualTo 0) then {
 [format["Mission Core: %1", "AnimalStateSet"], true] call TRGM_GLOBAL_fnc_log;
 [3.3] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
-if (TRGM_VAR_iMissionParamType != 5) then {
+if (call TRGM_GETTER_fnc_bIsCampaign) then {
     [] remoteExec ["TRGM_SERVER_fnc_postStartMission"];
 };
 

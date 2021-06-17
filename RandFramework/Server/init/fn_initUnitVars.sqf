@@ -115,6 +115,14 @@ if (count TRGM_VAR_AdvControls < 14) then {
 };
 */
 
+/////// IsCampaign ///////
+TRGM_GETTER_fnc_bIsCampaign = { TRGM_VAR_iMissionParamType != 5 };
+publicVariable "TRGM_GETTER_fnc_bIsCampaign";
+
+/////// HasThreeChoosableAOLocations ///////
+TRGM_GETTER_fnc_bHasThreeChoosableAOLocations = { TRGM_VAR_iMissionParamType isEqualTo 0 || TRGM_VAR_iMissionParamType isEqualTo 4 || TRGM_VAR_iMissionParamType isEqualTo 11 };
+publicVariable "TRGM_GETTER_fnc_bHasThreeChoosableAOLocations";
+
 /////// Sandstorm settings ///////
 if (isNil "TRGM_VAR_DefaultSandStormOption") then { TRGM_VAR_DefaultSandStormOption = 2; publicVariable "TRGM_VAR_DefaultSandStormOption"; };
 TRGM_GETTER_fnc_sandStormOption = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SANDSTORM_IDX };
@@ -260,6 +268,7 @@ TRGM_VAR_MissionParamTypes = [
 ];
 publicVariable "TRGM_VAR_MissionParamTypes";
 TRGM_VAR_MissionParamTypesValues = [0,6,8,1,2,3,9,4,7,10,11,12,5]; publicVariable "TRGM_VAR_MissionParamTypesValues";
+
 
 
 // 1  = Laptop

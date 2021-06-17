@@ -30,7 +30,7 @@ while {true} do {
         _bRepWorse = false;
         if (TRGM_VAR_BadPoints > _lastBadPoints) then {_bRepWorse = true};
         _lastBadPoints = TRGM_VAR_BadPoints;
-        if (TRGM_VAR_iMissionParamType != 5) then {
+        if (call TRGM_GETTER_fnc_bIsCampaign) then {
             if (_dCurrentRep <= 0 && {TRGM_VAR_iMissionParamRepOption isEqualTo 1}) then {
                 _iCurrentTaskCount = 0;
                 ["tskKeepAboveAverage", "failed"] call FHQ_fnc_ttSetTaskState;

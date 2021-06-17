@@ -253,7 +253,7 @@ if (!(isNil "IsTraining")) then {
     TRGM_VAR_MaxBadPoints = 100;
 };
 
-if (TRGM_VAR_bDebugMode) then {
+if (false) then { // This used to be set with the debug mode flag, but that's not all that helpful anymore.
     _ThisTaskTypes = [18,19];
     _IsMainObjs = _ThisTaskTypes apply {true;}; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
     _MarkerTypes = _ThisTaskTypes apply {"mil_objective";};
@@ -531,7 +531,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
         _markerInformant1 = nil;
 
         if (!_SamePrevAO || {_bUserDefinedAO || {_attempts > 100}}) then {
-            _randLocation = if !(isNil "TRGM_VAR_allLocationPositions") then {selectRandom TRGM_VAR_allLocationPositions} else {[0 + (floor random 25000), 0 + (floor random 25000)]};
+            _randLocation = if (!(isNil "TRGM_VAR_allLocationPositions") && {count TRGM_VAR_allLocationPositions > 0}) then {selectRandom TRGM_VAR_allLocationPositions} else {[0 + (floor random 25000), 0 + (floor random 25000)]};
             _randInfor1X = _randLocation select 0;
             _randInfor1Y = _randLocation select 1;
             _buildings = nearestObjects [[_randInfor1X,_randInfor1Y], TRGM_VAR_BasicBuildings, 200*_attempts] select {!((_x buildingPos -1) isEqualTo [])};
@@ -686,7 +686,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                         };
                     };
 
-                    if (_iTaskIndex isEqualTo 0 && TRGM_VAR_iMissionParamType != 5) then {_allowFriendlyIns = false};
+                    if (_iTaskIndex isEqualTo 0 && call TRGM_GETTER_fnc_bIsCampaign) then {_allowFriendlyIns = false};
 
                     if (_bSideMissionsCivOnlyToUse && !_bCreateTask) then {
                         TRGM_VAR_ClearedPositions pushBack [_inf1X,_inf1Y];
