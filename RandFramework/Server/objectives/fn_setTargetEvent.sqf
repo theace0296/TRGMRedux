@@ -91,7 +91,7 @@ if (!_isCache && count _nearestRoads > 0) then {
         //if not within 200 of main AO, then have patrol, and guards, if over 1k, then chance of checkpoint to
 
 
-        if (_posOfAO distance (([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos) > 150 ) then {
+        if (_posOfAO distance ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos) > 150 ) then {
 
             if (_showMarker) then {
                 //here, make circle, and random
@@ -110,7 +110,7 @@ if (!_isCache && count _nearestRoads > 0) then {
                 _markerstrcache setMarkerType "hd_dot";
             };
 
-            _posOfTarget = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
+            _posOfTarget = [_mainVeh] call TRGM_GLOBAL_fnc_getRealPos;
 
             ["Mission Events: Target 6", true] call TRGM_GLOBAL_fnc_log;
 
@@ -118,7 +118,7 @@ if (!_isCache && count _nearestRoads > 0) then {
                 [_posOfTarget] spawn TRGM_SERVER_fnc_createEnemySniper;
             };
 
-            _spawnedUnitTarget1 = ((createGroup east) createUnit [(call sRiflemanToUse), _posOfTarget, [], 10, "NONE"]);
+            _spawnedUnitTarget1 = (createGroup east) createUnit [(call sRiflemanToUse), _posOfTarget, [], 10, "NONE"];
             _directionTarget1 = [_mainVeh,_spawnedUnitTarget1] call BIS_fnc_DirTo;
             _spawnedUnitTarget1 setDir _directionTarget1;
             _spawnedUnitTarget1 setFormDir _directionTarget1;
