@@ -575,24 +575,6 @@ class TRGM_VAR_DialogRequests
             colorBackground[] = {0,1,0,1};
             colorActive[] = {0,1,0,1};
         };
-        // class RscCombo_8007: RscCombo
-        // {
-        //     idc = 8007;
-        //     text = "Select a Unit"; //--- ToDo: Localize;
-        //     x = 0.365954 * safezoneW + safezoneX;
-        //     y = 0.412003 * safezoneH + safezoneY;
-        //     w = 0.123734 * safezoneW;
-        //     h = 0.0329991 * safezoneH;
-        // };
-        // class RscCombo_8009: RscCombo
-        // {
-        //     idc = 8009;
-        //     text = "Select a Vehicle"; //--- ToDo: Localize;
-        //     x = 0.520622 * safezoneW + safezoneX;
-        //     y = 0.412003 * safezoneH + safezoneY;
-        //     w = 0.123734 * safezoneW;
-        //     h = 0.0329991 * safezoneH;
-        // };
 
         ////////////////////////////////////////////////////////
         // GUI EDITOR OUTPUT END
