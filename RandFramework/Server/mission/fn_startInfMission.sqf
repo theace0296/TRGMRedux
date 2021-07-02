@@ -269,6 +269,7 @@ TRGM_VAR_MissionParamsSet =  true; publicVariable "TRGM_VAR_MissionParamsSet";
 
 publicVariable "TRGM_VAR_MaxBadPoints";
 
+_usedLocations = [];
 _randInfor1X = nil;
 _randInfor1Y = nil;
 _buildings = nil;
@@ -520,6 +521,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     TRGM_VAR_allLocationPositions = TRGM_VAR_allLocations apply {[locationPosition _x select 0, locationPosition _x select 1]};
     TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {((getMarkerPos "mrkHQ") distance _x) > TRGM_VAR_SideMissionMinDistFromBase};
     TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {count nearestObjects [_x, TRGM_VAR_BasicBuildings, 200] > 0};
+    TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {!(_x in _usedLocations)};
 
     ["Mission Setup: Locations found", true] call TRGM_GLOBAL_fnc_log;
 
@@ -529,9 +531,10 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
         _attempts = _attempts + 1;
         ["Mission Setup: 9", true] call TRGM_GLOBAL_fnc_log;
         _markerInformant1 = nil;
+        _randLocation = nil;
 
         if (!_SamePrevAO || {_bUserDefinedAO || {_attempts > 100}}) then {
-            _randLocation = if (!(isNil "TRGM_VAR_allLocationPositions") && {count TRGM_VAR_allLocationPositions > 0}) then {selectRandom TRGM_VAR_allLocationPositions} else {[0 + (floor random 25000), 0 + (floor random 25000)]};
+            _randLocation = if (!(isNil "TRGM_VAR_allLocationPositions") && {count TRGM_VAR_allLocationPositions > 0 && {_attempts < 10}}) then {selectRandom TRGM_VAR_allLocationPositions} else {[0 + (floor random 25000), 0 + (floor random 25000)]};
             _randInfor1X = _randLocation select 0;
             _randInfor1Y = _randLocation select 1;
             _buildings = nearestObjects [[_randInfor1X,_randInfor1Y], TRGM_VAR_BasicBuildings, 200*_attempts] select {!((_x buildingPos -1) isEqualTo [])};
@@ -569,6 +572,10 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             _allBuildingPos = _infBuilding buildingPos -1;
             _inf1X = position _infBuilding select 0;
             _inf1Y = position _infBuilding select 1;
+            if !(isNil "_randLocation") then {
+                _usedLocations pushBack _randLocation;
+            };
+
             if (count _allBuildingPos > 2) then {
                 _TasksToValidate = [_iThisTaskType];
                 if (count _SamePrevAOStats > TRGM_VAR_InfTaskCount) then {

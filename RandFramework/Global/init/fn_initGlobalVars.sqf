@@ -11,10 +11,27 @@ if (isNil "TRGM_VAR_HQPosFound")             then { TRGM_VAR_HQPosFound         
 if (!isNil "laptop1")                     then { TRGM_VAR_NeededObjectsAvailable = true;  publicVariable "TRGM_VAR_NeededObjectsAvailable"; };
 
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
-TRGM_VAR_WestFactionData =  [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide; publicVariable "TRGM_VAR_WestFactionData";
-TRGM_VAR_EastFactionData =  [EAST] call TRGM_GLOBAL_fnc_getFactionDataBySide; publicVariable "TRGM_VAR_EastFactionData";
-TRGM_VAR_GuerFactionData =  [INDEPENDENT] call TRGM_GLOBAL_fnc_getFactionDataBySide; publicVariable "TRGM_VAR_GuerFactionData";
-TRGM_VAR_AllFactionData = TRGM_VAR_WestFactionData + TRGM_VAR_EastFactionData + TRGM_VAR_GuerFactionData;
+TRGM_VAR_AllFactionData = [];
+private _WestFactionData =  [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
+private _EastFactionData =  [EAST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
+private _GuerFactionData =  [INDEPENDENT] call TRGM_GLOBAL_fnc_getFactionDataBySide;
+private _AllFactionData = _WestFactionData + _EastFactionData + _GuerFactionData;
+{
+    // This is so inefficient, if we're collecting faction info here we should probably just make this a hashMap...
+    _x params ["_className", "_displayName"];
+    private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
+    private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
+
+    private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
+    _appendedData params ["_unitData", "_vehData"];
+
+    private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
+    private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
+
+    if ({count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0) then {
+        TRGM_VAR_AllFactionData pushBackUnique _x;
+    };
+} forEach _AllFactionData;
 TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
 publicVariable "TRGM_VAR_AllFactionData";
 

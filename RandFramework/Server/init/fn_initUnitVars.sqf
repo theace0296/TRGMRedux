@@ -6,9 +6,6 @@ TRGM_VAR_DefaultMilitiaFactionValue  = [1]; publicVariable "TRGM_VAR_DefaultMili
 TRGM_VAR_DefaultFriendlyFactionValue = [1]; publicVariable "TRGM_VAR_DefaultFriendlyFactionValue"; //default to NATO
 
 /////// Set up faction arrays ///////
-// TRGM_VAR_WestFactionData --- Initialized in initGlobalVars
-// TRGM_VAR_EastFactionData --- Initialized in initGlobalVars
-// TRGM_VAR_GuerFactionData --- Initialized in initGlobalVars
 // TRGM_VAR_AllFactionData --- Initialized in initGlobalVars
 
 TRGM_VAR_DefaultEnemyFactionArray        = []; publicVariable "TRGM_VAR_DefaultEnemyFactionArray";
