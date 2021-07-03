@@ -3807,6 +3807,11 @@
                 <English>Sets the time between enemy responses to a player being spotted. (Higher value means longer time before enemy units will call reinforcements, artillery, nearby units, etc.)</English>
             </Key>
 
+            <Key ID="STR_TRGM2_SecondsAbbreviation">
+                <Original>s</Original>
+                <English>s</English>
+            </Key>
+
             <Key ID="STR_TRGM2_Tooltip_AdvVirtualArsenal">
                 <Original>Will add an action to the supply create at base or camp to allow access to virtual arsenal</Original>
                 <English>Will add an action to the supply create at base or camp to allow access to virtual arsenal</English>

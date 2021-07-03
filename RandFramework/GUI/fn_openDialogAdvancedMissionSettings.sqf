@@ -97,14 +97,8 @@ _lblctrlTitle ctrlCommit 0;
     _inpXPos = ([0, ((2 * _ctrlWidth) + 0.1)] select (_forEachIndex > 12)) + (0.4 * safezoneW + safezoneX);
     _ctrlYPos = ((0.27 + _currentLinePos) * safezoneH + safezoneY);
 
-    _lblCtrlID =  _x select 0;
+    _x params ["_lblCtrlID", "_lblText", "_lnpCtrlType", "_Options", "_Values", "_DefaultSelIndex", "_toolTip", "_appendText"];
     _InpCtrlID = _lblCtrlID + 1;
-    _lblText = _x select 1;
-    _lnpCtrlType = _x select 2;
-    _Options = _x select 3;
-    _Values = _x select 4;
-    _DefaultSelIndex = _x select 5;
-    _toolTip = _x select 6;
 
     _display ctrlCreate ["RscText", _lblCtrlID];
     _lblctrl = _display displayCtrl _lblCtrlID;
@@ -142,7 +136,11 @@ _lblctrlTitle ctrlCommit 0;
             _ctrlIDC     = ctrlIDC _control;
             _ctrlSlider    = _display displayCtrl _ctrlIDC;
             _ctrlVal     = _display displayCtrl (_ctrlIDC+500);
-            _ctrlVal ctrlSetText (str(round _newValue) + (["", "s"] select (_lblCtrlID isEqualTo 6039)));
+            _ctrlText = str(round _newValue);
+            if !(isNil "_appendText") then {
+                _ctrlText = format ["%1%2", _ctrlText, _appendText];
+            };
+            _ctrlVal ctrlSetText _ctrlText;
         }];
     };
     _inpctrl ctrlCommit 0;

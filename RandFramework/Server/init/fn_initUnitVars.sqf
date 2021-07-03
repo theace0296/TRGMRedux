@@ -93,7 +93,7 @@ TRGM_VAR_AdvControls = [ //IDX,Title,Type,Options,OptionValues,DefaultOptionInde
     [ADVCTRLIDC(TRGM_VAR_ADVSET_IEDTARGET_COMPACT_SPACING_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_IedTargetCompact","RscCombo",[localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random",localize "STR_TRGM2_TRGMInitPlayerLocal_Enable",localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"],[0,1,2],2,localize "STR_TRGM2_Tooltip_AdvIedTargetCompact"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_MoreEnemies","RscXSliderH",1,100,50,localize "STR_TRGM2_Tooltip_AdvMoreEnemies"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_LARGE_PATROLS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_LargePatrols","RscCombo",[localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random",localize "STR_TRGM2_TRGMInitPlayerLocal_Enable",localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"],[0,1,2],1,localize "STR_TRGM2_Tooltip_AdvLargePatrols"],
-    [ADVCTRLIDC(TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_TimeBetweenSpotted","RscXSliderH",600,1800,1200,localize "STR_TRGM2_Tooltip_TimeBetweenSpotted"],
+    [ADVCTRLIDC(TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_TimeBetweenSpotted","RscXSliderH",600,1800,1200,localize "STR_TRGM2_Tooltip_TimeBetweenSpotted", localize "STR_TRGM2_SecondsAbbreviation"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_VehicleReqRep","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable"],[0,1],0,localize "STR_TRGM2_Tooltip_AdvVehicleReqRep"]
 ];
 publicVariable "TRGM_VAR_AdvControls";
