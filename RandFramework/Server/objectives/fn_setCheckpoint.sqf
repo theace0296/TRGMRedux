@@ -403,7 +403,7 @@ if (_PosFound) then {
         };
 
         if (!_isHiddenObj) then {
-            [_guardUnit5, [localize "STR_TRGM2_setCheckpoint_Ask", {_this spawn TRGM_SERVER_fnc_speakToFriendlyCheckpoint;}, [_pos5], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
+            [_guardUnit5, [localize "STR_TRGM2_setCheckpoint_Ask", {_this spawn TRGM_SERVER_fnc_speakToFriendlyCheckpoint;}, [_pos5], 0, true, true, "", "_this isEqualTo player && alive _target"]] remoteExec ["addAction", 0, true];
             if (random 1 < .66) then {
                 _test = nil;
                 _test = createMarker [format["MrkFriendCheckpoint%1%2",_roadBlockPos select 0, _roadBlockPos select 1], _roadBlockPos];

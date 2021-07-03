@@ -12,7 +12,7 @@ if (str(_flatPos) isEqualTo "[0,0,0]") then {
     }
     else {
         _dingy setPos _flatPos;
-        [_dingy, [format [localize "STR_TRGM2_UnloadDingy_push", getText (configFile >> "CfgVehicles" >> (typeOf _dingy) >> "displayName")],{_this spawn TRGM_GLOBAL_fnc_pushObject;}, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualTo 0"]] remoteExec ["addAction", 0];
+        [_dingy, [format [localize "STR_TRGM2_UnloadDingy_push", getText (configFile >> "CfgVehicles" >> (typeOf _dingy) >> "displayName")],{_this spawn TRGM_GLOBAL_fnc_pushObject;}, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualTo 0 && alive _target"]] remoteExec ["addAction", 0];
         [(localize "STR_TRGM2_UnloadDingy_DingyUnloaded")] call TRGM_GLOBAL_fnc_notify;
         _target removeAction _id;
     };
@@ -20,7 +20,7 @@ if (str(_flatPos) isEqualTo "[0,0,0]") then {
 }
 else {
     _dingy setPos _flatPos;
-    [_dingy, [format [localize "STR_TRGM2_UnloadDingy_push", getText (configFile >> "CfgVehicles" >> (typeOf _dingy) >> "displayName")],{_this spawn TRGM_GLOBAL_fnc_pushObject;}, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualTo 0"]] remoteExec ["addAction", 0];
+    [_dingy, [format [localize "STR_TRGM2_UnloadDingy_push", getText (configFile >> "CfgVehicles" >> (typeOf _dingy) >> "displayName")],{_this spawn TRGM_GLOBAL_fnc_pushObject;}, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualTo 0 && alive _target"]] remoteExec ["addAction", 0];
     [(localize "STR_TRGM2_UnloadDingy_DingyUnloadedWater")] call TRGM_GLOBAL_fnc_notify;
     _target removeAction _id;
 };

@@ -25,7 +25,7 @@ else {
             _target setVectorUp surfaceNormal position _target;
             _target allowDamage true;
             _player removeAction _actionId;
-            [_target, [format [localize "STR_TRGM2_UnloadDingy_push", getText (configFile >> "CfgVehicles" >> (typeOf _target) >> "displayName")],{_this spawn TRGM_GLOBAL_fnc_pushObject;}, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualTo 0"]] remoteExec ["addAction", 0];
+            [_target, [format [localize "STR_TRGM2_UnloadDingy_push", getText (configFile >> "CfgVehicles" >> (typeOf _target) >> "displayName")],{_this spawn TRGM_GLOBAL_fnc_pushObject;}, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualTo 0 && alive _target"]] remoteExec ["addAction", 0];
         }, [_Object], 5, true, true];
 
         private _largeObjectCorrection = if (((boundingBoxReal _Object select 1 select 1) - (boundingBoxReal _Object select 0 select 1)) != 0 && {

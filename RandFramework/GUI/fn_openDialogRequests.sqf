@@ -244,12 +244,12 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                 if ((toLower (gettext (configFile >> 'cfgvehicles' >> (typeOf _spawnedVeh) >> 'vehicleClass')) isEqualto 'static')) then {
                     [_spawnedVeh, [format [localize "str_TRGM2_UnloadDingy_push", gettext (configFile >> "Cfgvehicles" >> (typeOf _spawnedVeh) >> "displayname")], {
                         _this spawn TRGM_GLOBAL_fnc_pushObject;
-                    }, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualto 0"]] remoteExec ["addAction", 0];
+                    }, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualto 0 && alive _target"]] remoteExec ["addAction", 0];
                 } else {
                     // if not a turret, allow an inflatable boat to be unloaded.
                     [_spawnedVeh, [localize "str_TRGM2_startinfMission_UnloadDingy", {
                         _this spawn TRGM_GLOBAL_fnc_unloadDingy;
-                    }, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualto 0"]] remoteExec ["addAction", 0];
+                    }, [], -99, false, false, "", "_this isEqualTo player && count crew _target isEqualto 0 && alive _target"]] remoteExec ["addAction", 0];
                     [_spawnedVeh, (units group _caller)] call TRGM_GLOBAL_fnc_initAmmoBox;
                 };
 
