@@ -127,6 +127,8 @@ call CUSTOM_MISSION_fnc_SetFriendlyFaction; //if TRGM_VAR_useCustomFriendlyFacti
 if (typeName sCivilian != "ARRAY") then {sCivilian = [sCivilian]};
 // end
 
+[HQMan] call TRGM_GLOBAL_fnc_setLoadout;
+
 private _airTransClassName = selectRandom ((call SupplySupportChopperOptions) select {_x call TRGM_GLOBAL_fnc_isTransport});
 if (!isNil "chopper1" && {_airTransClassName != typeOf chopper1}) then {
     {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
