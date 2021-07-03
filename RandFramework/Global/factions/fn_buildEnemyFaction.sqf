@@ -3,16 +3,9 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
 private _enemyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENEMY_FACTIONS_IDX;
 (TRGM_VAR_AllFactionData select _enemyFactionIndex) params ["_eastClassName", "_eastDisplayName"];
 
-private _baseEastUnitData = [_eastClassName, _eastDisplayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
-private _baseEastVehData = [_eastClassName, _eastDisplayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
-
-private _eastAppendedData = [_baseEastUnitData, _baseEastVehData, _eastClassName, _eastDisplayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
-_eastAppendedData params ["_eastUnitData", "_eastVehData"];
-
-private _eastUnitArray = [_eastUnitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
+private _eastData = TRGM_VAR_AllFactionMap get _eastClassName;
+_eastData params ["_eastUnitArray", "_eastVehArray"];
 _eastUnitArray params ["_eastriflemen", "_eastleaders", "_eastatsoldiers", "_eastaasoldiers", "_eastengineers", "_eastgrenadiers", "_eastmedics", "_eastautoriflemen", "_eastsnipers", "_eastexplosiveSpecs", "_eastpilots", "_eastuavOperators"];
-
-private _eastVehArray = [_eastVehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
 _eastVehArray params ["_eastunarmedcars", "_eastarmedcars", "_easttrucks", "_eastapcs", "_easttanks", "_eastartillery", "_eastantiair", "_eastturrets", "_eastunarmedhelicopters", "_eastarmedhelicopters", "_eastplanes", "_eastboats", "_eastmortars"];
 
 TRGM_VAR_EastRiflemen     =  _eastriflemen; publicVariable "TRGM_VAR_EastRiflemen";
@@ -74,16 +67,9 @@ EnemyBaseChoppers           = { _veh = ["O_Heli_Light_02_unarmed_F"]; if (count 
 private _guerFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MILITIA_FACTIONS_IDX;
 (TRGM_VAR_AllFactionData select _guerFactionIndex) params ["_guerClassName", "_guerDisplayName"];
 
-private _baseGuerUnitData = [_guerClassName, _guerDisplayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
-private _baseGuerVehData = [_guerClassName, _guerDisplayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
-
-private _guerAppendedData = [_baseGuerUnitData, _baseGuerVehData, _guerClassName, _guerDisplayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
-_guerAppendedData params ["_guerUnitData", "_guerVehData"];
-
-private _guerUnitArray = [_guerUnitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
+private _guerData = TRGM_VAR_AllFactionMap get _guerClassName;
+_guerData params ["_guerUnitArray", "_guerVehArray"];
 _guerUnitArray params ["_guerriflemen", "_guerleaders", "_gueratsoldiers", "_gueraasoldiers", "_guerengineers", "_guergrenadiers", "_guermedics", "_guerautoriflemen", "_guersnipers", "_guerexplosiveSpecs", "_guerpilots", "_gueruavOperators"];
-
-private _guerVehArray = [_guerVehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
 _guerVehArray params ["_guerunarmedcars", "_guerarmedcars", "_guertrucks", "_guerapcs", "_guertanks", "_guerartillery", "_guerantiair", "_guerturrets", "_guerunarmedhelicopters", "_guerarmedhelicopters", "_guerplanes", "_guerboats", "_guermortars"];
 
 TRGM_VAR_GuerRiflemen     =  _guerriflemen; publicVariable "TRGM_VAR_GuerRiflemen";

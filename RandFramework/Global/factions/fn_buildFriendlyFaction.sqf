@@ -3,16 +3,9 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
 private _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
 (TRGM_VAR_AllFactionData select _friendlyFactionIndex) params ["_westClassName", "_westDisplayName"];
 
-private _baseWestUnitData = [_westClassName, _westDisplayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
-private _baseWestVehData = [_westClassName, _westDisplayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
-
-private _westAppendedData = [_baseWestUnitData, _baseWestVehData, _westClassName, _westDisplayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
-_westAppendedData params ["_westUnitData", "_westVehData"];
-
-private _westUnitArray = [_westUnitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
+private _westData = TRGM_VAR_AllFactionMap get _westClassName;
+_westData params ["_westUnitArray", "_westVehArray"];
 _westUnitArray params ["_westriflemen", "_westleaders", "_westatsoldiers", "_westaasoldiers", "_westengineers", "_westgrenadiers", "_westmedics", "_westautoriflemen", "_westsnipers", "_westexplosiveSpecs", "_westpilots", "_westuavOperators"];
-
-private _westVehArray = [_westVehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
 _westVehArray params ["_westunarmedcars", "_westarmedcars", "_westtrucks", "_westapcs", "_westtanks", "_westartillery", "_westantiair", "_westturrets", "_westunarmedhelicopters", "_westarmedhelicopters", "_westplanes", "_westboats", "_westmortars"];
 
 TRGM_VAR_WestRiflemen     =  _westriflemen; publicVariable "TRGM_VAR_WestRiflemen";

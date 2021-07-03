@@ -12,6 +12,7 @@ if (!isNil "laptop1")                     then { TRGM_VAR_NeededObjectsAvailable
 
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
 TRGM_VAR_AllFactionData = [];
+TRGM_VAR_AllFactionMap = createHashMap;
 private _WestFactionData =  [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
 private _EastFactionData =  [EAST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
 private _GuerFactionData =  [INDEPENDENT] call TRGM_GLOBAL_fnc_getFactionDataBySide;
@@ -30,10 +31,12 @@ private _AllFactionData = _WestFactionData + _EastFactionData + _GuerFactionData
 
     if ({count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0) then {
         TRGM_VAR_AllFactionData pushBackUnique _x;
+        TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
     };
 } forEach _AllFactionData;
 TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
 publicVariable "TRGM_VAR_AllFactionData";
+publicVariable "TRGM_VAR_AllFactionMap";
 
 // Custom Mission
 TRGM_VAR_UseCustomMission = (["CustomMission", 0] call BIS_fnc_getParamValue) isEqualTo 1;

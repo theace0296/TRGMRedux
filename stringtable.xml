@@ -3768,13 +3768,13 @@
             </Key>
 
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MoreEnemies">
-                <Original>Harder mission (beta)</Original>
-                <English>Harder mission (beta)</English>
+                <Original>Enemy density</Original>
+                <English>Enemy density</English>
             </Key>
 
             <Key ID="STR_TRGM2_Tooltip_AdvMoreEnemies">
-                <Original>If enabled, more vehicles and patrols will spawn around objectives. \n And they will call for reinforcements more often.</Original>
-                <English>If enabled, more vehicles and patrols will spawn around objectives. \n And they will call for reinforcements more often.</English>
+                <Original>Indicates likelihood of more vehicles and patrols spawning around objectives. \n Above 70 they will call for reinforcements more often.</Original>
+                <English>Indicates likelihood of more vehicles and patrols spawning around objectives. \n Above 70 they will call for reinforcements more often.</English>
             </Key>
 
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_LargePatrols">

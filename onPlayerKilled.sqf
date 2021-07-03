@@ -4,7 +4,7 @@ TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "Player Killed";
 TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["KILLED: %1", name player];
 TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["KILLED Distance: %1", player distance getMarkerPos "MrkHQ"];
 
-if (TRGM_VAR_bDebugMode) then {[format["KILLED!: %1", player distance getMarkerPos "MrkHQ"]] call TRGM_GLOBAL_fnc_notify; sleep 3;};
+if (TRGM_VAR_bDebugMode) then {[format["KILLED!: %1", player distance getMarkerPos "MrkHQ"]] call TRGM_GLOBAL_fnc_log; sleep 3;};
 
 if (player distance getMarkerPos "MrkHQ" > TRGM_VAR_SaveZoneRadius) then {
     waitUntil {!(TRGM_Logic getVariable "DeathRunning")};

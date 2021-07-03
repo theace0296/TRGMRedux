@@ -91,7 +91,7 @@ TRGM_VAR_AdvControls = [ //IDX,Title,Type,Options,OptionValues,DefaultOptionInde
     [ADVCTRLIDC(TRGM_VAR_ADVSET_SELECT_ENEMY_FLASHLIGHTS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_EnemyFlashLights","RscCombo",[localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random",localize "STR_TRGM2_TRGMInitPlayerLocal_Enable",localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"],[0,1,2],0,""],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_MINIMISSIONS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_MiniMissions","RscCombo",[localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random",localize "STR_TRGM2_TRGMInitPlayerLocal_Enable",localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"],[0,1,2],2,localize "STR_TRGM2_Tooltip_AdvMinimission"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_IEDTARGET_COMPACT_SPACING_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_IedTargetCompact","RscCombo",[localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random",localize "STR_TRGM2_TRGMInitPlayerLocal_Enable",localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"],[0,1,2],2,localize "STR_TRGM2_Tooltip_AdvIedTargetCompact"],
-    [ADVCTRLIDC(TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_MoreEnemies","RscCombo",[localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random",localize "STR_TRGM2_TRGMInitPlayerLocal_Enable",localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"],[0,1,2],2,localize "STR_TRGM2_Tooltip_AdvMoreEnemies"],
+    [ADVCTRLIDC(TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_MoreEnemies","RscXSliderH",1,50,100,localize "STR_TRGM2_Tooltip_AdvMoreEnemies"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_LARGE_PATROLS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_LargePatrols","RscCombo",[localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random",localize "STR_TRGM2_TRGMInitPlayerLocal_Enable",localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"],[0,1,2],1,localize "STR_TRGM2_Tooltip_AdvLargePatrols"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_TimeBetweenSpotted","RscXSliderH",600,1800,1200,localize "STR_TRGM2_Tooltip_TimeBetweenSpotted"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_VehicleReqRep","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable"],[0,1],0,localize "STR_TRGM2_Tooltip_AdvVehicleReqRep"]
@@ -131,8 +131,16 @@ TRGM_GETTER_fnc_bAllowLargerPatrols = { [random 1 < .33, true, false] select (TR
 publicVariable "TRGM_GETTER_fnc_bAllowLargerPatrols";
 
 /////// Higher Enemy Count ///////
-TRGM_GETTER_fnc_bMoreEnemies = { ( (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX isEqualTo 1) || (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX isEqualTo 0 && random 1 < .25) ); };
+TRGM_GETTER_fnc_bMoreEnemies = { random 1 < ((TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX) / 100) };
 publicVariable "TRGM_GETTER_fnc_bMoreEnemies";
+TRGM_GETTER_fnc_iMoreEnemies = {
+    params [["_modifier", 25]];
+    private _enemyDensity = floor (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX);
+    _enemyDensity mod _modifier;
+};
+publicVariable "TRGM_GETTER_fnc_iMoreEnemies";
+TRGM_GETTER_fnc_bMoreReinforcements = { (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX) > 70 };
+publicVariable "TRGM_GETTER_fnc_bMoreReinforcements";
 
 //////// Vehicle Spawning Rep Requirement ///////
 TRGM_GETTER_fnc_bVehiclesRequireRep = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX isEqualTo 1; };

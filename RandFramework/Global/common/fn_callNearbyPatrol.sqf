@@ -51,11 +51,11 @@ TRGM_VAR_TimeSinceLastSpottedAction = time; publicVariable "TRGM_VAR_TimeSinceLa
 _maxPatrolSearch = 2000;
 
 _SpottedUnitCount = { _x distance _SpottedUnit < 200 } count units group _SpottedUnit;
-//if (TRGM_VAR_bDebugMode) then {[format["pre first spotted count check: %1",_SpottedUnitCount]] call TRGM_GLOBAL_fnc_notify;};
+//if (TRGM_VAR_bDebugMode) then {[format["pre first spotted count check: %1",_SpottedUnitCount]] call TRGM_GLOBAL_fnc_log;};
 _AlivePlayerCount = { alive _x } count allplayers;
-//["a"] call TRGM_GLOBAL_fnc_notify;
+//["a"] call TRGM_GLOBAL_fnc_log;
 if (_SpottedUnitCount > 0) then {
-//["d"] call TRGM_GLOBAL_fnc_notify;
+//["d"] call TRGM_GLOBAL_fnc_log;
     //========First take care of additional support (reinforcements, air to air/ground support etc... based on the type of threat the enemy have spotted)
     _bAllowPatrolChange = true;
     _bAllowNextMortarRounds = true;
@@ -169,7 +169,7 @@ if (_SpottedUnitCount > 0) then {
         if (_bInfSpottedAction) then {
                 if (_bIsMainObjective) then {
                     [EAST, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
-                    if (call TRGM_GETTER_fnc_bMoreEnemies) then {
+                    if (call TRGM_GETTER_fnc_bMoreReinforcements) then {
                         sleep 5;
                         [EAST, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
                     };
@@ -177,7 +177,7 @@ if (_SpottedUnitCount > 0) then {
                 }
                 else {
                     [EAST, call TRGM_GETTER_fnc_aGetReinforceStartPos, _SpottedUnitPos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
-                    if (call TRGM_GETTER_fnc_bMoreEnemies) then {
+                    if (call TRGM_GETTER_fnc_bMoreReinforcements) then {
                         sleep 5;
                         [EAST, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
                     };
@@ -221,10 +221,10 @@ if (_SpottedUnitCount > 0) then {
         if ((vehicle _SpottedUnit isKindOf "Car") && _bAllowPatrolChange) then {
             if  ((_SpottedUnitCount > 0)) then {
                 _nearestATs = nearestObjects [_SpottedUnitPos, [(call sATMan),(call sATManMilitia)], _maxPatrolSearch];
-                if (TRGM_VAR_bDebugMode) then {[format["AT pre count check: %1",count _nearestATs]] call TRGM_GLOBAL_fnc_notify; sleep 2;};
+                if (TRGM_VAR_bDebugMode) then {[format["AT pre count check: %1",count _nearestATs]] call TRGM_GLOBAL_fnc_log; sleep 2;};
                 if (count _nearestATs > 0) then {
 
-                    if (TRGM_VAR_bDebugMode) then {["for than zero - count _nearestATs"] call TRGM_GLOBAL_fnc_notify; sleep 2;};
+                    if (TRGM_VAR_bDebugMode) then {["for than zero - count _nearestATs"] call TRGM_GLOBAL_fnc_log; sleep 2;};
                     _nearestTL = _nearestATs select 0;
                     while {(count (waypoints group _nearestTL)) > 0} do {
                         deleteWaypoint ((waypoints group _nearestTL) select 0);
@@ -296,10 +296,10 @@ if (_SpottedUnitCount > 0) then {
                         if (!_SpotterFound && (([_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos) distance ([_x] call TRGM_GLOBAL_fnc_getRealPos)) > 55 && side _x isEqualTo East) then {
 
                             _cansee = [objNull, "VIEW"] checkVisibility [eyePos _x, eyePos _SpottedUnit];
-                            // if (TRGM_VAR_bDebugMode) then {[format["POW4 %1",_cansee]] call TRGM_GLOBAL_fnc_notify;};
+                            // if (TRGM_VAR_bDebugMode) then {[format["POW4 %1",_cansee]] call TRGM_GLOBAL_fnc_log;};
                             sleep 0.6;
                             if (_cansee > 0.2) then {
-                                //["POW2 POW POW POW"] call TRGM_GLOBAL_fnc_notify;
+                                //["POW2 POW POW POW"] call TRGM_GLOBAL_fnc_log;
                                 sleep 3;
                                 //Set animation, or view binocs and face player
                                 _SpotterFound = true;
@@ -310,7 +310,7 @@ if (_SpottedUnitCount > 0) then {
                                     _test setMarkerShape "ICON";
                                     _test setMarkerType "hd_dot";
                                     _test setMarkerText "SPOTTER";
-                                    //["POW POW POW POW"] call TRGM_GLOBAL_fnc_notify;
+                                    //["POW POW POW POW"] call TRGM_GLOBAL_fnc_log;
                                 };
 
                             };
@@ -319,19 +319,19 @@ if (_SpottedUnitCount > 0) then {
 
                 } forEach _menNear;
                 if (_SpotterFound) then {
-                    if (TRGM_VAR_bDebugMode) then {["SPOTTER FOUND"] call TRGM_GLOBAL_fnc_notify; sleep 2;};
+                    if (TRGM_VAR_bDebugMode) then {["SPOTTER FOUND"] call TRGM_GLOBAL_fnc_log; sleep 2;};
                     _Spotter call BIS_fnc_ambientAnim__terminate;
                     _Spotter playMoveNow "Acts_listeningToRadio_loop";
                     _Spotter disableAI "anim";
                     _startPos = [_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos;
-                    //if (TRGM_VAR_bDebugMode) then {[format["spottedStartPos: %1",str(_startPos)]] call TRGM_GLOBAL_fnc_notify;};
+                    //if (TRGM_VAR_bDebugMode) then {[format["spottedStartPos: %1",str(_startPos)]] call TRGM_GLOBAL_fnc_log;};
                     sleep 7;
                     if (alive(_Spotter)) then {
                         _Spotter enableAI "anim";
                         _Spotter playMoveNow "Acts_listeningToRadio_out";
                         _endPos = [_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos;
                         _dDistance = _startPos distance _endPos;
-                        //if (TRGM_VAR_bDebugMode) then {[format["spottedEndPos: %1 - Distance:%2 - PlayersNear:%3 - Chance:%4",str(_endPos), str(_dDistance),str(_nearplayercount),str(_ChancesOfFireMortar)]] call TRGM_GLOBAL_fnc_notify;};
+                        //if (TRGM_VAR_bDebugMode) then {[format["spottedEndPos: %1 - Distance:%2 - PlayersNear:%3 - Chance:%4",str(_endPos), str(_dDistance),str(_nearplayercount),str(_ChancesOfFireMortar)]] call TRGM_GLOBAL_fnc_log;};
                         if (_dDistance < 7 && _bAllowMortar) then {
                             _nearestMortar = _nearestMortars select 0;
                             _Ammo = nil;
@@ -390,18 +390,18 @@ if (_SpottedUnitCount > 0) then {
                 _EnemyBaseChopperWP1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
             };
 
-            //if (TRGM_VAR_bDebugMode) then {[format["inFirstGenericIf: %1",_AlivePlayerCount > 7]] call TRGM_GLOBAL_fnc_notify; sleep 1;};
+            //if (TRGM_VAR_bDebugMode) then {[format["inFirstGenericIf: %1",_AlivePlayerCount > 7]] call TRGM_GLOBAL_fnc_log; sleep 1;};
 
             if  ((_SpottedUnitCount > 0)) then {
-                //if (TRGM_VAR_bDebugMode) then {[format["inSecondGenericIf: %1",_AlivePlayerCount > 7]] call TRGM_GLOBAL_fnc_notify; sleep 2;};
+                //if (TRGM_VAR_bDebugMode) then {[format["inSecondGenericIf: %1",_AlivePlayerCount > 7]] call TRGM_GLOBAL_fnc_log; sleep 2;};
 
 
                 //if (TRGM_VAR_bDebugMode) then {sleep 2};
                 _nearestTLs = nearestObjects [_SpottedUnitPos, [(call sTeamleader),(call sTeamleaderMilitia)], _maxPatrolSearch];
-                //if (TRGM_VAR_bDebugMode) then {[format["pre count check: %1",count _nearestTLs]] call TRGM_GLOBAL_fnc_notify; sleep 2;};
+                //if (TRGM_VAR_bDebugMode) then {[format["pre count check: %1",count _nearestTLs]] call TRGM_GLOBAL_fnc_log; sleep 2;};
                 if (count _nearestTLs > 0) then {
 
-                    //if (TRGM_VAR_bDebugMode) then {["for than zero - count _nearestTLs"] call TRGM_GLOBAL_fnc_notify; sleep 2;};
+                    //if (TRGM_VAR_bDebugMode) then {["for than zero - count _nearestTLs"] call TRGM_GLOBAL_fnc_log; sleep 2;};
                     _nearestTL = _nearestTLs select 0;
                     while {(count (waypoints group _nearestTL)) > 0} do {
                         deleteWaypoint ((waypoints group _nearestTL) select 0);
