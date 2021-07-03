@@ -66,8 +66,4 @@ if (isServer) then {
    [] spawn TRGM_SERVER_fnc_main;
 };
 
-if (hasInterface) then {
-   [] spawn TRGM_CLIENT_fnc_main;
-};
-
 true;
