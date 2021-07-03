@@ -15,7 +15,7 @@ if (_className isKindOf "CAManBase") then {
     _isArmed = count ((getArray(_configPath >> "weapons")) - ["Throw","Put","FakeWeapon"]) > 0;
 } else {
     if (_className isKindOf "AllVehicles") then {
-        _isArmed = count ([_className, false] call BIS_fnc_allTurrets) > 0;
+        _isArmed = count ([_className, false] call BIS_fnc_allTurrets) > 1;
 
         if (!_isArmed) then {
             _isArmed = count (getArray(_configPath >> "Turrets" >> "MainTurret" >> "Magazines")) > 0 || count (getArray(_configPath >> "Turrets" >> "M2_Turret" >> "Magazines")) > 0 || count (_configPath >> "Components" >> "TransportPylonsComponent" >> "pylons") > 0 || count (_configPath >> "Components" >> "TransportPylonsComponent" >> "pylons") > 0|| count (getArray(_configPath >> "Weapons") - ["Laserdesignator_mounted", "CMFlareLauncher","Laserdesignator_pilotCamera"]) > 0; // more than just flare/chaff launcher
