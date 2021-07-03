@@ -111,13 +111,26 @@ if (count TRGM_VAR_AdvControls < 14) then {
     TRGM_VAR_AdvControls pushBack (TRGM_VAR_DefaultAdvancedSettings select 13);
 };
 */
+// 0  = Heavy Mission (with two optional sides)
+// 6  = Heavy Mission (two hidden optional sides)
+// 8  = Heavy Mission (two objectives at AO, chance of side)
+// 1  = Heavy Mission (Intel required for AO Location)
+// 2  = Heavy Mission Only
+// 3  = Single Mission
+// 9  = Single Mission (two objectives at AO, chance of side)
+// 4  = Three Missions
+// 7  = Three Hidden Missions
+// 10 = Heavy full map hidden mission
+// 11 = Three heavy missions
+// 12 = Three hidden heavy missions, full map
+// 5  = Campaign
 
 /////// IsCampaign ///////
 TRGM_GETTER_fnc_bIsCampaign = { TRGM_VAR_iMissionParamType != 5 };
 publicVariable "TRGM_GETTER_fnc_bIsCampaign";
 
 /////// HasThreeChoosableAOLocations ///////
-TRGM_GETTER_fnc_bHasThreeChoosableAOLocations = { TRGM_VAR_iMissionParamType isEqualTo 0 || TRGM_VAR_iMissionParamType isEqualTo 4 || TRGM_VAR_iMissionParamType isEqualTo 11 };
+TRGM_GETTER_fnc_bHasThreeChoosableAOLocations = { TRGM_VAR_iMissionParamType in [0,4,11] };
 publicVariable "TRGM_GETTER_fnc_bHasThreeChoosableAOLocations";
 
 /////// Sandstorm settings ///////
