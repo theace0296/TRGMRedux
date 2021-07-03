@@ -17,27 +17,7 @@ publicVariable "RequestedMedicalItemName";
 _bloodPools = ["BloodPool_01_Large_New_F","BloodSplatter_01_Large_New_F"];
 
 //use IDAP with police car???
-
-fnc_AddToDirection = {
-    params ["_origDirection","_addToDirection"];
-
-    _iResult = _origDirection + _addToDirection;
-    //[format["result:%1",_iResult]] call TRGM_GLOBAL_fnc_notify;
-    //sleep 2;
-    if (_iResult > 360) then {
-        _iResult = _iResult - 360;
-    };
-    if (_origDirection+_addToDirection < 0) then {
-        _iResult = 360 + _iResult ;
-    };
-
-    _iResult;
-};
-
-
 _posOfAO =  _this select 0;
-
-
 
 _nearLocations = nearestLocations [_posOfAO, ["NameCity","NameCityCapital","NameVillage"], 2500];
 if (!(isNil "IsTraining") || TRGM_VAR_MainIsHidden) then {
@@ -120,11 +100,11 @@ while {_iteration <= 2} do {
     if (_PosFound) then {
 
         _roadBlockPos =  getPos _nearestRoad;
-        _roadBlockSidePos = _nearestRoad getPos [10, ([_direction,90] call fnc_AddToDirection)];
+        _roadBlockSidePos = _nearestRoad getPos [10, ([_direction,90] call TRGM_GLOBAL_fnc_addToDirection)];
 
         _mainVeh = createVehicle [selectRandom Ambulances,_roadBlockPos,[],0,"NONE"];
         _mainVeh setVehicleLock "LOCKED";
-        _mainVehDirection =  ([_direction,(selectRandom[0,-10,10,170,180,190])] call fnc_AddToDirection);
+        _mainVehDirection =  ([_direction,(selectRandom[0,-10,10,170,180,190])] call TRGM_GLOBAL_fnc_addToDirection);
         _mainVeh setDir _mainVehDirection;
         clearItemCargoGlobal _mainVeh;
         [
@@ -229,7 +209,7 @@ if (isnil "fncMedicalParamedicLight") then {
 
 
         _vehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
-        _backOfVehArea = _vehPos getPos [5,([_mainVehDirection,(selectRandom[170,180,190])] call fnc_AddToDirection)];
+        _backOfVehArea = _vehPos getPos [5,([_mainVehDirection,(selectRandom[170,180,190])] call TRGM_GLOBAL_fnc_addToDirection)];
         //_direction is direction of road
         //_mainVehDirection is direction of first veh
         //use these to lay down guys, cones, rubbish, barriers, lights etc...
@@ -356,10 +336,10 @@ if (isnil "fncMedicalParamedicLight") then {
 
             //[str(getpos _nearestRoad2)] call TRGM_GLOBAL_fnc_notify;
 
-            _conelight1 = createVehicle [selectRandom TRGM_VAR_ConesWithLight, (_nearestRoad2 getpos [3,[_direction2,90] call fnc_AddToDirection]), [], 0, "CAN_COLLIDE"];
+            _conelight1 = createVehicle [selectRandom TRGM_VAR_ConesWithLight, (_nearestRoad2 getpos [3,[_direction2,90] call TRGM_GLOBAL_fnc_addToDirection]), [], 0, "CAN_COLLIDE"];
             _conelight1 enableSimulation false;
             _conelight1 setDir (floor(random 360));
-            _conelight2 = createVehicle [selectRandom TRGM_VAR_ConesWithLight, (_nearestRoad2 getpos [3,[_direction2,270] call fnc_AddToDirection]), [], 0, "CAN_COLLIDE"];
+            _conelight2 = createVehicle [selectRandom TRGM_VAR_ConesWithLight, (_nearestRoad2 getpos [3,[_direction2,270] call TRGM_GLOBAL_fnc_addToDirection]), [], 0, "CAN_COLLIDE"];
             _conelight2 enableSimulation false;
             _conelight2 setDir (floor(random 360));
         };

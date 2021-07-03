@@ -1,22 +1,6 @@
 //use IDAP with police car???
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
-fnc_AddToDirection = {
-    params ["_origDirection","_addToDirection"];
-
-    _iResult = _origDirection + _addToDirection;
-    //[format["result:%1",_iResult]] call TRGM_GLOBAL_fnc_notify;
-    //sleep 2;
-    if (_iResult > 360) then {
-        _iResult = _iResult - 360;
-    };
-    if (_origDirection+_addToDirection < 0) then {
-        _iResult = 360 + _iResult ;
-    };
-
-    _iResult;
-};
-
 _vehs = CivCars;
 
 
@@ -66,11 +50,11 @@ if (count _nearestRoads > 0) then {
 
 
         _roadBlockPos =  getPos _nearestRoad;
-        _roadBlockSidePos = _nearestRoad getPos [3, ([_direction,90] call fnc_AddToDirection)];
+        _roadBlockSidePos = _nearestRoad getPos [3, ([_direction,90] call TRGM_GLOBAL_fnc_addToDirection)];
 
         _mainVeh = createVehicle [selectRandom _vehs,_roadBlockSidePos,[],0,"NONE"];
         //_mainVeh setVehicleLock "LOCKED";
-        _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call fnc_AddToDirection);
+        _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call TRGM_GLOBAL_fnc_addToDirection);
         _mainVeh setDir _mainVehDirection;
         //_smoke = createvehicle ["test_EmptyObjectForSmoke",([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos),[],0,"CAN_COLLIDE"];
         //_smoke setpos ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
@@ -124,7 +108,7 @@ if (count _nearestRoads > 0) then {
         };
 
         _vehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
-        _backOfVehArea = _vehPos getPos [10,([_mainVehDirection,selectRandom[170,180,190]] call fnc_AddToDirection)];
+        _backOfVehArea = _vehPos getPos [10,([_mainVehDirection,selectRandom[170,180,190]] call TRGM_GLOBAL_fnc_addToDirection)];
         //_direction is direction of road
         //_mainVehDirection is direction of first veh
         //use these to lay down guys, cones, rubbish, barriers, lights etc...

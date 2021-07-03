@@ -67,43 +67,28 @@ sleep 3;
 
 if (!isDedicated && {(!isNull TRGM_VAR_AdminPlayer && str player isEqualTo "sl") || (TRGM_VAR_AdminPlayer isEqualTo player)}) then {
     if (call TRGM_GETTER_fnc_bIsCampaign) then {    //if isCampaign, dont allow to select AO
-    
+
         if (call TRGM_GETTER_fnc_bManualAOPlacement) then {
-            mrkAoSelect1 = nil;
-            mrkAoSelect2 = nil;
-            mrkAoSelect3 = nil;
-            titleText[localize "STR_TRGM2_tele_SelectPositionAO1", "PLAIN"];
-            openMap true;
-            onMapSingleClick "TRGM_VAR_Mission1Loc = _pos; publicVariable 'TRGM_VAR_Mission1Loc'; openMap false; onMapSingleClick ''; true;";
-            sleep 1;
-            waitUntil {!visibleMap};
-            if (!isNil "TRGM_VAR_Mission1Loc") then {
-                ["mrkAoSelect1",  TRGM_VAR_Mission1Loc, "ICON", "ColorRed", [1,1], "AO 1"] call AIS_Core_fnc_createLocalMarker;
-            };
-
+            [player] spawn TRGM_CLIENT_fnc_selectAOLocation;
+            waitUntil { TRGM_VAR_ManualAOPosFound };
+            TRGM_VAR_Mission1Loc = TRGM_VAR_foundManualAOPos;
+            publicVariable "TRGM_VAR_Mission1Loc";
+            TRGM_VAR_foundManualAOPos = [0,0,0]; publicVariable "TRGM_VAR_foundManualAOPos";
+            TRGM_VAR_ManualAOPosFound = false; publicVariable "TRGM_VAR_ManualAOPosFound";
             if (call TRGM_GETTER_fnc_bHasThreeChoosableAOLocations) then {
-                titleText[localize "STR_TRGM2_tele_SelectPositionAO2", "PLAIN"];
-                openMap true;
-                onMapSingleClick "TRGM_VAR_Mission2Loc = _pos; publicVariable 'TRGM_VAR_Mission2Loc'; openMap false; onMapSingleClick ''; true;";
-                sleep 1;
-                waitUntil {!visibleMap};
-                if (!isNil "TRGM_VAR_Mission2Loc") then {
-                    ["mrkAoSelect2",  TRGM_VAR_Mission2Loc, "ICON", "ColorRed", [1,1], "AO 2"] call AIS_Core_fnc_createLocalMarker;
-                };
-
-                titleText[localize "STR_TRGM2_tele_SelectPositionAO3", "PLAIN"];
-                openMap true;
-                onMapSingleClick "TRGM_VAR_Mission3Loc = _pos; publicVariable 'TRGM_VAR_Mission3Loc'; openMap false; onMapSingleClick ''; true;";
-                sleep 1;
-                waitUntil {!visibleMap};
-                if (!isNil "TRGM_VAR_Mission3Loc") then {
-                    ["mrkAoSelect2",  TRGM_VAR_Mission3Loc, "ICON", "ColorRed", [1,1], "AO 2"] call AIS_Core_fnc_createLocalMarker;
-                };
+                [player] spawn TRGM_CLIENT_fnc_selectAOLocation;
+                waitUntil { TRGM_VAR_ManualAOPosFound };
+                TRGM_VAR_Mission2Loc = TRGM_VAR_foundManualAOPos;
+                publicVariable "TRGM_VAR_Mission2Loc";
+                TRGM_VAR_foundManualAOPos = [0,0,0]; publicVariable "TRGM_VAR_foundManualAOPos";
+                TRGM_VAR_ManualAOPosFound = false; publicVariable "TRGM_VAR_ManualAOPosFound";
+                [player] spawn TRGM_CLIENT_fnc_selectAOLocation;
+                waitUntil { TRGM_VAR_ManualAOPosFound };
+                TRGM_VAR_Mission3Loc = TRGM_VAR_foundManualAOPos;
+                publicVariable "TRGM_VAR_Mission3Loc";
+                TRGM_VAR_foundManualAOPos = [0,0,0]; publicVariable "TRGM_VAR_foundManualAOPos";
+                TRGM_VAR_ManualAOPosFound = false; publicVariable "TRGM_VAR_ManualAOPosFound";
             };
-
-            if (getMarkerColor "mrkAoSelect1" != "") then {deleteMarker "mrkAoSelect1";};
-            if (getMarkerColor "mrkAoSelect2" != "") then {deleteMarker "mrkAoSelect2";};
-            if (getMarkerColor "mrkAoSelect3" != "") then {deleteMarker "mrkAoSelect3";};
         };
 
         if (call TRGM_GETTER_fnc_bManualCampPlacement) then {

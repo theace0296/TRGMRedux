@@ -145,6 +145,7 @@ if (!isNil "chopper1" && {_airTransClassName != typeOf chopper1}) then {
     chopper1 lockDriver true;
     chopper1D = driver chopper1;
     chopper1D setVehicleVarName "chopper1D";
+    {_x allowDamage false;} forEach crew chopper1;
     chopper1D allowDamage false;
     chopper1D setCaptive true;
     chopper1D disableAI "AUTOTARGET";
@@ -176,11 +177,11 @@ if (!isNil "chopper2" && {_airSupClassName != typeOf chopper2}) then {
     chopper2D = driver chopper2;
     chopper2D setVehicleVarName "chopper2D";
     publicVariable "chopper2D";
+    {_x allowDamage false;} forEach crew chopper2;
     private _totalTurrets = [_airSupClassName, true] call BIS_fnc_allTurrets;
     {chopper2 lockTurret [_x, true]} forEach _totalTurrets;
     { doStop _x; } forEach crew chopper2;
     chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
-    chopper2 allowDamage true;
 };
 
 TRGM_VAR_transportHelosToGetActions = [];
@@ -210,6 +211,11 @@ TRGM_VAR_transportHelosToGetActions = [];
         TRGM_VAR_transportHelosToGetActions pushBackUnique _x;
     };
 } forEach vehicles;
+
+[chopper1] call TRGM_GLOBAL_fnc_setVehicleUpright;
+[chopper2] call TRGM_GLOBAL_fnc_setVehicleUpright;
+{_x setDamage 0;} forEach (crew chopper2 + crew chopper1 + [chopper1, chopper2]);
+{_x allowDamage true;} forEach crew chopper2 + [chopper2];
 
 [TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;
 [format["Mission Core: %1", "TransportScriptRun"], true] call TRGM_GLOBAL_fnc_log;

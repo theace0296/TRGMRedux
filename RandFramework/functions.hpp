@@ -131,6 +131,7 @@ class TRGM_GLOBAL {
         class setLoadout {};
         class setCustomLoadout {};
         class setMilitiaSkill {};
+        class setVehicleUpright {};
         class showIntel {};
         class unloadDingy {};
     };
@@ -226,6 +227,7 @@ class TRGM_CLIENT {
         class missionSelectLoop {};
         class onlyAllowDirectMapDraw {};
         class playerScripts {};
+        class selectAOLocation {};
         class setNVG {};
         class startingMove {};
     };

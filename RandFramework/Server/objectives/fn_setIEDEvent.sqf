@@ -9,24 +9,6 @@ _ieds = nil;
 If (_IEDType isEqualTo "CAR") then {_ieds = CivCars;};
 If (_IEDType isEqualTo "RUBBLE") then {_ieds = TRGM_VAR_IEDFakeClassNames;};
 
-
-fnc_AddToDirection = {
-    params ["_origDirection","_addToDirection"];
-
-    _iResult = _origDirection + _addToDirection;
-    //[format["result:%1",_iResult]] call TRGM_GLOBAL_fnc_notify;
-    //sleep 2;
-    if (_iResult > 360) then {
-        _iResult = _iResult - 360;
-    };
-    if (_origDirection+_addToDirection < 0) then {
-        _iResult = 360 + _iResult ;
-    };
-
-    _iResult;
-};
-
-
 _nearestRoads = _posOfAO nearRoads _roadRange;
 if ((!(isNil "IsTraining") || _isFullMap) && _roadRange isEqualTo 2000) then {
     _nearestRoads = _posOfAO nearRoads 30000;
@@ -84,7 +66,7 @@ if (count _nearestRoads > 0) then {
 
 
             _roadBlockPos =  getPos _nearestRoad;
-            _roadBlockSidePos = _nearestRoad getPos [3, ([_direction,90] call fnc_AddToDirection)];
+            _roadBlockSidePos = _nearestRoad getPos [3, ([_direction,90] call TRGM_GLOBAL_fnc_addToDirection)];
 
             _mainVeh = nil;
             if (isNil "_objIED") then {
@@ -96,7 +78,7 @@ if (count _nearestRoads > 0) then {
             };
             _mainVeh setVariable ["isDefused",false];
             //_mainVeh setVehicleLock "LOCKED";
-            _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call fnc_AddToDirection);
+            _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call TRGM_GLOBAL_fnc_addToDirection);
             _mainVeh setDir _mainVehDirection;
             clearItemCargoGlobal _mainVeh;
 

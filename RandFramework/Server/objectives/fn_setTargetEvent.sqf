@@ -3,23 +3,6 @@ params ["_posOfAO",["_roadRange",2000],["_showMarker",false],["_forceTrap",false
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
 _ieds = CivCars;
-
-fnc_AddToDirection = {
-    params ["_origDirection","_addToDirection"];
-
-    _iResult = _origDirection + _addToDirection;
-    //[format["result:%1",_iResult]] call TRGM_GLOBAL_fnc_notify;
-    //sleep 2;
-    if (_iResult > 360) then {
-        _iResult = _iResult - 360;
-    };
-    if (_origDirection+_addToDirection < 0) then {
-        _iResult = 360 + _iResult ;
-    };
-
-    _iResult;
-};
-
 _objectiveCreated = false;
 
 _nearestRoads = _posOfAO nearRoads _roadRange;
@@ -73,7 +56,7 @@ if (!_isCache && count _nearestRoads > 0) then {
             _objectiveCreated = true;
 
             _roadBlockPos =  getPos _nearestRoad;
-            _roadBlockSidePos = _nearestRoad getPos [3, ([_direction,90] call fnc_AddToDirection)];
+            _roadBlockSidePos = _nearestRoad getPos [3, ([_direction,90] call TRGM_GLOBAL_fnc_addToDirection)];
 
             _mainVeh = nil;
             if (isNil "_objTarget") then {
@@ -84,7 +67,7 @@ if (!_isCache && count _nearestRoads > 0) then {
                 _mainVeh setPos _roadBlockSidePos;
             };
             //_mainVeh setVehicleLock "LOCKED";
-            _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call fnc_AddToDirection);
+            _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call TRGM_GLOBAL_fnc_addToDirection);
             _mainVeh setDir _mainVehDirection;
             clearItemCargoGlobal _mainVeh;
 

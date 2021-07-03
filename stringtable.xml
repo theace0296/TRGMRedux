@@ -3700,6 +3700,11 @@
                 <Korean> 작전지역 선택 중</Korean>
             </Key>
 
+            <Key ID="STR_TRGM2_tele_SelectPositionAO">
+                <Original>SELECT AO LOCATION</Original>
+                <English>SELECT AO LOCATION</English>
+                <Korean>>작전지역 위치선택</Korean>
+            </Key>
             <Key ID="STR_TRGM2_tele_SelectPositionAO1">
                 <Original>1. SELECT AO LOCATION (Press esc at anytime to randomly place all following points)</Original>
                 <English>1. SELECT AO LOCATION (Press esc at anytime to randomly place all following points)</English>

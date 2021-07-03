@@ -501,7 +501,6 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     };
 
     _bUserDefinedAO = false;
-    ///*orangestest
     if (_iTaskIndex isEqualTo 0 && {!isNil "TRGM_VAR_Mission1Loc"}) then {
         _bUserDefinedAO = true;
     };
@@ -512,7 +511,6 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
         _bUserDefinedAO = true;
     };
     [format ["Mission Setup: Task: %1", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-    //orangestest*/
 
     //kill leader (he will run away in car to AO)    ::   save stranded guys    ::
 
@@ -535,30 +533,18 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
         if (!_SamePrevAO || {_bUserDefinedAO || {_attempts > 100}}) then {
             _randLocation = if (!(isNil "TRGM_VAR_allLocationPositions") && {count TRGM_VAR_allLocationPositions > 0 && {_attempts < 10}}) then {selectRandom TRGM_VAR_allLocationPositions} else {[0 + (floor random 25000), 0 + (floor random 25000)]};
+            if (_attempts < 100 && {_iTaskIndex isEqualTo 0 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission1Loc")}}}) then {
+                _randLocation = TRGM_VAR_Mission1Loc;
+            };
+            if (_attempts < 100 && {_iTaskIndex isEqualTo 1 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission2Loc")}}}) then {
+                _randLocation = TRGM_VAR_Mission2Loc;
+            };
+            if (_attempts < 100 && {_iTaskIndex isEqualTo 2 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission3Loc")}}}) then {
+                _randLocation = TRGM_VAR_Mission3Loc;
+            };
             _randInfor1X = _randLocation select 0;
             _randInfor1Y = _randLocation select 1;
-            _buildings = nearestObjects [[_randInfor1X,_randInfor1Y], TRGM_VAR_BasicBuildings, 200*_attempts] select {!((_x buildingPos -1) isEqualTo [])};
-
-            if (_iTaskIndex isEqualTo 0 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission1Loc")}}) then {
-                _randInfor1X = TRGM_VAR_Mission1Loc select 0;
-                _randInfor1Y = TRGM_VAR_Mission1Loc select 1;
-                _buildings = nearestObjects [[_randInfor1X,_randInfor1Y], TRGM_VAR_BasicBuildings, 50*_attempts] select {!((_x buildingPos -1) isEqualTo [])};
-                if (_attempts > 100) then {[format["Still no location found after %1 attempts!",_attempts]] call TRGM_GLOBAL_fnc_notify;}
-            };
-
-            if (_iTaskIndex isEqualTo 1 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission2Loc")}}) then {
-                _randInfor1X = TRGM_VAR_Mission2Loc select 0;
-                _randInfor1Y = TRGM_VAR_Mission2Loc select 1;
-                _buildings = nearestObjects [[_randInfor1X,_randInfor1Y], TRGM_VAR_BasicBuildings, 50*_attempts] select {!((_x buildingPos -1) isEqualTo [])};
-                if (_attempts > 100) then {[format["Still no location found after %1 attempts!",_attempts]] call TRGM_GLOBAL_fnc_notify;}
-            };
-
-            if (_iTaskIndex isEqualTo 2 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission3Loc")}}) then {
-                _randInfor1X = TRGM_VAR_Mission3Loc select 0;
-                _randInfor1Y = TRGM_VAR_Mission3Loc select 1;
-                _buildings = nearestObjects [[_randInfor1X,_randInfor1Y], TRGM_VAR_BasicBuildings, 50*_attempts] select {!((_x buildingPos -1) isEqualTo [])};
-                if (_attempts > 100) then {[format["Still no location found after %1 attempts!",_attempts]] call TRGM_GLOBAL_fnc_notify;}
-            };
+            _buildings = nearestObjects [[_randInfor1X,_randInfor1Y], TRGM_VAR_BasicBuildings, 100*_attempts] select {!((_x buildingPos -1) isEqualTo [])};
         };
 
         _isPosFarEnoughFromHq = (getMarkerPos "mrkHQ" distance [_randInfor1X, _randInfor1Y]) > TRGM_VAR_SideMissionMinDistFromBase;

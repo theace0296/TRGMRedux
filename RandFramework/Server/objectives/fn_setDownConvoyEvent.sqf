@@ -3,23 +3,6 @@ _bloodPools = ["BloodPool_01_Large_New_F","BloodSplatter_01_Large_New_F"];
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
 //use IDAP with police car???
-
-fnc_AddToDirection = {
-    params ["_origDirection","_addToDirection"];
-
-    _iResult = _origDirection + _addToDirection;
-    //[format["result:%1",_iResult]] call TRGM_GLOBAL_fnc_notify;
-    //sleep 2;
-    if (_iResult > 360) then {
-        _iResult = _iResult - 360;
-    };
-    if (_origDirection+_addToDirection < 0) then {
-        _iResult = 360 + _iResult ;
-    };
-
-    _iResult;
-};
-
 _vehs = (call FriendlyUnarmedCar) + (call FriendlyMedicalTruck) + (call FriendlyArmoredCar) + (call FriendlyFuelTruck) + (call FriendlyFuelTruck) + (call FriendlyFuelTruck);
 
 
@@ -87,12 +70,12 @@ if (count _nearestRoads > 0) then {
         if (_PosFound) then {
 
             _roadBlockPos =  getPos _nearestRoad;
-            _roadBlockSidePos = _nearestRoad getPos [10, ([_direction,90] call fnc_AddToDirection)];
+            _roadBlockSidePos = _nearestRoad getPos [10, ([_direction,90] call TRGM_GLOBAL_fnc_addToDirection)];
 
             _mainVeh = createVehicle [selectRandom _vehs,_roadBlockPos,[],0,"NONE"];
             _mainVeh setHit ["karoserie",0.75];
             //_mainVeh setVehicleLock "LOCKED";
-            _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call fnc_AddToDirection);
+            _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call TRGM_GLOBAL_fnc_addToDirection);
             _mainVeh setDir _mainVehDirection;
             clearItemCargoGlobal _mainVeh;
             [
@@ -162,7 +145,7 @@ if (count _nearestRoads > 0) then {
 
 
             _vehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
-            _backOfVehArea = _vehPos getPos [5,([_mainVehDirection,floor(random 360)] call fnc_AddToDirection)];
+            _backOfVehArea = _vehPos getPos [5,([_mainVehDirection,floor(random 360)] call TRGM_GLOBAL_fnc_addToDirection)];
             //_direction is direction of road
             //_mainVehDirection is direction of first veh
             //use these to lay down guys, cones, rubbish, barriers, lights etc...
