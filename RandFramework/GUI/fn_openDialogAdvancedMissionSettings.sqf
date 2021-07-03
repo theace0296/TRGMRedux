@@ -142,7 +142,7 @@ _lblctrlTitle ctrlCommit 0;
             _ctrlIDC     = ctrlIDC _control;
             _ctrlSlider    = _display displayCtrl _ctrlIDC;
             _ctrlVal     = _display displayCtrl (_ctrlIDC+500);
-            _ctrlVal ctrlSetText (str(round _newValue) + "s");
+            _ctrlVal ctrlSetText (str(round _newValue) + ["", "s"] select (_lblCtrlID isEqualTo 6039));
         }];
     };
     _inpctrl ctrlCommit 0;
