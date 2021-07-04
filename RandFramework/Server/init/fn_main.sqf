@@ -190,7 +190,7 @@ TRGM_VAR_transportHelosToGetActions = [];
         _faction = getText(configFile >> "CfgVehicles" >> typeOf _x >> "faction");
         _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
         _westFaction = (TRGM_VAR_AllFactionData select _friendlyFactionIndex) select 0;
-        if ((crew _x) isEqualTo [] && {getNumber(configFile >> "CfgFactionClasses" >> _faction >> "side") isEqualTo 1 && {_faction != _westFaction}}) then {
+        if ((crew _x) isEqualTo [] && {_faction != _westFaction}}) then {
             _newVehClass = [_x, WEST] call TRGM_GLOBAL_fnc_getFactionVehicle;
             if (!isNil "_newVehClass") then {
                 private _pos = getPosATL _x;
@@ -207,7 +207,7 @@ TRGM_VAR_transportHelosToGetActions = [];
         };
     };
 
-    if ((count crew _x) > 0 && {isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "Air" && {_x call TRGM_GLOBAL_fnc_isTransport}}}) then {
+    if ((count crew _x) > 0 && {isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "Helicopter" && {_x call TRGM_GLOBAL_fnc_isTransport}}}) then {
         TRGM_VAR_transportHelosToGetActions pushBackUnique _x;
     };
 } forEach vehicles;

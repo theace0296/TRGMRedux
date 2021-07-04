@@ -128,7 +128,7 @@ InterogateOfficerClasses    = ["O_T_Officer_F"];
 WeaponDealerClasses         = ["C_Nikos_aged","C_man_hunter_1_F"];
 sideResarchTruck            = ["O_Truck_03_device_F"];
 SideRadioClassNames         = ["Land_PortableGenerator_01_F"];
-sideAmmoTruck               = { _veh = ["O_Truck_03_ammo_F"]; if (count (TRGM_VAR_EastUnarmedCars select {_x call TRGM_GLOBAL_fnc_isAmmo}) > 0) then { _veh = (TRGM_VAR_EastUnarmedCars select {_x call TRGM_GLOBAL_fnc_isAmmo}); }; _veh; };
+sideAmmoTruck               = { _veh = ["O_Truck_03_ammo_F"]; if (count TRGM_VAR_EastUnarmedCars > 0) then { _veh = TRGM_VAR_EastUnarmedCars; }; if (count (TRGM_VAR_EastUnarmedCars select {_x call TRGM_GLOBAL_fnc_isAmmo}) > 0) then { _veh = (TRGM_VAR_EastUnarmedCars select {_x call TRGM_GLOBAL_fnc_isAmmo}); }; _veh; };
 DestroyAAAVeh               = { _veh = ["O_T_APC_Tracked_02_AA_ghex_F"]; if (count TRGM_VAR_EastAntiAir > 0) then { _veh = TRGM_VAR_EastAntiAir; }; _veh; };
 
 sRiflemanFriendInsurg       = "B_G_Soldier_F";
