@@ -212,6 +212,7 @@ if (_PosFound) then {
             _NearTurret1 = createVehicle [selectRandom (call CheckPointTurret), _initItem getPos [1,_direction+180], [], 0, "CAN_COLLIDE"];
             _NearTurret1 setDir (_direction);
             createVehicleCrew _NearTurret1;
+            crew vehicle _NearTurret1 joinSilent createGroup _thisSide;
         };
     };
     if (_iBarricadeType isEqualTo "NONE") then {  //if none, then either use flag or defensive object

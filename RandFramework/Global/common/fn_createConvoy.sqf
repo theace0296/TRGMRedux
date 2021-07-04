@@ -32,7 +32,7 @@ _pos = _startPos;
         _vehicle setDir _dir;
         createvehiclecrew _vehicle;
         _crew = crew _vehicle;
-        _crew joinsilent _group;
+        _crew joinSilent _group;
         _group addVehicle _vehicle;
         if (!_allowCaching) then {
             {

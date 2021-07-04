@@ -204,7 +204,7 @@ TRGM_VAR_transportHelosToGetActions = [];
                     _newVeh setPos (_pos vectorAdd [0,0,0.1]);
                     _newVeh allowDamage true;
                 } else {
-                    if (({isPlayer _x || _x in playableUnits || _x in switchableUnits} count (crew _x)) isEqualTo 0) then {
+                    if (({isPlayer _x || _x in playableUnits || _x in switchableUnits || !(side _x isEqualTo TRGM_VAR_FriendlySide)} count (crew _x)) isEqualTo 0) then {
                         {deleteVehicle _x;} forEach crew _x + [_x];
                         sleep 0.01;
                         private _newVeh = createVehicle [_newVehClass, _pos, [], 0, "NONE"];
