@@ -88,7 +88,8 @@ while {_iCount <= _unitCount} do
             if (typeName _sCivClass isEqualTo "ARRAY") then {
                 _sCivClass = selectRandom sCivilian;
             };
-            _sCivClass createUnit [_wayPosInit, _sideCivGroup, _sInitString];
+            private _newCiv = _sideCivGroup createUnit [_sCivClass, _wayPosInit, [], 0, "NONE"];
+            _newCiv call compile _sInitString;
         };
     };
 

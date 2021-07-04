@@ -55,19 +55,18 @@ if (count _TowersNear > 0) then {
 
                 _DiamPatrolGroupTower = createGroup TRGM_VAR_EnemySide;
                     if (random 1 < .50) then {
-                        (call sAAManToUse) createUnit [[_wayX, _wayY], _DiamPatrolGroupTower];
+                        _DiamPatrolGroupTower createUnit [call sAAManToUse, [_wayX, _wayY], [], 0, "NONE"];
                         _iHasAA = 1;
                     }
                     else {
-                        (call sATManToUse) createUnit [[_wayX, _wayY], _DiamPatrolGroupTower];
+                        _DiamPatrolGroupTower createUnit [call sATManToUse, [_wayX, _wayY], [], 0, "NONE"];
                         _iHasAT = 1;
                     };
-
-                (call sRiflemanToUse) createUnit [[_wayX, _wayY], _DiamPatrolGroupTower];
-                if (random 1 < .50) then {(call sRiflemanToUse) createUnit [[_wayX, _wayY], _DiamPatrolGroupTower]};
-                if (random 1 < .50) then {(call sRiflemanToUse) createUnit [[_wayX, _wayY], _DiamPatrolGroupTower]};
-                if (random 1 < .50) then {(call sRiflemanToUse) createUnit [[_wayX, _wayY], _DiamPatrolGroupTower]};
-                if (random 1 < .50) then {(call sRiflemanToUse) createUnit [[_wayX, _wayY], _DiamPatrolGroupTower]};
+                _DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];
+                if (random 1 < .50) then {_DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];};
+                if (random 1 < .50) then {_DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];};
+                if (random 1 < .50) then {_DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];};
+                if (random 1 < .50) then {_DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];};
 
                 _wp1Tower = _DiamPatrolGroupTower addWaypoint [_wp1PosTower, 0];
                 _wp2Tower = _DiamPatrolGroupTower addWaypoint [_wp2PosTower, 0];

@@ -28,9 +28,6 @@ if (!_bThisMissionCivsOnly) then {
                 _thisGroup = createGroup _InsurgentSide;
                 _thisGroup createUnit [(call sRiflemanToUse), position _randBuilding, [], 0, "NONE"];
                 if (random 1 < .50) then {_thisGroup createUnit [(call sRiflemanToUse), position _randBuilding, [], 0, "NONE"];};
-                //HERE!!!! copy and paste the zen init script into a placed unig, then run and see if he is in building!!! (esc out of TRGM dialog)
-                //(call sRiflemanToUse) createUnit [position _randBuilding, _thisGroup, "[getPosATL this, units group this, 10, false, false] spawn TRGM_SERVER_fnc_zenOccupyHouse;"];
-
                 _teamLeaderUnit = _thisGroup createUnit [(call sTeamleaderToUse),_randBuildingPos,[],0,"NONE"];
                 [_randBuildingPos, units group _teamLeaderUnit, -1, true, false,true] spawn TRGM_SERVER_fnc_zenOccupyHouse;
 

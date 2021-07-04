@@ -679,8 +679,8 @@ if (!_bFriendlyInsurgents) then {
                         _BaseChopperGroup = createGroup TRGM_VAR_EnemySide;
                         _EnemyBaseChopper = selectRandom (call EnemyBaseChoppers) createVehicle getPosATL TRGM_VAR_baseHeliPad;
                         _EnemyBaseChopper setDir direction TRGM_VAR_baseHeliPad;
-                        (call sEnemyHeliPilotToUse) createUnit [[(getPos TRGM_VAR_baseHeliPad select 0)+10,(getPos TRGM_VAR_baseHeliPad select 1)+10], _BaseChopperGroup];
-                        (call sEnemyHeliPilotToUse) createUnit [[(getPos TRGM_VAR_baseHeliPad select 0)+11,(getPos TRGM_VAR_baseHeliPad select 1)+10], _BaseChopperGroup];
+                        _BaseChopperGroup createUnit [call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+10,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"];
+                        _BaseChopperGroup createUnit [call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+11,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"];
                         {
                             [_x,"STAND","ASIS"] call BIS_fnc_ambientAnimCombat;
                         } forEach units _BaseChopperGroup;

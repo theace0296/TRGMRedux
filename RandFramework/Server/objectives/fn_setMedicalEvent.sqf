@@ -364,7 +364,7 @@ if (isnil "fncMedicalParamedicLight") then {
             _flatPosPolice1 = nil;
             _flatPosPolice1 = [_vehPos , 30, 50, 10, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],selectRandom PoliceVehicles] call TRGM_GLOBAL_fnc_findSafePos;
             _carPolice = createVehicle [selectRandom PoliceVehicles, _flatPosPolice1, [], 0, "NONE"];
-            _manPolice = createGroup TRGM_VAR_FriendlySide createUnit [selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"];
+            _manPolice = createGroup civilian createUnit [selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"];
             _manPolice setDir (floor(random 360));
             _manPolice setBehaviour "SAFE";
     //Police
