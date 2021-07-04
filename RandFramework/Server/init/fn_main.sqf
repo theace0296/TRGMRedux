@@ -190,27 +190,41 @@ TRGM_VAR_transportHelosToGetActions = [];
         _faction = getText(configFile >> "CfgVehicles" >> typeOf _x >> "faction");
         _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
         _westFaction = (TRGM_VAR_AllFactionData select _friendlyFactionIndex) select 0;
-        if ((crew _x) isEqualTo [] && {_faction != _westFaction}}) then {
+        if (getNumber(configFile >> "CfgFactionClasses" >> _faction >> "side") isEqualTo 1 && {_faction != _westFaction}) then {
             _newVehClass = [_x, WEST] call TRGM_GLOBAL_fnc_getFactionVehicle;
             if (!isNil "_newVehClass") then {
                 private _pos = getPosATL _x;
                 private _dir = getDir _x;
-                deleteVehicle _x;
-                sleep 0.01;
-                private _newVeh = createVehicle [_newVehClass, _pos, [], 0, "NONE"];
-                _newVeh setDir _dir;
-                _newVeh allowDamage false;
-                _newVeh setPos (_pos vectorAdd [0,0,0.1]);
-                _newVeh allowDamage true;
+                if ((crew _x) isEqualTo []) then {
+                    deleteVehicle _x;
+                    sleep 0.01;
+                    private _newVeh = createVehicle [_newVehClass, _pos, [], 0, "NONE"];
+                    _newVeh setDir _dir;
+                    _newVeh allowDamage false;
+                    _newVeh setPos (_pos vectorAdd [0,0,0.1]);
+                    _newVeh allowDamage true;
+                } else {
+                    if (({isPlayer _x || _x in playableUnits || _x in switchableUnits} count (crew _x)) isEqualTo 0) then {
+                        {deleteVehicle _x;} forEach crew _x + [_x];
+                        sleep 0.01;
+                        private _newVeh = createVehicle [_newVehClass, _pos, [], 0, "NONE"];
+                        createVehicleCrew _newVeh;
+                        crew vehicle _newVeh joinSilent createGroup WEST;
+                        _newVeh setDir _dir;
+                        _newVeh allowDamage false;
+                        _newVeh setPos (_pos vectorAdd [0,0,0.1]);
+                        _newVeh allowDamage true;
+                    };
+                };
             };
 
         };
     };
 
-    if ((count crew _x) > 0 && {isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "Helicopter" && {_x call TRGM_GLOBAL_fnc_isTransport}}}) then {
+    if ((count crew _x) > 0 && {isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "Air" && {_x call TRGM_GLOBAL_fnc_isTransport}}}) then {
         TRGM_VAR_transportHelosToGetActions pushBackUnique _x;
     };
-} forEach vehicles;
+} forEach (vehicles - [chopper1, chopper2]);
 
 [chopper1] call TRGM_GLOBAL_fnc_setVehicleUpright;
 [chopper2] call TRGM_GLOBAL_fnc_setVehicleUpright;
