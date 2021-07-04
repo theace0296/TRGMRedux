@@ -239,8 +239,7 @@ if (call TRGM_GLOBAL_fnc_isCbaLoaded) then {
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 {
     if (!isPlayer _x) then {
-        _handle = [_x] call TRGM_GLOBAL_fnc_setLoadout;
-        waitUntil {_handle};
+        [_x] call TRGM_GLOBAL_fnc_setLoadout;
         if (!isNil("_isAceRespawnWithGear")) then {
             if (!_isAceRespawnWithGear) then {
                 _x addEventHandler ["Respawn", { [_this select 0] call TRGM_GLOBAL_fnc_setLoadout; }];

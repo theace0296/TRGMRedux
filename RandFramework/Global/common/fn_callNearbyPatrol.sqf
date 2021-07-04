@@ -221,10 +221,10 @@ if (_SpottedUnitCount > 0) then {
         if ((vehicle _SpottedUnit isKindOf "Car") && _bAllowPatrolChange) then {
             if  ((_SpottedUnitCount > 0)) then {
                 _nearestATs = nearestObjects [_SpottedUnitPos, [(call sATMan),(call sATManMilitia)], _maxPatrolSearch];
-                if (TRGM_VAR_bDebugMode) then {[format["AT pre count check: %1",count _nearestATs]] call TRGM_GLOBAL_fnc_log; sleep 2;};
+                // if (TRGM_VAR_bDebugMode) then {[format["AT pre count check: %1",count _nearestATs]] call TRGM_GLOBAL_fnc_log; sleep 2;};
                 if (count _nearestATs > 0) then {
 
-                    if (TRGM_VAR_bDebugMode) then {["for than zero - count _nearestATs"] call TRGM_GLOBAL_fnc_log; sleep 2;};
+                    // if (TRGM_VAR_bDebugMode) then {["for than zero - count _nearestATs"] call TRGM_GLOBAL_fnc_log; sleep 2;};
                     _nearestTL = _nearestATs select 0;
                     while {(count (waypoints group _nearestTL)) > 0} do {
                         deleteWaypoint ((waypoints group _nearestTL) select 0);
@@ -304,14 +304,14 @@ if (_SpottedUnitCount > 0) then {
                                 //Set animation, or view binocs and face player
                                 _SpotterFound = true;
                                 _Spotter = _x;
-                                if (TRGM_VAR_bDebugMode) then {
-                                    _test = nil;
-                                    _test = createMarker [format["SpotterMrk%1%2%3",([_x] call TRGM_GLOBAL_fnc_getRealPos) select 0,([_x] call TRGM_GLOBAL_fnc_getRealPos) select 1,selectRandom[1,2,3,4,5]], ([_x] call TRGM_GLOBAL_fnc_getRealPos)];
-                                    _test setMarkerShape "ICON";
-                                    _test setMarkerType "hd_dot";
-                                    _test setMarkerText "SPOTTER";
-                                    //["POW POW POW POW"] call TRGM_GLOBAL_fnc_log;
-                                };
+                                // if (TRGM_VAR_bDebugMode) then {
+                                //     _test = nil;
+                                //     _test = createMarker [format["SpotterMrk%1%2%3",([_x] call TRGM_GLOBAL_fnc_getRealPos) select 0,([_x] call TRGM_GLOBAL_fnc_getRealPos) select 1,selectRandom[1,2,3,4,5]], ([_x] call TRGM_GLOBAL_fnc_getRealPos)];
+                                //     _test setMarkerShape "ICON";
+                                //     _test setMarkerType "hd_dot";
+                                //     _test setMarkerText "SPOTTER";
+                                //     //["POW POW POW POW"] call TRGM_GLOBAL_fnc_log;
+                                // };
 
                             };
                         };
@@ -319,7 +319,7 @@ if (_SpottedUnitCount > 0) then {
 
                 } forEach _menNear;
                 if (_SpotterFound) then {
-                    if (TRGM_VAR_bDebugMode) then {["SPOTTER FOUND"] call TRGM_GLOBAL_fnc_log; sleep 2;};
+                    // if (TRGM_VAR_bDebugMode) then {["SPOTTER FOUND"] call TRGM_GLOBAL_fnc_log; sleep 2;};
                     _Spotter call BIS_fnc_ambientAnim__terminate;
                     _Spotter playMoveNow "Acts_listeningToRadio_loop";
                     _Spotter disableAI "anim";

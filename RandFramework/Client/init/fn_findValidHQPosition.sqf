@@ -3,12 +3,11 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
 
 if (_player != player) exitWith {false;};
 
-_isAdmin = (!isMultiplayer || isMultiplayer && !isDedicated && isServer || isMultiplayer && !isServer && (call BIS_fnc_admin) != 0);
-if (_isAdmin && isNull TRGM_VAR_AdminPlayer) then {
+if ((call TRGM_CLIENT_fnc_isAdmin) && (isNil "TRGM_VAR_AdminPlayer" || isNull TRGM_VAR_AdminPlayer)) then {
     TRGM_VAR_AdminPlayer = player; publicVariable "TRGM_VAR_AdminPlayer";
 };
 
-if ((!isNull TRGM_VAR_AdminPlayer && (str player isEqualTo "sl")) || (TRGM_VAR_AdminPlayer isEqualTo player)) then {
+if (TRGM_VAR_AdminPlayer isEqualTo player) then {
     if (!TRGM_VAR_HQPosFound) then {
         TRGM_VAR_playerIsChoosingHQpos = true; publicVariable "TRGM_VAR_playerIsChoosingHQpos";
         TRGM_VAR_MapClicked = 0; publicVariable "TRGM_VAR_MapClicked";

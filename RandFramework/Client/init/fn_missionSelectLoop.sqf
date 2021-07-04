@@ -2,8 +2,7 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
 sleep 3;
 
 while {!TRGM_VAR_bAndSoItBegins} do {
-
-    if ((!isNull TRGM_VAR_AdminPlayer && str player isEqualTo "sl") || (TRGM_VAR_AdminPlayer isEqualTo player)) then {
+    if (TRGM_VAR_AdminPlayer isEqualTo player) then {
         if (!dialog) then {
             sleep 1.5;
             if  (!dialog && !TRGM_VAR_bOptionsSet) then { //seemed to show dialog twice... so havce added delay and double check its still not showing

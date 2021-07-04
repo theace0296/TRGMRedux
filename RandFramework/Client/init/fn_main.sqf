@@ -34,8 +34,7 @@ waitUntil {time > 0};
     };
 };
 
-_isAdmin = (!isMultiplayer || isMultiplayer && !isDedicated && isServer || isMultiplayer && !isServer && (call BIS_fnc_admin) != 0);
-if (_isAdmin && isNull TRGM_VAR_AdminPlayer) then {
+if ((call TRGM_CLIENT_fnc_isAdmin) && (isNil "TRGM_VAR_AdminPlayer" || isNull TRGM_VAR_AdminPlayer)) then {
     TRGM_VAR_AdminPlayer = player; publicVariable "TRGM_VAR_AdminPlayer";
 };
 
@@ -65,7 +64,7 @@ call TRGM_CLIENT_fnc_endCamera;
 
 sleep 3;
 
-if (!isDedicated && {(!isNull TRGM_VAR_AdminPlayer && str player isEqualTo "sl") || (TRGM_VAR_AdminPlayer isEqualTo player)}) then {
+if (TRGM_VAR_AdminPlayer isEqualTo player) then {
     if (call TRGM_GETTER_fnc_bIsCampaign) then {    //if isCampaign, dont allow to select AO
 
         if (call TRGM_GETTER_fnc_bManualAOPlacement) then {

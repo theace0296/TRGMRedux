@@ -91,6 +91,7 @@ if (isNil "_className" ||isNil "_dispName" || isNil "_icon" || isNil "_calloutNa
 
 if (TRGM_VAR_useCustomFriendlyFaction || TRGM_VAR_useCustomEnemyFaction || TRGM_VAR_useCustomMilitiaFaction) exitWith {
     [_unit] call TRGM_GLOBAL_fnc_setCustomLoadout;
+    true;
 };
 
 true;

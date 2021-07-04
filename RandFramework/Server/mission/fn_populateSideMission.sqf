@@ -265,13 +265,13 @@ if (!_bFriendlyInsurgents) then {
             _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,_sidePos]] call TRGM_GLOBAL_fnc_findSafePos;
             [_flatPos,  (floor random 300), selectRandom (call sMortarToUse), createGroup _InsurgentSide] call BIS_fnc_spawnVehicle;
 
-            if (TRGM_VAR_bDebugMode) then {
-                _test = nil;
-                _test = createMarker [format["MORTARMrk%1%2%3",_flatPos select 0,_flatPos select 1,selectRandom[1,2,3,4,5]], _flatPos];
-                _test setMarkerShape "ICON";
-                _test setMarkerType "hd_dot";
-                _test setMarkerText "MORTAR";
-            };
+            // if (TRGM_VAR_bDebugMode) then {
+            //     _test = nil;
+            //     _test = createMarker [format["MORTARMrk%1%2%3",_flatPos select 0,_flatPos select 1,selectRandom[1,2,3,4,5]], _flatPos];
+            //     _test setMarkerShape "ICON";
+            //     _test setMarkerType "hd_dot";
+            //     _test setMarkerText "MORTAR";
+            // };
         };
 
         //Spawn vehicle

@@ -2,11 +2,20 @@
 
 call TRGM_GLOBAL_fnc_initGlobalVars;
 
+if (isServer) then {
+   [] spawn {
+      while {isNil "TRGM_VAR_AdminPlayer" || isNull TRGM_VAR_AdminPlayer} do {
+         call TRGM_SERVER_fnc_setAdmin;
+         sleep 30;
+      };
+   };
+};
+
 waitUntil { TRGM_VAR_playerIsChoosingHQpos || TRGM_VAR_NeededObjectsAvailable; };
 
 if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {
-    waitUntil { TRGM_VAR_HQPosFound };
-    _handle = [TRGM_VAR_foundHQPos] spawn TRGM_SERVER_fnc_createNeededObjects;
+   waitUntil { TRGM_VAR_HQPosFound };
+   _handle = [TRGM_VAR_foundHQPos] spawn TRGM_SERVER_fnc_createNeededObjects;
    waitUntil {scriptDone _handle};
 
    { [[_x], {(_this select 0) allowDamage false}] remoteExec ["call", _x]; } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
@@ -40,10 +49,8 @@ tf_give_personal_radio_to_regular_soldier = true; publicVariable "tf_give_person
 tf_no_auto_long_range_radio = true; publicVariable "tf_no_auto_long_range_radio";
 
 
-_handle = call FHQ_fnc_ttiInit;
-waitUntil { _handle; };
-_handle = call FHQ_fnc_ttiPostInit;
-waitUntil { _handle; };
+call FHQ_fnc_ttiInit;
+call FHQ_fnc_ttiPostInit;
 
 [
    west,

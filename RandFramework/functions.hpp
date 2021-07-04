@@ -8,6 +8,7 @@ class TRGM_SERVER {
         class playBaseRadioEffect {};
         class sandStormEffect {};
         class serverSave {};
+        class setAdmin {};
         class setTimeAndWeather {};
         class weatherAffectsAI {};
     };
@@ -222,6 +223,7 @@ class TRGM_CLIENT {
         class drawKilledRanges {};
         class generalPlayerLoop {};
         class inSafeZone {};
+        class isAdmin {};
         class findValidHQPosition {};
         class main {};
         class missionSelectLoop {};

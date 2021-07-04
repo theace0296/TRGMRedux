@@ -2,12 +2,12 @@ params[["_player", objNull, [objNull]]];
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
 if (_player != player) exitWith {false;};
-_isAdmin = (!isMultiplayer || isMultiplayer && !isDedicated && isServer || isMultiplayer && !isServer && (call BIS_fnc_admin) != 0);
-if (_isAdmin && isNull TRGM_VAR_AdminPlayer) then {
+
+if ((call TRGM_CLIENT_fnc_isAdmin) && (isNil "TRGM_VAR_AdminPlayer" || isNull TRGM_VAR_AdminPlayer)) then {
     TRGM_VAR_AdminPlayer = player; publicVariable "TRGM_VAR_AdminPlayer";
 };
 
-if ((!isNull TRGM_VAR_AdminPlayer && (str player isEqualTo "sl")) || (TRGM_VAR_AdminPlayer isEqualTo player)) then {
+if (TRGM_VAR_AdminPlayer isEqualTo player) then {
     TRGM_VAR_foundManualAOPos = [0,0,0]; publicVariable "TRGM_VAR_foundManualAOPos";
     TRGM_VAR_ManualAOPosFound = false; publicVariable "TRGM_VAR_ManualAOPosFound";
     if (!TRGM_VAR_ManualAOPosFound) then {
