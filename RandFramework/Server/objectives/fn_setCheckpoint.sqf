@@ -157,6 +157,8 @@ if (_PosFound) then {
         if (count _allRoadsNear isEqualTo 0 && _nearestHouseCount isEqualTo 0) then {_NoRoadsOrBuildingsNear = true;};
     };
 
+    if ({_x distance _roadBlockPos < 250 && side _x != _thisSide} count allUnits > 0) exitWith {false;};
+
     if (_thisIsCheckPoint && _thisSide isEqualTo TRGM_VAR_EnemySide) then {
         //TRGM_VAR_CheckPointAreas
         TRGM_VAR_CheckPointAreas = TRGM_VAR_CheckPointAreas + [[_roadBlockPos,_thisAreaAroundCheckpointSpacing]]; //the ,_thisAreaAroundCheckpointSpacing is for when we use TRGM_GLOBAL_fnc_findSafePos to make sure no other road block is within 100 meters

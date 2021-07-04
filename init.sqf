@@ -32,6 +32,7 @@ if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {
          }] remoteExec ["call", _x];
       } else {
             [[_x], {
+               titleCut ["", "BLACK OUT", 5];
                (_this select 0) setpos [(TRGM_VAR_foundHQPos select 0) - 10, (TRGM_VAR_foundHQPos select 1)];
                (_this select 0) setdamage 0;
                (_this select 0) allowDamage true;
