@@ -4,7 +4,7 @@ params [
     "_sideMainBuilding",
     "_bIsMainObjective",
     "_iTaskIndex",
-    "_allowFriendlyIns",
+    ["_allowFriendlyIns", false],
     ["_ForceCivsOnly", false]
 ];
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;

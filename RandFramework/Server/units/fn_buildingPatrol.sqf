@@ -1,4 +1,4 @@
-params ["_sidePos","_distFromCent", "_unitCounts","_IncludTeamLeader","_InsurgentSide","_buildingCount"];
+params ["_sidePos","_distFromCent", "_unitCounts","_IncludTeamLeader",["_InsurgentSide", EAST],["_buildingCount", 8]];
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
 
