@@ -65,7 +65,7 @@ call TRGM_CLIENT_fnc_endCamera;
 sleep 3;
 
 if (TRGM_VAR_AdminPlayer isEqualTo player) then {
-    if (call TRGM_GETTER_fnc_bIsCampaign) then {    //if isCampaign, dont allow to select AO
+    if !(call TRGM_GETTER_fnc_bIsCampaign) then {    //if isCampaign, dont allow to select AO
 
         if (call TRGM_GETTER_fnc_bManualAOPlacement) then {
             [player] spawn TRGM_CLIENT_fnc_selectAOLocation;
