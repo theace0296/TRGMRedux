@@ -17,9 +17,9 @@ publicVariable "TRGM_VAR_AODetails";
 
 _bFriendlyInsurgents = selectRandom TRGM_VAR_bFriendlyInsurgents;
 
-_InsurgentSide = east;
-if (_bFriendlyInsurgents) then {_InsurgentSide = west;};
-if (_bIsMainObjective) then {_InsurgentSide = east; _bFriendlyInsurgents = false;}; //if main need to make sure not friendly insurgents
+_InsurgentSide = TRGM_VAR_EnemySide;
+if (_bFriendlyInsurgents) then {_InsurgentSide = TRGM_VAR_FriendlySide;};
+if (_bIsMainObjective) then {_InsurgentSide = TRGM_VAR_EnemySide; _bFriendlyInsurgents = false;}; //if main need to make sure not friendly insurgents
 
 _bThisMissionCivsOnly = selectRandom TRGM_VAR_bCivsOnly;
 _bTownBigenoughForFriendlyInsurgants = true;
@@ -30,11 +30,11 @@ if (_allBuildingsNearAOCount <= TRGM_VAR_iBuildingCountToAllowCivsAndFriendlyInf
     _bTownBigenoughForFriendlyInsurgants = false;
 };
 if (!_bTownBigenoughForFriendlyInsurgants && _bFriendlyInsurgents) then {
-    _InsurgentSide = east;
+    _InsurgentSide = TRGM_VAR_EnemySide;
     _bFriendlyInsurgents = false;
 };
 if (!_allowFriendlyIns) then {
-    _InsurgentSide = east;
+    _InsurgentSide = TRGM_VAR_EnemySide;
     _bFriendlyInsurgents = false;
 };
 
@@ -51,7 +51,7 @@ _selectRandomW = call {random 1 > .80};;
 if (call TRGM_GETTER_fnc_bMoreEnemies) then {
     _selectRandomW = call {random 1 > .65};
     _bThisMissionCivsOnly = false;
-    _InsurgentSide = east;
+    _InsurgentSide = TRGM_VAR_EnemySide;
     _bFriendlyInsurgents = false;
 };
 
@@ -415,7 +415,7 @@ if (!_bFriendlyInsurgents) then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = _selectRandomW;
                     _thisIsDirectionAwayFromAO = true;
@@ -439,7 +439,7 @@ if (!_bFriendlyInsurgents) then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = false;
                     _thisIsDirectionAwayFromAO = true;
@@ -458,7 +458,7 @@ if (!_bFriendlyInsurgents) then {
                     if (_flatPos select 0 > 0) then {
                         _thisPosAreaOfCheckpoint = _flatPos;
                         _thisRoadOnly = true;
-                        _thisSide = west;
+                        _thisSide = TRGM_VAR_FriendlySide;
                         _thisUnitTypes = (call FriendlyCheckpointUnits);
                         _thisAllowBarakade = true;
                         _thisIsDirectionAwayFromAO = false;
@@ -482,7 +482,7 @@ if (!_bFriendlyInsurgents) then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = false;
                     _thisIsDirectionAwayFromAO = true;
@@ -504,7 +504,7 @@ if (!_bFriendlyInsurgents) then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = true;
                     _thisIsDirectionAwayFromAO = true;
@@ -526,7 +526,7 @@ if (!_bFriendlyInsurgents) then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = true;
                     _thisIsDirectionAwayFromAO = true;
@@ -548,7 +548,7 @@ if (!_bFriendlyInsurgents) then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = true;
                     _thisIsDirectionAwayFromAO = true;
@@ -570,7 +570,7 @@ if (!_bFriendlyInsurgents) then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = false;
                     _thisIsDirectionAwayFromAO = true;
@@ -593,7 +593,7 @@ if (!_bFriendlyInsurgents) then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
-                    _thisSide = west;
+                    _thisSide = TRGM_VAR_FriendlySide;
                     _thisUnitTypes = (call FriendlyCheckpointUnits);
                     _thisAllowBarakade = true;
                     _thisIsDirectionAwayFromAO = false;
@@ -624,7 +624,7 @@ if (!_bFriendlyInsurgents) then {
                     _objMilUnit1 = nil;
                     _objMilUnit2 = nil;
                     _objMilUnit3 = nil;
-                    _MilGroup1 = createGroup east;
+                    _MilGroup1 = createGroup TRGM_VAR_EnemySide;
                     _objMilUnit1 = _MilGroup1 createUnit [selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1000,0,0],[],0,"NONE"];
                     _objMilUnit2 = _MilGroup1 createUnit [selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1002,0,0],[],0,"NONE"];
                     _objMilUnit3 = _MilGroup1 createUnit [selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1003,0,0],[],0,"NONE"];
@@ -645,7 +645,7 @@ if (!_bFriendlyInsurgents) then {
                     };
 
                     if (_selectRandomW) then {
-                        _MilGroup4 = createGroup east;
+                        _MilGroup4 = createGroup TRGM_VAR_EnemySide;
                         _sCheckpointGuyName = format["objMilGuyName%1",(floor(random 999999))];
                         _pos5 = [getpos _x , 0, 30, 5, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[getpos _x,getpos _x]] call TRGM_GLOBAL_fnc_findSafePos;
                         _guardUnit5 = _MilGroup4 createUnit [(call sRiflemanToUse),_pos5,[],0,"NONE"];
@@ -706,7 +706,7 @@ if (!_bFriendlyInsurgents) then {
             if (_flatPos select 0 > 0) then {
                 _thisPosAreaOfCheckpoint = _flatPos;
                 _thisRoadOnly = true;
-                _thisSide = east;
+                _thisSide = TRGM_VAR_EnemySide;
                 _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                 _thisAllowBarakade = true;
                 _thisIsDirectionAwayFromAO = true;
@@ -725,7 +725,7 @@ if (!_bFriendlyInsurgents) then {
             if (_flatPos select 0 > 0) then {
                 _thisPosAreaOfCheckpoint = _flatPos;
                 _thisRoadOnly = false;
-                _thisSide = east;
+                _thisSide = TRGM_VAR_EnemySide;
                 _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                 _thisAllowBarakade = false;
                 _thisIsDirectionAwayFromAO = true;

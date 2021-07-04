@@ -47,7 +47,7 @@ if (!(isNil "IsTraining") || _isFullMap) then {
 
 if (str(_flatPos) != "[0,0,0]") then {
 
-    _groupCamp1 = createGroup east;
+    _groupCamp1 = createGroup TRGM_VAR_EnemySide;
 
     _aaaX = _flatPos select 0;
     _aaaY = _flatPos select 1;
@@ -87,7 +87,7 @@ if (str(_flatPos) != "[0,0,0]") then {
         if (_flatPosSentry select 0 > 0) then {
             _thisPosAreaOfCheckpoint = _flatPosSentry;
             _thisRoadOnly = false;
-            _thisSide = east;
+            _thisSide = TRGM_VAR_EnemySide;
             _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
             _thisAllowBarakade = false;
             _thisIsDirectionAwayFromAO = true;

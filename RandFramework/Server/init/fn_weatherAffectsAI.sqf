@@ -5,7 +5,7 @@ if (_iWeatherOption >= 11 && {_iWeatherOption != 99}) then {
     [format["Mission Core: %1", "Weather Dependant AI Skill"], true] call TRGM_GLOBAL_fnc_log;
     //Set enemy skill
     {
-        if (Side _x isEqualTo East) then {
+        if (Side _x isEqualTo TRGM_VAR_EnemySide) then {
             _x setskill ["aimingAccuracy",0.01];
             _x setskill ["aimingShake",0.01];
             _x setskill ["aimingSpeed",0.01];
@@ -16,7 +16,7 @@ if (_iWeatherOption >= 11 && {_iWeatherOption != 99}) then {
     sleep 18030;
     //reset enemy skill
     {
-        if (Side _x isEqualTo East) then {
+        if (Side _x isEqualTo TRGM_VAR_EnemySide) then {
             _x setskill ["aimingAccuracy",0.15];
             _x setskill ["aimingShake",0.1];
             _x setskill ["aimingSpeed",0.2];

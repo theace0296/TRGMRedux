@@ -1,7 +1,7 @@
 params ["_badCiv"];
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
-_grpName = createGroup east;
+_grpName = createGroup TRGM_VAR_EnemySide;
 [_badCiv] joinSilent _grpName;
 
 [_badCiv] call TRGM_SERVER_fnc_badCivApplyAssingnedArmament;

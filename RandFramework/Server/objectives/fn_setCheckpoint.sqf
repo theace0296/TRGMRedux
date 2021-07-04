@@ -157,20 +157,20 @@ if (_PosFound) then {
         if (count _allRoadsNear isEqualTo 0 && _nearestHouseCount isEqualTo 0) then {_NoRoadsOrBuildingsNear = true;};
     };
 
-    if (_thisIsCheckPoint && _thisSide isEqualTo east) then {
+    if (_thisIsCheckPoint && _thisSide isEqualTo TRGM_VAR_EnemySide) then {
         //TRGM_VAR_CheckPointAreas
         TRGM_VAR_CheckPointAreas = TRGM_VAR_CheckPointAreas + [[_roadBlockPos,_thisAreaAroundCheckpointSpacing]]; //the ,_thisAreaAroundCheckpointSpacing is for when we use TRGM_GLOBAL_fnc_findSafePos to make sure no other road block is within 100 meters
         publicVariable "TRGM_VAR_CheckPointAreas";
     }
     else {
-        if (_thisSide isEqualTo east) then {
+        if (_thisSide isEqualTo TRGM_VAR_EnemySide) then {
         //TRGM_VAR_SentryAreas
             TRGM_VAR_SentryAreas = TRGM_VAR_SentryAreas + [[_roadBlockPos,_thisAreaAroundCheckpointSpacing]];
             publicVariable "TRGM_VAR_SentryAreas"
         };
     };
 
-    if (_thisSide isEqualTo west) then {
+    if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
         TRGM_VAR_friendlySentryCheckpointPos = TRGM_VAR_friendlySentryCheckpointPos + [_roadBlockPos];
         publicVariable "TRGM_VAR_friendlySentryCheckpointPos";
     };
@@ -208,7 +208,7 @@ if (_PosFound) then {
         _initItem = selectRandom _RoadSideBarricadesLow createVehicle _roadBlockSidePos;
         _initItem setDir ([_direction,180] call TRGM_GLOBAL_fnc_addToDirection);
 
-        if (_thisSide isEqualTo east && _AllowTurrent) then {
+        if (_thisSide isEqualTo TRGM_VAR_EnemySide && _AllowTurrent) then {
             _NearTurret1 = createVehicle [selectRandom (call CheckPointTurret), _initItem getPos [1,_direction+180], [], 0, "CAN_COLLIDE"];
             _NearTurret1 setDir (_direction);
             createVehicleCrew _NearTurret1;
@@ -233,7 +233,7 @@ if (_PosFound) then {
                 _thisSide = _this select 1;
                 while {alive(_initItem)} do {
                     _soundToPlay = selectRandom TRGM_VAR_EnemyRadioSounds;
-                    if (_thisSide isEqualTo west) then {_soundToPlay = selectRandom TRGM_VAR_FriendlyRadioSounds};
+                    if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {_soundToPlay = selectRandom TRGM_VAR_FriendlyRadioSounds};
                     playSound3D ["A3\Sounds_F\sfx\radio\" + _soundToPlay + ".wss",_initItem,false,getPosASL _initItem,0.5,1,0];
                     sleep selectRandom [10,15,20,30];
                 };
@@ -243,7 +243,7 @@ if (_PosFound) then {
 
     _bHasParkedCar = false;
     _ParkedCar = nil;
-    if (_AllowVeh && (random 1 < .75 || _thisSide isEqualTo west)) then {
+    if (_AllowVeh && (random 1 < .75 || _thisSide isEqualTo TRGM_VAR_FriendlySide)) then {
         _behindBlockPos = _initItem getPos [10,([_direction,180] call TRGM_GLOBAL_fnc_addToDirection)];
         _flatPos = nil;
         _flatPos = [_behindBlockPos , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos,_behindBlockPos],selectRandom _thisScoutVehicles] call TRGM_GLOBAL_fnc_findSafePos;
@@ -296,7 +296,7 @@ if (_PosFound) then {
             _flatPos = nil;
             _flatPos = [_behindBlockPos2 , 0, 5, 7, 0, 0.5, 0,[],[_behindBlockPos2,_behindBlockPos2]] call TRGM_GLOBAL_fnc_findSafePos;
             _radio = nil;
-            if (_thisSide isEqualTo west) then {
+            if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
                 _radio = selectRandom ["uns_radio2_radio","uns_radio2_transitor","uns_radio2_transitor02"] createVehicle _flatPos;
             }
             else {
@@ -381,7 +381,7 @@ if (_PosFound) then {
     _guardUnit5 = _group4 createUnit [_sUnitType,_pos5,[],0,"NONE"];
     _guardUnit5 setVariable [_sCheckpointGuyName, _guardUnit5, true];
     missionNamespace setVariable [_sCheckpointGuyName, _guardUnit5];
-    if (_thisSide isEqualTo west) then {
+    if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
         _isHiddenObj = false;
         _mainAOPos = TRGM_VAR_ObjectivePossitions select 0;
         if (! isNil "_mainAOPos") then {

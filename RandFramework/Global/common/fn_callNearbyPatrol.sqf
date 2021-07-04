@@ -168,18 +168,18 @@ if (_SpottedUnitCount > 0) then {
 
         if (_bInfSpottedAction) then {
                 if (_bIsMainObjective) then {
-                    [EAST, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
+                    [TRGM_VAR_EnemySide, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
                     if (call TRGM_GETTER_fnc_bMoreReinforcements) then {
                         sleep 5;
-                        [EAST, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
+                        [TRGM_VAR_EnemySide, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
                     };
                     TRGM_VAR_ParaDropped = true; publicVariable "TRGM_VAR_ParaDropped";
                 }
                 else {
-                    [EAST, call TRGM_GETTER_fnc_aGetReinforceStartPos, _SpottedUnitPos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
+                    [TRGM_VAR_EnemySide, call TRGM_GETTER_fnc_aGetReinforceStartPos, _SpottedUnitPos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
                     if (call TRGM_GETTER_fnc_bMoreReinforcements) then {
                         sleep 5;
-                        [EAST, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
+                        [TRGM_VAR_EnemySide, call TRGM_GETTER_fnc_aGetReinforceStartPos, _MainObjectivePos, 3, true, false, false, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements;
                     };
                 };
 
@@ -289,11 +289,11 @@ if (_SpottedUnitCount > 0) then {
                 _SpotterFound = false;
                 _Spotter = nil;
                 {
-                    if ((([_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos) distance ([_x] call TRGM_GLOBAL_fnc_getRealPos)) < 55 && side _x isEqualTo east) then {
+                    if ((([_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos) distance ([_x] call TRGM_GLOBAL_fnc_getRealPos)) < 55 && side _x isEqualTo TRGM_VAR_EnemySide) then {
                         _bAllowMortar = false; //enemy units are too close to spotted unit to call mortar
                     }
                     else {
-                        if (!_SpotterFound && (([_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos) distance ([_x] call TRGM_GLOBAL_fnc_getRealPos)) > 55 && side _x isEqualTo East) then {
+                        if (!_SpotterFound && (([_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos) distance ([_x] call TRGM_GLOBAL_fnc_getRealPos)) > 55 && side _x isEqualTo TRGM_VAR_EnemySide) then {
 
                             _cansee = [objNull, "VIEW"] checkVisibility [eyePos _x, eyePos _SpottedUnit];
                             // if (TRGM_VAR_bDebugMode) then {[format["POW4 %1",_cansee]] call TRGM_GLOBAL_fnc_log;};

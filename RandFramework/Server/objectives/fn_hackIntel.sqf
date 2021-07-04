@@ -6,7 +6,7 @@ _objParams params ["_markerType","_objectiveMainBuilding","_centralAO_x","_centr
 
 [_thisLaptop] call TRGM_SERVER_fnc_updateTask;
 
-if (side _caller isEqualTo west && !_bCreateTask) then {
+if (side _caller isEqualTo TRGM_VAR_FriendlySide && !_bCreateTask) then {
     for [{private _i = 0;}, {_i < 3;}, {_i = _i + 1;}] do {
         if (getMarkerType format["mrkMainObjective%1", _i] isEqualTo "empty") then {
             format["mrkMainObjective%1", _i] setMarkerType "mil_unknown";

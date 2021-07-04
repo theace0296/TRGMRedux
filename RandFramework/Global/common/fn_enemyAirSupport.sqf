@@ -14,7 +14,7 @@ if (isServer) then {
 
     //sleep WaitTime;
 
-    _groupp1 = createGroup east;
+    _groupp1 = createGroup TRGM_VAR_EnemySide;
 
     _AirVehicle = nil;
     if (_IsAirType isEqualTo 1) then {

@@ -15,7 +15,7 @@ while {alive _badCiv && !_bFired} do {
 
                 if (!_bActivated) then {
                     _bActivated = true;
-                    _grpName = createGroup east;
+                    _grpName = createGroup TRGM_VAR_EnemySide;
                     [_badCiv] joinSilent _grpName;
 
                     [_badCiv] call TRGM_SERVER_fnc_badCivApplyAssingnedArmament;

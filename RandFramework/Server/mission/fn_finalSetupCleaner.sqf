@@ -7,14 +7,14 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
     _enemyNear = false;
     //check if enemy near
     {
-        if (side _x isEqualTo east) then {
+        if (side _x isEqualTo TRGM_VAR_EnemySide) then {
             _enemyNear = true;
         };
     } forEach nearestObjects [_currentFriendCpPos, ["Man","Car","Tank"], 400];
     //if enemy is near, then delete this friendly checkpoint
     if (_enemyNear) then {
         {
-            if ((side _x isEqualTo west)) then {
+            if ((side _x isEqualTo TRGM_VAR_FriendlySide)) then {
                 deleteVehicle _x;
             };
         } forEach nearestObjects [_currentFriendCpPos, ["Man","Car","Tank"], 100];
@@ -25,7 +25,7 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
 if (TRGM_VAR_iStartLocation isEqualTo 1) then {//move to ao camp
     {
         //if (_y distance getPos _x > TRGM_VAR_PunishmentRadius) then {
-        if ((side _x isEqualTo east)) then {
+        if ((side _x isEqualTo TRGM_VAR_EnemySide)) then {
             deleteVehicle _x;
         };
         //};

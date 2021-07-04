@@ -10,8 +10,8 @@ _maxRange = 800;
 _minRange = 600;
 _minHeight = 20;
 
-_spawnedUnit = ((createGroup east) createUnit [(call sSniperToUse), [-135,-253,0], [], 10, "NONE"]);
-_spawnedTempTarget = ((createGroup east) createUnit [(call sSniperToUse), _targetPos, [], 10, "NONE"]);
+_spawnedUnit = ((createGroup TRGM_VAR_EnemySide) createUnit [(call sSniperToUse), [-135,-253,0], [], 10, "NONE"]);
+_spawnedTempTarget = ((createGroup TRGM_VAR_EnemySide) createUnit [(call sSniperToUse), _targetPos, [], 10, "NONE"]);
 
 for "_i" from 1 to 20 do {
     if (!_foundPlace) then {
@@ -75,7 +75,7 @@ if (_foundPlace) then {
         if (_eyedir < 0) then {_eyedir = 360 + _eyedir};
         _distance = _distance ^2;
 
-        _enemies = allUnits select {side _x isEqualTo west && _x distancesqr _spawnedUnit < _distance && acos ([sin _eyedir, cos _eyedir, 0] vectorCos [sin (_spawnedUnit getDir _x), cos (_spawnedUnit getDir _x), 0]) <= _fov/2};
+        _enemies = allUnits select {side _x isEqualTo TRGM_VAR_FriendlySide && _x distancesqr _spawnedUnit < _distance && acos ([sin _eyedir, cos _eyedir, 0] vectorCos [sin (_spawnedUnit getDir _x), cos (_spawnedUnit getDir _x), 0]) <= _fov/2};
         _enemies apply {_spawnedUnit reveal [_x,4]};
         TRGM_VAR_SniperRevialTotal = count _enemies;
         //consider loop through _enemies, and confirm sniper has Line of sight, before revealing

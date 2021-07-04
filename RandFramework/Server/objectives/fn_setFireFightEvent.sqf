@@ -139,7 +139,7 @@ TRGM_VAR_WarEventActive = true;
         }
         else {
 
-            _group = createGroup east;
+            _group = createGroup TRGM_VAR_EnemySide;
             _sUnitType = selectRandom [(call sRiflemanToUse),(call sMachineGunManToUse)];
             _tempFireUnit = _group createUnit [_sUnitType,[_xPos+(random 250),_yPos+(random 250),0],[],0,"NONE"];
             hideObject _tempFireUnit;
@@ -184,7 +184,7 @@ TRGM_VAR_WarEventActive = true;
         _pos = _eventLocationPos getPos [3000,random 360];//random 360 and 3 clicks out and no playable units within 2 clicks
         _pos = [_pos select 0,_pos select 1, 365];
         _dir = [_pos, _eventLocationPos] call BIS_fnc_DirTo;//dir from pos to _eventLocationPos
-        _WarzoneGroupp1 = createGroup WEST;
+        _WarzoneGroupp1 = createGroup TRGM_VAR_FriendlySide;
         _WarZoneAir1 = createVehicle [_AirToUse, _pos, [], 0, "FLY"];
         _WarZoneAir1 setDir _dir;
         createVehicleCrew _WarZoneAir1;

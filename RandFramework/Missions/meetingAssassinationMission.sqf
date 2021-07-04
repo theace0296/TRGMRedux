@@ -82,23 +82,23 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         if (!isNil "_direction") then {
             _objVehicle setDir (_direction);
         };
-        _guardUnit1 = (createGroup east) createUnit [selectRandom _HVTGuys,_poshVehPos,[],0,"NONE"];
+        _guardUnit1 = (createGroup TRGM_VAR_EnemySide) createUnit [selectRandom _HVTGuys,_poshVehPos,[],0,"NONE"];
     }
     else {
         _flatPos = nil;
         _flatPos = [getPos _objectiveMainBuilding, 10, 50, 5, 0, 0.5, 0,[],[getPos _objectiveMainBuilding,getPos _objectiveMainBuilding]] call TRGM_GLOBAL_fnc_findSafePos;
         if ((_flatPos select 0) > 0) then {
-            _guardUnit1 = (createGroup east) createUnit [selectRandom _HVTGuys,_flatPos,[],0,"NONE"];
+            _guardUnit1 = (createGroup TRGM_VAR_EnemySide) createUnit [selectRandom _HVTGuys,_flatPos,[],0,"NONE"];
         }
         else {
-            _guardUnit1 = (createGroup east) createUnit [selectRandom _HVTGuys,getPos _objectiveMainBuilding,[],20,"NONE"];
+            _guardUnit1 = (createGroup TRGM_VAR_EnemySide) createUnit [selectRandom _HVTGuys,getPos _objectiveMainBuilding,[],20,"NONE"];
         };
     };
      (group _guardUnit1) setBehaviour 'CARELESS';
      _guardUnit1 setCaptive true;
 
-    _hvtGroup = createGroup east;
-    _hvtGuardGroup = createGroup east;
+    _hvtGroup = createGroup TRGM_VAR_EnemySide;
+    _hvtGuardGroup = createGroup TRGM_VAR_EnemySide;
 
     _mainHVT = _hvtGroup createUnit [_mainHVTClass,[-500,-500,0],[],20,"NONE"];
     sleep 0.1;
@@ -131,7 +131,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _iWait = (420 * (_iTaskIndex + 1)) + floor(random 300);
             sleep floor(random 120);
             _sMessageOne = format["%1 is due to arrive in the area at %2",name _mainHVT, (daytime  + (_iWait/3600) call BIS_fnc_timeToString)];
-            [[west, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
+            [[TRGM_VAR_FriendlySide, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
             [_sMessageOne] call TRGM_GLOBAL_fnc_notifyGlobal;
 
             [_iWait, _iTaskIndex] spawn {
@@ -152,7 +152,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         };
 
         _sMessageTwo = format["%1 is in the area and on way to AO (position is tracked and marked on map",name _mainHVT];
-        [[west, "HQ"],_sMessageTwo] remoteExec ["sideChat", 0];
+        [[TRGM_VAR_FriendlySide, "HQ"],_sMessageTwo] remoteExec ["sideChat", 0];
         [_sMessageTwo] call TRGM_GLOBAL_fnc_notifyGlobal;
 
         _hvtChopperStartPos = [-400,-400,200] getPos [400 * sqrt random 1, random 360];

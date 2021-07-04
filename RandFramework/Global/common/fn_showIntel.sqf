@@ -1,7 +1,7 @@
 params ["_AllowedIntelToShow", "_FoundViaType"];
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
-if (side player isEqualTo west) then {
+if (side player isEqualTo TRGM_VAR_FriendlySide) then {
     _IntelToShow = 0;
     _iAttemptCount = 0;
     while {_IntelToShow isEqualTo 0 && _iAttemptCount < 100} do {

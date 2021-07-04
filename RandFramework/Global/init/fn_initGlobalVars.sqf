@@ -71,8 +71,10 @@ publicVariable "TRGM_VAR_ThemeAndIntroMusic";
 if (isNil "TRGM_VAR_aNVClassNames")      then { TRGM_VAR_aNVClassNames = ["NVGoggles","NVGoggles_tna_F"]; publicVariable "TRGM_VAR_aNVClassNames"; };
 if (isNil "TRGM_VAR_FriendlySide")       then { TRGM_VAR_FriendlySide = West;                             publicVariable "TRGM_VAR_FriendlySide"; };
 if (isNil "TRGM_VAR_EnemySide")          then { TRGM_VAR_EnemySide = East;                                publicVariable "TRGM_VAR_EnemySide"; };
+if (isNil "TRGM_VAR_InsSide")            then { TRGM_VAR_InsSide = Independent;                           publicVariable "TRGM_VAR_InsSide"; };
 if (isNil "TRGM_VAR_FriendlySideString") then { TRGM_VAR_FriendlySideString = "West";                     publicVariable "TRGM_VAR_FriendlySideString"; };
 if (isNil "TRGM_VAR_EnemySideString")    then { TRGM_VAR_EnemySideString = "East";                        publicVariable "TRGM_VAR_EnemySideString"; };
+if (isNil "TRGM_VAR_InsSideString")      then { TRGM_VAR_InsSideString = "Independent";                   publicVariable "TRGM_VAR_InsSideString"; };
 if (isNil "TRGM_VAR_sArmaGroup")         then { TRGM_VAR_sArmaGroup = "TCF";                              publicVariable "TRGM_VAR_sArmaGroup"; }; //use this to customise code for specific group requiments
 if (isNil "TRGM_VAR_bNoVNChance")        then { TRGM_VAR_bNoVNChance = [false];                           publicVariable "TRGM_VAR_bNoVNChance"; };
 

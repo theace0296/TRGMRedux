@@ -9,7 +9,7 @@ _HidingPlacesTooClose = nearestTerrainObjects [_triggerArea, ["HIDE","BUSH"], 75
 _nearestHidingPlaces = _nearestHidingPlaces - _HidingPlacesTooClose;
 
 if (count _nearestHidingPlaces > 5) then {
-    _ambushGroup = createGroup east;
+    _ambushGroup = createGroup TRGM_VAR_EnemySide;
 
     _objMilUnit = _ambushGroup createUnit [selectRandom sCivilian,getPos (selectRandom _nearestHidingPlaces),[],0,"NONE"];
     doStop _objMilUnit;

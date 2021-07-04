@@ -11,7 +11,7 @@ if (alive _thisCiv) then {
     [_thisCiv, "failed"] spawn TRGM_SERVER_fnc_updateTask;
 };
 
-if (side _caller isEqualTo west && !_bCreateTask) then {
+if (side _caller isEqualTo TRGM_VAR_FriendlySide && !_bCreateTask) then {
     _ballowSearch = true;
 
     ["You start to talk to the informant..."] call TRGM_GLOBAL_fnc_notify;

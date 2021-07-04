@@ -9,7 +9,7 @@ if (isNil "_bCreateTask") then {
     _bCreateTask = _thisCiv getVariable "createTask";
 };
 
-if (side _caller isEqualTo west) then {
+if (side _caller isEqualTo TRGM_VAR_FriendlySide) then {
 
     //TRGM_VAR_ClearedPositions pushBack (TRGM_VAR_ObjectivePossitions select _iSelected);
     TRGM_VAR_ClearedPositions pushBack ([TRGM_VAR_ObjectivePossitions, _caller] call BIS_fnc_nearestPosition);

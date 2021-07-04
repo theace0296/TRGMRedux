@@ -14,7 +14,7 @@ if (_iSandStormOption isEqualTo 0 && {random 1 < .20}) then { //Random
     [[SandStormTimer,false], "RandFramework\RikoSandStorm\ROSSandstorm.sqf"] remoteExec ["execVM", 0];
     //Set enemy skill
     {
-        if (Side _x isEqualTo East) then {
+        if (Side _x isEqualTo TRGM_VAR_EnemySide) then {
             _x setskill ["aimingAccuracy",0.01];
             _x setskill ["aimingShake",0.01];
             _x setskill ["aimingSpeed",0.01];
@@ -25,7 +25,7 @@ if (_iSandStormOption isEqualTo 0 && {random 1 < .20}) then { //Random
     sleep SandStormTimer;
     //reset enemy skill
     {
-        if (Side _x isEqualTo East) then {
+        if (Side _x isEqualTo TRGM_VAR_EnemySide) then {
             _x setskill ["aimingAccuracy",0.15];
             _x setskill ["aimingShake",0.1];
             _x setskill ["aimingSpeed",0.2];
@@ -45,7 +45,7 @@ if (_iSandStormOption isEqualTo 1) then { //Always
     [[SandStormTimer,false], "RandFramework\RikoSandStorm\ROSSandstorm.sqf"] remoteExec ["execVM", 0];
     //Set enemy skill
     {
-        if (Side _x isEqualTo East) then {
+        if (Side _x isEqualTo TRGM_VAR_EnemySide) then {
             _x setskill ["aimingAccuracy",0.01];
             _x setskill ["aimingShake",0.01];
             _x setskill ["aimingSpeed",0.01];
@@ -56,7 +56,7 @@ if (_iSandStormOption isEqualTo 1) then { //Always
     sleep SandStormTimer;
     //reset enemy skill
     {
-        if (Side _x isEqualTo East) then {
+        if (Side _x isEqualTo TRGM_VAR_EnemySide) then {
             _x setskill ["aimingAccuracy",0.15];
             _x setskill ["aimingShake",0.1];
             _x setskill ["aimingSpeed",0.2];
@@ -73,7 +73,7 @@ if (_iSandStormOption isEqualTo 3) then { //5 hours non stop
     [[18030,false], "RandFramework\RikoSandStorm\ROSSandstorm.sqf"] remoteExec ["execVM", 0];
     //Set enemy skill
     {
-        if (Side _x isEqualTo East) then {
+        if (Side _x isEqualTo TRGM_VAR_EnemySide) then {
             _x setskill ["aimingAccuracy",0.01];
             _x setskill ["aimingShake",0.01];
             _x setskill ["aimingSpeed",0.01];
@@ -84,7 +84,7 @@ if (_iSandStormOption isEqualTo 3) then { //5 hours non stop
     sleep 18030;
     //reset enemy skill
     {
-        if (Side _x isEqualTo East) then {
+        if (Side _x isEqualTo TRGM_VAR_EnemySide) then {
             _x setskill ["aimingAccuracy",0.15];
             _x setskill ["aimingShake",0.1];
             _x setskill ["aimingSpeed",0.2];

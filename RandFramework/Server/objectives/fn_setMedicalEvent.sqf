@@ -363,7 +363,7 @@ if (isnil "fncMedicalParamedicLight") then {
             _flatPosPolice1 = nil;
             _flatPosPolice1 = [_vehPos , 30, 50, 10, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],selectRandom PoliceVehicles] call TRGM_GLOBAL_fnc_findSafePos;
             _carPolice = createVehicle [selectRandom PoliceVehicles, _flatPosPolice1, [], 0, "NONE"];
-            _manPolice = createGroup west createUnit [selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"];
+            _manPolice = createGroup TRGM_VAR_FriendlySide createUnit [selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"];
             _manPolice setDir (floor(random 360));
             _manPolice setBehaviour "SAFE";
     //Police
@@ -390,7 +390,7 @@ if (isnil "fncMedicalParamedicLight") then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = true;
                     _thisIsDirectionAwayFromAO = true;
@@ -411,7 +411,7 @@ if (isnil "fncMedicalParamedicLight") then {
                 if (_flatPos select 0 > 0) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
-                    _thisSide = east;
+                    _thisSide = TRGM_VAR_EnemySide;
                     _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                     _thisAllowBarakade = false;
                     _thisIsDirectionAwayFromAO = true;

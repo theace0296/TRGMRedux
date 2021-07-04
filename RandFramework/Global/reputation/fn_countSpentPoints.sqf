@@ -3,7 +3,7 @@ format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOB
 if (isNil "TRGM_VAR_SpawnedVehicles") then {TRGM_VAR_SpawnedVehicles = []; publicVariable "TRGM_VAR_SpawnedVehicles";};
 _SpentCount = 0;
 {
-   if ((side _x) isEqualTo West) then
+   if ((side _x) isEqualTo TRGM_VAR_FriendlySide) then
    {
            //_SpawnedUnit setVariable ["RepCost", 1];
            _var = _x getVariable "RepCost";

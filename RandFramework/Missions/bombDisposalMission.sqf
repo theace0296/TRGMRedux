@@ -145,7 +145,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             if (_flatPosSentry select 0 > 0) then {
                 _thisPosAreaOfCheckpoint = _flatPosSentry;
                 _thisRoadOnly = false;
-                _thisSide = east;
+                _thisSide = TRGM_VAR_EnemySide;
                 _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
                 _thisAllowBarakade = false;
                 _thisIsDirectionAwayFromAO = true;

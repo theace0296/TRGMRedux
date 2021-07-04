@@ -51,7 +51,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     if (_flatPos select 0 > 0) then {
         _thisPosAreaOfCheckpoint = _flatPos;
         _thisRoadOnly = true;
-        _thisSide = east;
+        _thisSide = TRGM_VAR_EnemySide;
         _thisUnitTypes = [(call sRifleman), (call sRifleman), (call sRifleman), (call sMachineGunMan), (call sEngineer), (call sEngineer), (call sMedic), (call sAAMan)];
         _thisAllowBarakade = true;
         _thisIsDirectionAwayFromAO = true;
@@ -66,7 +66,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     missionNamespace setVariable[_flagName, _flag, true];
     _flag setflagAnimationPhase 1;
     _flag setFlagTexture "\A3\Data_F\Flags\flag_red_CO.paa";
-    _flag setVariable["TRGM_VAR_flagSide", east, true];
+    _flag setVariable["TRGM_VAR_flagSide", TRGM_VAR_EnemySide, true];
     _flag setVariable ["ObjectiveParams", [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
     missionNamespace setVariable [format ["missionObjectiveParams%1", _iTaskIndex], [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
 
@@ -76,7 +76,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         localize "STR_TRGM2_FlagLowerCallSupply", // Title of the action
         "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", // Idle icon shown on screen
         "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", // Progress icon shown on screen
-        "_this distance _target < 35 && _target getVariable [""TRGM_VAR_flagSide"", east] != west", // Condition for the action to be shown
+        "_this distance _target < 35 && _target getVariable [""TRGM_VAR_flagSide"", TRGM_VAR_EnemySide] != TRGM_VAR_FriendlySide", // Condition for the action to be shown
         "_caller distance _target < 35", // Condition for the action to progress
         {}, // Code executed when action starts
         {
@@ -99,13 +99,13 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             params ["_flag", "_caller", "_actionId", "_arguments"];
             _arguments
             params ["_iTaskIndex"];
-            _flag setVariable["TRGM_VAR_flagSide", west, true];
+            _flag setVariable["TRGM_VAR_flagSide", TRGM_VAR_FriendlySide, true];
             _flag setVariable["Lowered", true, true];
         }, // Code executed on completion
         {
             params ["_flag", "_caller", "_actionId", "_arguments"];
             _flag setFlagAnimationPhase 1;
-            _side = _flag setVariable["TRGM_VAR_flagSide", east, true];
+            _side = _flag setVariable["TRGM_VAR_flagSide", TRGM_VAR_EnemySide, true];
             _flag setFlagTexture "\A3\Data_F\Flags\flag_red_CO.paa";
         }, // Code executed on interrupted
         [_iTaskIndex], // Arguments passed to the scripts as _this select 3
@@ -130,9 +130,9 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             };
         };
 
-        [EAST, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
+        [TRGM_VAR_EnemySide, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
-        [EAST, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
+        [TRGM_VAR_EnemySide, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
 
         (format[localize "STR_TRGM2_MinUntilSupplyChopperInArea", "5:00"]) call TRGM_GLOBAL_fnc_notifyGlobal;
@@ -156,7 +156,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         publicVariable "TRGM_VAR_dropCrate";
 
         private _airToUse = selectRandom(call SupplySupportChopperOptions);
-        private _heloGroup = createGroup west;
+        private _heloGroup = createGroup TRGM_VAR_FriendlySide;
         private _spawnPos = _flag getRelPos[3000, random 360];
         private _exitPos = _flag getRelPos[25000, random 360];
 
@@ -240,9 +240,9 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             sleep 2;
             !TRGM_VAR_dropCrate;
         };
-        [EAST, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
+        [TRGM_VAR_EnemySide, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
-        [EAST, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
+        [TRGM_VAR_EnemySide, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
 
         (format[localize "STR_TRGM2_MinUntilSupplyChopperInArea", "5:00"]) call TRGM_GLOBAL_fnc_notifyGlobal;
@@ -262,7 +262,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         sleep 300; //wait 5 mins before supply drop in area
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;
 
-        _heloGroup = createGroup west;
+        _heloGroup = createGroup TRGM_VAR_FriendlySide;
         _spawnPos = _flag getRelPos[3000, random 360];
         _exitPos = _flag getRelPos[25000, random 360];
         airDropHelo1 = createVehicle [_airToUse, [(_spawnPos select 0), (_spawnPos select 1)], [], 0, "FLY"];

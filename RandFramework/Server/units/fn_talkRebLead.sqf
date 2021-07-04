@@ -1,7 +1,7 @@
 params ["_thisCiv", "_caller"];
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
-if (side _caller isEqualTo west) then {
+if (side _caller isEqualTo TRGM_VAR_FriendlySide) then {
 
     [_thisCiv] remoteExec ["removeAllActions", 0, true];
 

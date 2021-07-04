@@ -19,7 +19,7 @@ if (_bAllowAmbush) then {
     _nearestHidingPlaces = _nearestHidingPlaces - _HidingPlacesTooClose;
 
     if (count _nearestHidingPlaces > 5) then {
-        _ambushGroup = createGroup east;
+        _ambushGroup = createGroup TRGM_VAR_EnemySide;
 
         _groupSize = selectRandom [5,6,7];
         _iCount = 0;

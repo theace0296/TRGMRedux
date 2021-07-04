@@ -52,7 +52,7 @@ if (count _TowersNear > 0) then {
                 ["Mission Events: Comms 5", true] call TRGM_GLOBAL_fnc_log;
                 //1 in (_maxGroups*2) chance of having an AA/AT guy
 
-                _DiamPatrolGroupTower = createGroup east;
+                _DiamPatrolGroupTower = createGroup TRGM_VAR_EnemySide;
                     if (random 1 < .50) then {
                         (call sAAManToUse) createUnit [[_wayX, _wayY], _DiamPatrolGroupTower];
                         _iHasAA = 1;

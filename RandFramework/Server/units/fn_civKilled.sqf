@@ -6,7 +6,7 @@ if (!(_aceSource isEqualTo objNull)) then {
     _killer = _aceSource;
 };
 
-if (side _killer isEqualTo west && str(_killed) != str(_killer)) then {
+if (side _killer isEqualTo TRGM_VAR_FriendlySide && str(_killed) != str(_killer)) then {
     TRGM_VAR_bCivKilled =  true; publicVariable "TRGM_VAR_bCivKilled";
 
     TRGM_VAR_CivDeathCount = TRGM_VAR_CivDeathCount + 1;

@@ -113,7 +113,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _pushThrough = true;
 
         _convoyArr = [
-            EAST, // Side of created convoy group
+            TRGM_VAR_EnemySide, // Side of created convoy group
             _convoyVehicleClasses, // Classnames of vehicles to create for convoy (size of this array is also the number of vehicles created)
             _convoyStartPosition, // Spawn position of convoy
             _poshVehPos, // Final destination of convoy
@@ -165,7 +165,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _iWait = (420 * (_iTaskIndex + 1)) + floor(random 300);
             sleep floor(random 120);
             _sMessageOne = format["The convoy is due to depart at %1", (daytime  + (_iWait/3600) call BIS_fnc_timeToString)];
-            [[west, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
+            [[TRGM_VAR_FriendlySide, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
             [_sMessageOne] call TRGM_GLOBAL_fnc_notifyGlobal;
 
             [_iWait, _iTaskIndex] spawn {
@@ -199,7 +199,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         } forEach units _hvtGroup;
 
         _sMessageTwo = format["%1 is in the area and on way to AO (position is tracked and marked on map",name _mainHVT];
-        [[west, "HQ"],_sMessageTwo] remoteExec ["sideChat", 0];
+        [[TRGM_VAR_FriendlySide, "HQ"],_sMessageTwo] remoteExec ["sideChat", 0];
         [_sMessageTwo] call TRGM_GLOBAL_fnc_notifyGlobal;
 
         _mrkMeetingHVTMarker = nil;

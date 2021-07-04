@@ -47,7 +47,7 @@ while {_iCount <= _unitCount} do
     };
     _sideCivGroup = nil;
     if (_bIsRebels) then {
-        _sideCivGroup = createGroup west;
+        _sideCivGroup = createGroup TRGM_VAR_FriendlySide;
     }
     else {
         _sideCivGroup = createGroup Civilian;

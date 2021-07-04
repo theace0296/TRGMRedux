@@ -1,13 +1,4 @@
-/*
 
-["Populating AO222 please wait..."] call TRGM_GLOBAL_fnc_notify;
-_percentage = 0;
-while {_percentage < 100} do {
-    [format["Populating AO please wait... %1 %", _percentage]] call TRGM_GLOBAL_fnc_notify;
-    _percentage = _percentage + 1;
-    sleep 0.2;
-};
-*/
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 if (isServer) then {
 
@@ -31,7 +22,7 @@ if (isServer) then {
 
         _thisPosAreaOfCheckpoint = _flatPos;
         _thisRoadOnly = true;
-        _thisSide = west;
+        _thisSide = TRGM_VAR_FriendlySide;
         _thisUnitTypes = (call FriendlyCheckpointUnits);
         _thisAllowBarakade = true;
         _thisIsDirectionAwayFromAO = false;

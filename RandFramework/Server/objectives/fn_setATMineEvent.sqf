@@ -49,7 +49,7 @@ if (_currentATFieldPos select 0 != 0) then {
 
         _pos1 = _mainVeh getPos [5,(floor random 360)];
         _pos2 = _mainVeh getPos [5,(floor random 360)];
-        _group = createGroup west;
+        _group = createGroup TRGM_VAR_FriendlySide;
         _sUnitType = selectRandom (call FriendlyCheckpointUnits);
 
         _guardUnit1 = _group createUnit [_sUnitType,_pos1,[],0,"NONE"];

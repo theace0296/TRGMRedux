@@ -35,7 +35,7 @@ if (_condition isEqualType {}) then {
 if (_condition) then {
     {
         _group = _x;
-        if (!(_group in _groupsAlerted) && {(side _group isEqualTo east || side _group isEqualTo independent)}) then {
+        if (!(_group in _groupsAlerted) && {(side _group isEqualTo TRGM_VAR_EnemySide || side _group isEqualTo TRGM_VAR_InsSide)}) then {
             _groupLeader = leader _group;
             if (!((vehicle _groupLeader) isKindOf "Air") && {([_groupLeader] call TRGM_GLOBAL_fnc_getRealPos) distance _centerPos < _radius}) then {
                 {

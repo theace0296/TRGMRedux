@@ -134,7 +134,7 @@ if (!isNil "chopper1" && {_airTransClassName != typeOf chopper1}) then {
     {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
     chopper1 = createVehicle [_airTransClassName, ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "NONE"];
     createVehicleCrew chopper1;
-    crew vehicle chopper1 joinSilent createGroup WEST;
+    crew vehicle chopper1 joinSilent createGroup TRGM_VAR_FriendlySide;
     chopper1 setVehicleVarName "chopper1";
     publicVariable "chopper1";
     chopper1 allowDamage false;
@@ -165,7 +165,7 @@ if (!isNil "chopper2" && {_airSupClassName != typeOf chopper2}) then {
     {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
     chopper2 = createVehicle [_airSupClassName, ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "NONE"];
     createVehicleCrew chopper2;
-    crew vehicle chopper2 joinSilent createGroup WEST;
+    crew vehicle chopper2 joinSilent createGroup TRGM_VAR_FriendlySide;
     chopper2 setVehicleVarName "chopper2";
     publicVariable "chopper2";
     chopper2 allowDamage false;
@@ -191,7 +191,7 @@ TRGM_VAR_transportHelosToGetActions = [];
         _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
         _westFaction = (TRGM_VAR_AllFactionData select _friendlyFactionIndex) select 0;
         if (getNumber(configFile >> "CfgFactionClasses" >> _faction >> "side") isEqualTo 1 && {_faction != _westFaction}) then {
-            _newVehClass = [_x, WEST] call TRGM_GLOBAL_fnc_getFactionVehicle;
+            _newVehClass = [_x, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
             if (!isNil "_newVehClass") then {
                 private _pos = getPosATL _x;
                 private _dir = getDir _x;
@@ -209,7 +209,7 @@ TRGM_VAR_transportHelosToGetActions = [];
                         sleep 0.01;
                         private _newVeh = createVehicle [_newVehClass, _pos, [], 0, "NONE"];
                         createVehicleCrew _newVeh;
-                        crew vehicle _newVeh joinSilent createGroup WEST;
+                        crew vehicle _newVeh joinSilent createGroup TRGM_VAR_FriendlySide;
                         _newVeh setDir _dir;
                         _newVeh allowDamage false;
                         _newVeh setPos (_pos vectorAdd [0,0,0.1]);
@@ -401,7 +401,7 @@ _iEnemyFlashLightOption = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SELEC
 if (_iEnemyFlashLightOption isEqualTo 0) then {_iEnemyFlashLightOption = selectRandom [1,2]}; //1=yes, 2=no
 if (_iEnemyFlashLightOption isEqualTo 1) then {
     {
-        if ((side _x) isEqualTo East) then
+        if ((side _x) isEqualTo TRGM_VAR_EnemySide) then
         {
             if (isNil { _x getVariable "ambushUnit" }) then {
                 _unit = _x;

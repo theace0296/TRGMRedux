@@ -39,7 +39,7 @@ opforPresentAtBaseTrigger = createTrigger["EmptyDetector",_HQpos];
 opforPresentAtBaseTrigger setVehicleVarName "opforPresentAtBaseTrigger";
 opforPresentAtBaseTrigger setTriggerArea[300,300,0,false];
 opforPresentAtBaseTrigger setTriggerActivation["EAST","PRESENT",true];
-opforPresentAtBaseTrigger setTriggerStatements["this","[West,""HQ""] sidechat 'This is HQ, there are enemies near our head quarters!'", ""];
+opforPresentAtBaseTrigger setTriggerStatements["this","[TRGM_VAR_FriendlySide,""HQ""] sidechat 'This is HQ, there are enemies near our head quarters!'", ""];
 publicVariable "opforPresentAtBaseTrigger";
 
 SERVER = (group (missionNamespace getvariable ["BIS_functions_mainscope",objnull])) createUnit ["Logic",[0,0,0],[],0,"CAN_COLLIDE"];
@@ -53,7 +53,7 @@ TRGM_Logic setPos _HQpos;
 TRGM_Logic setVehicleVarName "TRGM_Logic";
 publicVariable "TRGM_Logic";
 
-private _group = [getMarkerPos "mrkHQ", WEST, ["B_officer_F"]] call BIS_fnc_spawnGroup;
+private _group = [getMarkerPos "mrkHQ", TRGM_VAR_FriendlySide, ["B_officer_F"]] call BIS_fnc_spawnGroup;
 HQMan = units _group select 0;
 HQMan setVehicleVarName "HQMan";
 HQMan allowDamage false;
@@ -120,7 +120,7 @@ private _helo_spawn = {
     [_safePos, sizeOf _name] call TRGM_GLOBAL_fnc_hideTerrainObjects;
     private _helo = createVehicle [_name, _safePos, [], 0, "NONE"];
     createVehicleCrew _helo;
-    crew vehicle _helo joinSilent createGroup WEST;
+    crew vehicle _helo joinSilent createGroup TRGM_VAR_FriendlySide;
     _helo allowDamage false;
     _helo setpos _safePos;
     _helo setVelocity [0,0,0];
