@@ -14,37 +14,122 @@ _unarmedcars = []; _armedcars = []; _trucks = []; _apcs = []; _tanks = []; _arti
             if (" (" in _category) then {
                 _category = (_category splitString " (") select 0
             };
-            if (_calloutName isEqualTo "mortar") then {
+            if (_calloutName isEqualTo "mortar" || _className isKindOf "StaticMortar") then {
                 _mortars pushBackUnique _className;
             } else {
-                switch (_category) do {
-                    case "Turrets":       { _turrets pushBackUnique _className; };
-                    case "Boats":           { _boats pushBackUnique _className; };
-                    case "Boat":           { _boats pushBackUnique _className; };
-                    case "Artillery":       { _artillery pushBackUnique _className; };
-                    case "Anti-Air":       { _antiair pushBackUnique _className; };
-                    case "Anti-aircraft": { _antiair pushBackUnique _className; };
-                    case "Planes":           { _planes pushBackUnique _className; };
-                    case "Plane":           { _planes pushBackUnique _className; };
-                    case "APCs":           { _apcs pushBackUnique _className; };
-                    case "APC":           { _apcs pushBackUnique _className; };
-                    case "IFV":           { _apcs pushBackUnique _className; };
-                    case "Tanks":           { _tanks pushBackUnique _className; };
-                    case "Tank":           { _tanks pushBackUnique _className; };
-                    case "Helicopters":   { if (_isArmed && !_isTransport) then { _armedhelicopters pushBackUnique _className; } else { _unarmedhelicopters pushBackUnique _className; }; };
-                    case "Helicopter":       { if (_isArmed && !_isTransport) then { _armedhelicopters pushBackUnique _className; } else { _unarmedhelicopters pushBackUnique _className; }; };
-                    case "Cars":           { if (_isArmed && !_isTransport) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
-                    case "Car":           { if (_isArmed && !_isTransport) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
-                    case "Bikes":         { if (_isArmed && !_isTransport) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
-                    case "MRAP":           { if (_isArmed && !_isTransport) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
-                    case "Truck":           { if (_isArmed && !_isTransport) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
-                    case "Trucks":           { if (_isArmed && !_isTransport) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
-                    default { };
+                if (_className isKindOf "StaticMGWeapon" || _className isKindOf "StaticGrenadeLauncher") then {
+                    _turrets pushBackUnique _className;
+                } else {
+                    switch (_category) do {
+                        case "Turrets":       { _turrets pushBackUnique _className; };
+                        case "Boats":           { _boats pushBackUnique _className; };
+                        case "Boat":           { _boats pushBackUnique _className; };
+                        case "Artillery":       { _artillery pushBackUnique _className; };
+                        case "Anti-Air":       { _antiair pushBackUnique _className; };
+                        case "Anti-aircraft": { _antiair pushBackUnique _className; };
+                        case "Planes":           { _planes pushBackUnique _className; };
+                        case "Plane":           { _planes pushBackUnique _className; };
+                        case "APCs":           { _apcs pushBackUnique _className; };
+                        case "APC":           { _apcs pushBackUnique _className; };
+                        case "IFV":           { _apcs pushBackUnique _className; };
+                        case "Tanks":           { _tanks pushBackUnique _className; };
+                        case "Tank":           { _tanks pushBackUnique _className; };
+                        case "Helicopters":   { if (_isArmed) then { _armedhelicopters pushBackUnique _className; } else { _unarmedhelicopters pushBackUnique _className; }; };
+                        case "Helicopter":       { if (_isArmed) then { _armedhelicopters pushBackUnique _className; } else { _unarmedhelicopters pushBackUnique _className; }; };
+                        case "Cars":           { if (_isArmed) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
+                        case "Car":           { if (_isArmed) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
+                        case "Bikes":         { if (_isArmed) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
+                        case "MRAP":           { if (_isArmed) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
+                        case "Truck":           { if (_isArmed) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
+                        case "Trucks":           { if (_isArmed) then { _armedcars pushBackUnique _className; } else { if (_isTransport) then { _trucks pushBackUnique _className; } else { _unarmedcars pushBackUnique _className; }; }; };
+                        default { };
+                    };
                 };
             };
         };
     };
 } forEach _vehData;
+private _combinedWheeled = _unarmedcars + _armedcars + _trucks;
+if (_unarmedcars isEqualTo [] && count _combinedWheeled > 0) then {
+    _unarmedcars = _combinedWheeled;
+};
+if (_armedcars isEqualTo [] && count _combinedWheeled > 0) then {
+    _armedcars = _combinedWheeled;
+};
+if (_trucks isEqualTo [] && count _combinedWheeled > 0) then {
+    _trucks = _combinedWheeled;
+};
+
+private _combinedArmored = _apcs + _tanks;
+if (_apcs isEqualTo [] && count _combinedArmored > 0) then {
+    _apcs = _combinedArmored;
+};
+if (_tanks isEqualTo [] && count _combinedArmored > 0) then {
+    _tanks = _combinedArmored;
+};
+
+private _combinedAntiAir = _antiair + _turrets;
+if (_antiair isEqualTo [] && count _combinedAntiAir > 0) then {
+    _antiair = _combinedAntiAir;
+};
+if (_turrets isEqualTo [] && count _combinedAntiAir > 0) then {
+    _turrets = _combinedAntiAir;
+};
+
+private _combinedHelicopters = _unarmedhelicopters + _armedhelicopters;
+if (_unarmedhelicopters isEqualTo [] && count _combinedHelicopters > 0) then {
+    _unarmedhelicopters = _combinedHelicopters;
+};
+if (_armedhelicopters isEqualTo [] && count _combinedHelicopters > 0) then {
+    _armedhelicopters = _combinedHelicopters;
+};
+if (_planes isEqualTo [] && count _armedhelicopters > 0) then {
+    _planes = _armedhelicopters;
+};
+
+if (_boats isEqualTo []) then {
+    private _arbitraryVeh = _vehData select 0;
+    switch ((configFile >> "CfgVehicles" >> (_arbitraryVeh select 0) >> "side")) do {
+        case 0: {
+            _boats = ["O_G_Boat_Transport_01_F"];
+        };
+        case 1: {
+            _boats = ["B_G_Boat_Transport_01_F"];
+        };
+        case 2: {
+            _boats = ["I_G_Boat_Transport_01_F"];
+        };
+        default {
+            _boats = ["B_G_Boat_Transport_01_F"];
+        };
+    };
+};
+
+if (_mortars isEqualTo [] && _artillery isEqualTo []) then {
+    private _arbitraryVeh = _vehData select 0;
+    switch ((configFile >> "CfgVehicles" >> (_arbitraryVeh select 0) >> "side")) do {
+        case 0: {
+            _mortars = ["O_G_Mortar_01_F"];
+        };
+        case 1: {
+            _mortars = ["B_G_Mortar_01_F"];
+        };
+        case 2: {
+            _mortars = ["I_G_Mortar_01_F"];
+        };
+        default {
+            _mortars = ["B_G_Mortar_01_F"];
+        };
+    };
+};
+
+private _combinedArty = _artillery + _mortars;
+if (_artillery isEqualTo [] && count _combinedArty > 0) then {
+    _artillery = _combinedArty;
+};
+if (_mortars isEqualTo [] && count _combinedArty > 0) then {
+    _mortars = _combinedArty;
+};
 
 private _vehArray = [_unarmedcars, _armedcars, _trucks, _apcs, _tanks, _artillery, _antiair, _turrets, _unarmedhelicopters, _armedhelicopters, _planes, _boats, _mortars];
 _vehArray;
@@ -116,6 +201,25 @@ Example output for VDV:
     [],
     ["RHS_Mi24P_vdv","RHS_Mi24V_vdv","RHS_Mi8mt_vdv","RHS_Mi8mt_Cargo_vdv","RHS_Mi8MTV3_vdv","RHS_Mi8mtv3_Cargo_vdv","RHS_Mi8MTV3_heavy_vdv","RHS_Mi8T_vdv","RHS_Mi8AMT_vdv"],
     [],
+    []
+]
+*/
+
+/*
+Example output for West Germany:
+[
+    ["gm_gc_army_p601","gm_gc_army_ural375d_refuel","gm_gc_army_ural375d_medic","gm_gc_army_ural375d_cargo","gm_gc_army_ural4320_repair","gm_gc_army_ural4320_cargo","gm_gc_army_ural4320_reammo","gm_gc_army_ural44202","gm_gc_army_uaz469_cargo","gm_gc_army_uaz469_spg9","gm_gc_army_uaz469_dshkm"],
+    ["gm_gc_army_p601","gm_gc_army_ural375d_refuel","gm_gc_army_ural375d_medic","gm_gc_army_ural375d_cargo","gm_gc_army_ural4320_repair","gm_gc_army_ural4320_cargo","gm_gc_army_ural4320_reammo","gm_gc_army_ural44202","gm_gc_army_uaz469_cargo","gm_gc_army_uaz469_spg9","gm_gc_army_uaz469_dshkm"],
+    ["gm_gc_army_p601","gm_gc_army_ural375d_refuel","gm_gc_army_ural375d_medic","gm_gc_army_ural375d_cargo","gm_gc_army_ural4320_repair","gm_gc_army_ural4320_cargo","gm_gc_army_ural4320_reammo","gm_gc_army_ural44202","gm_gc_army_uaz469_cargo","gm_gc_army_uaz469_spg9","gm_gc_army_uaz469_dshkm"],
+    ["gm_gc_army_bmp1sp2","gm_gc_army_brdm2","gm_gc_army_brdm2um","gm_gc_army_btr60pa","gm_gc_army_btr60pb","gm_gc_army_btr60pu12"],
+    ["gm_gc_army_pt76b","gm_gc_army_t55","gm_gc_army_t55a","gm_gc_army_t55ak","gm_gc_army_t55am2","gm_gc_army_t55am2b"],
+    [],
+    ["gm_gc_army_zsu234v1"],
+    ["gm_gc_army_fagot_launcher_tripod","gm_gc_army_spg9_tripod","gm_gc_army_dshkm_aatripod"],
+    ["gm_gc_airforce_mi2p","gm_gc_airforce_mi2sr"],
+    ["gm_gc_airforce_mi2t","gm_gc_airforce_mi2us","gm_gc_airforce_mi2urn"],
+    ["gm_gc_airforce_l410t","gm_gc_airforce_l410s_salon"],
+    ["B_G_Boat_Transport_01_F"],
     []
 ]
 */

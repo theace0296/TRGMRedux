@@ -21,7 +21,7 @@ if (bAllAtBase2 && TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted) then {
 
     sleep 10;
 
-    if (TRGM_VAR_iMissionParamType isEqualTo 5) then {
+    if (call TRGM_GETTER_fnc_bIsCampaign) then {
         ["end1", true, 7] remoteExec ["BIS_fnc_endMission"];
     }
     else {

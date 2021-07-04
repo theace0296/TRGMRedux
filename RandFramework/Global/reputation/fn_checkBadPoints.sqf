@@ -56,7 +56,7 @@ while {true} do {
         _bRepWorse = true;
         if (_CurrentRank > _LastRank) then {_bRepWorse = false};
         _LastRank = _CurrentRank;
-        if (TRGM_VAR_iMissionParamType isEqualTo 5) then {
+        if (call TRGM_GETTER_fnc_bIsCampaign) then {
             _sRankIcon = "";
             _sRankMessage = "";
             //HERE HERE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -62,5 +62,12 @@ _riflemen = []; _leaders = []; _atsoldiers = []; _aasoldiers = []; _engineers = 
     };
 } forEach _unitData;
 
-private _unitArray = [_riflemen, _leaders, _atsoldiers, _aasoldiers, _engineers, _grenadiers, _medics, _autoriflemen, _snipers, _explosiveSpecs, _pilots, _uavOperators];
+private _unitArray = [];
+{
+    if (count _x > 0) then {
+        _unitArray pushBack _x;
+    } else {
+        _unitArray pushBack _riflemen;
+    };
+} forEach [_riflemen, _leaders, _atsoldiers, _aasoldiers, _engineers, _grenadiers, _medics, _autoriflemen, _snipers, _explosiveSpecs, _pilots, _uavOperators];
 _unitArray;

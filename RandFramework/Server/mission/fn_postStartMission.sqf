@@ -1,6 +1,6 @@
 
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
-_isCampaign = (TRGM_VAR_iMissionParamType isEqualTo 5);
+_isCampaign = (call TRGM_GETTER_fnc_bIsCampaign);
 
 waituntil {sleep 2; TRGM_VAR_CoreCompleted};
 

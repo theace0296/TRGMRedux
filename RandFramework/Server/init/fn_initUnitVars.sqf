@@ -126,7 +126,7 @@ if (count TRGM_VAR_AdvControls < 14) then {
 // 5  = Campaign
 
 /////// IsCampaign ///////
-TRGM_GETTER_fnc_bIsCampaign = { TRGM_VAR_iMissionParamType != 5 };
+TRGM_GETTER_fnc_bIsCampaign = { TRGM_VAR_iMissionParamType isEqualTo 5 };
 publicVariable "TRGM_GETTER_fnc_bIsCampaign";
 
 /////// HasThreeChoosableAOLocations ///////

@@ -312,13 +312,22 @@ if (!isMultiplayer) then {
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 TRGM_VAR_CoreCompleted = true; publicVariable "TRGM_VAR_CoreCompleted";
+TRGM_VAR_BadPoints = 0; publicVariable "TRGM_VAR_BadPoints";
+TRGM_VAR_BadPointsReason = ""; publicVariable "TRGM_VAR_BadPointsReason";
+TRGM_VAR_MaxBadPoints = 1; publicVariable "TRGM_VAR_MaxBadPoints";
+[format["Mission Core: %1", "BadPointsSet"], true] call TRGM_GLOBAL_fnc_log;
 
-if (TRGM_VAR_iMissionParamType isEqualTo 5) then {
+if (call TRGM_GETTER_fnc_bIsCampaign) then {
     if (isServer) then {
         call TRGM_SERVER_fnc_initCampaign;
     };
-}
-else {
+    // Campaign doesn't load tasks right away, fake mission loaded as to not confuse players.
+    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
+    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
+    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
+    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
+    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
+} else {
     call TRGM_SERVER_fnc_startMission;
 };
 [format["Mission Core: %1", "InitCampaign/StartMission ran"], true] call TRGM_GLOBAL_fnc_log;
@@ -328,14 +337,13 @@ waitUntil { TRGM_VAR_MissionLoaded; };
 
 [format["Mission Core: %1", "TRGM_VAR_MissionLoaded true"], true] call TRGM_GLOBAL_fnc_log;
 
-[format["Mission Core: %1", "BadPointsSet"], true] call TRGM_GLOBAL_fnc_log;
 {
     _x setVariable ["DontDelete",true];
 } forEach nearestObjects [getMarkerPos "mrkHQ", ["all"], 2000];
 [format["Mission Core: %1", "DontDeleteSet"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
-if (isMultiplayer && {!(TRGM_VAR_iMissionParamType isEqualTo 5)}) then {
+if (isMultiplayer && {!(call TRGM_GETTER_fnc_bIsCampaign)}) then {
     [] spawn TRGM_SERVER_fnc_checkAnyPlayersAlive;
 };
 

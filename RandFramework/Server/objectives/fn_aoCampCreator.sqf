@@ -92,7 +92,7 @@ if (isServer) then {
 
 
 
-        if (TRGM_VAR_iMissionParamType isEqualTo 5) then {
+        if (call TRGM_GETTER_fnc_bIsCampaign) then {
             _flatPos4b = nil;
             _flatPos4b = [_flatPosCampFire , 5, 10, 3, 0, 0.5, 0,[],[_behindBlockPos,_behindBlockPos],endMissionBoard2] call TRGM_GLOBAL_fnc_findSafePos;
             endMissionBoard2 setPos _flatPos4b;

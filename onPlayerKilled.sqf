@@ -24,7 +24,7 @@ if (player distance getMarkerPos "MrkHQ" > TRGM_VAR_SaveZoneRadius) then {
         publicVariable "TRGM_VAR_KilledPositions";
 
         _iPointsToAdd = 0.2;
-        if (call TRGM_GETTER_fnc_bIsCampaign) then { //if not campaign, then work out how many rep points team gain when a player is killed
+        if !(call TRGM_GETTER_fnc_bIsCampaign) then { //if not campaign, then work out how many rep points team gain when a player is killed
             _justPlayers = allPlayers - entities "HeadlessClient_F";
             _iPlayerCount = count _justPlayers;
             _iPointsToAdd = 3 / ((_iPlayerCount / 3) * 1.8);
