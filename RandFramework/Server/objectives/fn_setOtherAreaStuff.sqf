@@ -1,6 +1,7 @@
 ///*orangestest
 
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+call TRGM_SERVER_fnc_initMissionVars;
 _mainObjPos = TRGM_VAR_ObjectivePossitions select 0;
 
 

@@ -9,6 +9,8 @@ params [
 ];
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
 
+call TRGM_SERVER_fnc_initMissionVars;
+
 _dAngleAdustPerLoop = 0;
 _bHasVehicle = false;
 
@@ -108,6 +110,7 @@ if (TRGM_VAR_AllowAOFires && _selectRandomW && !_bThisMissionCivsOnly) then {
 };
 
 //if main var to set friendly insurg and also, if our random selction above plus 25/75 chance is true, then the units will be dressed as insurgents (player will not know if friendly of enemy)
+TRGM_VAR_ToUseMilitia_Side = false; publicVariable "TRGM_VAR_ToUseMilitia_Side";
 if ((_bThisMissionCivsOnly || (!_bIsMainObjective && random 1 < .25))) then {
     TRGM_VAR_ToUseMilitia_Side = true; publicVariable "TRGM_VAR_ToUseMilitia_Side";
 };

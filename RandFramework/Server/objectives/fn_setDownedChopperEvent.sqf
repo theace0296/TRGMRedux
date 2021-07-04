@@ -1,5 +1,6 @@
 
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+call TRGM_SERVER_fnc_initMissionVars;
 
 _iVictimType = selectRandom [1,2,3];  //1=reporter, 2=medic, 3=friendlyPilot
 _completedMessage = "";

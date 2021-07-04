@@ -1,5 +1,6 @@
 
 format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+call TRGM_SERVER_fnc_initMissionVars;
 _requiredItemIndex = selectRandom [0,1,2];
 requiredItemsCount = [10,5,2] select _requiredItemIndex;
 RequestedMedicalItem = ["FirstAidKit","FirstAidKit","Medikit"] select _requiredItemIndex;

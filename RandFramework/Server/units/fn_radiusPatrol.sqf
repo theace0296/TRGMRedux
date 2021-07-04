@@ -89,39 +89,30 @@ _iWaypointLoopCount = 1;
 while {!_bWaypointsAdded} do {
     if (_iWaypointCount isEqualTo 1) then {
         _wp1 = _group addWaypoint [_wp1Pos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp1Pos)],_wp1Pos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     if (_iWaypointCount isEqualTo 2) then {
         _wp1b = _group addWaypoint [_wp1bPos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp1bPos)],_wp1bPos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     if (_iWaypointCount isEqualTo 3) then {
         _wp2 = _group addWaypoint [_wp2Pos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp2Pos)],_wp2Pos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     if (_iWaypointCount isEqualTo 4) then {
         _wp2b = _group addWaypoint [_wp2bPos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp2bPos)],_wp2bPos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     if (_iWaypointCount isEqualTo 5) then {
         _wp3 = _group addWaypoint [_wp3Pos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp3Pos)],_wp3Pos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     if (_iWaypointCount isEqualTo 6) then {
         _wp3b = _group addWaypoint [_wp3bPos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp3bPos)],_wp3bPos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     if (_iWaypointCount isEqualTo 7) then {
         _wp4 = _group addWaypoint [_wp4Pos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp4Pos)],_wp4Pos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     if (_iWaypointCount isEqualTo 8) then {
         _wp4b = _group addWaypoint [_wp4bPos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp4bPos)],_wp4bPos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     if (_iWaypointCount isEqualTo 9) then {
         _wp5 = _group addWaypoint [_wp5Pos, 0];
-        if (bDebugging) then {[format["(%1 - %2)",_iWaypointCount, str(_wp5Pos)],_wp5Pos] spawn TRGM_GLOBAL_fnc_debugDotMarker;};
     };
     _iWaypointCount = _iWaypointCount + 1;
     _iWaypointLoopCount = _iWaypointLoopCount + 1;

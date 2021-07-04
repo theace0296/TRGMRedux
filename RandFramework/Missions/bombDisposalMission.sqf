@@ -35,6 +35,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
      * --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     */
     params ["_markerType","_objectiveMainBuilding","_centralAO_x","_centralAO_y","_roadSearchRange", "_bCreateTask", "_iTaskIndex", "_bIsMainObjective", ["_args", []]];
+    call TRGM_SERVER_fnc_initMissionVars;
     if (_markerType != "empty") then { _markerType = "hd_unknown"; }; // Set marker type here...
 
     //DEFUSED = false;
