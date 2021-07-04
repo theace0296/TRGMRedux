@@ -3,7 +3,7 @@ TRGM_VAR_useCustomFriendlyFaction = (["CustomFriendlyFaction", 0] call BIS_fnc_g
 publicVariable "TRGM_VAR_useCustomFriendlyFaction";
 
 if (isServer && TRGM_VAR_useCustomFriendlyFaction) then {
-    TRGM_VAR_WestUnarmedCars  =  ["B_T_MRAP_01_F","B_T_LSV_01_unarmed_F", "B_Truck_01_transport_F"]; publicVariable "TRGM_VAR_WestUnarmedCars"; // Combine transport vehicles and scout vehicles for now...
+    TRGM_VAR_WestUnarmedCars  =  ["B_T_MRAP_01_F","B_T_LSV_01_unarmed_F", "B_Truck_01_transport_F"]; publicVariable "TRGM_VAR_WestUnarmedCars";
     TRGM_VAR_WestArmedCars    =  ["B_T_MRAP_01_F"]; publicVariable "TRGM_VAR_WestArmedCars";
     TRGM_VAR_WestAPCs         =  ["B_APC_Tracked_01_rcws_F"]; publicVariable "TRGM_VAR_WestAPCs";
     TRGM_VAR_WestTanks        =  ["B_MBT_01_cannon_F"]; publicVariable "TRGM_VAR_WestTanks";
