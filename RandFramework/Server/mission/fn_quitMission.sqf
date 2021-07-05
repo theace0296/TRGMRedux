@@ -7,5 +7,5 @@
 //run this as a string?? use CALL command???
 
 // This seems to be not called by anything, should it be removed? - TheAce
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 // [InfSide%1, "failed"] remoteExec [FHQ_fnc_ttSetTaskState, 0], TRGM_VAR_iCampaignDay

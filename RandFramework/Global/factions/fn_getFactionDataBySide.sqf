@@ -1,5 +1,5 @@
 params[["_side", WEST]];
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 // _factionData = [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
 // Return format: [[faction1_className, faction1_displayName], [faction2_className, faction2_displayName], ... , [factionN_className, factionN_displayName]]

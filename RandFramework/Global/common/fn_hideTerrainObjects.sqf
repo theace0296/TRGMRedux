@@ -7,7 +7,7 @@
 #define CATEGORY_COMP           [MAP_TYPES_BUILDING,MAP_TYPES_WALL,MAP_TYPES_VEGETATION,MAP_TYPES_MISC]
 
 params ["_pos", "_radius", ["_excludes", []], ["_types", CATEGORIES, [[]]]];
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if !(isServer) exitWith {};
 

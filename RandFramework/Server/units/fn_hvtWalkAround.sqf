@@ -1,6 +1,6 @@
 params ["_objManName","_thisInitPos","_objMan","_walkRadius"];
 if (_fnc_scriptName != _fnc_scriptNameParent) then { //Reduce RPT Spam for this looping function...
-    format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+    format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 };
 
 _currentManPos = ([_objMan] call TRGM_GLOBAL_fnc_getRealPos);

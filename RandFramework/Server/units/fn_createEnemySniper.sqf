@@ -1,6 +1,6 @@
 
 params ["_targetPos"];
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 _targetPos = [_targetPos select 0, _targetPos select 1, 0]; //round (_targetPos select 2)];
 
 _spawnedUnit = nil;

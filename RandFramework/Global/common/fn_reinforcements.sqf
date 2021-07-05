@@ -24,7 +24,7 @@ _nul = [SIDE, "string", "string", number, bool, bool, bool, bool, bool, bool, bo
 _nul = [EAST, "spawnMrk", "LZMrk", 2, true, true, true, true, false, false, false] spawn TRGM_GLOBAL_fnc_reinforcements; <<
 
  ---------------------------------------------------------------------------------------------------------*/
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 FPSMAX=60; //60 FPS max
 FPSLIMIT=15; // 15 FPS min

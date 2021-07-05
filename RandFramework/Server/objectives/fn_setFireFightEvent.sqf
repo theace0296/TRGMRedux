@@ -1,6 +1,6 @@
 _posOfAO =  _this select 0;
 _eventType = _this select 1; //1=fullWar  2=AOOnly  3=WarzoneOnly 4=warzoneOnlyFullWar
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 call TRGM_SERVER_fnc_initMissionVars;
 
 _nearLocations = nearestLocations [_posOfAO, ["NameCity","NameCityCapital","NameVillage"], 1500];

@@ -1,5 +1,5 @@
 params ["_AllowedIntelToShow", "_FoundViaType"];
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (side player isEqualTo TRGM_VAR_FriendlySide) then {
     _IntelToShow = 0;

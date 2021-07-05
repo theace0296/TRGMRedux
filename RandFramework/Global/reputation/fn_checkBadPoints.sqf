@@ -1,4 +1,4 @@
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 if (isNil "TRGM_VAR_BadPoints") then {TRGM_VAR_BadPoints = 0; publicVariable "TRGM_VAR_BadPoints";};
 _lastRepPoints = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
 _lastBadPoints = TRGM_VAR_BadPoints;

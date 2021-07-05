@@ -23,7 +23,7 @@
 #define ROOF_CHECK 4
 #define ROOF_EDGE 2
 
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 private ["_center", "_units", "_buildingradius", "_putonRoof", "_fillEvenly", "_Zen_Extendposition", "_buildingsArray", "_buildingPosArray", "_buildingpositions", "_posArray", "_unitindex", "_j", "_building", "_posArray", "_randomindex", "_housePos", "_startangle", "_i", "_checkPos", "_hitcount", "_isRoof", "_edge", "_k", "_unUsedunits", "_array", "_sortHeight", "_Zen_insertionsort", "_Zen_ArrayShuffle", "_domove"];
 

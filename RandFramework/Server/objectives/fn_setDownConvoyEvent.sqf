@@ -1,6 +1,6 @@
 
 _bloodPools = ["BloodPool_01_Large_New_F","BloodSplatter_01_Large_New_F"];
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 //use IDAP with police car???
 _vehs = (call FriendlyUnarmedCar) + (call FriendlyMedicalTruck) + (call FriendlyArmoredCar) + (call FriendlyFuelTruck) + (call FriendlyFuelTruck) + (call FriendlyFuelTruck);

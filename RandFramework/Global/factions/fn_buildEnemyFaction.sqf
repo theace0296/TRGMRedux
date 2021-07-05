@@ -1,4 +1,4 @@
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 private _enemyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENEMY_FACTIONS_IDX;
 (TRGM_VAR_AllFactionData select _enemyFactionIndex) params ["_eastClassName", "_eastDisplayName"];

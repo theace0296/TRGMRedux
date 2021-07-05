@@ -1,4 +1,4 @@
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 //loop here, sleep 5 (doesnt need to be too fast looping!!)
 while {true} do {
     if (getPlayerUID player in TRGM_VAR_KilledPlayers && (vehicle player isEqualTo player) && alive(player)) then {

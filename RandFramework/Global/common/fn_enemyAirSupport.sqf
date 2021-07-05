@@ -2,7 +2,7 @@
 _SpottedPos = _this select 0;
 _IsAirType = _this select 1; // 1=AirToAir, 2=AirToGround, 3=Scout
 
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (isServer) then {
 

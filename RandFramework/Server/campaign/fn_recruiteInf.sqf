@@ -2,7 +2,7 @@
 params ["_object","_caller","_id","_params"];
 _params params ["_unitClass","_unitRole"];
 
-format["%1 called by %2", _fnc_scriptName, _fnc_scriptNameParent] call TRGM_GLOBAL_fnc_log;
+format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 //TRGM_VAR_CampaignRecruitUnitRifleman createUnit [[player] call TRGM_GLOBAL_fnc_getRealPos, group player];
 
