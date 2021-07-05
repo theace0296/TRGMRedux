@@ -73,7 +73,7 @@ const { throttling } = require('@octokit/plugin-throttling');
         url: repo.upload_url,
         headers,
         name: basename(releaseAsset),
-        file: readFileSync(releaseAsset),
+        data: readFileSync(releaseAsset),
       });
       endGroup();
     }
