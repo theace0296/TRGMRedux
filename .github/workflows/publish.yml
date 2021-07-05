@@ -19,6 +19,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+    needs: validate
     steps:
     - name: Checkout the source code
       uses: actions/checkout@master
@@ -30,6 +31,7 @@ jobs:
 
   build:
     runs-on: windows-latest
+    needs: [validate, lint]
     steps:
       - uses: actions/checkout@v2
       - name: Copy mission files to templates
