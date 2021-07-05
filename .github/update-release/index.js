@@ -43,11 +43,12 @@ const { throttling } = require('@octokit/plugin-throttling');
       throw new Error('Body was empty!');
     }
 
-    startGroup('Getting assets for the release...');
     startGroup('Getting list of repositories...');
     const allReleases = await github.repos.listReleases({ ...context.repo });
     const repos = allReleases.data;
     endGroup();
+
+    startGroup('Getting assets for the release...');
     const repo = repos.find(repo => repo.name === release);
     if (!repo.id || repo.id < 0) {
       throw new Error('Existing release could not be found!');
@@ -69,7 +70,7 @@ const { throttling } = require('@octokit/plugin-throttling');
       const headers = { 'content-type': contentType, 'content-length': contentLength };
       startGroup('Uploading release asset: ' + basename(releaseAsset) + '...');
       await github.repos.uploadReleaseAsset({
-        url: await this.getReleaseUploadURL(),
+        url: repo.upload_url,
         headers,
         name: basename(releaseAsset),
         file: readFileSync(releaseAsset),
