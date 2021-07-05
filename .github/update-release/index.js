@@ -48,11 +48,11 @@ const { throttling } = require('@octokit/plugin-throttling');
     const allReleases = await github.repos.listReleases({ ...context.repo });
     const repos = allReleases.data;
     endGroup();
-    const releaseID = repos.find(repo => repo.name === release)?.id;
-    if (!releaseID || releaseID < 0) {
+    const repo = repos.find(repo => repo.name === release);
+    if (!repo.id || repo.id < 0) {
       throw new Error('Existing release could not be found!');
     }
-    const existingAssets = (await github.repos.listAssetsForRelease({ ...context.repo, release_id: releaseID })).data;
+    const existingAssets = (await github.repos.listAssetsForRelease({ ...context.repo, release_id: repo.id })).data;
     endGroup();
 
     for (const existingAsset of existingAssets) {
