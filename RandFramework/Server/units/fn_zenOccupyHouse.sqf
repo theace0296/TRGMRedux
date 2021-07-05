@@ -36,7 +36,7 @@ _sortHeight = _this param [5, false, [true]];
 _domove = _this param [6, false, [true]];
 
 if (_center isEqualto [0, 0, 0]) exitwith {
-    player sideChat str "Zen_Occupy House Error : invalid position given.";
+    // player sideChat str "Zen_Occupy House Error : invalid position given.";
     diag_log "Zen_Occupy House Error : invalid position given.";
     ([])
 };
@@ -114,7 +114,7 @@ if (_buildingradius < 0) then {
 };
 
 if (count _buildingsArray isEqualTo 0) exitwith {
-    player sideChat str "Zen_Occupy House Error : No buildings found.";
+    // player sideChat str "Zen_Occupy House Error : No buildings found.";
     diag_log "Zen_Occupy House Error : No buildings found.";
     ([])
 };

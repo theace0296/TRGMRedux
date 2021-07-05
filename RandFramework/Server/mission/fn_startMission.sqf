@@ -42,13 +42,13 @@ _bAllowStart = true;
 if (_bAllowStart) then {
 
     if ((bAllAtBase2 && TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted) || !_isCampaign) then {
-        player allowdamage false;
+        // player allowdamage false;
         // titleText [localize "STR_TRGM2_mainInit_Loading", "BLACK FADED", 5];
         //sleep 3;
 
         if (_isCampaign) then {
             ["NEW_MISSION"] remoteExec ["TRGM_SERVER_fnc_setMissionBoardOptions",0,true];
-            if ((player getVariable ["calUAVActionID", -1]) != -1) then {
+            if (hasInterface && (player getVariable ["calUAVActionID", -1]) != -1) then {
                 player removeAction (player getVariable ["calUAVActionID", -1]);
                 player setVariable ["calUAVActionID", nil];
                 //["UAV no longer available"] call TRGM_GLOBAL_fnc_notify;
