@@ -115,6 +115,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+
+      - name: Install packages
+        run: |
+          Set-Location ${{ github.workspace }}/.github/update-release/
+          npm install
+        shell: pwsh
+
       - name: Update Release Assets
         uses: ./.github/update-release/
         env:
