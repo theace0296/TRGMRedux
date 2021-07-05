@@ -1,3 +1,4 @@
 copy.ps1
 launch.json
 tasks.json
+node_modules/

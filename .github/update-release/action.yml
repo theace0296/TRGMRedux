@@ -1,0 +1,26 @@
+
+name: 'Update Release'
+description: 'Update release assets'
+author: 'TheAce0296'
+inputs:
+  token:
+    description: 'Github token.'
+    required: true
+  path:
+    description: 'Path to folder containing files to be published.'
+    required: true
+  release:
+    description: 'Name of release.'
+    required: true
+  tag:
+    description: 'Tag of release.'
+    required: true
+  body:
+    description: 'Body of release.'
+    required: true
+  prerelease:
+    description: 'Is prerelease?'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'

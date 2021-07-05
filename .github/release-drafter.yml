@@ -1,8 +1,8 @@
 branches:
   - refactor
 
-name-template: 'TRGM Redux v$NEXT_PATCH_VERSION.xxxxxx'
-tag-template: 'v$NEXT_PATCH_VERSION.xxxxxx'
+name-template: 'TRGM Redux'
+tag-template: 'v$NEXT_PATCH_VERSION'
 
 change-template: '- $TITLE (#$NUMBER) **$AUTHOR**'
 template: |

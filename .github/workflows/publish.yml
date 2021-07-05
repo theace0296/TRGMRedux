@@ -116,13 +116,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update Release Assets
-        uses: johnwbyrd/update-release@v1.0.0
+        uses: ./.github/update-release/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          files: ${{ github.workspace }}/Publish/**/*
-          draft: true
+          path: ${{ github.workspace }}/Publish/
           prerelease: true
           release: ${{ steps.release_drafter.outputs.name }}
           tag: ${{ steps.release_drafter.outputs.tag_name }}
