@@ -106,3 +106,22 @@ jobs:
           name: TRGM-Redux-Missions
           path: ${{ github.workspace }}/Publish/**/*
           if-no-files-found: error
+
+      - name: Release Drafter
+        id: release_drafter
+        uses: release-drafter/release-drafter@v5.15.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Release Assets
+        uses: johnwbyrd/update-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: ${{ github.workspace }}/Publish/**/*
+          draft: true
+          prerelease: true
+          release: ${{ steps.release_drafter.outputs.name }}
+          tag: ${{ steps.release_drafter.outputs.tag_name }}
+          body: ${{ steps.release_drafter.outputs.body }}

@@ -1,0 +1,12 @@
+branches:
+  - refactor
+
+name-template: 'TRGM Redux v$NEXT_PATCH_VERSION.xxxxxx'
+tag-template: 'v$NEXT_PATCH_VERSION.xxxxxx'
+
+change-template: '- $TITLE (#$NUMBER) **$AUTHOR**'
+template: |
+  # Summary:
+
+  ## Change log:
+  $CHANGES
