@@ -366,7 +366,7 @@ if (isnil "fncMedicalParamedicLight") then {
             _carPolice = createVehicle [selectRandom PoliceVehicles, _flatPosPolice1, [], 0, "NONE"];
             _manPolice = createGroup civilian createUnit [selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"];
             _manPolice setDir (floor(random 360));
-            _manPolice setBehaviour "SAFE";
+            [_manPolice] call TRGM_GLOBAL_fnc_makeNPC;
     //Police
 
         };
