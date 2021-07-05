@@ -21,10 +21,12 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 if (isNil "_thisAOPos" || isNil "_thisPosAreaOfCheckpoint") exitWith {};
 
 if (_thisUnitTypes isEqualTo []) then {
+    _thisSide = EAST;
     _thisUnitTypes = [(call sRifleman), (call sRifleman), (call sRifleman), (call sMachineGunMan), (call sEngineer), (call sEngineer), (call sMedic), (call sAAMan)];
 };
 
 if (_thisScoutVehicles isEqualTo []) then {
+    _thisSide = EAST;
     _thisScoutVehicles = (call UnarmedScoutVehicles);
 };
 
@@ -319,13 +321,19 @@ if (_PosFound) then {
 
     _sUnitType = selectRandom _thisUnitTypes;
     _guardUnit1 = _group createUnit [_sUnitType,_pos1,[],0,"NONE"];
+    if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
+        [_guardUnit1] call TRGM_GLOBAL_fnc_makeNPC;
+    };
     doStop [_guardUnit1];
     _guardUnit1 setDir (_direction);
      if (_AllowAnimation) then {[_guardUnit1,"WATCH","ASIS"] call BIS_fnc_ambientAnimCombat;};
     //["HMM2"] call TRGM_GLOBAL_fnc_notify;
     if (random 1 < .66) then {
         _sUnitType = selectRandom _thisUnitTypes;
-        _guardUnit2 = _group createUnit [_sUnitType,_pos2,[],0,"NONE"];
+        if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
+            [_guardUnit2] call TRGM_GLOBAL_fnc_makeNPC;
+        };
+        [_guardUnit2] call TRGM_GLOBAL_fnc_makeNPC;
         doStop [_guardUnit2];
         _guardUnit2 setDir (_direction);
         //[_guardUnit2,"STAND","ASIS"] call BIS_fnc_ambientAnimCombat;
@@ -345,11 +353,17 @@ if (_PosFound) then {
 
         _sUnitType = selectRandom _thisUnitTypes;
         _guardUnit3 = _group2 createUnit [_sUnitType,_pos3,[],0,"NONE"];
+        if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
+            [_guardUnit3] call TRGM_GLOBAL_fnc_makeNPC;
+        };
         doStop [_guardUnit3];
         _guardUnit3 setDir (_chatDir1);
 
         _sUnitType = selectRandom _thisUnitTypes;
         _guardUnit4 = _group3 createUnit [_sUnitType,_pos4,[],0,"NONE"];
+        if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
+            [_guardUnit4] call TRGM_GLOBAL_fnc_makeNPC;
+        };
         doStop [_guardUnit4];
         _guardUnit4 setDir (_chatDir2);
 
@@ -382,6 +396,9 @@ if (_PosFound) then {
     _pos5 = [_behindBlockPos2 , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos2,_behindBlockPos2],_sUnitType] call TRGM_GLOBAL_fnc_findSafePos;
 
     _guardUnit5 = _group4 createUnit [_sUnitType,_pos5,[],0,"NONE"];
+    if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
+        [_guardUnit5] call TRGM_GLOBAL_fnc_makeNPC;
+    };
     _guardUnit5 setVariable [_sCheckpointGuyName, _guardUnit5, true];
     missionNamespace setVariable [_sCheckpointGuyName, _guardUnit5];
     if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
@@ -410,7 +427,9 @@ if (_PosFound) then {
         _objMan = missionNamespace getVariable _objManName;
 
         group _objMan setSpeedMode "LIMITED";
-        group _objMan setBehaviour "SAFE";
+        if !(_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
+            group _objMan setBehaviour "SAFE";
+        };
 
         while {alive(_objMan) && {behaviour _objMan isEqualTo "SAFE"}} do {
             [_objManName,_thisInitPos,_objMan,35] spawn TRGM_SERVER_fnc_hvtWalkAround;

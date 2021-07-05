@@ -124,6 +124,7 @@ class TRGM_GLOBAL {
         class initAmmoBox {};
         class isAceLoaded {};
         class isCbaLoaded {};
+        class makeNPC {};
         class nvScript {};
         class para {};
         class paraDrop {};

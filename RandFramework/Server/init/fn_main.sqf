@@ -2,6 +2,12 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 if !(isServer) exitWith {};
 
+createCenter west;
+createCenter east;
+createCenter independent;
+createCenter civilian;
+createCenter sideLogic;
+
 // Set relationships
 west setFriend [east, 0];
 west setFriend [independent, 0];
