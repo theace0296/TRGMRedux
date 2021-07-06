@@ -94,7 +94,7 @@ class Params
 {
     class OverrideMissionSetup
     {
-        title = "Enable Custom Mission (Mission parameters are set up using 'CustomMission/TRGMSetDefaultMissionSetupVars.sqf')"; // Param name visible in the list
+        title = "Override mission setup screen (Mission parameters are set up using 'CustomMission/TRGMSetDefaultMissionSetupVars.sqf')"; // Param name visible in the list
         values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
         texts[] = {"Disable","Enable"}; // Description of each selectable item
         default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
