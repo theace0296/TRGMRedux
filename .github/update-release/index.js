@@ -79,7 +79,8 @@ const run = async () => {
       for (const commit of commits) {
         const date = Date.parse(commit.commit.author.date);
         if (date > prevReleaseDate) {
-          body = `${body}\n* [${commit.commit.message}](${commit.commit.url})`;
+          const commitMessage = commit.commit.message.includes('This reverts commit') ? commit.commit.message.substr(0, commit.commit.message.indexOf('This reverts commit')) : commit.commit.message;
+          body = `${body}\n* [${commitMessage}](${commit.commit.url})`;
         }
       }
       await github.repos.updateRelease({
