@@ -85,8 +85,8 @@ const run = async () => {
       await github.repos.updateRelease({
         ...context.repo,
         release_id: release.id,
-        tag_name: release.tag_name,
-        name: release.name,
+        tag_name: tag,
+        name: releaseName,
         body: body,
         draft: true,
         prerelease: prerelease
