@@ -49,7 +49,7 @@ const run = async () => {
     }
 
     startGroup('Getting list of repositories...');
-    const releases = await github.repos.listReleases({ ...context.repo }).data;
+    const releases = (await github.repos.listReleases({ ...context.repo })).data;
     endGroup();
 
     startGroup('Getting existing release id...');
@@ -79,7 +79,7 @@ const run = async () => {
     if (body.includes('Change log:')) {
       startGroup('Adding commit messages to body...');
       body = body.substr(0, body.indexOf('Change log:') + 11);
-      const commits = await github.repos.listCommits({ ...context.repo }).data;
+      const commits = (await github.repos.listCommits({ ...context.repo })).data;
       const prevRelease = releases.find(rel => Date.parse(rel.created_at) < Date.parse(release.created_at));
       const prevReleaseDate = Date.parse(prevRelease.created_at);
       for (const commit of commits) {
