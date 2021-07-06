@@ -110,7 +110,9 @@ const run = async () => {
     endGroup();
   } catch (error) {
     console.error('An error occured while updating release assets:');
-    console.error(error);
+    console.error(error.name);
+    console.error(error.message);
+    console.error(error.stack);
     setFailed(error);
     process.exit(2);
   }
