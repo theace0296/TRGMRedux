@@ -62,11 +62,9 @@ const run = async () => {
     endGroup();
 
     for (const existingAsset of existingAssets) {
-      if (releaseAssets.map(file => basename(file)).includes(existingAsset.name)) {
-        startGroup('Deleting existing asset: ' + existingAsset.id + '...');
-        await github.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
-        endGroup();
-      }
+      startGroup('Deleting existing asset: ' + existingAsset.id + '...');
+      await github.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
+      endGroup();
     }
 
     if (body.includes('Change log:')) {
