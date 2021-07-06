@@ -70,6 +70,7 @@ const run = async () => {
     }
 
     if (body.includes('Change log:')) {
+      startGroup('Adding commit messages to body...');
       body = body.substr(0, body.indexOf('Change log:') + 11);
       const allCommits = await github.repos.listCommits({ ...context.repo });
       const commits = allCommits.data;
@@ -90,6 +91,7 @@ const run = async () => {
         draft: true,
         prerelease: prerelease
       });
+      endGroup();
     }
 
     const contentType = 'application/octet-stream';
@@ -107,8 +109,8 @@ const run = async () => {
     }
 
     endGroup();
-  } catch (err) {
-    const error = `An error occured while updating release assets: \n${JSON.stringify(err, null, 2)}`;
+  } catch (error) {
+    console.error('An error occured while updating release assets:');
     console.error(error);
     setFailed(error);
     process.exit(2);
