@@ -6,7 +6,7 @@ const { normalize, extname, isAbsolute, resolve, basename } = require('path');
 const { retry } = require('@octokit/plugin-retry');
 const { throttling } = require('@octokit/plugin-throttling');
 
-(async () => {
+const run = async () => {
   try {
     startGroup('Updating release assets...');
 
@@ -16,9 +16,9 @@ const { throttling } = require('@octokit/plugin-throttling');
     const github = new GitHub(token, { retry, throttling });
     const ref = process.env.GITHUB_REF;
 
-    let release = getInput('release');
-    if (!release) {
-      release = ref
+    let releaseName = getInput('release');
+    if (!releaseName) {
+      releaseName = ref
         .replace(/refs\//, '')
         .replace(/heads\//, '')
         .replace(/tags\//, '')
@@ -30,6 +30,11 @@ const { throttling } = require('@octokit/plugin-throttling');
       throw new Error('Tag was empty!');
     }
 
+    const prerelease = core.getInput('prerelease') !== 'false';
+    if (!prerelease) {
+      throw new Error('Prerelease was not set!');
+    }
+
     const releaseAssetsPath = getInput('path', { required: true });
     const releaseAssets = readdirSync(normalize(releaseAssetsPath))
       .filter(file => extname(file).toLowerCase().includes('pbo'))
@@ -38,22 +43,22 @@ const { throttling } = require('@octokit/plugin-throttling');
       )
       .filter(file => existsSync(file));
 
-    const body = getInput('body');
+    let body = getInput('body');
     if (!body) {
       throw new Error('Body was empty!');
     }
 
     startGroup('Getting list of repositories...');
     const allReleases = await github.repos.listReleases({ ...context.repo });
-    const repos = allReleases.data;
+    const releases = allReleases.data;
     endGroup();
 
     startGroup('Getting assets for the release...');
-    const repo = repos.find(repo => repo.name === release);
-    if (!repo.id || repo.id < 0) {
+    const release = releases.find(rel => rel.name === releaseName);
+    if (!release.id || release.id < 0) {
       throw new Error('Existing release could not be found!');
     }
-    const existingAssets = (await github.repos.listAssetsForRelease({ ...context.repo, release_id: repo.id })).data;
+    const existingAssets = (await github.repos.listAssetsForRelease({ ...context.repo, release_id: release.id })).data;
     endGroup();
 
     for (const existingAsset of existingAssets) {
@@ -64,13 +69,36 @@ const { throttling } = require('@octokit/plugin-throttling');
       }
     }
 
+    if (body.includes('Change log:')) {
+      body = body.substr(0, body.indexOf('Change log:') + 11);
+      const allCommits = await github.repos.listCommits({ ...context.repo });
+      const commits = allCommits.data;
+      const prevRelease = releases.find(rel => Date.parse(rel.created_at) < Date.parse(release.created_at));
+      const prevReleaseDate = Date.parse(prevRelease.created_at);
+      for (const commit of commits) {
+        const date = Date.parse(commit.commit.author.date);
+        if (date > prevReleaseDate) {
+          body = `${body}\n* [${commit.commit.message}](${commit.commit.url})`;
+        }
+      }
+      await github.repos.updateRelease({
+        ...context.repo,
+        release_id: release.id,
+        tag_name: release.tag_name,
+        name: release.name,
+        body: body,
+        draft: true,
+        prerelease: prerelease
+      });
+    }
+
     const contentType = 'application/octet-stream';
     for (const releaseAsset of releaseAssets) {
       const contentLength = statSync(releaseAsset).size;
       const headers = { 'content-type': contentType, 'content-length': contentLength };
       startGroup('Uploading release asset: ' + basename(releaseAsset) + '...');
       await github.repos.uploadReleaseAsset({
-        url: repo.upload_url,
+        url: release.upload_url,
         headers,
         name: basename(releaseAsset),
         data: readFileSync(releaseAsset),
@@ -85,4 +113,9 @@ const { throttling } = require('@octokit/plugin-throttling');
     setFailed(error);
     process.exit(2);
   }
-})();
+};
+
+export default run;
+if (process.env.CI) {
+  run();
+}
