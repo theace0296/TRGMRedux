@@ -12,8 +12,12 @@ if (isServer && TRGM_VAR_useCustomMilitiaFaction) then {
     TRGM_VAR_GuerTurrets      =  ["I_HMG_01_F", "I_HMG_01_high_F"]; publicVariable "TRGM_VAR_GuerTurrets";
     TRGM_VAR_GuerUnarmedHelos =  ["I_Heli_Transport_02_F"]; publicVariable "TRGM_VAR_GuerUnarmedHelos";
     TRGM_VAR_GuerArmedHelos   =  ["I_Heli_light_03_F"]; publicVariable "TRGM_VAR_GuerArmedHelos";
-    TRGM_VAR_GuerHelos        =  (TRGM_VAR_GuerUnarmedHelos + TRGM_VAR_GuerArmedHelos); publicVariable "TRGM_VAR_GuerHelos";
     TRGM_VAR_GuerPlanes       =  ["I_Plane_Fighter_04_F"]; publicVariable "TRGM_VAR_GuerPlanes";
     TRGM_VAR_GuerBoats        =  ["I_C_Boat_Transport_02_F"]; publicVariable "TRGM_VAR_GuerBoats";
     TRGM_VAR_GuerMortars      =  ["I_Mortar_01_F"]; publicVariable "TRGM_VAR_GuerMortars";
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Do not change anything under here!
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    TRGM_VAR_GuerHelos = (TRGM_VAR_GuerUnarmedHelos + TRGM_VAR_GuerArmedHelos); publicVariable "TRGM_VAR_GuerHelos";
 };

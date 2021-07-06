@@ -12,8 +12,12 @@ if (isServer && TRGM_VAR_useCustomEnemyFaction) then {
     TRGM_VAR_EastTurrets      =  ["O_HMG_01_F", "O_HMG_01_high_F"]; publicVariable "TRGM_VAR_EastTurrets";
     TRGM_VAR_EastUnarmedHelos =  ["O_Heli_Light_02_unarmed_F", "O_Heli_Transport_04_bench_F"]; publicVariable "TRGM_VAR_EastUnarmedHelos";
     TRGM_VAR_EastArmedHelos   =  ["O_Heli_Attack_02_dynamicLoadout_F"]; publicVariable "TRGM_VAR_EastArmedHelos";
-    TRGM_VAR_EastHelos        =  (TRGM_VAR_EastUnarmedHelos + TRGM_VAR_EastArmedHelos); publicVariable "TRGM_VAR_EastHelos";
     TRGM_VAR_EastPlanes       =  ["O_Plane_CAS_02_dynamicLoadout_F", "O_Plane_Fighter_02_F"]; publicVariable "TRGM_VAR_EastPlanes";
     TRGM_VAR_EastBoats        =  ["O_T_Boat_Armed_01_hmg_F"]; publicVariable "TRGM_VAR_EastBoats";
     TRGM_VAR_EastMortars      =  ["O_Mortar_01_F"]; publicVariable "TRGM_VAR_EastMortars";
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Do not change anything under here!
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    TRGM_VAR_EastHelos = (TRGM_VAR_EastUnarmedHelos + TRGM_VAR_EastArmedHelos); publicVariable "TRGM_VAR_EastHelos";
 };

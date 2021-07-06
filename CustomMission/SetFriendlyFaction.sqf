@@ -12,8 +12,12 @@ if (isServer && TRGM_VAR_useCustomFriendlyFaction) then {
     TRGM_VAR_WestTurrets      =  ["B_HMG_01_F", "B_HMG_01_high_F"]; publicVariable "TRGM_VAR_WestTurrets";
     TRGM_VAR_WestUnarmedHelos =  ["B_Heli_Transport_01_F", "B_Heli_Transport_03_unarmed_F"]; publicVariable "TRGM_VAR_WestUnarmedHelos";
     TRGM_VAR_WestArmedHelos   =  ["B_Heli_Attack_01_dynamicLoadout_F"]; publicVariable "TRGM_VAR_WestArmedHelos";
-    TRGM_VAR_WestHelos        =  (TRGM_VAR_WestArmedHelos + TRGM_VAR_WestUnarmedHelos); publicVariable "TRGM_VAR_WestHelos";
     TRGM_VAR_WestPlanes       =  ["B_Plane_Fighter_01_F"]; publicVariable "TRGM_VAR_WestPlanes";
     TRGM_VAR_WestBoats        =  ["B_T_Boat_Transport_01_F"]; publicVariable "TRGM_VAR_WestBoats";
     TRGM_VAR_WestMortars      =  ["B_Mortar_01_F"]; publicVariable "TRGM_VAR_WestMortars";
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Do not change anything under here!
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    TRGM_VAR_WestHelos = (TRGM_VAR_WestArmedHelos + TRGM_VAR_WestUnarmedHelos); publicVariable "TRGM_VAR_WestHelos";
 };
