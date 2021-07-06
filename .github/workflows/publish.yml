@@ -90,9 +90,8 @@ jobs:
               {
                   Try
                   {
-                    makepbo -P -A -$ -B -X=".bak,.txt" "$folder" > "$folder.log"
+                    makepbo -P -A -$ -B -X=".bak,.txt" "$folder"
                     Copy-Item -Path "$folder.pbo" -Destination "$($Env:GITHUB_WORKSPACE)\Publish\$($folder.Name).pbo"
-                    Remove-Item -Path "$folder.log"
                   }
                   Catch
                   {

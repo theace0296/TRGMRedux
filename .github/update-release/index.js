@@ -30,7 +30,7 @@ const run = async () => {
       throw new Error('Tag was empty!');
     }
 
-    const prerelease = core.getInput('prerelease') !== 'false';
+    const prerelease = getInput('prerelease') !== 'false';
     if (!prerelease) {
       throw new Error('Prerelease was not set!');
     }
