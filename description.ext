@@ -108,25 +108,49 @@ class Params
         default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
         // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
     };
-    class CustomFriendlyFaction
+    class CustomFriendlyFactionVehicles
     {
-        title = "Enable Custom Friendly Faction (Overrides Faction selected in mission set up)"; // Param name visible in the list
+        title = "Enable Custom Friendly Faction Vehicles (Overrides Faction selected in mission set up)"; // Param name visible in the list
         values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
         texts[] = {"Disable","Enable"}; // Description of each selectable item
         default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
         // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
     };
-    class CustomEnemyFaction
+    class CustomFriendlyFactionLoadouts
     {
-        title = "Enable Custom Enemy Faction (Overrides Faction selected in mission set up)"; // Param name visible in the list
+        title = "Enable Custom Friendly Faction Loadouts (Overrides Faction selected in mission set up)"; // Param name visible in the list
         values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
         texts[] = {"Disable","Enable"}; // Description of each selectable item
         default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
         // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
     };
-    class CustomMilitiaFaction
+    class CustomEnemyFactionVehicles
     {
-        title = "Enable Custom Militia Faction (Overrides Faction selected in mission set up)"; // Param name visible in the list
+        title = "Enable Custom Enemy Faction Vehicles (Overrides Faction selected in mission set up)"; // Param name visible in the list
+        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
+        texts[] = {"Disable","Enable"}; // Description of each selectable item
+        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
+        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+    };
+    class CustomEnemyFactionLoadouts
+    {
+        title = "Enable Custom Enemy Faction Loadouts (Overrides Faction selected in mission set up)"; // Param name visible in the list
+        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
+        texts[] = {"Disable","Enable"}; // Description of each selectable item
+        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
+        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+    };
+    class CustomMilitiaFactionVehicles
+    {
+        title = "Enable Custom Militia Faction Vehicles (Overrides Faction selected in mission set up)"; // Param name visible in the list
+        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
+        texts[] = {"Disable","Enable"}; // Description of each selectable item
+        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
+        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+    };
+    class CustomMilitiaFactionLoadouts
+    {
+        title = "Enable Custom Militia Faction Loadouts (Overrides Faction selected in mission set up)"; // Param name visible in the list
         values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
         texts[] = {"Disable","Enable"}; // Description of each selectable item
         default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used

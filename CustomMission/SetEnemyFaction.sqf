@@ -1,8 +1,8 @@
 
-TRGM_VAR_useCustomEnemyFaction = (["CustomEnemyFaction", 0] call BIS_fnc_getParamValue) isEqualTo 1;
-publicVariable "TRGM_VAR_useCustomEnemyFaction";
+TRGM_VAR_useCustomEnemyFactionVehicles = (["CustomEnemyFactionVehicles", 0] call BIS_fnc_getParamValue) isEqualTo 1;
+publicVariable "TRGM_VAR_useCustomEnemyFactionVehicles";
 
-if (isServer && TRGM_VAR_useCustomEnemyFaction) then {
+if (isServer && TRGM_VAR_useCustomEnemyFactionVehicles) then {
     TRGM_VAR_EastUnarmedCars  =  ["O_MRAP_02_F", "O_G_Offroad_01_F", "O_Truck_02_transport_F"]; publicVariable "TRGM_VAR_EastUnarmedCars";
     TRGM_VAR_EastArmedCars    =  ["O_MRAP_02_hmg_F", "O_G_Offroad_01_armed_F"]; publicVariable "TRGM_VAR_EastArmedCars";
     TRGM_VAR_EastAPCs         =  ["O_APC_Tracked_02_cannon_F"]; publicVariable "TRGM_VAR_EastAPCs";

@@ -1,8 +1,8 @@
 
-TRGM_VAR_useCustomFriendlyFaction = (["CustomFriendlyFaction", 0] call BIS_fnc_getParamValue) isEqualTo 1;
-publicVariable "TRGM_VAR_useCustomFriendlyFaction";
+TRGM_VAR_useCustomFriendlyFactionVehicles = (["CustomFriendlyFactionVehicles", 0] call BIS_fnc_getParamValue) isEqualTo 1;
+publicVariable "TRGM_VAR_useCustomFriendlyFactionVehicles";
 
-if (isServer && TRGM_VAR_useCustomFriendlyFaction) then {
+if (isServer && TRGM_VAR_useCustomFriendlyFactionVehicles) then {
     TRGM_VAR_WestUnarmedCars  =  ["B_T_MRAP_01_F","B_T_LSV_01_unarmed_F", "B_Truck_01_transport_F"]; publicVariable "TRGM_VAR_WestUnarmedCars";
     TRGM_VAR_WestArmedCars    =  ["B_T_MRAP_01_F"]; publicVariable "TRGM_VAR_WestArmedCars";
     TRGM_VAR_WestAPCs         =  ["B_APC_Tracked_01_rcws_F"]; publicVariable "TRGM_VAR_WestAPCs";

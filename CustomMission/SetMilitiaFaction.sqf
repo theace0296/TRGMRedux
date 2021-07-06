@@ -1,8 +1,8 @@
 
-TRGM_VAR_useCustomMilitiaFaction = (["CustomMilitiaFaction", 0] call BIS_fnc_getParamValue) isEqualTo 1;
-publicVariable "TRGM_VAR_useCustomMilitiaFaction";
+TRGM_VAR_useCustomMilitiaFactionVehicles = (["CustomMilitiaFactionVehicles", 0] call BIS_fnc_getParamValue) isEqualTo 1;
+publicVariable "TRGM_VAR_useCustomMilitiaFactionVehicles";
 
-if (isServer && TRGM_VAR_useCustomMilitiaFaction) then {
+if (isServer && TRGM_VAR_useCustomMilitiaFactionVehicles) then {
     TRGM_VAR_GuerUnarmedCars  =  ["I_MRAP_03_F", "I_G_Offroad_01_F", "I_Truck_02_covered_F"]; publicVariable "TRGM_VAR_GuerUnarmedCars";
     TRGM_VAR_GuerArmedCars    =  ["I_MRAP_03_hmg_F", "I_G_Offroad_01_armed_F"]; publicVariable "TRGM_VAR_GuerArmedCars";
     TRGM_VAR_GuerAPCs         =  ["I_APC_Wheeled_03_cannon_F"]; publicVariable "TRGM_VAR_GuerAPCs";

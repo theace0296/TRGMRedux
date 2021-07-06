@@ -1,7 +1,7 @@
 params [["_unit", objNull, [objNull]]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-if (TRGM_VAR_useCustomFriendlyFaction || TRGM_VAR_useCustomEnemyFaction || TRGM_VAR_useCustomMilitiaFaction) then {
+if (TRGM_VAR_useCustomFriendlyFactionLoadouts || TRGM_VAR_useCustomEnemyFactionLoadouts || TRGM_VAR_useCustomMilitiaFactionLoadouts) then {
     private _unitClassName = typeOf _unit;
     private _configPath = (configFile >> "CfgVehicles" >> _unitClassName);
 
@@ -20,7 +20,7 @@ if (TRGM_VAR_useCustomFriendlyFaction || TRGM_VAR_useCustomEnemyFaction || TRGM_
 
     switch (side _unit) do {
         case WEST: {
-            if !(TRGM_VAR_useCustomFriendlyFaction) exitWith {};
+            if !(TRGM_VAR_useCustomFriendlyFactionLoadouts) exitWith {};
             _riflemen = (missionConfigFile >> "BluRifleman");
             _leaders = (missionConfigFile >> "BluLeader");
             _atsoldiers = (missionConfigFile >> "BluAT");
@@ -35,7 +35,7 @@ if (TRGM_VAR_useCustomFriendlyFaction || TRGM_VAR_useCustomEnemyFaction || TRGM_
             _uavOps = (missionConfigFile >> "BluUavOp");
         };
         case EAST: {
-            if !(TRGM_VAR_useCustomEnemyFaction) exitWith {};
+            if !(TRGM_VAR_useCustomEnemyFactionLoadouts) exitWith {};
             _riflemen = (missionConfigFile >> "OpfRifleman");
             _leaders = (missionConfigFile >> "OpfLeader");
             _atsoldiers = (missionConfigFile >> "OpfAT");
@@ -50,7 +50,7 @@ if (TRGM_VAR_useCustomFriendlyFaction || TRGM_VAR_useCustomEnemyFaction || TRGM_
             _uavOps = (missionConfigFile >> "OpfUavOp");
         };
         case INDEPENDENT: {
-            if !(TRGM_VAR_useCustomMilitiaFaction) exitWith {};
+            if !(TRGM_VAR_useCustomMilitiaFactionLoadouts) exitWith {};
             _riflemen = (missionConfigFile >> "IndRifleman");
             _leaders = (missionConfigFile >> "IndLeader");
             _atsoldiers = (missionConfigFile >> "IndAT");
