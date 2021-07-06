@@ -115,7 +115,4 @@ const run = async () => {
   }
 };
 
-export default run;
-if (process.env.CI) {
-  run();
-}
+run();
