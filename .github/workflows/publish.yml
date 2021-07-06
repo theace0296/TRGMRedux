@@ -103,7 +103,8 @@ jobs:
           }
         shell: pwsh
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
         with:
           name: TRGM-Redux-Missions
           path: ${{ github.workspace }}/Publish/**/*
