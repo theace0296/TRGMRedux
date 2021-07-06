@@ -102,7 +102,7 @@ const run = async () => {
         url: release.upload_url,
         headers,
         name: basename(releaseAsset),
-        file: readFileSync(releaseAsset),
+        data: readFileSync(releaseAsset),
       });
       endGroup();
     }
