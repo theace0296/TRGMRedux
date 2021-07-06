@@ -1,9 +1,7 @@
-name: Test-And-Build
+name: Test
 
 on:
-  push:
-    branches: [ refactor ]
-  workflow_dispatch:
+  pull_request:
 
 jobs:
   validate:
@@ -108,32 +106,3 @@ jobs:
           name: TRGM-Redux-Missions
           path: ${{ github.workspace }}/Publish/**/*
           if-no-files-found: error
-
-      - name: Release Drafter
-        id: release_drafter
-        uses: release-drafter/release-drafter@v5.15.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12.x'
-
-      - name: Install packages
-        run: |
-          Set-Location ${{ github.workspace }}/.github/update-release/
-          npm install
-        shell: pwsh
-
-      - name: Update Release Assets
-        uses: ./.github/update-release/
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          path: ${{ github.workspace }}/Publish/
-          prerelease: true
-          release: ${{ steps.release_drafter.outputs.name }}
-          tag: ${{ steps.release_drafter.outputs.tag_name }}
-          body: ${{ steps.release_drafter.outputs.body }}
