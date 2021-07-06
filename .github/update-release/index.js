@@ -49,29 +49,37 @@ const run = async () => {
     }
 
     startGroup('Getting list of repositories...');
-    const allReleases = await github.repos.listReleases({ ...context.repo });
-    const releases = allReleases.data;
+    const releases = await github.repos.listReleases({ ...context.repo }).data;
     endGroup();
 
-    startGroup('Getting assets for the release...');
+    startGroup('Getting existing release id...');
     const release = releases.find(rel => rel.name === releaseName);
     if (!release.id || release.id < 0) {
       throw new Error('Existing release could not be found!');
     }
-    const existingAssets = (await github.repos.listAssetsForRelease({ ...context.repo, release_id: release.id })).data;
     endGroup();
 
-    for (const existingAsset of existingAssets) {
-      startGroup('Deleting existing asset: ' + existingAsset.name + '...');
-      await github.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
-      endGroup();
+    let newAssetsExistAlready = true;
+    while (newAssetsExistAlready) {
+      const releaseAssetNames = releaseAssets.map(file => basename(file));
+      const existingAssets = (await github.repos.listAssetsForRelease({ ...context.repo, release_id: release.id })).data;
+      if (existingAssets.find(existingAsset => releaseAssetNames.includes(existingAsset.name))) {
+        for (const existingAsset of existingAssets) {
+          if (releaseAssetNames.includes(existingAsset.name)) {
+            startGroup('Deleting existing asset: ' + existingAsset.name + '...');
+            await github.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
+            endGroup();
+          }
+        }
+      } else {
+        newAssetsExistAlready = false;
+      }
     }
 
     if (body.includes('Change log:')) {
       startGroup('Adding commit messages to body...');
       body = body.substr(0, body.indexOf('Change log:') + 11);
-      const allCommits = await github.repos.listCommits({ ...context.repo });
-      const commits = allCommits.data;
+      const commits = await github.repos.listCommits({ ...context.repo }).data;
       const prevRelease = releases.find(rel => Date.parse(rel.created_at) < Date.parse(release.created_at));
       const prevReleaseDate = Date.parse(prevRelease.created_at);
       for (const commit of commits) {
