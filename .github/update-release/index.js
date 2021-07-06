@@ -62,7 +62,7 @@ const run = async () => {
     endGroup();
 
     for (const existingAsset of existingAssets) {
-      startGroup('Deleting existing asset: ' + existingAsset.id + '...');
+      startGroup('Deleting existing asset: ' + existingAsset.name + '...');
       await github.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
       endGroup();
     }
