@@ -190,7 +190,7 @@ if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != ty
     chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
 };
 
-TRGM_VAR_transportHelosToGetActions = [];
+TRGM_VAR_transportHelosToGetActions = [chopper1];
 {
     if (isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship"}) then {
         _faction = getText(configFile >> "CfgVehicles" >> typeOf _x >> "faction");

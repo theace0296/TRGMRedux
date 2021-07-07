@@ -11,6 +11,8 @@ if(!(_action in _existingActions)) then {
         player addEventHandler ["Respawn", {
             params ["_unit", "_corpse"];
             removeAllActions _corpse;
+            _existingActions = _unit getVariable ["TRGM_addedActions",[]];
+            _unit setVariable ["TRGM_addedActions",_existingActions - [_action]];
             [_action] call TRGM_GLOBAL_fnc_addPlayerActionPersistent;
         }];
     };

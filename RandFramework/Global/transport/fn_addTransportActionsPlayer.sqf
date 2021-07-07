@@ -100,7 +100,6 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
 
     // add actions on player with CBA_fnc_addPlayerAction (respawn persistent)
     {
-        //[_x] remoteExec ["TRGM_GLOBAL_fnc_addPlayerActionPersistent",[0, -2] select isMultiplayer,true];
         [_x] remoteExec ["TRGM_GLOBAL_fnc_addPlayerActionPersistent",0,true];
     } foreach _playerActions;
 };
