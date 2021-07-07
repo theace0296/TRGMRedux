@@ -135,8 +135,8 @@ if (typeName sCivilian != "ARRAY") then {sCivilian = [sCivilian]};
 
 [HQMan] call TRGM_GLOBAL_fnc_setLoadout;
 
-private _airTransClassName = selectRandom ((call SupplySupportChopperOptions) select {_x call TRGM_GLOBAL_fnc_isTransport});
-if (!isNil "chopper1" && {_airTransClassName != typeOf chopper1}) then {
+private _airTransClassName = selectRandom (call SupplySupportChopperOptions);
+if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName != typeOf chopper1}}) then {
     {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
     chopper1 = createVehicle [_airTransClassName, ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "NONE"];
     createVehicleCrew chopper1;
@@ -167,7 +167,7 @@ if (!isNil "chopper1" && {_airTransClassName != typeOf chopper1}) then {
 };
 
 private _airSupClassName = selectRandom (call FriendlyChopper);
-if (!isNil "chopper2" && {_airSupClassName != typeOf chopper2}) then {
+if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != typeOf chopper2}}) then {
     {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
     chopper2 = createVehicle [_airSupClassName, ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "NONE"];
     createVehicleCrew chopper2;

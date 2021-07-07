@@ -143,7 +143,7 @@ waitUntil { TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet };
 _isAceRespawnWithGear = false;
 if (call TRGM_GLOBAL_fnc_isCbaLoaded) then {
     // check for ACE respawn with gear setting
-_isAceRespawnWithGear = "ace_respawn_savePreDeathGear" call CBA_settings_fnc_get;
+    _isAceRespawnWithGear = "ace_respawn_savePreDeathGear" call CBA_settings_fnc_get;
 };
 if (!isNil("_isAceRespawnWithGear")) then {
     if (!_isAceRespawnWithGear) then {

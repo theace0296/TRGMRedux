@@ -35,7 +35,6 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
         // Add children to this action
         private _actions = [];
         {
-
             _actionName = [_x] call TRGM_GLOBAL_fnc_getTransportName;
             _action = [format ["vehicle:%1",_x],_actionName, "", _actionAdapterPickupAce, _childCondition , {}, _x] call ace_interact_menu_fnc_createAction;
             _actions pushBack [_action, [], _x]; // New action, it's children, and the action's target
@@ -103,7 +102,7 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
     {
         //[_x] remoteExec ["TRGM_GLOBAL_fnc_addPlayerActionPersistent",[0, -2] select isMultiplayer,true];
         [_x] remoteExec ["TRGM_GLOBAL_fnc_addPlayerActionPersistent",0,true];
-    }    foreach _playerActions;
+    } foreach _playerActions;
 };
 
 true;

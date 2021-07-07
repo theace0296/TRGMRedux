@@ -332,6 +332,7 @@ if (_PosFound) then {
     //["HMM2"] call TRGM_GLOBAL_fnc_notify;
     if (random 1 < .66) then {
         _sUnitType = selectRandom _thisUnitTypes;
+        _guardUnit2 = _group createUnit [_sUnitType,_pos2,[],0,"NONE"];
         if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
             [_guardUnit2] call TRGM_GLOBAL_fnc_makeNPC;
         };
@@ -426,6 +427,7 @@ if (_PosFound) then {
     TRGM_LOCAL_fnc_walkingGuyLoop = {
         _objManName = _this select 0;
         _thisInitPos = _this select 1;
+        _thisSide = _this select 2;
         _objMan = missionNamespace getVariable _objManName;
 
         group _objMan setSpeedMode "LIMITED";
@@ -440,7 +442,7 @@ if (_PosFound) then {
             sleep 10;
         };
     };
-    [_sCheckpointGuyName,_pos5] spawn TRGM_LOCAL_fnc_walkingGuyLoop;
+    [_sCheckpointGuyName,_pos5, _thisSide] spawn TRGM_LOCAL_fnc_walkingGuyLoop;
 };
 
 

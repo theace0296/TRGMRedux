@@ -8,6 +8,11 @@ if(!(_action in _existingActions)) then {
         [_action] call CBA_fnc_addPlayerAction;
     } else {
         player addAction _action;
+        player addEventHandler ["Respawn", {
+            params ["_unit", "_corpse"];
+            removeAllActions _corpse;
+            [_action] call TRGM_GLOBAL_fnc_addPlayerActionPersistent;
+        }];
     };
 };
 
