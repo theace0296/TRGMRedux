@@ -1,6 +1,5 @@
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-_isCampaign = (call TRGM_GETTER_fnc_bIsCampaign);
 
 waituntil {sleep 2; TRGM_VAR_CoreCompleted};
 
@@ -29,7 +28,7 @@ if (! isNil "_mainAOPos") then {
     };
 };
 
-[] remoteExec ["TRGM_CLIENT_fnc_postStartMissionCamera", 0, true];
+[_isHiddenObj, _bMoveToAO] remoteExec ["TRGM_CLIENT_fnc_postStartMissionCamera", 0, true];
 
 "FinalCleanup" call TRGM_GLOBAL_fnc_log;
 call TRGM_SERVER_fnc_finalSetupCleaner;
@@ -41,11 +40,9 @@ if (_bMoveToAO) then {
     {
         if (isPlayer _x) then {
             [[_x], {
-                titleCut ["", "BLACK OUT", 5];
                 (_this select 0) setpos [(TRGM_VAR_foundHQPos select 0) - 10, (TRGM_VAR_foundHQPos select 1)];
                 {_x setpos [(TRGM_VAR_foundHQPos select 0) - 10, (TRGM_VAR_foundHQPos select 1)];} forEach units group (_this select 0);
                 (_this select 0) setdamage 0;
-                titleCut ["", "BLACK IN", 5];
             }] remoteExec ["call", _x];
         };
     } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});

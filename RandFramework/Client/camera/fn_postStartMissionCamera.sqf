@@ -1,4 +1,6 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+params ["_isHiddenObj", "_bMoveToAO"];
+
 
 if (hasInterface) then {
     _locationText = [TRGM_VAR_ObjectivePossitions select 0] call TRGM_GLOBAL_fnc_getLocationName;
@@ -32,7 +34,7 @@ if (hasInterface) then {
         _LineThree = "location unknown"
     };
 
-    if (!_isCampaign) then {
+    if (!(call TRGM_GETTER_fnc_bIsCampaign)) then {
         _LineOne = "TRGM Redux"
     };
 
@@ -89,6 +91,7 @@ if (hasInterface) then {
 
 
     private _camera = "camera" camCreate _pos1;
+    player setVariable ["TRGM_postStartMissionCam", _camera, true];
     _camera cameraEffect ["internal","back"];
 
     _camera camPreparePos _pos2;
