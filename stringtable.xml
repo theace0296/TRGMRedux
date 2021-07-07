@@ -3895,6 +3895,11 @@
                 <English>Valid position, close the map to accept positon, or click anywhere to choose a different position.</English>
             </Key>
 
+            <Key ID="STR_TRGM2_openDialogRequests_RequestUnitsVehicles">
+                <Original>Request Units and Vehicles</Original>
+                <English>Request Units and Vehicles</English>
+            </Key>
+
             <Key ID="STR_TRGM2_openDialogRequests_RequestUnit">
                 <Original>Request Unit</Original>
                 <English>Request Unit</English>
@@ -4053,6 +4058,16 @@
             <Key ID="STR_TRGM2_downloadData_title">
                 <Original>Transmitting data...</Original>
                 <English>Transmitting data...</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_logMissionInfo">
+                <Original>Copy mission info to clipboard</Original>
+                <English>Copy mission info to clipboard</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_logMissionInfo_copied">
+                <Original>Mission info copied to clipboard!</Original>
+                <English>Mission info copied to clipboard!</English>
             </Key>
 
         </Container>
