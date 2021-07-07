@@ -3,6 +3,7 @@ params ["_isHiddenObj", "_bMoveToAO"];
 
 
 if (hasInterface) then {
+    player setVariable ["TRGM_postStartMissionCamRunning", true, true];
     _locationText = [TRGM_VAR_ObjectivePossitions select 0] call TRGM_GLOBAL_fnc_getLocationName;
     _hour = floor daytime;
     _minute = floor ((daytime - _hour) * 60);
@@ -117,6 +118,8 @@ if (hasInterface) then {
         playMusic "";
     };
     sleep 3;
+
+    player setVariable ["TRGM_postStartMissionCamRunning", false, true];
 };
 
 true;
