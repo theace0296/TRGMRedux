@@ -449,8 +449,8 @@ if (!_bFriendlyInsurgents) then {
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
 
-                _iCount = ([25] call TRGM_GETTER_fnc_iMoreEnemies);
-                if (!_bIsMainObjective) then {_iCount = ([45] call TRGM_GETTER_fnc_iMoreEnemies);};
+                _iCount = 1;
+                if (!_bIsMainObjective) then {_iCount = 2;};
                 if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
                 while {_iCount > 0} do {
                     _thisAreaRange = 500;
@@ -584,8 +584,8 @@ if (!_bFriendlyInsurgents) then {
 
             //future update... player faction here, or frienly rebels
             //spawn outer nearish friendly checkpoint
-            _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
-            if (!_bIsMainObjective || _selectRandomW) then {_iCount = ([70] call TRGM_GETTER_fnc_iMoreEnemies);};
+            _iCount = 1;
+            if (!_bIsMainObjective || _selectRandomW) then {_iCount = 2;};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
                 _thisAreaRange = 500;
