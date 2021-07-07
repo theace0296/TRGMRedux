@@ -419,6 +419,9 @@ if (_iEnemyFlashLightOption isEqualTo 1) then {
     } forEach allUnits;
 };
 
+waitUntil { TRGM_VAR_AllInitScriptsFinished; };
 [format["Mission Core: %1", "Main Init Complete"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
-TRGM_VAR_AllInitScriptsFinished = true; publicVariable "TRGM_VAR_AllInitScriptsFinished";
+"Mission setup finished!" call TRGM_GLOBAL_fnc_notifyGlobal;
+
+true;

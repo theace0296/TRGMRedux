@@ -57,7 +57,6 @@ sleep 3;
 saveGame;
 sleep 1;
 
-"Mission setup finished!" call TRGM_GLOBAL_fnc_log;
 TRGM_VAR_AllInitScriptsFinished = true; publicVariable "TRGM_VAR_AllInitScriptsFinished";
 
 true;
