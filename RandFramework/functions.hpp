@@ -242,6 +242,8 @@ class TRGM_CLIENT {
         class introCamera {};
         class missionOverAnimation {};
         class missionSetupCamera {};
+        class postStartMissionCamera {};
+        class postStartMissionEndCamera {};
     };
 
     class supports {
