@@ -11,6 +11,9 @@ if (count _waypoints < _findWps) then {_findWps=count _waypoints;};
 _group=_x;
 _group setBehaviour "SAFE";
 _group setSpeedMode "LIMITED";
+while {(count (waypoints _group)) > 0} do {
+    deleteWaypoint ((waypoints _group) select 0);
+};
 
     _EHkilledIdx = (leader _group) addEventHandler ["FiredNear", {_this call breakPatrol_FNC;}];
 

@@ -47,6 +47,9 @@ if (isServer) then {
 
     _iFlyRange = 1000;
     if (_IsAirType isEqualTo 3) then {_iFlyRange = 300;};
+    while {(count (waypoints _groupp1)) > 0} do {
+        deleteWaypoint ((waypoints _groupp1) select 0);
+    };
     _v1wp1 = _groupp1 addWaypoint [_SpottedPos, 0];
     _v1wp2 = _groupp1 addWaypoint [[(_SpottedPos select 0) + _iFlyRange,(_SpottedPos select 1) + _iFlyRange], 0];
     _v1wp3 = _groupp1 addWaypoint [[(_SpottedPos select 0) + _iFlyRange,(_SpottedPos select 1) - _iFlyRange], 0];

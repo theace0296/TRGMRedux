@@ -52,10 +52,9 @@ if (!isServer) exitWith {};
 
 sleep(_AdditionalUnitCreationDelay);
 
-if (TRGM_VAR_ReinforcementsCalled > 4) exitWith {};
-TRGM_VAR_ReinforcementsCalled = TRGM_VAR_ReinforcementsCalled + 1; publicVariable "TRGM_VAR_ReinforcementsCalled";
-
 if !(_noDelay) then {
+    if (TRGM_VAR_ReinforcementsCalled > 4) exitWith {};
+    TRGM_VAR_ReinforcementsCalled = TRGM_VAR_ReinforcementsCalled + 1; publicVariable "TRGM_VAR_ReinforcementsCalled";
     if (_useStandardDelay && {(time - TRGM_VAR_TimeLastReinforcementsCalled) < (call TRGM_GETTER_fnc_iGetSpottedDelay)}) exitWith {};
     if (!_useStandardDelay && {(time - TRGM_VAR_TimeSinceAdditionalReinforcementsCalled) < (call TRGM_GETTER_fnc_iGetSpottedDelay * 1.5)}) exitWith {}; //Using 1.5 multiplier for the delay so the main and additional triggers don't fire at the same time.
 
