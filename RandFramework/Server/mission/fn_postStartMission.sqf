@@ -29,7 +29,7 @@ if (! isNil "_mainAOPos") then {
     };
 };
 
-[] remoteExecCall ["TRGM_CLIENT_fnc_postStartMissionCamera", 0, true];
+[] remoteExec ["TRGM_CLIENT_fnc_postStartMissionCamera", 0, true];
 
 "FinalCleanup" call TRGM_GLOBAL_fnc_log;
 call TRGM_SERVER_fnc_finalSetupCleaner;
@@ -51,7 +51,7 @@ if (_bMoveToAO) then {
     } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
 };
 
-[] remoteExecCall ["TRGM_CLIENT_fnc_postStartMissionEndCamera", 0, true];
+[] remoteExec ["TRGM_CLIENT_fnc_postStartMissionEndCamera", 0, true];
 
 sleep 3;
 saveGame;
