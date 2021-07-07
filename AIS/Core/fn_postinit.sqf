@@ -60,7 +60,9 @@ AIS_Core_realSide = getNumber (configfile >> "CfgVehicles" >> (typeOf AIS_Core_r
         AIS_Core_realPlayer = _currentPlayer;
         if !(call TRGM_GLOBAL_fnc_isCbaLoaded) then {
             AIS_Core_realPlayer setVariable ["TRGM_addedActions",[]];
-            [[chopper1]] call TRGM_GLOBAL_fnc_addTransportActions;
+            if (call TRGM_GETTER_fnc_bTransportEnabled) then {
+                [TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;
+            };
         };
         AIS_Core_realSide = getNumber (configfile >> "CfgVehicles" >> (typeOf AIS_Core_realPlayer) >> "side");
     };
