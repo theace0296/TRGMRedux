@@ -231,13 +231,16 @@ TRGM_VAR_transportHelosToGetActions = [chopper1];
         TRGM_VAR_transportHelosToGetActions pushBackUnique _x;
     };
 } forEach (vehicles - [chopper1, chopper2]);
+publicVariable "TRGM_VAR_transportHelosToGetActions";
 
 [chopper1] call TRGM_GLOBAL_fnc_setVehicleUpright;
 [chopper2] call TRGM_GLOBAL_fnc_setVehicleUpright;
 {_x setDamage 0;} forEach (crew chopper2 + crew chopper1 + [chopper1, chopper2]);
 {_x allowDamage true;} forEach crew chopper2 + [chopper2];
 
-[TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;
+if (call TRGM_GETTER_fnc_bTransportEnabled) then {
+    [TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;
+};
 [format["Mission Core: %1", "TransportScriptRun"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 

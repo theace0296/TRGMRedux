@@ -70,6 +70,7 @@ TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX           = 16; publicVariable "TRGM_VAR_
 TRGM_VAR_ADVSET_LARGE_PATROLS_IDX                = 17; publicVariable "TRGM_VAR_ADVSET_LARGE_PATROLS_IDX";
 TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX     = 18; publicVariable "TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX";
 TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX = 19; publicVariable "TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX";
+TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX             = 20; publicVariable "TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX";
 
 /////// Advanced Settings Set up ///////
 //NOTE the id's must go up in twos!
@@ -94,7 +95,8 @@ TRGM_VAR_AdvControls = [ //IDX,Title,Type,Options,OptionValues,DefaultOptionInde
     [ADVCTRLIDC(TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_MoreEnemies","RscXSliderH",1,100,50,localize "STR_TRGM2_Tooltip_AdvMoreEnemies"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_LARGE_PATROLS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_LargePatrols","RscCombo",[localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random",localize "STR_TRGM2_TRGMInitPlayerLocal_Enable",localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"],[0,1,2],1,localize "STR_TRGM2_Tooltip_AdvLargePatrols"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_TimeBetweenSpotted","RscXSliderH",600,1800,1200,localize "STR_TRGM2_Tooltip_TimeBetweenSpotted", localize "STR_TRGM2_SecondsAbbreviation"],
-    [ADVCTRLIDC(TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_VehicleReqRep","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable"],[0,1],0,localize "STR_TRGM2_Tooltip_AdvVehicleReqRep"]
+    [ADVCTRLIDC(TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_VehicleReqRep","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable"],[0,1],0,localize "STR_TRGM2_Tooltip_AdvVehicleReqRep"],
+    [ADVCTRLIDC(TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_EnableTransport","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable", localize "STR_TRGM2_TRGMInitPlayerLocal_EnableLeaderOnly"],[0,1,2],1,localize "STR_TRGM2_Tooltip_EnableTransport"]
 ];
 publicVariable "TRGM_VAR_AdvControls";
 
@@ -158,6 +160,12 @@ publicVariable "TRGM_GETTER_fnc_bMoreReinforcements";
 //////// Vehicle Spawning Rep Requirement ///////
 TRGM_GETTER_fnc_bVehiclesRequireRep = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX isEqualTo 1; };
 publicVariable "TRGM_GETTER_fnc_bVehiclesRequireRep";
+
+//////// Transport Options ///////
+TRGM_GETTER_fnc_bTransportEnabled = { (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX) in [1,2]; };
+publicVariable "TRGM_GETTER_fnc_bTransportEnabled";
+TRGM_GETTER_fnc_bTransportLeaderOnly = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX isEqualTo 2; };
+publicVariable "TRGM_GETTER_fnc_bTransportLeaderOnly";
 
 //////// Spotted Delay ///////
 TRGM_GETTER_fnc_iGetSpottedDelay = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX };

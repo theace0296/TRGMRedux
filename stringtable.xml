@@ -1854,6 +1854,10 @@
                 <Spanish>Habilitar</Spanish>
                 <Korean>사용</Korean>
             </Key>
+            <Key ID="STR_TRGM2_TRGMInitPlayerLocal_EnableLeaderOnly">
+                <Original>Enable for Leaders</Original>
+                <English>Enable for Leaders</English>
+            </Key>
             <Key ID="STR_TRGM2_TRGMInitPlayerLocal_Disable">
                 <Original>Disable</Original>
                 <English>Disable</English>
@@ -3800,6 +3804,16 @@
             <Key ID="STR_TRGM2_Tooltip_AdvVehicleReqRep">
                 <Original>Vehicle spawning via the requests menu, will require rep points.\n If enabled, vehicles will cost 1 rep point and lower rep when destroyed.</Original>
                 <English>Vehicle spawning via the requests menu, will require rep points.\n If enabled, vehicles will cost 1 rep point and lower rep when destroyed.</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_EnableTransport">
+                <Original>Transport</Original>
+                <English>Transport</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_Tooltip_EnableTransport">
+                <Original>Enables/Disables the ability to call for transport. Can also be set so only group leaders can call for transport.</Original>
+                <English>Enables/Disables the ability to call for transport. Can also be set so only group leaders can call for transport.</English>
             </Key>
 
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_TimeBetweenSpotted">

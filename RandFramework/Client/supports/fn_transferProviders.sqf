@@ -1,8 +1,4 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-if !(call TRGM_GLOBAL_fnc_isCbaLoaded) then {
-    [[chopper1]] call TRGM_GLOBAL_fnc_addTransportActions;
-};
-
 _oldUnit = _this select 0;
 _oldProviders = _oldUnit getVariable ["BIS_SUPP_allProviderModules",[]];
 _HQ = _oldUnit getVariable ["BIS_SUPP_HQ",nil];

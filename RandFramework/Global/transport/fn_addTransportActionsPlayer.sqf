@@ -78,6 +78,9 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
         _uniqueVarName = [_x,"TRGM_transport_vehicle_"] call BIS_fnc_objectVar;
         publicVariable _uniqueVarName;
         _condition = format ["alive %1 && !(_this in (crew %1))",_uniqueVarName];
+        if (call TRGM_GETTER_fnc_bTransportLeaderOnly) then {
+            _condition = format ["leader group _this isEqualTo _this && alive %1 && !(_this in (crew %1))",_uniqueVarName];
+        };
 
         _name = [_x] call TRGM_GLOBAL_fnc_getTransportName;
         _actionName = format [localize "STR_TRGM2_TRGMInitPlayerLocal_CallHeliTransport",_name];

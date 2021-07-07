@@ -129,6 +129,7 @@ if (isNil "TRGM_VAR_OfficerImage")      then { TRGM_VAR_OfficerImage = "<img ima
 if (isNil "TRGM_VAR_WeaponDealerImage") then { TRGM_VAR_WeaponDealerImage = "<img image='RandFramework\Media\WeaponDealers2.jpg' size='1' />"; publicVariable "TRGM_VAR_WeaponDealerImage"; };
 
 
+if (isNil "TRGM_VAR_transportHelosToGetActions")              then {TRGM_VAR_transportHelosToGetActions = [];                         publicVariable "TRGM_VAR_transportHelosToGetActions";};
 if (isNil "TRGM_VAR_AllInitScriptsFinished")                  then {TRGM_VAR_AllInitScriptsFinished = false;                          publicVariable "TRGM_VAR_AllInitScriptsFinished";};
 if (isNil "TRGM_VAR_AOCampOnlyAmmoBox")                       then {TRGM_VAR_AOCampOnlyAmmoBox = false;                               publicVariable "TRGM_VAR_AOCampOnlyAmmoBox";};
 //TRGM_VAR_AODetails = [[AOIndex,InfSpottedCount,VehSpottedCount,AirSpottedCount,bScoutCalled,patrolMoveCounter]]
@@ -137,8 +138,8 @@ if (isNil "TRGM_VAR_AODetails")                               then {TRGM_VAR_AOD
 if (isNil "TRGM_VAR_ATFieldPos")                              then {TRGM_VAR_ATFieldPos = [];                                         publicVariable "TRGM_VAR_ATFieldPos";};
 if (isNil "TRGM_VAR_ActiveTasks")                             then {TRGM_VAR_ActiveTasks = [];                                        publicVariable "TRGM_VAR_ActiveTasks";};
 if (isNil "TRGM_VAR_AdminPlayer")                             then {TRGM_VAR_AdminPlayer = objNull;                                   publicVariable "TRGM_VAR_AdminPlayer";};
-if (isNil "TRGM_VAR_AdvancedSettings")                        then {TRGM_VAR_AdvancedSettings = TRGM_VAR_DefaultAdvancedSettings;        publicVariable "TRGM_VAR_AdvancedSettings";};
-if (isNil "TRGM_VAR_AllowAOFires")                            then {TRGM_VAR_AllowAOFires =   true;                                     publicVariable "TRGM_VAR_AllowAOFires";};
+if (isNil "TRGM_VAR_AdvancedSettings")                        then {TRGM_VAR_AdvancedSettings = TRGM_VAR_DefaultAdvancedSettings;     publicVariable "TRGM_VAR_AdvancedSettings";};
+if (isNil "TRGM_VAR_AllowAOFires")                            then {TRGM_VAR_AllowAOFires =   true;                                   publicVariable "TRGM_VAR_AllowAOFires";};
 if (isNil "TRGM_VAR_AllowUAVLocateHelp")                      then {TRGM_VAR_AllowUAVLocateHelp = false;                              publicVariable "TRGM_VAR_AllowUAVLocateHelp";};
 if (isNil "TRGM_VAR_BadPoints")                               then {TRGM_VAR_BadPoints = 0;                                           publicVariable "TRGM_VAR_BadPoints";};
 if (isNil "TRGM_VAR_BadPointsReason")                         then {TRGM_VAR_BadPointsReason = "";                                    publicVariable "TRGM_VAR_BadPointsReason";};
@@ -148,7 +149,7 @@ if (isNil "TRGM_VAR_CheckPointAreas")                         then {TRGM_VAR_Che
 if (isNil "TRGM_VAR_CivDeathCount")                           then {TRGM_VAR_CivDeathCount = 0;                                       publicVariable "TRGM_VAR_CivDeathCount";};
 if (isNil "TRGM_VAR_ClearedPositions")                        then {TRGM_VAR_ClearedPositions = [];                                   publicVariable "TRGM_VAR_ClearedPositions";};
 if (isNil "TRGM_VAR_CommsTowerPos")                           then {TRGM_VAR_CommsTowerPos = [0,0];                                   publicVariable "TRGM_VAR_CommsTowerPos";};
-if (isNil "TRGM_VAR_CoreCompleted")                           then { TRGM_VAR_CoreCompleted = false;                                     publicVariable "TRGM_VAR_CoreCompleted";};
+if (isNil "TRGM_VAR_CoreCompleted")                           then { TRGM_VAR_CoreCompleted = false;                                  publicVariable "TRGM_VAR_CoreCompleted";};
 if (isNil "TRGM_VAR_CurrentZeroMissionTitle")                 then {TRGM_VAR_CurrentZeroMissionTitle = "";                            publicVariable "TRGM_VAR_CurrentZeroMissionTitle";};
 if (isNil "TRGM_VAR_CustomObjectsSet")                        then {TRGM_VAR_CustomObjectsSet = false;                                publicVariable "TRGM_VAR_CustomObjectsSet";};
 if (isNil "TRGM_VAR_EnemyFactionData")                        then {TRGM_VAR_EnemyFactionData = "";                                   publicVariable "TRGM_VAR_EnemyFactionData";};
@@ -163,7 +164,7 @@ if (isNil "TRGM_VAR_ISUNSUNG")                                then {TRGM_VAR_ISU
 if (isNil "TRGM_VAR_InfTaskCount")                            then {TRGM_VAR_InfTaskCount = 0;                                        publicVariable "TRGM_VAR_InfTaskCount";};
 if (isNil "TRGM_VAR_InfTaskStarted")                          then {TRGM_VAR_InfTaskStarted = false;                                  publicVariable "TRGM_VAR_InfTaskStarted";};
 if (isNil "TRGM_VAR_IntelFound")                              then {TRGM_VAR_IntelFound = [];                                         publicVariable "TRGM_VAR_IntelFound";};
-if (isNil "TRGM_VAR_IntroMusic")                              then {TRGM_VAR_IntroMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic;      publicVariable "TRGM_VAR_IntroMusic";};
+if (isNil "TRGM_VAR_IntroMusic")                              then {TRGM_VAR_IntroMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic;   publicVariable "TRGM_VAR_IntroMusic";};
 if (isNil "TRGM_VAR_IsFullMap")                               then {TRGM_VAR_IsFullMap = false;                                       publicVariable "TRGM_VAR_IsFullMap";};
 if (isNil "TRGM_VAR_IsSnowMap")                               then {TRGM_VAR_IsSnowMap = false;                                       publicVariable "TRGM_VAR_IsSnowMap";};
 if (isNil "TRGM_VAR_KilledPlayers")                           then {TRGM_VAR_KilledPlayers = [];                                      publicVariable "TRGM_VAR_KilledPlayers";};
@@ -176,17 +177,17 @@ if (isNil "TRGM_VAR_MissionLoaded")                           then {TRGM_VAR_Mis
 if (isNil "TRGM_VAR_MissionParamsSet")                        then {TRGM_VAR_MissionParamsSet = false;                                publicVariable "TRGM_VAR_MissionParamsSet";};
 if (isNil "TRGM_VAR_NewMissionMusic")                            then {TRGM_VAR_NewMissionMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic; publicVariable "TRGM_VAR_NewMissionMusic";};
 if (isNil "TRGM_VAR_ObjectivePossitions")                     then {TRGM_VAR_ObjectivePossitions = [];                                publicVariable "TRGM_VAR_ObjectivePossitions";};
-if (isNil "TRGM_VAR_OccupiedHousesPos")                        then {TRGM_VAR_OccupiedHousesPos =   [];                                 publicVariable "TRGM_VAR_OccupiedHousesPos"; };
+if (isNil "TRGM_VAR_OccupiedHousesPos")                        then {TRGM_VAR_OccupiedHousesPos =   [];                               publicVariable "TRGM_VAR_OccupiedHousesPos"; };
 if (isNil "TRGM_VAR_ParaDropped")                             then {TRGM_VAR_ParaDropped = false;                                     publicVariable "TRGM_VAR_ParaDropped";};
-if (isNil "TRGM_VAR_PatrolType")                               then {TRGM_VAR_PatrolType =   0;                                         publicVariable "TRGM_VAR_PatrolType";};
+if (isNil "TRGM_VAR_PatrolType")                               then {TRGM_VAR_PatrolType =   0;                                       publicVariable "TRGM_VAR_PatrolType";};
 if (isNil "TRGM_VAR_PlayersHaveLeftStartingArea")             then {TRGM_VAR_PlayersHaveLeftStartingArea = false;                     publicVariable "TRGM_VAR_PlayersHaveLeftStartingArea";};
-if (isNil "TRGM_VAR_ReinforcementsCalled")                       then {TRGM_VAR_ReinforcementsCalled = 0;                                 publicVariable "TRGM_VAR_ReinforcementsCalled";};
+if (isNil "TRGM_VAR_ReinforcementsCalled")                       then {TRGM_VAR_ReinforcementsCalled = 0;                             publicVariable "TRGM_VAR_ReinforcementsCalled";};
 if (isNil "TRGM_VAR_SaveType")                                then {TRGM_VAR_SaveType = 0;                                            publicVariable "TRGM_VAR_SaveType";};
 if (isNil "TRGM_VAR_SentryAreas")                             then {TRGM_VAR_SentryAreas = [];                                        publicVariable "TRGM_VAR_SentryAreas";};
 if (isNil "TRGM_VAR_TimeLastReinforcementsCalled")            then {TRGM_VAR_TimeLastReinforcementsCalled = time;                     publicVariable "TRGM_VAR_TimeLastReinforcementsCalled";};
 if (isNil "TRGM_VAR_TimeSinceAdditionalReinforcementsCalled") then {TRGM_VAR_TimeSinceAdditionalReinforcementsCalled = time;          publicVariable "TRGM_VAR_TimeSinceAdditionalReinforcementsCalled";};
 if (isNil "TRGM_VAR_TimeSinceLastSpottedAction")              then {TRGM_VAR_TimeSinceLastSpottedAction = time;                       publicVariable "TRGM_VAR_TimeSinceLastSpottedAction";};
-if (isNil "TRGM_VAR_ToUseMilitia_Side")                        then {TRGM_VAR_ToUseMilitia_Side = false;                                 publicVariable "TRGM_VAR_ToUseMilitia_Side";};
+if (isNil "TRGM_VAR_ToUseMilitia_Side")                        then {TRGM_VAR_ToUseMilitia_Side = false;                              publicVariable "TRGM_VAR_ToUseMilitia_Side";};
 if (isNil "TRGM_VAR_bAndSoItBegins")                          then {TRGM_VAR_bAndSoItBegins = false;                                  publicVariable "TRGM_VAR_bAndSoItBegins";};
 if (isNil "TRGM_VAR_bBaseHasChopper")                         then {TRGM_VAR_bBaseHasChopper = false;                                 publicVariable "TRGM_VAR_bBaseHasChopper";};
 if (isNil "TRGM_VAR_bBreifingPrepped")                        then {TRGM_VAR_bBreifingPrepped = false;                                publicVariable "TRGM_VAR_bBreifingPrepped";};

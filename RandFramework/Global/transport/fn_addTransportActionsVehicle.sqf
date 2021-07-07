@@ -22,7 +22,7 @@ _actions = [
         false,
         true,
         "",
-        "_this in (crew _target) && !([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)",
+        ["_this in (crew _target) && !([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)", "leader group _this isEqualTo _this && _this in (crew _target) && !([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)"] select (call TRGM_GETTER_fnc_bTransportLeaderOnly),
         -1,
         false,
         ""
@@ -37,7 +37,7 @@ _actions = [
         false,
         true,
         "",
-        "_this in (crew _target) && ([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)",
+        ["_this in (crew _target) && ([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)", "leader group _this isEqualTo _this && _this in (crew _target) && ([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)"] select (call TRGM_GETTER_fnc_bTransportLeaderOnly),
         -1,
         false,
         ""
