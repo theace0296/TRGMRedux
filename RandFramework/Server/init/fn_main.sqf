@@ -170,7 +170,7 @@ if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName !
     [] spawn {
         waitUntil { !([chopper1] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
         { _x enableAI "MOVE"; } forEach crew chopper1;
-    }
+    };
     chopper1 setPos ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos);
 };
 
@@ -202,7 +202,7 @@ if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != ty
     [] spawn {
         waitUntil { !([chopper2] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
         { _x enableAI "MOVE"; } forEach crew chopper2;
-    }
+    };
     chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
 };
 
