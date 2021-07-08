@@ -18,7 +18,7 @@ while {true} do {
             //};
         };
         if (leader (group (vehicle player)) isEqualTo player && TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SUPPORT_OPTION_IDX isEqualTo 1) then {
-            if (TRGM_VAR_iMissionSetup isEqualTo 5) then {
+            if (call TRGM_GETTER_fnc_bIsCampaign) then {
                 if (TRGM_VAR_CampaignInitiated) then {
 
                     _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;

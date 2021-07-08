@@ -7,7 +7,7 @@ while {!_bEnd} do {
     _bMissionEnded = false;
     _bAnyPlayersInAOAndAlive = false;
 
-    if (TRGM_VAR_iMissionSetup isEqualTo 5) then {
+    if (call TRGM_GETTER_fnc_bIsCampaign) then {
         _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
         if (TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted && _dCurrentRep >= 10 && TRGM_VAR_FinalMissionStarted) then {_bMissionEnded = true};
     }

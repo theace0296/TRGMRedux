@@ -39,8 +39,8 @@ if (TRGM_VAR_iMissionParamObjective3 > 0) then {
 
 ["Mission Setup: 14", true] call TRGM_GLOBAL_fnc_log;
 
-TRGM_VAR_iMissionSetup = TRGM_VAR_iMissionParamType; publicVariable "TRGM_VAR_iMissionSetup";
-switch (TRGM_VAR_iMissionSetup) do {
+TRGM_VAR_iMissionParamType = TRGM_VAR_iMissionParamType; publicVariable "TRGM_VAR_iMissionParamType";
+switch (TRGM_VAR_iMissionParamType) do {
     case 0: {
         _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
         _IsMainObjs = [true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening

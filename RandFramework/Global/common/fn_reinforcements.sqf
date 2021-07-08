@@ -213,7 +213,7 @@ if (!_paraDrop) then {
     _heloWp setWaypointCombatMode "BLUE";
     _heloWp setWaypointSpeed "FULL";
     if (_spawnMrk select 2 isEqualTo 0) then {
-        //_heloWp setWaypointStatements ["true", "[""hmmmm""] call TRGM_GLOBAL_fnc_notify; {this spawn {unAssignVehicle _x; _x action [""eject"", vehicle _x]; sleep 0.5;} forEach crew vehicle _this;"}];
+        //_heloWp setWaypointStatements ["true", "[""hmmmm""] call TRGM_GLOBAL_fnc_notify; {_this spawn {unAssignVehicle _x; _x action [""eject"", vehicle _x]; sleep 0.5;} forEach crew vehicle _this;"}];
         _heloWp setWaypointStatements ["true", "{unAssignVehicle _x; _x action [""eject"", vehicle _x]; sleep 0.5;} forEach crew vehicle this;"];
         //_heloWp setWaypointStatements ["true", "[""hmmmm""] call TRGM_GLOBAL_fnc_notify; {unAssignVehicle _x; _x action [""eject"", vehicle _x]; sleep 0.5;} forEach crew vehicle this;"];
     }

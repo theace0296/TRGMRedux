@@ -16,11 +16,9 @@ params ["_new_player", "_old_player"];
 
 removeAllActions _old_player;
 _old_player enableAI "TEAMSWITCH";
-if !(call TRGM_GLOBAL_fnc_isCbaLoaded) then {
-    _new_player setVariable ["TRGM_addedActions",[]];
-    if (call TRGM_GETTER_fnc_bTransportEnabled) then {
-        [TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;
-    };
+_existingActions = _new_player getVariable ["TRGM_addedActions",[]];
+if (!(_existingActions isEqualTo []) && {call TRGM_GETTER_fnc_bTransportEnabled && {!(isNil "TRGM_VAR_transportHelosToGetActions")}}) then {
+    [TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;
 };
 AIS_Core_realSide = getNumber (configfile >> "CfgVehicles" >> (typeOf _new_player) >> "side");
 

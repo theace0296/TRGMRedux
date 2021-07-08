@@ -176,8 +176,8 @@ if (TRGM_VAR_iCirclesOfDeath isEqualTo 1) then {
     TRGM_VAR_bCirclesOfDeath = true;
 };
 
-TRGM_VAR_iMissionSetup = TRGM_VAR_iMissionParamType;
-if (TRGM_VAR_iMissionSetup isEqualTo 12 || TRGM_VAR_iMissionSetup isEqualTo 20) then {
+private _isTraining = false;
+if (_isTraining) then {
     //training
     [player, 100] call BIS_fnc_respawnTickets;
 
@@ -200,7 +200,7 @@ else {
     _iRespawnTimer = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_RESPAWN_TIMER_IDX;
     setPlayerRespawnTime _iRespawnTimer;
 
-    //if (TRGM_VAR_iMissionSetup isEqualTo 5 && !isMultiplayer) then {
+    //if ((call TRGM_GETTER_fnc_bIsCampaign) && !isMultiplayer) then {
     //    [player, 999] call BIS_fnc_respawnTickets;
     //    TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "\n" + "999 respawn tickets"
     //}

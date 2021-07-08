@@ -24,25 +24,25 @@ while {_iCount <= _unitCount} do
     if (random 1 < .20) then {
 
         if (_bIsRebels) then {
-                _sInitString = "this spawn TRGM_SERVER_fnc_badReb;";
+                _sInitString = "_this spawn TRGM_SERVER_fnc_badReb;";
 
         }
         else {
-            _sInitString = "this spawn TRGM_SERVER_fnc_badCiv; this addAction [localize ""STR_TRGM2_civillians_fnbadCivAddSearchAction_Button"",{[_this select 0, _this select 1] spawn TRGM_SERVER_fnc_badCivSearch;}, nil,1.5,true,true,"""",""true"",5]; removeHeadgear this;Removevest this;";
+            _sInitString = "_this spawn TRGM_SERVER_fnc_badCiv; _this addAction [localize ""STR_TRGM2_civillians_fnbadCivAddSearchAction_Button"",{[_this select 0, _this select 1] spawn TRGM_SERVER_fnc_badCivSearch;}, nil,1.5,true,true,"""",""true"",5]; removeHeadgear _this;Removevest _this;";
         };
     }
     else {
         if (_bIsRebels) then {
             if (!_bRebelLeaderPicked) then {
-                _sInitString = "this addaction [localize ""STR_TRGM2_trendFunctions_TalkToLeader"",{[_this select 0, _this select 1] spawn TRGM_SERVER_fnc_talkRebLead;}, nil,1.5,true,true,"""",""true"",5]; this addEventHandler [""killed"", {_this spawn TRGM_SERVER_fnc_insKilled;}]; removeHeadgear this;";
+                _sInitString = "_this addaction [localize ""STR_TRGM2_trendFunctions_TalkToLeader"",{[_this select 0, _this select 1] spawn TRGM_SERVER_fnc_talkRebLead;}, nil,1.5,true,true,"""",""true"",5]; _this addEventHandler [""killed"", {_this spawn TRGM_SERVER_fnc_insKilled;}]; removeHeadgear _this;";
                 _bRebelLeaderPicked = true;
             }
             else {
-                _sInitString = "this addEventHandler [""killed"", {_this spawn TRGM_SERVER_fnc_insKilled;}]; removeHeadgear this;Removevest this;";
+                _sInitString = "_this addEventHandler [""killed"", {_this spawn TRGM_SERVER_fnc_insKilled;}]; removeHeadgear _this;Removevest _this;";
             };
         }
         else {
-            _sInitString = "this addEventHandler [""killed"", {_this spawn TRGM_SERVER_fnc_civKilled;}]; this addaction [localize ""STR_TRGM2_civillians_fnbadCivAddSearchAction_Button"",{[_this select 0, _this select 1] spawn TRGM_SERVER_fnc_searchGoodCiv;}, nil,1.5,true,true,"""",""true"",5]; removeHeadgear this;Removevest this;";
+            _sInitString = "_this addEventHandler [""killed"", {_this spawn TRGM_SERVER_fnc_civKilled;}]; _this addaction [localize ""STR_TRGM2_civillians_fnbadCivAddSearchAction_Button"",{[_this select 0, _this select 1] spawn TRGM_SERVER_fnc_searchGoodCiv;}, nil,1.5,true,true,"""",""true"",5]; removeHeadgear _this;Removevest _this;";
         };
     };
     _sideCivGroup = nil;
@@ -68,7 +68,7 @@ while {_iCount <= _unitCount} do
                 _bRebelLeaderPicked = true;
             }
             else {
-                _sInitString = "this addEventHandler [""killed"", {_this spawn TRGM_SERVER_fnc_insKilled;}]; removeHeadgear this;Removevest this;";
+                _sInitString = "_this addEventHandler [""killed"", {_this spawn TRGM_SERVER_fnc_insKilled;}]; removeHeadgear _this;Removevest _this;";
                 _SpawnedRifleman addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_insKilled;}];
 
                 _SpawnedRifleman spawn TRGM_SERVER_fnc_badReb;
