@@ -189,6 +189,7 @@ class TRGM_GLOBAL {
         class flyToLz {};
         class getTransportName {};
         class helicopterIsFlying {};
+        class isLeaderOrAdmin {};
         class isOnlyBoardCrewOnboard {};
         class selectLz {};
         class selectLzCreateBolckedAreaMarker {};

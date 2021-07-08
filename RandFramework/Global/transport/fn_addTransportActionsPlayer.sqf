@@ -79,7 +79,7 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
         publicVariable _uniqueVarName;
         _condition = format ["alive %1 && !(_this in (crew %1))",_uniqueVarName];
         if (call TRGM_GETTER_fnc_bTransportLeaderOnly) then {
-            _condition = format ["leader group _this isEqualTo _this && alive %1 && !(_this in (crew %1))",_uniqueVarName];
+            _condition = format ["[_this] call TRGM_GLOBAL_fnc_isLeaderOrAdmin && alive %1 && !(_this in (crew %1))",_uniqueVarName];
         };
 
         _name = [_x] call TRGM_GLOBAL_fnc_getTransportName;
@@ -101,7 +101,6 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
 
     } forEach _vehicles;
 
-    // add actions on player with CBA_fnc_addPlayerAction (respawn persistent)
     {
         [_x] remoteExec ["TRGM_GLOBAL_fnc_addPlayerActionPersistent",0,true];
     } foreach _playerActions;

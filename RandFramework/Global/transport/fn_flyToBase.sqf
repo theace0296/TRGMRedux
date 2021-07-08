@@ -16,6 +16,12 @@ if (isNil "_thisMission") then {
 {
     deleteWaypoint _x
 } foreach waypoints group driver _vehicle;
+units (group driver _vehicle) doFollow leader (group driver _vehicle);
+{
+     _x enableAI "MOVE";
+    _x enableSimulation true;
+} forEach units group driver _vehicle;
+_vehicle setFuel 1;
 
 if ([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying) then {
     _locationText = [position _vehicle,true] call TRGM_GLOBAL_fnc_getLocationName;

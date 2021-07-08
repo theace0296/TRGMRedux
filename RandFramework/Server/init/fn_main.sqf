@@ -140,7 +140,11 @@ if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName !
     {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
     chopper1 = createVehicle [_airTransClassName, ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "NONE"];
     createVehicleCrew chopper1;
-    crew vehicle chopper1 joinSilent createGroup TRGM_VAR_FriendlySide;
+    [driver chopper1] joinSilent createGroup TRGM_VAR_FriendlySide;
+    private _chopper1CrewMinusDriver = (crew vehicle chopper1 - [driver chopper1]);
+    if (!(_chopper1CrewMinusDriver isEqualTo []) && _chopper1CrewMinusDriver isEqualType []) then {
+        _chopper1CrewMinusDriver joinSilent group driver chopper1;
+    };
     chopper1 setVehicleVarName "chopper1";
     publicVariable "chopper1";
     chopper1 allowDamage false;
@@ -162,7 +166,11 @@ if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName !
     publicVariable "chopper1D";
     private _totalTurrets = [_airTransClassName, true] call BIS_fnc_allTurrets;
     {chopper1 lockTurret [_x, true]} forEach _totalTurrets;
-    { doStop _x; } forEach crew chopper1;
+    { _x disableAI "MOVE"; } forEach crew chopper1;
+    [] spawn {
+        waitUntil { !([chopper1] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+        { _x enableAI "MOVE"; } forEach crew chopper1;
+    }
     chopper1 setPos ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos);
 };
 
@@ -171,7 +179,11 @@ if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != ty
     {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
     chopper2 = createVehicle [_airSupClassName, ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "NONE"];
     createVehicleCrew chopper2;
-    crew vehicle chopper2 joinSilent createGroup TRGM_VAR_FriendlySide;
+    [driver chopper2] joinSilent createGroup TRGM_VAR_FriendlySide;
+    private _chopper2CrewMinusDriver = (crew vehicle chopper2 - [driver chopper2]);
+    if (!(_chopper2CrewMinusDriver isEqualTo []) && _chopper2CrewMinusDriver isEqualType []) then {
+        _chopper2CrewMinusDriver joinSilent group driver chopper2;
+    };
     chopper2 setVehicleVarName "chopper2";
     publicVariable "chopper2";
     chopper2 allowDamage false;
@@ -186,7 +198,11 @@ if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != ty
     {_x allowDamage false;} forEach crew chopper2;
     private _totalTurrets = [_airSupClassName, true] call BIS_fnc_allTurrets;
     {chopper2 lockTurret [_x, true]} forEach _totalTurrets;
-    { doStop _x; } forEach crew chopper2;
+    { _x disableAI "MOVE"; } forEach crew chopper2;
+    [] spawn {
+        waitUntil { !([chopper2] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+        { _x enableAI "MOVE"; } forEach crew chopper2;
+    }
     chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
 };
 
@@ -215,7 +231,11 @@ TRGM_VAR_transportHelosToGetActions = [chopper1];
                         sleep 0.01;
                         private _newVeh = createVehicle [_newVehClass, _pos, [], 0, "NONE"];
                         createVehicleCrew _newVeh;
-                        crew vehicle _newVeh joinSilent createGroup TRGM_VAR_FriendlySide;
+                        [driver _newVeh] joinSilent createGroup TRGM_VAR_FriendlySide;
+                        private _newVehCrewMinusDriver = (crew vehicle _newVeh - [driver _newVeh]);
+                        if (!(_newVehCrewMinusDriver isEqualTo []) && _newVehCrewMinusDriver isEqualType []) then {
+                            _newVehCrewMinusDriver joinSilent group driver _newVeh;
+                        };
                         _newVeh setDir _dir;
                         _newVeh allowDamage false;
                         _newVeh setPos (_pos vectorAdd [0,0,0.1]);
@@ -287,7 +307,7 @@ waitUntil { TRGM_VAR_CustomObjectsSet };
 [endMissionBoard] remoteExec ["removeAllActions"];
 [endMissionBoard2] remoteExec ["removeAllActions"];
 
-if (TRGM_VAR_iMissionSetup isEqualTo 5 && isMultiplayer && isServer) then {
+if (call TRGM_GETTER_fnc_bIsCampaign && isMultiplayer && isServer) then {
     if (TRGM_VAR_SaveType isEqualTo 0) then {
         [laptop1, [localize "STR_TRGM2_TRGMInitPlayerLocal_SaveLocal",{[1,true] spawn TRGM_SERVER_fnc_serverSave;}]] remoteExec ["addaction"];
         [laptop1, [localize "STR_TRGM2_TRGMInitPlayerLocal_SaveGlobal",{[2,true] spawn TRGM_SERVER_fnc_serverSave;}]] remoteExec ["addaction"];

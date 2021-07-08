@@ -22,7 +22,7 @@ _actions = [
         false,
         true,
         "",
-        ["_this in (crew _target) && !([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)", "leader group _this isEqualTo _this && _this in (crew _target) && !([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)"] select (call TRGM_GETTER_fnc_bTransportLeaderOnly),
+        ["_this in (crew _target) && !([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)", "[_this] call TRGM_GLOBAL_fnc_isLeaderOrAdmin && _this in (crew _target) && !([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)"] select (call TRGM_GETTER_fnc_bTransportLeaderOnly),
         -1,
         false,
         ""
@@ -37,7 +37,7 @@ _actions = [
         false,
         true,
         "",
-        ["_this in (crew _target) && ([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)", "leader group _this isEqualTo _this && _this in (crew _target) && ([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)"] select (call TRGM_GETTER_fnc_bTransportLeaderOnly),
+        ["_this in (crew _target) && ([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)", "[_this] call TRGM_GLOBAL_fnc_isLeaderOrAdmin && _this in (crew _target) && ([_target] call TRGM_GLOBAL_fnc_helicopterIsFlying)"] select (call TRGM_GETTER_fnc_bTransportLeaderOnly),
         -1,
         false,
         ""
@@ -47,7 +47,6 @@ _actions = [
 
 // add actions on vehicle
 {
-    //[_vehicle, _x] remoteExec ["addAction",[0, -2] select isMultiplayer,true];
     [_vehicle, _x] remoteExec ["addAction",0,true];
     // TODO: ACE alternative
 } foreach _actions;

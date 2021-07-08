@@ -8,4 +8,6 @@ if ((call BIS_fnc_admin) != 0) exitWith {true;};
 
 if (str player isEqualTo "sl") exitWith {true;};
 
+if (leader group player isEqualTo player) exitWith {true;};
+
 false;

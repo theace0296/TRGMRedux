@@ -12,9 +12,9 @@ _radius = 900;
 _airEscort = false;
 _isHiddenObj = false;
 //{
-//        if ((_x distance2D _destinationPosition) < _radius) then {
-//            _airEscort = true;
-//        };
+//    if ((_x distance2D _destinationPosition) < _radius) then {
+//        _airEscort = true;
+//    };
 //} forEach TRGM_VAR_ClearedPositions;
 
 _mainAOPos = TRGM_VAR_ObjectivePossitions select 0;
@@ -38,8 +38,12 @@ if (!alive _vehicle) then {
     breakOut "FlyTo";
 };
 
+{
+    deleteWaypoint _x
+} foreach waypoints group driver _vehicle;
 units (group driver _vehicle) doFollow leader (group driver _vehicle);
 {
+    _x enableAI "MOVE";
     _x enableSimulation true;
 } forEach units group driver _vehicle;
 _vehicle setFuel 1;
