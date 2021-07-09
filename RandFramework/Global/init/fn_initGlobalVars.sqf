@@ -15,32 +15,59 @@ TRGM_VAR_Mission2Loc = nil; publicVariable "TRGM_VAR_Mission2Loc";
 TRGM_VAR_Mission3Loc = nil; publicVariable "TRGM_VAR_Mission3Loc";
 
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
-TRGM_VAR_AllFactionData = [];
-TRGM_VAR_AllFactionMap = createHashMap;
-private _WestFactionData =  [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
-private _EastFactionData =  [EAST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
-private _GuerFactionData =  [INDEPENDENT] call TRGM_GLOBAL_fnc_getFactionDataBySide;
-private _AllFactionData = _WestFactionData + _EastFactionData + _GuerFactionData;
-{
-    // This is so inefficient, if we're collecting faction info here we should probably just make this a hashMap...
-    _x params ["_className", "_displayName"];
-    private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
-    private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
+if (isNil "TRGM_VAR_UnfilteredAllFactionData" || {isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap"}}) then {
+    format["Get all faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+    private _WestFactionData =  [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
+    private _EastFactionData =  [EAST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
+    private _GuerFactionData =  [INDEPENDENT] call TRGM_GLOBAL_fnc_getFactionDataBySide;
+    private _AllFactionData = _WestFactionData + _EastFactionData + _GuerFactionData;
+    private _SavedAllFactionData = profileNamespace getVariable ["TRGM_VAR_UnfilteredAllFactionData", []];
 
-    private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
-    _appendedData params ["_unitData", "_vehData"];
-
-    private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
-    private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
-
-    if ({count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0) then {
-        TRGM_VAR_AllFactionData pushBackUnique _x;
-        TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
+    if (_AllFactionData isEqualTo _SavedAllFactionData) then {
+        format["Get saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+        TRGM_VAR_UnfilteredAllFactionData = _SavedAllFactionData;
+        TRGM_VAR_AllFactionData = profileNamespace getVariable "TRGM_VAR_AllFactionData";
+        TRGM_VAR_AllFactionMap = profileNamespace getVariable "TRGM_VAR_AllFactionMap";
     };
-} forEach _AllFactionData;
-TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
-publicVariable "TRGM_VAR_AllFactionData";
-publicVariable "TRGM_VAR_AllFactionMap";
+
+    TRGM_VAR_bRecalculateFactionData = [false, true] select ((["RecalculateFactionData", 0] call BIS_fnc_getParamValue) isEqualTo 1);
+    if (TRGM_VAR_bRecalculateFactionData || {isNil "TRGM_VAR_UnfilteredAllFactionData" || {isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap"}}}) then {
+        format["Overwrite saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+        TRGM_VAR_UnfilteredAllFactionData = _AllFactionData;
+        TRGM_VAR_AllFactionData = [];
+        TRGM_VAR_AllFactionMap = createHashMap;
+        {
+            // This is so inefficient, if we're collecting faction info here we should probably just make this a hashMap...
+            _x params ["_className", "_displayName"];
+            private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
+            private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
+
+            private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
+            _appendedData params ["_unitData", "_vehData"];
+
+            private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
+            private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
+
+            if ({count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0) then {
+                TRGM_VAR_AllFactionData pushBackUnique _x;
+                TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
+            };
+        } forEach TRGM_VAR_UnfilteredAllFactionData;
+        TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
+
+        profileNamespace setVariable ["TRGM_VAR_UnfilteredAllFactionData", TRGM_VAR_UnfilteredAllFactionData];
+        profileNamespace setVariable ["TRGM_VAR_AllFactionData", TRGM_VAR_AllFactionData];
+        profileNamespace setVariable ["TRGM_VAR_AllFactionMap", TRGM_VAR_AllFactionMap];
+        saveProfileNamespace;
+    } else {
+        format["Using saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+    };
+
+    publicVariable "TRGM_VAR_UnfilteredAllFactionData";
+    publicVariable "TRGM_VAR_AllFactionData";
+    publicVariable "TRGM_VAR_AllFactionMap";
+    format["Faction data calculated, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+};
 
 // Custom Mission
 TRGM_VAR_UseCustomMission = (["CustomMission", 0] call BIS_fnc_getParamValue) isEqualTo 1;
