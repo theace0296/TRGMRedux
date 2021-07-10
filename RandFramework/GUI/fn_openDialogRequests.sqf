@@ -203,7 +203,7 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                 if (_safePos isEqualto _playerPosition) then {
                     _safePos = [_playerPosition, 0, 150, 25, 0, 0.30, 0, [], [_playerPosition, _playerPosition], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
                 };
-                if !(_safePos isEqualto _playerPosition) exitwith {
+                if !(_safePos isEqualto _playerPosition) then {
                     player setPos _safePos;
                 };
                 private _spawnedVeh = createvehicle [_classtospawn, _safePos vectorAdd [0, 0, 250], [], 0, "NONE"];
