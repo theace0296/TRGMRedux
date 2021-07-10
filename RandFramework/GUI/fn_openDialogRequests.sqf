@@ -117,7 +117,7 @@ _btnselectUnit ctrlAddEventHandler ["ButtonClick", {
     } else {
         _currentSpentPoints = call TRGM_GLOBAL_fnc_countSpentPoints;
         if (_currentSpentPoints < (TRGM_VAR_maxBadPoints - TRGM_VAR_BadPoints + 1)) then {
-            private _spawnedUnit = (group player createUnit [_unitClassName, [player] call TRGM_GLOBAL_fnc_getRealPos, [], 10, "NONE"]);
+            private _spawnedUnit = (group player createUnit [_unitClassName, getPos player, [], 10, "NONE"]);
             addswitchableUnit _spawnedUnit;
             player doFollow player;
             _spawnedUnit setVariable ["Repcost", 0.5, true];
@@ -188,13 +188,15 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
     }) then {
         [_vehClassName] spawn {
             params ["_classtospawn"];
-            private _safePos = [[player] call TRGM_GLOBAL_fnc_getRealPos, 20, 100, 25, 0, 0.15, 0, [], [[player] call TRGM_GLOBAL_fnc_getRealPos, [player] call TRGM_GLOBAL_fnc_getRealPos], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
+            private _safePos = [getPos player, 0, 50, 25, 0, 0.15, 0, [], [getPos player, getPos player], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
             // find a valid pos
-            if (_safePos isEqualto [player] call TRGM_GLOBAL_fnc_getRealPos) then {
-                _safePos = [[player] call TRGM_GLOBAL_fnc_getRealPos, 20, 150, 25, 0, 0.30, 0, [], [[player] call TRGM_GLOBAL_fnc_getRealPos, [player] call TRGM_GLOBAL_fnc_getRealPos], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
-                // find a valid pos
+            if (_safePos isEqualto getPos player) then {
+                _safePos = [getPos player, 0, 100, 25, 0, 0.30, 0, [], [getPos player, getPos player], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
             };
-            if (_safePos isEqualto [player] call TRGM_GLOBAL_fnc_getRealPos) exitwith {
+            if (_safePos isEqualto getPos player) then {
+                _safePos = [getPos player, 0, 150, 25, 0, 0.30, 0, [], [getPos player, getPos player], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
+            };
+            if (_safePos isEqualto getPos player) exitwith {
                 ["No safe location nearby to create vehicle!"] call TRGM_GLOBAL_fnc_notify;
             };
             player setPos _safePos;
