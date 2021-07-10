@@ -288,8 +288,11 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                         ["Open", _spawnedVeh] spawn TRGM_GUI_fnc_openVehicleCustomizationDialog;
                     };
 
-                    _spawnedVeh setDamage 0;
-                    _spawnedVeh allowdamage true;
+                    [_spawnedVeh] spawn {
+                        sleep 10;
+                        (_this select 0) setDamage 0;
+                        (_this select 0) allowdamage true;
+                    };
 
                 }, [_spawnedVeh], 5, true, true];
 
