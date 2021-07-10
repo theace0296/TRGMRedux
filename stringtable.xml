@@ -3810,6 +3810,16 @@
                 <English>Vehicle spawning via the requests menu, will require rep points.\n If enabled, vehicles will cost 1 rep point and lower rep when destroyed.</English>
             </Key>
 
+            <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_VehicleLeaderOnly">
+                <Original>Only leaders can spawn vehicles</Original>
+                <English>Only leaders can spawn vehicles</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_Tooltip_VehicleLeaderOnly">
+                <Original>Only leaders will be able to spawn vehicles from the requests menu.</Original>
+                <English>Only leaders will be able to spawn vehicles from the requests menu.</English>
+            </Key>
+
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_EnableTransport">
                 <Original>Transport</Original>
                 <English>Transport</English>
