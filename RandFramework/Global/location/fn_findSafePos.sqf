@@ -51,4 +51,10 @@ if !(_spawnPosition isEqualTo []) then {
     _returnPosition = _spawnPosition;
 };
 
+if (_returnPosition isEqualTo []) exitWith {
+    _defaultPos;
+};
+if !(_returnPosition isEqualType []) exitWith {
+    _defaultPos;
+};
 _returnPosition;

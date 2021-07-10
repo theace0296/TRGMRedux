@@ -188,18 +188,21 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
     }) then {
         [_vehClassName] spawn {
             params ["_classtospawn"];
-            private _safePos = [getPos player, 0, 50, 25, 0, 0.15, 0, [], [getPos player, getPos player], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
+            private _playerPosition = [player] call TRGM_GLOBAL_fnc_getRealPos;
+            if (!(_playerPosition isEqualType []) || {!(count _playerPosition isEqualTo 3) || {!(_playerPosition isEqualTypeArray (getPos player))}}) then {
+                _playerPosition = getPos player;`
+            };
+            private _safePos = [_playerPosition, 0, 50, 25, 0, 0.15, 0, [], [_playerPosition, _playerPosition], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
             // find a valid pos
-            if (_safePos isEqualto getPos player) then {
-                _safePos = [getPos player, 0, 100, 25, 0, 0.30, 0, [], [getPos player, getPos player], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
+            if (_safePos isEqualto _playerPosition) then {
+                _safePos = [_playerPosition, 0, 100, 25, 0, 0.30, 0, [], [_playerPosition, _playerPosition], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
             };
-            if (_safePos isEqualto getPos player) then {
-                _safePos = [getPos player, 0, 150, 25, 0, 0.30, 0, [], [getPos player, getPos player], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
+            if (_safePos isEqualto _playerPosition) then {
+                _safePos = [_playerPosition, 0, 150, 25, 0, 0.30, 0, [], [_playerPosition, _playerPosition], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
             };
-            if (_safePos isEqualto getPos player) exitwith {
-                ["No safe location nearby to create vehicle!"] call TRGM_GLOBAL_fnc_notify;
+            if !(_safePos isEqualto _playerPosition) exitwith {
+                player setPos _safePos;
             };
-            player setPos _safePos;
             private _spawnedVeh = createvehicle [_classtospawn, _safePos vectorAdd [0, 0, 250], [], 0, "NONE"];
             _spawnedVeh allowdamage false;
             _spawnedVeh setDamage 0;
@@ -207,8 +210,7 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
             private _largeObjectCorrection = if (((boundingBoxReal _spawnedVeh select 1 select 1) - (boundingBoxReal _spawnedVeh select 0 select 1)) != 0 && {
                 ((boundingBoxReal _spawnedVeh select 1 select 0) - (boundingBoxReal _spawnedVeh select 0 select 0)) > 3.2 &&
                 ((boundingBoxReal _spawnedVeh select 1 select 0) - (boundingBoxReal _spawnedVeh select 0 select 0)) / ((boundingBoxReal _spawnedVeh select 1 select 1) - (boundingBoxReal _spawnedVeh select 0 select 1)) > 1.25
-            })
-            then {
+            }) then {
                 90;
             } else {
                 0;
@@ -239,7 +241,6 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                 detach _spawnedVeh;
                 _spawnedVeh setPos ([_spawnedVeh] call TRGM_GLOBAL_fnc_getRealPos);
                 _spawnedVeh setvectorUp surfaceNormal position _spawnedVeh;
-                _spawnedVeh allowdamage true;
                 _target removeAction _actionId;
 
                 // if turret, allow it to be moved by player | todo: Storage system for statics...
@@ -283,6 +284,9 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                 if (count _data > 0) then {
                     ["Open", _spawnedVeh] spawn TRGM_GUI_fnc_openVehicleCustomizationDialog;
                 };
+
+                _spawnedVeh setDamage 0;
+                _spawnedVeh allowdamage true;
 
             }, [_spawnedVeh], 5, true, true];
 
