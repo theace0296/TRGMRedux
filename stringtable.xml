@@ -552,6 +552,10 @@
                 <Spanish>Punto de control</Spanish>
                 <Korean>검문소</Korean>
             </Key>
+            <Key ID="STR_TRGM2_setCheckpoint_MarkerTextFormat">
+                <Original>Checkpoint %1</Original>
+                <English>Checkpoint %1</English>
+            </Key>
             <Key ID="STR_TRGM2_showIntel_NoIntel">
                 <Original>No intel to report</Original>
                 <English>No intel to report</English>
@@ -3814,6 +3818,21 @@
             <Key ID="STR_TRGM2_Tooltip_EnableTransport">
                 <Original>Enables/Disables the ability to call for transport. Can also be set so only group leaders can call for transport.</Original>
                 <English>Enables/Disables the ability to call for transport. Can also be set so only group leaders can call for transport.</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_EnableCheckpointRespawn">
+                <Original>Respawn at Checkpoints</Original>
+                <English>Respawn at Checkpoints</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_Tooltip_EnableCheckpointRespawn">
+                <Original>Enables/Disables the ability to respawn at checkpoints. Can also be set so the checkpoint must be visited first.</Original>
+                <English>Enables/Disables the ability to respawn at checkpoints. Can also be set so the checkpoint must be visited first.</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_Option_EnableAfterVisit">
+                <Original>Enabled after visit</Original>
+                <English>Enabled after visit</English>
             </Key>
 
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_TimeBetweenSpotted">

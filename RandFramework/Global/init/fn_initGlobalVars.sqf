@@ -104,6 +104,9 @@ if (isNil "TRGM_VAR_EnemySideString")    then { TRGM_VAR_EnemySideString = "East
 if (isNil "TRGM_VAR_InsSideString")      then { TRGM_VAR_InsSideString = "Independent";                   publicVariable "TRGM_VAR_InsSideString"; };
 if (isNil "TRGM_VAR_sArmaGroup")         then { TRGM_VAR_sArmaGroup = "TCF";                              publicVariable "TRGM_VAR_sArmaGroup"; }; //use this to customise code for specific group requiments
 if (isNil "TRGM_VAR_bNoVNChance")        then { TRGM_VAR_bNoVNChance = [false];                           publicVariable "TRGM_VAR_bNoVNChance"; };
+if (isNil "TRGM_VAR_aPhoneticNames")   then { TRGM_VAR_aPhoneticNames = (["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"] apply { localize (format ["str_a3_radio_%1", _x])}); publicVariable "TRGM_VAR_aPhoneticNames"; };
+
+TRGM_GETTER_fnc_sGetPhoneticName = { _index = _this select 0; _name = format ["%1", _index]; if (_index < 26) then { _name = TRGM_VAR_aPhoneticNames select _index; }; _name; }; publicVariable "TRGM_GETTER_fnc_sGetPhoneticName";
 
 TRGM_GETTER_fnc_aGetReinforceStartPos = { [random 500, random 500, 0]; }; publicVariable "TRGM_GETTER_fnc_aGetReinforceStartPos";
 
