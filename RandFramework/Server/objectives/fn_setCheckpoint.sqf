@@ -30,8 +30,6 @@ if (_thisScoutVehicles isEqualTo []) then {
     _thisScoutVehicles = (call UnarmedScoutVehicles);
 };
 
-if (random 1 < .25 && _thisSide isEqualTo TRGM_VAR_FriendlySide) exitWith {};
-
 _startPos = _thisPosAreaOfCheckpoint;
 _nearestRoads = _startPos nearRoads _thisAreaRange;
 
@@ -322,7 +320,7 @@ if (_PosFound) then {
     _group setFormDir _direction;
 
     _sUnitType = selectRandom _thisUnitTypes;
-    _guardUnit1 = _group createUnit [_sUnitType,_pos1,[],0,"NONE"];
+    _guardUnit1 = [_group, _sUnitType,_pos1,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
     if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
         [_guardUnit1] call TRGM_GLOBAL_fnc_makeNPC;
     };
@@ -332,7 +330,7 @@ if (_PosFound) then {
     //["HMM2"] call TRGM_GLOBAL_fnc_notify;
     if (random 1 < .66) then {
         _sUnitType = selectRandom _thisUnitTypes;
-        _guardUnit2 = _group createUnit [_sUnitType,_pos2,[],0,"NONE"];
+        _guardUnit2 = [_group, _sUnitType,_pos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
             [_guardUnit2] call TRGM_GLOBAL_fnc_makeNPC;
         };
@@ -355,7 +353,7 @@ if (_PosFound) then {
         _group3 setFormDir _chatDir2;
 
         _sUnitType = selectRandom _thisUnitTypes;
-        _guardUnit3 = _group2 createUnit [_sUnitType,_pos3,[],0,"NONE"];
+        _guardUnit3 = [_group2, _sUnitType,_pos3,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
             [_guardUnit3] call TRGM_GLOBAL_fnc_makeNPC;
         };
@@ -363,7 +361,7 @@ if (_PosFound) then {
         _guardUnit3 setDir (_chatDir1);
 
         _sUnitType = selectRandom _thisUnitTypes;
-        _guardUnit4 = _group3 createUnit [_sUnitType,_pos4,[],0,"NONE"];
+        _guardUnit4 = [_group3, _sUnitType,_pos4,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
             [_guardUnit4] call TRGM_GLOBAL_fnc_makeNPC;
         };
@@ -398,7 +396,7 @@ if (_PosFound) then {
 
     _pos5 = [_behindBlockPos2 , 0, 10, 10, 0, 0.5, 0,[],[_behindBlockPos2,_behindBlockPos2],_sUnitType] call TRGM_GLOBAL_fnc_findSafePos;
 
-    _guardUnit5 = _group4 createUnit [_sUnitType,_pos5,[],0,"NONE"];
+    _guardUnit5 = [_group4, _sUnitType,_pos5,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
     if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
         [_guardUnit5] call TRGM_GLOBAL_fnc_makeNPC;
     };
@@ -414,13 +412,18 @@ if (_PosFound) then {
         };
 
         if (!_isHiddenObj) then {
-            [_guardUnit5, [localize "STR_TRGM2_setCheckpoint_Ask", {_this spawn TRGM_SERVER_fnc_speakToFriendlyCheckpoint;}, [_pos5], 0, true, true, "", "_this isEqualTo player && alive _target"]] remoteExec ["addAction", 0, true];
+            _checkPointName = (format [localize "STR_TRGM2_setCheckpoint_MarkerTextFormat", ([count TRGM_VAR_friendlySentryCheckpointPos] call TRGM_GETTER_fnc_sGetPhoneticName)]);
+            [_guardUnit5, [localize "STR_TRGM2_setCheckpoint_Ask", { _this spawn TRGM_SERVER_fnc_speakToFriendlyCheckpoint; }, [_pos5, _checkPointName], 0, true, true, "", "_this isEqualTo player && alive _target"]] remoteExec ["addAction", 0, true];
             if (_thisSide isEqualTo TRGM_VAR_FriendlySide) then {
                 _test = nil;
-                _test = createMarker [format["MrkFriendCheckpoint%1%2",_roadBlockPos select 0, _roadBlockPos select 1], _roadBlockPos];
+                _markerName = _checkPointName;
+                if (call TRGM_GETTER_fnc_bCheckpointRespawnEnabled) then {
+                    _markerName = format ["respawn_west_%1", _checkPointName];
+                };
+                _test = createMarker [_markerName, _roadBlockPos];
                 _test setMarkerShape "ICON";
                 _test setMarkerType "b_inf";
-                _test setMarkerText (localize "STR_TRGM2_setCheckpoint_MarkerText");
+                _test setMarkerText _checkPointName;
             };
         };
     };

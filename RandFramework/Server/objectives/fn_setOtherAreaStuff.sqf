@@ -55,18 +55,18 @@ if (count _TowersNear > 0) then {
 
                 _DiamPatrolGroupTower = createGroup TRGM_VAR_EnemySide;
                     if (random 1 < .50) then {
-                        _DiamPatrolGroupTower createUnit [call sAAManToUse, [_wayX, _wayY], [], 0, "NONE"];
+                        [_DiamPatrolGroupTower, call sAAManToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                         _iHasAA = 1;
                     }
                     else {
-                        _DiamPatrolGroupTower createUnit [call sATManToUse, [_wayX, _wayY], [], 0, "NONE"];
+                        [_DiamPatrolGroupTower, call sATManToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                         _iHasAT = 1;
                     };
-                _DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];
-                if (random 1 < .50) then {_DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];};
-                if (random 1 < .50) then {_DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];};
-                if (random 1 < .50) then {_DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];};
-                if (random 1 < .50) then {_DiamPatrolGroupTower createUnit [call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"];};
+                [_DiamPatrolGroupTower, call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                if (random 1 < .50) then {[_DiamPatrolGroupTower, call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
+                if (random 1 < .50) then {[_DiamPatrolGroupTower, call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
+                if (random 1 < .50) then {[_DiamPatrolGroupTower, call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
+                if (random 1 < .50) then {[_DiamPatrolGroupTower, call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
 
                 _wp1Tower = _DiamPatrolGroupTower addWaypoint [_wp1PosTower, 0];
                 _wp2Tower = _DiamPatrolGroupTower addWaypoint [_wp2PosTower, 0];

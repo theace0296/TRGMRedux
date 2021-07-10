@@ -142,7 +142,7 @@ TRGM_VAR_WarEventActive = true;
 
             _group = createGroup TRGM_VAR_EnemySide;
             _sUnitType = selectRandom [(call sRiflemanToUse),(call sMachineGunManToUse)];
-            _tempFireUnit = _group createUnit [_sUnitType,[_xPos+(random 250),_yPos+(random 250),0],[],0,"NONE"];
+            _tempFireUnit = [_group, _sUnitType,[_xPos+(random 250),_yPos+(random 250),0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             hideObject _tempFireUnit;
             sleep 1;
             _shotsToFire = selectRandom[3,10,15];

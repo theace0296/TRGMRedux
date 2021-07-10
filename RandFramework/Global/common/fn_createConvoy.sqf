@@ -69,7 +69,7 @@ if !(_hvtUnitClass isEqualTo "") then {
         _hvtVehicle setdir _dir;
         _finalGroup set [_index,_hvtVehicle];
 
-        _driver = _group createUnit [_driverClass, [_startPos select 0, _startPos select 1, 0], [], 0, "NONE"];
+        _driver = [_group, _driverClass, [_startPos select 0, _startPos select 1, 0], [], 0, "NONE", _allowCaching] call TRGM_GLOBAL_fnc_createUnit;
         if (!_allowCaching) then {
             _driver setVariable ["zbe_cacheDisabled", true, true];
         };
@@ -82,7 +82,7 @@ if !(_hvtUnitClass isEqualTo "") then {
     if !(_guardUnitClasses isEqualTo []) then {
         {
             if ((_hvtVehicle emptyPositions "Cargo") > 1) then {
-                _guardUnit = _group createUnit [_x, [_startPos select 0, _startPos select 1, 0], [], 0, "NONE"];
+                _guardUnit = [_group, _x, [_startPos select 0, _startPos select 1, 0], [], 0, "NONE", _allowCaching] call TRGM_GLOBAL_fnc_createUnit;
                 if (!_allowCaching) then {
                     _guardUnit setVariable ["zbe_cacheDisabled", true, true];
                 };
@@ -94,7 +94,7 @@ if !(_hvtUnitClass isEqualTo "") then {
         } forEach _guardUnitClasses;
     };
 
-    _hvtUnit = _group createUnit [_hvtUnitClass, [_startPos select 0, _startPos select 1, 0], [], 0, "NONE"];
+    _hvtUnit = [_group, _hvtUnitClass, [_startPos select 0, _startPos select 1, 0], [], 0, "NONE", _allowCaching] call TRGM_GLOBAL_fnc_createUnit;
     if (!_allowCaching) then {
         _hvtUnit setVariable ["zbe_cacheDisabled", true, true];
     };
@@ -106,7 +106,7 @@ if !(_hvtUnitClass isEqualTo "") then {
     _thisVehicle = _x;
     for [{private _i = 0}, {_i < (_thisVehicle emptyPositions "Cargo")}, {_i = _i + 1}] do {
         _unitTypeIndex = [_i, 8] select (_i > 8);
-        _convoyUnit = _group createUnit [[call sTeamleader, call sMachineGunMan, call sATMan, call sMedic, call sAAMan, call sEngineer, call sGrenadier, call sSniper, call sRifleman] select _unitTypeIndex, [([_thisVehicle] call TRGM_GLOBAL_fnc_getRealPos) select 0, (([_thisVehicle] call TRGM_GLOBAL_fnc_getRealPos) select 1) + 5, 0], [], 0, "NONE"];
+        _convoyUnit = [_group, [call sTeamleader, call sMachineGunMan, call sATMan, call sMedic, call sAAMan, call sEngineer, call sGrenadier, call sSniper, call sRifleman] select _unitTypeIndex, [([_thisVehicle] call TRGM_GLOBAL_fnc_getRealPos) select 0, (([_thisVehicle] call TRGM_GLOBAL_fnc_getRealPos) select 1) + 5, 0], [], 0, "NONE", _allowCaching] call TRGM_GLOBAL_fnc_createUnit;
         _convoyUnit assignAsCargo _thisVehicle;
         _convoyUnit moveInCargo _thisVehicle;
     };

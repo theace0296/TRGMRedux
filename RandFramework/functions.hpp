@@ -73,7 +73,6 @@ class TRGM_SERVER {
         class buildingPatrol {};
         class civKilled {};
         class createEnemySniper {};
-        class createUnit {};
         class createWaitingAmbush {};
         class createWaitingSuicideBomber {};
         class findOverwatchOverride {};
@@ -115,8 +114,10 @@ class TRGM_GLOBAL {
         class carryAndJoinWounded {};
         class convoy {};
         class createConvoy {};
+        class createUnit {};
         class debugDotMarker {};
         class deleteTrash {};
+        class dynamicShowHide {};
         class enemyAirSupport {};
         class fireAOFlares {};
         class fireIllumFlares {};

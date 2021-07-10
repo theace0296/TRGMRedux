@@ -218,7 +218,7 @@ if (isnil "fncMedicalParamedicLight") then {
         //[str(_backOfVehArea)] call TRGM_GLOBAL_fnc_notify;
         _group = createGroup civilian;
 
-        _downedCiv = _group createUnit [selectRandom sCivilian,_backOfVehArea,[],0,"NONE"];
+        _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         _downedCiv setDamage 0.8;
         [_downedCiv, "Acts_CivilInjuredGeneral_1"] remoteExec ["switchMove", 0];
         //_downedCiv playMoveNow "Acts_CivilInjuredGeneral_1"; //"AinjPpneMstpSnonWrflDnon";
@@ -248,7 +248,7 @@ if (isnil "fncMedicalParamedicLight") then {
 
         //Paramedics object1 attachTo [object2, offset, memPoint]
         //_group = createGroup civilian;
-        _downedCivMedic = _group createUnit [selectRandom Paramedics,_backOfVehArea,[],0,"CAN_COLLIDE"];
+        _downedCivMedic = [_group, selectRandom Paramedics,_backOfVehArea,[],0,"CAN_COLLIDE"] call TRGM_GLOBAL_fnc_createUnit;
         _downedCivMedic playmove "Acts_TreatingWounded02";
         _downedCivMedic disableAI "anim";
         _downedCivMedic attachTo [_downedCiv, [0.5,-0.3,-0.1]];
@@ -283,14 +283,14 @@ if (isnil "fncMedicalParamedicLight") then {
 
             _Crater = createVehicle ["Crater", _backOfVehArea, [], 20, "CAN_COLLIDE"];
 
-            _downedCivMedic2 = _group createUnit [selectRandom sCivilian,_backOfVehArea,[],8,"NONE"];
+            _downedCivMedic2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _downedCivMedic2 playmove "Acts_CivilListening_2";
             _downedCivMedic2 disableAI "anim";
             _downedCivMedic2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_paramedicKilled;}]; //ParamedicKilled
 
             //_RequestedMedicalItems
 
-            _downedCiv2 = _group createUnit [selectRandom Paramedics,([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"];
+            _downedCiv2 = [_group, selectRandom Paramedics,([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _downedCiv2 playmove "Acts_CivilTalking_2";
             _downedCiv2 disableAI "anim";
             _downedCiv2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
@@ -300,14 +300,14 @@ if (isnil "fncMedicalParamedicLight") then {
             _downedCiv2 setDir _directionFromCiv2ToMed2;
         };
         if (_iteration isEqualTo 2) then {
-            _downedCiv2 = _group createUnit [selectRandom sCivilian,_backOfVehArea,[],8,"NONE"];
+            _downedCiv2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _downedCiv2 playmove "Acts_CivilHiding_2";
             _downedCiv2 disableAI "anim";
             _downedCiv2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
             _directionFromCiv2ToMed2 = [_downedCiv2, _downedCiv] call BIS_fnc_DirTo;
             _downedCiv2 setDir _directionFromCiv2ToMed2;
 
-            _downedCiv3 = _group createUnit [selectRandom sCivilian,_backOfVehArea,[],25,"NONE"];
+            _downedCiv3 = [_group, selectRandom sCivilian,_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _downedCiv3 playmove "Acts_CivilShocked_1";
             _downedCiv3 disableAI "anim";
             _downedCiv3 setDir (floor(random 360));
@@ -364,7 +364,7 @@ if (isnil "fncMedicalParamedicLight") then {
             _flatPosPolice1 = nil;
             _flatPosPolice1 = [_vehPos , 30, 50, 10, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],selectRandom PoliceVehicles] call TRGM_GLOBAL_fnc_findSafePos;
             _carPolice = createVehicle [selectRandom PoliceVehicles, _flatPosPolice1, [], 0, "NONE"];
-            _manPolice = createGroup civilian createUnit [selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"];
+            _manPolice = [createGroup civilian, selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _manPolice setDir (floor(random 360));
             [_manPolice] call TRGM_GLOBAL_fnc_makeNPC;
     //Police

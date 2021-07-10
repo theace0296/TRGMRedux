@@ -52,12 +52,12 @@ if (_currentATFieldPos select 0 != 0) then {
         _group = createGroup TRGM_VAR_FriendlySide;
         _sUnitType = selectRandom (call FriendlyCheckpointUnits);
 
-        _guardUnit1 = _group createUnit [_sUnitType,_pos1,[],0,"NONE"];
+        _guardUnit1 = [_group, _sUnitType,_pos1,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         doStop [_guardUnit1];
         _guardUnit1 setDir (floor random 360);
          [_guardUnit1,"WATCH","ASIS"] call BIS_fnc_ambientAnimCombat;
 
-         _guardUnit2 = _group createUnit [_sUnitType,_pos2,[],0,"NONE"];
+         _guardUnit2 = [_group, _sUnitType,_pos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         doStop [_guardUnit2];
         _guardUnit2 setDir (floor random 360);
          [_guardUnit2,"WATCH","ASIS"] call BIS_fnc_ambientAnimCombat;

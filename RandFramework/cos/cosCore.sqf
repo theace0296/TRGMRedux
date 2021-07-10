@@ -102,7 +102,7 @@ for "_i" from 1 to _civilians do {
                 _localGrps=_localGrps+1;
                         };
 
-        _unit = _grp createUnit [_tempUnit, _tempPos, [], 0, "NONE"];
+        _unit = [_grp, _tempUnit, _tempPos, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
         _civilianArray set [count _civilianArray,_grp];
 
                 null =[_unit] execVM "RandFramework\cos\addScript_Unit.sqf";
@@ -158,7 +158,7 @@ if (!(server getvariable _trigID)) exitwith {_isActive=false;};
                 };
 
     _veh = createVehicle [_tempVeh, _tempPos, [], 0, "NONE"];
-    _unit = _grp createUnit [_tempUnit, getpos _veh, [], 0, "CAN_COLLIDE"];
+    _unit = [_grp, _tempUnit, getpos _veh, [], 0, "CAN_COLLIDE"] call TRGM_GLOBAL_fnc_createUnit;
         _veh setdir _direction;
 
             _unit assignAsDriver _veh;

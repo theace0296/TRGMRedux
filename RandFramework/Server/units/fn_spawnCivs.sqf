@@ -57,8 +57,8 @@ while {_iCount <= _unitCount} do
     if (_bIsRebels) then {
         _wayPosInit = selectRandom _allBuildingPos;
         if (!isNil "_wayPosInit") then {
-            //_SpawnedRifleman = (_sideCivGroup createUnit [sRiflemanFriendInsurg, _wayPosInit, [], 10, "NONE"]);
-            _SpawnedRifleman = (_sideCivGroup createUnit [sRiflemanFriendInsurg, _wayPosInit, [], 10, "NONE"]);
+            //_SpawnedRifleman = [_sideCivGroup, sRiflemanFriendInsurg, _wayPosInit, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            _SpawnedRifleman = [_sideCivGroup, sRiflemanFriendInsurg, _wayPosInit, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
             [_SpawnedRifleman] joinSilent (_sideCivGroup);
             if (!_bRebelLeaderPicked) then {
                 _SpawnedRifleman addaction [localize "STR_TRGM2_trendFunctions_TalkToLeader",{[_this select 0, _this select 1] spawn TRGM_SERVER_fnc_talkRebLead}];
@@ -88,7 +88,7 @@ while {_iCount <= _unitCount} do
             if (typeName _sCivClass isEqualTo "ARRAY") then {
                 _sCivClass = selectRandom sCivilian;
             };
-            private _newCiv = _sideCivGroup createUnit [_sCivClass, _wayPosInit, [], 0, "NONE"];
+            private _newCiv = [_sideCivGroup, _sCivClass, _wayPosInit, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _newCiv call compile _sInitString;
         };
     };

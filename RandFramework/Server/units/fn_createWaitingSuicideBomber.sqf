@@ -11,7 +11,7 @@ _nearestHidingPlaces = _nearestHidingPlaces - _HidingPlacesTooClose;
 if (count _nearestHidingPlaces > 5) then {
     _ambushGroup = createGroup TRGM_VAR_EnemySide;
 
-    _objMilUnit = _ambushGroup createUnit [selectRandom sCivilian,getPos (selectRandom _nearestHidingPlaces),[],0,"NONE"];
+    _objMilUnit = [_ambushGroup, selectRandom sCivilian,getPos (selectRandom _nearestHidingPlaces),[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
     doStop _objMilUnit;
     _ambushGroup setCombatMode "BLUE";
     _ambushGroup setBehaviour "SAFE";

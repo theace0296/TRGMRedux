@@ -92,31 +92,31 @@ switch (_side) do {
     case WEST : {
         _infgrp = createGroup WEST;
 
-        _infgrp createUnit [(call fTeamleader),    [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call fGrenadier),     [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call fMedic),         [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call fRifleman),      [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call fMachineGunMan), [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call fTeamleader),    [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call fGrenadier),     [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call fMedic),         [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call fRifleman),      [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call fMachineGunMan), [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
         _helo = createVehicle [(call ReinforceVehicleFriendly), _spawnMrk, [], 0, "FLY"];
     };
     case EAST : {
         _infgrp = createGroup EAST;
 
-        _infgrp createUnit [(call sTeamleader),    [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call sGrenadier),     [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call sMedic),         [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call sRifleman),      [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call sMachineGunMan), [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sTeamleader),    [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sGrenadier),     [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sMedic),         [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sRifleman),      [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sMachineGunMan), [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
         _helo = createVehicle [(call ReinforceVehicle), _spawnMrk, [], 0, "FLY"];
     };
     case INDEPENDENT : {
         _infgrp = createGroup INDEPENDENT;
 
-        _infgrp createUnit [(call sTeamleaderMilitia),    [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call sGrenadierMilitia),     [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call sMedicMilitia),         [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call sRiflemanMilitia),      [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
-        _infgrp createUnit [(call sMachineGunManMilitia), [0,0], [], 5, "NONE"]; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sTeamleaderMilitia),    [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sGrenadierMilitia),     [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sMedicMilitia),         [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sRiflemanMilitia),      [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
+        [_infgrp, (call sMachineGunManMilitia), [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
         _helo = createVehicle [(call ReinforceVehicleMilitia), _spawnMrk, [], 0, "FLY"];
     };
 };

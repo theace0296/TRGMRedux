@@ -81,7 +81,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     },[_bombSerialNumber]]]; remoteExec ["addAction", 0, true];
 
 
-    _objInformant = createGroup Civilian createUnit [selectRandom InformantClasses,[-200,-200,0],[],0,"NONE"];
+    _objInformant = [createGroup Civilian, selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
     _buildings = nil;
     if (_iTaskIndex isEqualTo 0 && !isNil "TRGM_VAR_Mission1SubLoc") then {
         _buildings = nearestObjects [TRGM_VAR_Mission1SubLoc, TRGM_VAR_BasicBuildings, 100];

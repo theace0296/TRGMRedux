@@ -115,7 +115,7 @@ if (count _nearestRoads > 0) then {
 
         //[str(_backOfVehArea)] call TRGM_GLOBAL_fnc_notify;
         _group = createGroup civilian;
-        _downedCiv = _group createUnit [selectRandom sCivilian,_backOfVehArea,[],0,"NONE"];
+        _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         [_downedCiv, "Acts_CivilShocked_1"] remoteExec ["switchMove", 0];
         //_downedCiv playMoveNow "Acts_CivilInjuredGeneral_1"; //"AinjPpneMstpSnonWrflDnon";
         _downedCiv disableAI "anim";

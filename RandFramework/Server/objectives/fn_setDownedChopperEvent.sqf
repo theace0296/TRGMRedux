@@ -99,7 +99,7 @@ if (str(_flatPos) != "[0,0,0]") then {
     _flatPos2 = nil;
     _flatPos2 = [_flatPos , 10, 25, 3, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],_sVictim] call TRGM_GLOBAL_fnc_findSafePos;
     _group = createGroup civilian;
-    _downedCiv = _group createUnit [_sVictim,_flatPos2,[],0,"NONE"];
+    _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
 
 
     [_downedCiv,["Join Group",{

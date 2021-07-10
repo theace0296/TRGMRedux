@@ -628,9 +628,9 @@ if (!_bFriendlyInsurgents) then {
                     _objMilUnit2 = nil;
                     _objMilUnit3 = nil;
                     _MilGroup1 = createGroup TRGM_VAR_EnemySide;
-                    _objMilUnit1 = _MilGroup1 createUnit [selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1000,0,0],[],0,"NONE"];
-                    _objMilUnit2 = _MilGroup1 createUnit [selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1002,0,0],[],0,"NONE"];
-                    _objMilUnit3 = _MilGroup1 createUnit [selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1003,0,0],[],0,"NONE"];
+                    _objMilUnit1 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1000,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    _objMilUnit2 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1002,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    _objMilUnit3 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1003,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                     TRGM_VAR_OccupiedHousesPos = TRGM_VAR_OccupiedHousesPos + [_thisMilBuilPos];
                     [getPos _x, [_objMilUnit1,_objMilUnit2,_objMilUnit3], -1, true, false,true] spawn TRGM_SERVER_fnc_zenOccupyHouse;
                     sleep 0.2;
@@ -651,7 +651,7 @@ if (!_bFriendlyInsurgents) then {
                         _MilGroup4 = createGroup TRGM_VAR_EnemySide;
                         _sCheckpointGuyName = format["objMilGuyName%1",(floor(random 999999))];
                         _pos5 = [getpos _x , 0, 30, 5, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[getpos _x,getpos _x]] call TRGM_GLOBAL_fnc_findSafePos;
-                        _guardUnit5 = _MilGroup4 createUnit [(call sRiflemanToUse),_pos5,[],0,"NONE"];
+                        _guardUnit5 = [_MilGroup4, (call sRiflemanToUse),_pos5,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                         _guardUnit5 setVariable [_sCheckpointGuyName, _guardUnit5, true];
                         missionNamespace setVariable [_sCheckpointGuyName, _guardUnit5];
                         TRGM_LOCAL_fnc_walkingGuyLoop = {
@@ -679,8 +679,8 @@ if (!_bFriendlyInsurgents) then {
                         _BaseChopperGroup = createGroup TRGM_VAR_EnemySide;
                         _EnemyBaseChopper = selectRandom (call EnemyBaseChoppers) createVehicle getPosATL TRGM_VAR_baseHeliPad;
                         _EnemyBaseChopper setDir direction TRGM_VAR_baseHeliPad;
-                        _BaseChopperGroup createUnit [call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+10,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"];
-                        _BaseChopperGroup createUnit [call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+11,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"];
+                        [_BaseChopperGroup, call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+10,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                        [_BaseChopperGroup, call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+11,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                         {
                             [_x,"STAND","ASIS"] call BIS_fnc_ambientAnimCombat;
                         } forEach units _BaseChopperGroup;

@@ -26,7 +26,7 @@ if (_bAllowAmbush) then {
         _iCount = 0;
         while {_iCount < _groupSize} do {
             _iCount = _iCount + 1;
-            _objMilUnit = _ambushGroup createUnit [selectRandom[(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sATManToUse),(call sMachineGunManToUse)],getPos (selectRandom _nearestHidingPlaces),[],0,"NONE"];
+            _objMilUnit = [_ambushGroup, selectRandom[(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sATManToUse),(call sMachineGunManToUse)],getPos (selectRandom _nearestHidingPlaces),[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             doStop _objMilUnit;
             _ambushGroup setCombatMode "BLUE";
             _ambushGroup setBehaviour "SAFE";

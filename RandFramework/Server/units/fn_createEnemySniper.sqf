@@ -10,8 +10,8 @@ _maxRange = 800;
 _minRange = 600;
 _minHeight = 20;
 
-_spawnedUnit = ((createGroup TRGM_VAR_EnemySide) createUnit [(call sSniperToUse), [-135,-253,0], [], 10, "NONE"]);
-_spawnedTempTarget = ((createGroup TRGM_VAR_EnemySide) createUnit [(call sSniperToUse), _targetPos, [], 10, "NONE"]);
+_spawnedUnit = [(createGroup TRGM_VAR_EnemySide), (call sSniperToUse), [-135,-253,0], [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+_spawnedTempTarget = [(createGroup TRGM_VAR_EnemySide), (call sSniperToUse), _targetPos, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
 
 for "_i" from 1 to 20 do {
     if (!_foundPlace) then {
