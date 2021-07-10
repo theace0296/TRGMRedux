@@ -193,7 +193,7 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                 params ["_classtospawn"];
                 private _playerPosition = [player] call TRGM_GLOBAL_fnc_getRealPos;
                 if (!(_playerPosition isEqualType []) || {!(count _playerPosition isEqualTo 3) || {!(_playerPosition isEqualTypeArray (getPos player))}}) then {
-                    _playerPosition = getPos player;`
+                    _playerPosition = getPos player;
                 };
                 private _safePos = [_playerPosition, 0, 50, 25, 0, 0.15, 0, [], [_playerPosition, _playerPosition], _classtospawn] call TRGM_GLOBAL_fnc_findSafePos;
                 // find a valid pos
