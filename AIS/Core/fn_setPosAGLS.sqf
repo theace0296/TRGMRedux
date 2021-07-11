@@ -1,4 +1,4 @@
-﻿// from Killzone Kid
+// from Killzone Kid
 
 /*
     //---This will place player exactly on top deck of Cargo HQ on Stratis:

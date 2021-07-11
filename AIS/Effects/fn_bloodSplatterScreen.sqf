@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Vladimir Hynek (BI)
    Changed: Psycho
 

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Disable the respawn button for given time.

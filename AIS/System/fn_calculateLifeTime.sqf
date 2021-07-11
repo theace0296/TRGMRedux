@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Calculate the real revive time. Time depends on real summary damage of all body parts.

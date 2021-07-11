@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Check if no player is in this group. (only AI's) If it is so, the AI will call for other AI's to help him. Otherwise a AI-only group cant be revive.

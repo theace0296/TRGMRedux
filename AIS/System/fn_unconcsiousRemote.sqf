@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Broadcast everything across the network which is needed if a unit fall in agony

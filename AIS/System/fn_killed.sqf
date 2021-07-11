@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Clean up the unit if they got killed. Is called by the killed EH.

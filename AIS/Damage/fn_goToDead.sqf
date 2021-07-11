@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Set the unit to the real dead. (overall damage == 1)

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: psycho
 
  * Pull a injured out of a vehicle

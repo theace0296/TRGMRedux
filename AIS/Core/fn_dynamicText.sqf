@@ -1,4 +1,4 @@
-﻿/*
+/*
     ["Mein Text"] call AIS_Core_fnc_dynamicText;
 */
 

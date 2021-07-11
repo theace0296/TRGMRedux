@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Load a unit into a vehicles cargo or turret seat.

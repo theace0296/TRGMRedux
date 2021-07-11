@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * unbind some key functions while the player is unconcious.

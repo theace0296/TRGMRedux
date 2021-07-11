@@ -1,4 +1,4 @@
-﻿/*
+/*
  * by Psycho
 
  * Arguments:

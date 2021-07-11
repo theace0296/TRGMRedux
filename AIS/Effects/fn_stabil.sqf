@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Visual bleeding effects and counter for revive time. Will self-run in a loop till unit get revived/stabilized or died.

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Start to init a unit which is local to a player.

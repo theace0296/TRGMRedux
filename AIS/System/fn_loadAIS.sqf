@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Start to init a unit. It's a public function.

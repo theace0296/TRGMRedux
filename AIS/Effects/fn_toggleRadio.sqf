@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Enable/disable the TFAR and/or ACRE radios when player is unconscious.

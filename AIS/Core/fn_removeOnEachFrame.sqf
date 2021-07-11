@@ -1,4 +1,4 @@
-﻿/*
+/*
     Arma Mission Enhancement - Core\Events\fn_removeOnEachFrame.sqf
 
     Author: NetFusion

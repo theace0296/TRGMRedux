@@ -1,4 +1,4 @@
-﻿/*
+/*
     Author: NetFusion
     Description:
     Continuously checks whether an action should be added to the cursorTarget.

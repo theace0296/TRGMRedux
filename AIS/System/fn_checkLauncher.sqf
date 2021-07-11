@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Check if the unit have a launcher.

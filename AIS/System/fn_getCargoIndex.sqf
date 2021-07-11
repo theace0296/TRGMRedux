@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Get a free cargo seat position for given vehicle.

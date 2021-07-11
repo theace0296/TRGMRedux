@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Alwarren
    Changed: Psycho
 

@@ -1,4 +1,4 @@
-﻿// this script run on the server/host for every unit which should be added to the revive system. It run's once by starting the mission.
+// this script run on the server/host for every unit which should be added to the revive system. It run's once by starting the mission.
 params ["_unit"];
 if (_unit getVariable ["AIS_noReviveInit", false]) exitWith {};
 

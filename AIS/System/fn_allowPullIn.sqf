@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Check if uncoscious Unit can load in a vehicle..

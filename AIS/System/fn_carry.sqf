@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Start to carry a unit.

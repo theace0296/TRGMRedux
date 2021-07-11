@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Set all needed vars to the unit.

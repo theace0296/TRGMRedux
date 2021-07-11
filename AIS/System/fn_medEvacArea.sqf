@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Check Unit if is in range of a medevac object.

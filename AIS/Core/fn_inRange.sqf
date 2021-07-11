@@ -1,4 +1,4 @@
-﻿/*
+/*
     Author: [C-L-F] NetFusion
 
     Description:

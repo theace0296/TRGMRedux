@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Create a local marker for unconcious units

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Update the marker position every 5 seconds until the marker is deleted.

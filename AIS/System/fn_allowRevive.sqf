@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Check Unit if Revive is possible. If yes, Revive-Action is shown up.

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Override the heal action if the unit is unconscious.

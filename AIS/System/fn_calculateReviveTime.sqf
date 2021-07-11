@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Calculate the needed time to revive a unit.

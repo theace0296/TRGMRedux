@@ -1,4 +1,4 @@
-﻿//if (!isNull (findDisplay 12)) exitWith {};        // Map
+//if (!isNull (findDisplay 12)) exitWith {};        // Map
 if (isNull (findDisplay 46)) exitWith {};
 if (!isNull (findDisplay 49)) exitWith {};        // Esc Menu
 

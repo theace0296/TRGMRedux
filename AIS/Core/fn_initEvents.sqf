@@ -1,4 +1,4 @@
-﻿/*
+/*
     Arma Mission Enhancement - Core\Events\fn_initEvents.sqf
     Author: NetFusion
     Changed: Psycho - expand function with "next-frame" and "waitUntil" elements

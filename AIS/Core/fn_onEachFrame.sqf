@@ -1,4 +1,4 @@
-﻿/*
+/*
     Arma Mission Enhancement - Core\Events\fn_onEachFrame.sqf
 
     Author: NetFusion

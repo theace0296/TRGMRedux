@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: psycho
 
  * Check Unit if get a unit out of a vehicle is possible

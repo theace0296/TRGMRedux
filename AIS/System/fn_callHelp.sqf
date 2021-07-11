@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Call for help and also start to check if a AI can help you.

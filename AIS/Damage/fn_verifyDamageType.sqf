@@ -1,4 +1,4 @@
-﻿params ["_unit", "_hitSelection", "_new_damage", "_source", "_projectile", "_hitPartIndex"];
+params ["_unit", "_hitSelection", "_new_damage", "_source", "_projectile", "_hitPartIndex"];
 private _damageType = "";
 
 // Vehicle crash?

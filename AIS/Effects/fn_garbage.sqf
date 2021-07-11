@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Alwarren
 
  * Remove ambient medical equimpment from the ground. If euqipment is marked as "do not delete", the loop will set it to delete list for the next time the function is called.

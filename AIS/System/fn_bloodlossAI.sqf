@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Calculate the time till the AI units will die (Revive-Time) and check if the get revived.

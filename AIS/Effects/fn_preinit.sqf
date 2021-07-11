@@ -1,4 +1,4 @@
-﻿// from domination
+// from domination
 ais_help_screaming = [
     [
         "Person0",

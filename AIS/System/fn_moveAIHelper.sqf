@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Make the AI moving to a injured unit and start the revive.

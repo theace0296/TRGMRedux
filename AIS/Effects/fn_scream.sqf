@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Play a random screaming sound when a unit go unconcsious

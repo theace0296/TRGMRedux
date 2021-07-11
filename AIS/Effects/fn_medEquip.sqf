@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Alwarren
 
  * Spawn randomized some ambient medical equipment around the injured.

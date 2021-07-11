@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Check if a unconscious unit is pulled out of the vehicle by a AI order and set the correct anim-state. Is called by the getOutMan EH.

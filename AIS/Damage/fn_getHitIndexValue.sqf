@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Give back a wanted hitDamageIndex. Index number or correspondending Hitpart.

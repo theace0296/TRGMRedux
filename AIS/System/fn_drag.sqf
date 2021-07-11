@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Start to drag a unit.

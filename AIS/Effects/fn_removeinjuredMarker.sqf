@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Delete a local unconcsious marker

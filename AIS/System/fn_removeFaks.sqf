@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Alwarren
 
  * Remove first aid and Medikits

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * give back the last damage of the specific body part

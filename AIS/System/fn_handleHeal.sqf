@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Block the engine heal action during the unit is unconscious. Function is triggered trough the Heal-EH.

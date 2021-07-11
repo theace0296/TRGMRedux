@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Set the unit in unconcsious state. This is a public function.

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Re-initialize a respawned unit.

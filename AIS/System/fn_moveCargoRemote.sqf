@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Load a unit into a vehicles cargo or turret seat. Function is everytime called by a player. Checks if the unit is local, if not, use remoteExec.

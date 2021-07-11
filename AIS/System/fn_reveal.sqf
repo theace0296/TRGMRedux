@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Reveal near units after revive.

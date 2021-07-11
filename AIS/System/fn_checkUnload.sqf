@@ -1,4 +1,4 @@
-﻿/*
+/*
     * Author: psycho
 
     * Check if a unit can be unload from a vehicle at the actual situation

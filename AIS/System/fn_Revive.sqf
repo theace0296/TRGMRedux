@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Handle Revive actions from a PLAYER

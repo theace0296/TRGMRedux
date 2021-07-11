@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Set the unit in unconcsious state for PLAYERS. Set all variables and handle things around.

@@ -1,4 +1,4 @@
-﻿// by psycho
+// by psycho
 private _title = _this select 0;
 _value = _this select 1;
 

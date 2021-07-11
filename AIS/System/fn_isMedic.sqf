@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Chck if the unit is a medic. Also units which set manually to a medic will be found. (setUnitTrait)

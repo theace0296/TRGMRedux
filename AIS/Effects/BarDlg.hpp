@@ -1,4 +1,4 @@
-﻿class AIS_Core_Progress_BarDlg {
+class AIS_Core_Progress_BarDlg {
     idd = -1;
     movingEnable = false;
     onLoad = "uiNamespace setVariable ['AIS_Core_Progress_ProgressBar', (_this select 0) displayCtrl 1]; uiNamespace setVariable ['AIS_Core_Progress_ProgressTitle', (_this select 0) displayCtrl 2];";

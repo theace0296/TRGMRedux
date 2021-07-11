@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Check if a unit is a playable unit.

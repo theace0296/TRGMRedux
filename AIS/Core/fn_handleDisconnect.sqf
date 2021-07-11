@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Server side handling of disconnected players. The disconnected entity get transfered to the server and re-init the AIS.

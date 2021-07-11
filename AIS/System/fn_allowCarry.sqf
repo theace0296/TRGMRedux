@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: psycho
 
  * Check Unit if carrying is possible/allowed. If yes, drag-action is shown up.

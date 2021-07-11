@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Searching for the best helper in the near of a player.

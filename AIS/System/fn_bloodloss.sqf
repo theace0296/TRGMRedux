@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Calculate the time till the unit will die (Revive-Time) and control the injury-effects.

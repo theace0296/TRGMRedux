@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Handle unit state after a teamswtich was performed.

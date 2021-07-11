@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: psycho
 
  * Set a object / Vehicle in function of a medevac point and make it public. Usable for spawned objects for example. Public function.

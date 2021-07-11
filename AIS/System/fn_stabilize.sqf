@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Author: Psycho
 
  * Stabilize a unit. A stabilized unit stop to bleed and cant die trough the revive timer.
