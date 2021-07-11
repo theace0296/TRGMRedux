@@ -1,0 +1,21 @@
+name: Remove BOMs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  removeBOMs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the source code
+      uses: actions/checkout@master
+    - name: Remove BOMs
+      run: python3 Tools/remove_bom.py
+    - name: Create PR with BOMs removed
+      uses: peter-evans/create-pull-request@v3.10.0
+      with:
+        title: Remove BOMs
+        commit-message: Remove BOMs
+        delete-branch: true
+        branch: removeBOMs/patch
+        branch-suffix: short-commit-hash
