@@ -3625,7 +3625,7 @@
             <Key ID="STR_TRGM2_BombPsst">
                 <Original>Psst %1.\n\nThis guy is dead... why are you trying to talk to him? (you will have to guess the code and colour now lol)</Original>
                 <English>Psst %1.\n\nThis guy is dead... why are you trying to talk to him? (you will have to guess the code and colour now lol)</English>
-                <Korean>잠깐! %1.\n그는 이미 죽었다... 당신은 그에게 무엇을 말하려 합니까? (당신은 코드와 색상을 추측해야합니다)</korean>
+                <Korean>잠깐! %1.\n그는 이미 죽었다... 당신은 그에게 무엇을 말하려 합니까? (당신은 코드와 색상을 추측해야합니다)</Korean>
             </Key>
             <Key ID="STR_TRGM2_BombCountdown">
                 <Original>Countdown: %1</Original>
@@ -3690,16 +3690,15 @@
                 <Korean>목표</Korean>
             </Key>
 
-            </Key>
       		<Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MainAOSelect">
-              <Original>Select main AO Pos</Original>
-              <English>Select main AO Pos</English>
+                <Original>Select main AO Pos</Original>
+                <English>Select main AO Pos</English>
                 <Korean>주요 작전지역 선택</Korean>
             </Key>
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MainAO_CAMP_Select">
-              <Original>Select main AO Camp Pos</Original>
-              <English>Select main AO Camp Pos</English>
-              <Korean>주요 작전캠프 선택</Korean>
+                <Original>Select main AO Camp Pos</Original>
+                <English>Select main AO Camp Pos</English>
+                <Korean>주요 작전캠프 선택</Korean>
             </Key>
 
             <Key ID="STR_TRGM2_TRGMInitPlayerLocal_PleaseWait3">
