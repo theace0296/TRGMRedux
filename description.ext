@@ -92,93 +92,96 @@ class CfgRadio
 
 class Params
 {
+    class DynamicSimulationDistance
+    {
+        title = "Minimum distance between spawned units and players to enable AI simulation. (Setting to 'disabled' disables Dynamic Simulation)";
+        values[] = {1000,1500,2000,2500,3000,3500,4000,4500,5000,9999};
+        texts[] = {"1000","1500","2000","2500","3000","3500","4000","4500","5000","Disabled"};
+        default = 2500;
+    };
+    class DynamicSimulationMultiplier
+    {
+        title = "Multiplier for distance between spawned units and players when players are in a vehicle. (Setting to 'disabled' disables Dynamic Simulation)";
+        values[] = {1,2,3,4,5,10,9999};
+        texts[] = {"1","2","3","4","5","10","Disabled"};
+        default = 2;
+    };
     class OverrideMissionSetup
     {
-        title = "Override mission setup screen (Mission parameters are set up using 'CustomMission/TRGMSetDefaultMissionSetupVars.sqf')"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Override mission setup screen (Mission parameters are set up using 'CustomMission/TRGMSetDefaultMissionSetupVars.sqf')";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class CustomMission
     {
-        title = "Enable Custom Mission (Mission objectives and script is defined in 'CustomMission/CustomMission.sqf')"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Enable Custom Mission (Mission objectives and script is defined in 'CustomMission/CustomMission.sqf')";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class CustomFriendlyFactionVehicles
     {
-        title = "Enable Custom Friendly Faction Vehicles (Overrides Faction selected in mission set up)"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Enable Custom Friendly Faction Vehicles (Overrides Faction selected in mission set up)";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class CustomFriendlyFactionLoadouts
     {
-        title = "Enable Custom Friendly Faction Loadouts (Overrides Faction selected in mission set up)"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Enable Custom Friendly Faction Loadouts (Overrides Faction selected in mission set up)";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class CustomEnemyFactionVehicles
     {
-        title = "Enable Custom Enemy Faction Vehicles (Overrides Faction selected in mission set up)"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Enable Custom Enemy Faction Vehicles (Overrides Faction selected in mission set up)";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class CustomEnemyFactionLoadouts
     {
-        title = "Enable Custom Enemy Faction Loadouts (Overrides Faction selected in mission set up)"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Enable Custom Enemy Faction Loadouts (Overrides Faction selected in mission set up)";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class CustomMilitiaFactionVehicles
     {
-        title = "Enable Custom Militia Faction Vehicles (Overrides Faction selected in mission set up)"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Enable Custom Militia Faction Vehicles (Overrides Faction selected in mission set up)";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class CustomMilitiaFactionLoadouts
     {
-        title = "Enable Custom Militia Faction Loadouts (Overrides Faction selected in mission set up)"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Enable Custom Militia Faction Loadouts (Overrides Faction selected in mission set up)";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class DebugMode
     {
-        title = "Enable Debugging Mode"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 1; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Enable Debugging Mode";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 1;
     };
     class ResetMissionSettings
     {
-        title = "Reset all saved mission settings to default values"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Reset all saved mission settings to default values";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
     class RecalculateFactionData
     {
-        title = "Ignores faction data saved in profile and re-parses config"; // Param name visible in the list
-        values[] = {0,1}; // Values; must be integers; has to have the same number of elements as 'texts'
-        texts[] = {"Disable","Enable"}; // Description of each selectable item
-        default = 0; // Default value; must be listed in 'values' array, otherwise 0 is used
-        // Default values that are not whole numbers do not work. Param will default to 0 (or 1 if defined)
+        title = "Ignores faction data saved in profile and re-parses config";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
     };
 };
 
