@@ -22,6 +22,9 @@ switch (_option) do {
         {
             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_StartMission",{[false] spawn TRGM_SERVER_fnc_startMissionPreCheck;}]] remoteExec ["addAction", 0];
         } forEach [endMissionBoard, endMissionBoard2];
+        if (TRGM_GETTER_fnc_bIsCampaign) then {
+            [endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_ExitCampaign",{[false] spawn TRGM_SERVER_fnc_exitCampaign;}]] remoteExec ["addAction", 0];
+        };
     };
     case "NEW_MISSION": {
         {
@@ -39,43 +42,13 @@ switch (_option) do {
         if (isMultiplayer) then {
             [endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_EndMission",{_this spawn TRGM_SERVER_fnc_attemptEndMission;}]] remoteExec ["addAction", 0];
         };
+        if (TRGM_GETTER_fnc_bIsCampaign) then {
+            [endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_ExitCampaign",{[false] spawn TRGM_SERVER_fnc_exitCampaign;}]] remoteExec ["addAction", 0];
+        };
     };
     case "CAMPAIGN_END": {
         [endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_EndMission",{_this spawn TRGM_SERVER_fnc_attemptEndMission;}]] remoteExec ["addAction", 0];
     };
 };
-
-// The following code is redundant with the new recruit system:
-// if (_option != "CAMPAIGN_END") then {
-//     {
-//         [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitRifleman",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitRifleman,"Rifleman"]]] remoteExec ["addAction", 0];
-//         [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitAT",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitAT,"ATSpecialist"]]] remoteExec ["addAction", 0];
-//         [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitAA",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitAA,"AASpecialist"]]] remoteExec ["addAction", 0];
-//         [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitEngineer",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitEngineer,"Engineer"]]] remoteExec ["addAction", 0];
-//         [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitExplosive",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitExplosiveSpecialist,"ExplosiveSpecialist"]]] remoteExec ["addAction", 0];
-//         [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitMedic",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitMedic,"Medic"]]] remoteExec ["addAction", 0];
-//         if (_dCurrentRep isEqualTo 3) then {
-//             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitAutomaticRiflemanS",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitAuto,"Autorifleman"]]] remoteExec ["addAction", 0];
-//         };
-//         if (_dCurrentRep > 3) then {
-//             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitAutomaticRifleman",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitAuto,"Autorifleman"]]] remoteExec ["addAction", 0];
-//         };
-//         if (_dCurrentRep isEqualTo 5) then {
-//             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitSniperS",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitSniper,"Sniper"]]] remoteExec ["addAction", 0];
-//             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitSpotterS",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitSpotter,"Spotter"]]] remoteExec ["addAction", 0];
-//         };
-
-//         if (_dCurrentRep > 5) then {
-//             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitSniper",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitSniper,"Sniper"]]] remoteExec ["addAction", 0];
-//             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitSpotter",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitSpotter,"Spotter"]]] remoteExec ["addAction", 0];
-//         };
-//         if (_dCurrentRep isEqualTo 7) then {
-//             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitUAVS",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitUAV,"UAVOperator"]]] remoteExec ["addAction", 0];
-//         };
-//         if (_dCurrentRep > 7) then {
-//             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_RecruitUAV",{_this spawn TRGM_SERVER_fnc_recruiteInf;},[TRGM_VAR_CampaignRecruitUnitUAV,"UAVOperator"]]] remoteExec ["addAction", 0];
-//         };
-//     } forEach [endMissionBoard, endMissionBoard2];
-// };
 
 true;

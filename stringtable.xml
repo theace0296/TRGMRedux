@@ -1209,6 +1209,10 @@
                 <Spanish>!!Iniciar Misión!!</Spanish>
                 <Korean>!!임무 시작!!</Korean>
             </Key>
+            <Key ID="STR_TRGM2_SetMissionBoardOptions_ExitCampaign">
+                <Original>!!Exit Campaign!!</Original>
+                <English>!!Exit Campaign!!</English>
+            </Key>
             <Key ID="STR_TRGM2_SetMissionBoardOptions_RecruitRifleman">
                 <Original>Recruit Rifleman</Original>
                 <English>Recruit Rifleman</English>
