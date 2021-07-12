@@ -2,7 +2,7 @@ name: Test-And-Build
 
 on:
   push:
-    branches: [ refactor ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:

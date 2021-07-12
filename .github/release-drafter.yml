@@ -1,5 +1,5 @@
 branches:
-  - refactor
+  - main
 
 name-template: 'TRGM Redux'
 tag-template: 'v$NEXT_PATCH_VERSION'
