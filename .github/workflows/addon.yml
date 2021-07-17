@@ -80,15 +80,20 @@ jobs:
         run: |
           $addonFolder = "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons\trgmredux"
           $addonMissionFolders = Get-ChildItem -Path "$addonMissionsFolder\missions" -Directory
-          $configContent = "#include "BIS_AddonInfo.hpp`r`n"class CfgPatches`r`n{`r`n    class MyAddon`r`n    {`r`n        name = `"TRGM Redux`";`r`n        author = `"TheAce0296`";`r`n        url = `"https://github.com/theace0296/TRGM2.Malden#readme`";`r`n        requiredVersion = 2.01;`r`n        requiredAddons[] = {};`r`n        units[] = {};`r`n        weapons[] = {};`r`n    };`r`n};`r`n`r`nclass CfgMissions`r`n{`r`n    class MPMissions`r`n    {`r`n"
+          $configContent = "#include `"BIS_AddonInfo.hpp`"`r`n"class CfgPatches`r`n{`r`n    class MyAddon`r`n    {`r`n        name = `"TRGM Redux`";`r`n        author = `"TheAce0296`";`r`n        url = `"https://github.com/theace0296/TRGM2.Malden#readme`";`r`n        requiredVersion = 2.01;`r`n        requiredAddons[] = {};`r`n        units[] = {};`r`n        weapons[] = {};`r`n    };`r`n};`r`n`r`nclass CfgMissions`r`n{`r`n    class MPMissions`r`n    {`r`n"
           if ($addonMissionFolders.Count -gt 0)
           {
               ForEach ($addonMissionFolder in $addonMissionFolders)
               {
                   Write-Output "-----------------------------------------------------"
                   Write-Output "Mission Folder: $addonMissionFolder"
-                  $missionName = $addonMissionFolder.Name -replace "-|\.", "_"
-                  $configContent += "        class $($missionName)`r`n        {`r`n            briefingName = `"TRGM Redux`";`r`n            directory = `"trgmredux\missions\$($addonMissionFolder.Name)`";`r`n        };`r`n"
+                  $missionClassName = $addonMissionFolder.Name -replace "-|\.", "_"
+                  $missionName = "TRGM Redux"
+                  if ($addonMissionFolder.Name.ToLower().Contains("empty"))
+                  {
+                      $missionName = "TRGM Redux Empty"
+                  }
+                  $configContent += "        class $($missionClassName)`r`n        {`r`n            briefingName = `"$($missionName)`";`r`n            directory = `"trgmredux\missions\$($addonMissionFolder.Name)`";`r`n        };`r`n"
                   Write-Output "-----------------------------------------------------"
               }
           }
