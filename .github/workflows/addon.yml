@@ -229,7 +229,7 @@ jobs:
 
           Get-Command makepbo
           $addonsFolder = "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons"
-          makepbo -P -A -$ -L -J -X=".bak,.txt" "$addonsFolder\trgmredux"
+          makepbo -P -A -$ -B -J -X=".bak,.txt" "$addonsFolder\trgmredux"
           Remove-FileSystemItem "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons\trgmredux\" -Recurse
           Compress-Archive -Path "$($Env:GITHUB_WORKSPACE)\@TRGMRedux" -DestinationPath "$($Env:GITHUB_WORKSPACE)\TRGM-Redux-Addon.zip"
         shell: pwsh
