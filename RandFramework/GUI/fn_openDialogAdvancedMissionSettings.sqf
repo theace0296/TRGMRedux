@@ -115,17 +115,17 @@ _lblctrlTitle ctrlCommit 0;
             _inpctrl lbAdd _x;
         } forEach _Options;
         _savedValue = _Values find (TRGM_VAR_AdvancedSettings select _forEachIndex);
-        _inpctrl lbSetCurSel [_savedValue, _DefaultValue] select (isNil "_savedValue");
+        _inpctrl lbSetCurSel ([_savedValue, _DefaultValue] select (isNil "_savedValue"));
     };
     if (_lnpCtrlType isEqualTo "RscEdit") then {
         _savedValue = (TRGM_VAR_AdvancedSettings select _forEachIndex);
-        _inpctrl ctrlSetText [_savedValue, _DefaultValue] select (isNil "_savedValue");
+        _inpctrl ctrlSetText ([_savedValue, _DefaultValue] select (isNil "_savedValue"));
     };
     if (_lnpCtrlType isEqualTo "RscXSliderH") then {
         _inpctrl sliderSetRange [_Options, _Values];
         _inpctrl sliderSetSpeed [(_Values / _Options), 1];
         _savedValue = (TRGM_VAR_AdvancedSettings select _forEachIndex);
-        _inpctrl sliderSetPosition [_savedValue, _DefaultValue] select (isNil "_savedValue");
+        _inpctrl sliderSetPosition ([_savedValue, _DefaultValue] select (isNil "_savedValue"));
 
         _display ctrlCreate ["ctrlEdit", (_InpCtrlID+500)];
         _valctrl = _display displayCtrl (_InpCtrlID+500);
