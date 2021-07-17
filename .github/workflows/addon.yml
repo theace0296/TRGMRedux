@@ -231,7 +231,7 @@ jobs:
           $addonsFolder = "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons"
           Try
           {
-              makepbo -P -A -$ -B -J -X=".bak,.txt" "$addonsFolder\trgmredux"
+              makepbo -P -A -$ -B -X=".bak,.txt" "$addonsFolder\trgmredux"
           }
           Catch
           {
