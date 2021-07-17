@@ -272,12 +272,17 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                             {_target lockTurret [_x, true]} forEach _totalTurrets;
                             { _x disableAI "MOVE"; _x allowDamage false; } forEach crew _target;
                             [_target] spawn {
-                                waitUntil { !([(_this select 0)] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
-                                { _x enableAI "MOVE"; } forEach crew (_this select 0);
-                                [(_this select 0)] call TRGM_GLOBAL_fnc_setVehicleUpright;
-                                {_x setDamage 0;} forEach (crew (_this select 0) + [(_this select 0)]);
+                                params ["_vehicle"]
+                                waitUntil { !([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+                                { _x enableAI "MOVE"; } forEach crew _vehicle;
+                                [_vehicle] call TRGM_GLOBAL_fnc_setVehicleUpright;
+                                {_x setDamage 0;} forEach (crew _vehicle + [_vehicle]);
                                 if (call TRGM_GETTER_fnc_bTransportEnabled) then {
-                                    [[(_this select 0)]] call TRGM_GLOBAL_fnc_addTransportActions;
+                                    [[_vehicle]] remoteExec ["TRGM_GLOBAL_fnc_addTransportActions", 0, true];
+                                    if !(isNil "TRGM_VAR_transportHelosToGetActions") then {
+                                        TRGM_VAR_transportHelosToGetActions pushBack _vehicle;
+                                        publicVariable "TRGM_VAR_transportHelosToGetActions";
+                                    };
                                 };
                             };
                         }, [], -99, false, false, "", "_this isEqualTo player && leader group player isEqualTo player && count crew _target isEqualto 0 && alive _target && ((_target distance (getMarkerPos 'mrkHQ')) < 500)"]] remoteExec ["addAction", 0];
