@@ -2,8 +2,8 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 params ["_isHiddenObj", "_bMoveToAO"];
 
 
-if (hasInterface) then {
-    player setVariable ["TRGM_postStartMissionCamRunning", true, true];
+if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "NOTRUN"]) isEqualTo "COMPLETE")}) then {
+    player setVariable ["TRGM_postStartMissionCamRunning", "RUNNING", true];
     _locationText = [TRGM_VAR_ObjectivePossitions select 0] call TRGM_GLOBAL_fnc_getLocationName;
     _hour = floor daytime;
     _minute = floor ((daytime - _hour) * 60);
@@ -119,7 +119,7 @@ if (hasInterface) then {
     };
     sleep 3;
 
-    player setVariable ["TRGM_postStartMissionCamRunning", false, true];
+    player setVariable ["TRGM_postStartMissionCamRunning", "ENDING", true];
 };
 
 true;
