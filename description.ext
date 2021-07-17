@@ -106,6 +106,13 @@ class Params
         texts[] = {"1","2","3","4","5","10","Disabled"};
         default = 2;
     };
+    class TimeMultiplier
+    {
+        title = "Sets the multiplier for real-world to in-game time.";
+        values[] = {50,1,2,4,6,12};
+        texts[] = {"0.5x (120 minutes real-world = 60 minutes in-game)","1 (60 minutes real-world = 60 minutes in-game)","2 (30 minutes real-world = 60 minutes in-game)","4 (15 minutes real-world = 60 minutes in-game)","6 (10 minutes real-world = 60 minutes in-game)","12 (5 minutes real-world = 60 minutes in-game)"};
+        default = 1;
+    };
     class OverrideMissionSetup
     {
         title = "Override mission setup screen (Mission parameters are set up using 'CustomMission/TRGMSetDefaultMissionSetupVars.sqf')";

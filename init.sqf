@@ -11,6 +11,8 @@ if (isServer) then {
    };
 };
 
+TRGM_VAR_iTimeMultiplier call BIS_fnc_paramTimeAcceleration;
+
 waitUntil { TRGM_VAR_playerIsChoosingHQpos || TRGM_VAR_NeededObjectsAvailable; };
 
 if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {

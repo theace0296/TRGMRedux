@@ -14,6 +14,12 @@ TRGM_VAR_Mission1Loc = nil; publicVariable "TRGM_VAR_Mission1Loc";
 TRGM_VAR_Mission2Loc = nil; publicVariable "TRGM_VAR_Mission2Loc";
 TRGM_VAR_Mission3Loc = nil; publicVariable "TRGM_VAR_Mission3Loc";
 
+TRGM_VAR_iTimeMultiplier = ["TimeMultiplier", 0] call BIS_fnc_getParamValue;
+if (TRGM_Var_iTimeMultiplier isEqualTo 50) then {
+   TRGM_VAR_iTimeMultiplier = 0.5;
+};
+publicVariable "TRGM_VAR_iTimeMultiplier";
+
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
 if (isNil "TRGM_VAR_UnfilteredAllFactionData" || {isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap"}}) then {
     format["Get all faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
