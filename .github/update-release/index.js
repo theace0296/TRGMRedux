@@ -86,7 +86,7 @@ const run = async () => {
         const date = Date.parse(commit.commit.author.date);
         if (date > prevReleaseDate) {
           const commitMessage = commit.commit.message.includes('[') || commit.commit.message.includes('#') ? commit.commit.message : `[${commit.commit.message}](${commit.html_url})`;
-          body = `${body}\n* ${commitMessage}`;
+          body = `${body}\n* ${commitMessage.includes('\n') ? commitMessage.substr(0, commitMessage.indexOf('\n')) : commitMessage}`;
         }
       }
       await github.repos.updateRelease({
