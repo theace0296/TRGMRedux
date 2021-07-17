@@ -229,7 +229,16 @@ jobs:
 
           Get-Command makepbo
           $addonsFolder = "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons"
-          makepbo -P -A -$ -B -J -X=".bak,.txt" "$addonsFolder\trgmredux"
+          Try
+          {
+              makepbo -P -A -$ -B -J -X=".bak,.txt" "$addonsFolder\trgmredux"
+          }
+          Catch
+          {
+              $ErrorMessage = $_ | Out-String
+              Write-Output "The following error occured while packing the addon:"
+              Write-Output $ErrorMessage
+          }
           Remove-FileSystemItem "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons\trgmredux\" -Recurse
           Compress-Archive -Path "$($Env:GITHUB_WORKSPACE)\@TRGMRedux" -DestinationPath "$($Env:GITHUB_WORKSPACE)\TRGM-Redux-Addon.zip"
         shell: pwsh
