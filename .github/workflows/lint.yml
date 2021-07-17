@@ -39,7 +39,7 @@ jobs:
         run: |
           $mainFolder = "$($Env:GITHUB_WORKSPACE)"
           $templateFolder = "$($Env:GITHUB_WORKSPACE)\Mission-Templates"
-          $unwantedFoldersAndFiles = @("mission.sqm", ".vscode", ".github", ".git", ".gitignore", "Mission-Templates", "Pbo-Tools", "Tools")
+          $unwantedFoldersAndFiles = @("mission.sqm", ".vscode", ".github", ".git", ".gitignore", "Mission-Templates", "Pbo-Tools", "Tools", "@TRGMRedux")
           $mainFiles = Get-ChildItem -Path "$mainFolder" | Where-Object { $_.Name -notin $unwantedFoldersAndFiles }
           $missionFolders = Get-ChildItem -Path "$templateFolder" -Directory
           if ($missionFolders.Count -gt 0)

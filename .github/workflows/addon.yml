@@ -1,0 +1,237 @@
+name: Build-Addon
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the source code
+      uses: actions/checkout@master
+    - name: Validate SQF
+      run: python3 Tools/sqf_validator.py
+    - name: Validate Config
+      run: python3 Tools/config_style_checker.py
+    - uses: arma-actions/bom-check@v1
+      name: Check for BOM
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+    - name: Checkout the source code
+      uses: actions/checkout@master
+    - name: Lint (sqflint)
+      uses: arma-actions/sqflint@master
+      with:
+          args: --exit w --directory $GITHUB_WORKSPACE
+      continue-on-error: true
+
+  build:
+    runs-on: windows-latest
+    needs: [validate, lint]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy mission files and folders
+        run: |
+          $mainFolder = "$($Env:GITHUB_WORKSPACE)"
+          $templateMissionsFolder = "$($Env:GITHUB_WORKSPACE)\Mission-Templates"
+          $addonMissionsFolder = "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons\trgmredux\missions"
+          $unwantedFoldersAndFiles = @("mission.sqm", ".vscode", ".github", ".git", ".gitignore", "Mission-Templates", "Pbo-Tools", "Tools", "@TRGMRedux")
+          $mainFiles = Get-ChildItem -Path "$mainFolder" | Where-Object { $_.Name -notin $unwantedFoldersAndFiles }
+          $templateMissionFolders = Get-ChildItem -Path "$templateMissionsFolder" -Directory
+          if ($templateMissionFolders.Count -gt 0)
+          {
+              ForEach ($templateMissionFolder in $templateMissionFolders)
+              {
+                  Copy-Item -Path "$templateMissionFolder" -Destination "$addonMissionsFolder" -Recurse -Force
+              }
+          }
+          $addonMissionFolders = Get-ChildItem -Path "$addonMissionsFolder" -Directory
+          if ($addonMissionFolders.Count -gt 0)
+          {
+              ForEach ($addonMissionFolder in $addonMissionFolders)
+              {
+                  Write-Output "-----------------------------------------------------"
+                  Write-Output "Mission Folder: $addonMissionFolder"
+                  ForEach ($file in $mainFiles)
+                  {
+                      Try
+                      {
+                          Copy-Item -Path "$($file.Fullname)" -Destination "$addonMissionFolder\$($file.Name)" -Recurse -Force
+                          Write-Output "    $($file.Name) --> $addonMissionFolder\$($file.Name)"
+                      }
+                      Catch
+                      {
+                          $ErrorMessage = $_ | Out-String
+                          Write-Output "The following error occured while copying files for $($file.Name) from Main Mission to Addon Mission:"
+                          Write-Output $ErrorMessage
+                      }
+                  }
+                  Write-Output "-----------------------------------------------------"
+              }
+          }
+        shell: pwsh
+
+      - name: Update addon Config
+        run: |
+          $addonFolder = "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons\trgmredux"
+          $addonMissionFolders = Get-ChildItem -Path "$addonMissionsFolder\missions" -Directory
+          $configContent = "#include "BIS_AddonInfo.hpp`r`n"class CfgPatches`r`n{`r`n    class MyAddon`r`n    {`r`n        name = `"TRGM Redux`";`r`n        author = `"TheAce0296`";`r`n        url = `"https://github.com/theace0296/TRGM2.Malden#readme`";`r`n        requiredVersion = 2.01;`r`n        requiredAddons[] = {};`r`n        units[] = {};`r`n        weapons[] = {};`r`n    };`r`n};`r`n`r`nclass CfgMissions`r`n{`r`n    class MPMissions`r`n    {`r`n"
+          if ($addonMissionFolders.Count -gt 0)
+          {
+              ForEach ($addonMissionFolder in $addonMissionFolders)
+              {
+                  Write-Output "-----------------------------------------------------"
+                  Write-Output "Mission Folder: $addonMissionFolder"
+                  $missionName = $addonMissionFolder.Name -replace "-|\.", "_"
+                  $configContent += "        class $($missionName)`r`n        {`r`n            briefingName = `"TRGM Redux`";`r`n            directory = `"trgmredux\missions\$($addonMissionFolder.Name)`";`r`n        };`r`n"
+                  Write-Output "-----------------------------------------------------"
+              }
+          }
+          $configContent += "    };`r`n};`r`n"
+          Set-Content -Path "$addonFolder\config.cpp" -Value $configContent
+        shell: pwsh
+
+      - name: Install Mikero Tools
+        run: |
+          $PboTools = "$($Env:GITHUB_WORKSPACE)\Pbo-Tools\"
+          Get-ChildItem "$PboTools" | ForEach-Object {
+            echo "Installing $_"
+            Start-Process -Wait $_.FullName "/S"
+          }
+          echo "Updating environment variables"
+          echo "C:\Program Files (x86)\Mikero\DePboTools\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        shell: pwsh
+
+      - name: Pack mission files to PBOs
+        run: |
+          function Remove-FileSystemItem {
+            [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Path', PositionalBinding = $false)]
+            param(
+              [Parameter(ParameterSetName = 'Path', Mandatory, Position = 0, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+              [string[]] $Path
+              ,
+              [Parameter(ParameterSetName = 'Literalpath', ValueFromPipelineByPropertyName)]
+              [Alias('PSPath')]
+              [string[]] $LiteralPath
+              ,
+              [switch] $Recurse
+            )
+            begin {
+              if ($ErrorActionPreference -eq [System.Management.Automation.ActionPreference]::Ignore) { $ErrorActionPreference = 'Ignore' }
+              $targetPath = ''
+              $yesToAll = $noToAll = $false
+              function trimTrailingPathSep([string] $itemPath) {
+                if ($itemPath[-1] -in '\', '/') {
+                  if ($itemPath.Length -gt 1 -and $itemPath -notmatch '^[^:\\/]+:.$') {
+                    $itemPath = $itemPath.Substring(0, $itemPath.Length - 1)
+                  }
+                }
+                $itemPath
+              }
+              function getTempPathOnSameVolume([string] $itemPath, [string] $tempDir) {
+                if (-not $tempDir) { $tempDir = [IO.Path]::GetDirectoryName($itemPath) }
+                [IO.Path]::Combine($tempDir, [IO.Path]::GetRandomFileName())
+              }
+              function syncRemoveFile([string] $filePath, [string] $tempDir) {
+                if (($attribs = [IO.File]::GetAttributes($filePath)) -band [System.IO.FileAttributes]::ReadOnly) {
+                  [IO.File]::SetAttributes($filePath, $attribs -band -bnot [System.IO.FileAttributes]::ReadOnly)
+                }
+                $tempPath = getTempPathOnSameVolume $filePath $tempDir
+                [IO.File]::Move($filePath, $tempPath)
+                [IO.File]::Delete($tempPath)
+              }
+              function syncRemoveDir([string] $dirPath, [switch] $recursing) {
+                if (-not $recursing) { $dirPathParent = [IO.Path]::GetDirectoryName($dirPath) }
+                if (($attribs = [IO.File]::GetAttributes($dirPath)) -band [System.IO.FileAttributes]::ReadOnly) {
+                  [IO.File]::SetAttributes($dirPath, $attribs -band -bnot [System.IO.FileAttributes]::ReadOnly)
+                }
+                $isFirstChild = $true
+                foreach ($item in [IO.directory]::EnumerateFileSystemEntries($dirPath)) {
+                  if (-not $recursing -and -not $Recurse -and $isFirstChild) {
+                    $isFirstChild = $false
+                    if (-not $PSCmdlet.ShouldContinue("The item at '$dirPath' has children and the -Recurse switch was not specified. If you continue, all children will be removed with the item. Are you sure you want to continue?", 'Confirm', ([ref] $yesToAll), ([ref] $noToAll))) { return }
+                  }
+                  $itemPath = [IO.Path]::Combine($dirPath, $item)
+                  ([ref] $targetPath).Value = $itemPath
+                  if ([IO.Directory]::Exists($itemPath)) {
+                    syncremoveDir $itemPath -recursing
+                  }
+                  else {
+                    syncremoveFile $itemPath $dirPathParent
+                  }
+                }
+                ([ref] $targetPath).Value = $dirPath
+                $tempPath = getTempPathOnSameVolume $dirPath $dirPathParent
+                [IO.Directory]::Move($dirPath, $tempPath)
+                [IO.Directory]::Delete($tempPath)
+              }
+            }
+
+            process {
+              $isLiteral = $PSCmdlet.ParameterSetName -eq 'LiteralPath'
+              if ($env:OS -ne 'Windows_NT') {
+                Remove-Item @PSBoundParameters
+              }
+              else {
+                foreach ($rawPath in ($Path, $LiteralPath)[$isLiteral]) {
+                  try {
+                    $resolvedPaths = if ($isLiteral) { Convert-Path -ErrorAction Stop -LiteralPath $rawPath } else { Convert-Path -ErrorAction Stop -path $rawPath }
+                  }
+                  catch {
+                    Write-Error $_
+                    continue
+                  }
+                  try {
+                    $isDir = $false
+                    foreach ($resolvedPath in $resolvedPaths) {
+                      if (-not $PSCmdlet.ShouldProcess($resolvedPath)) { continue }
+                      if ($isDir = [IO.Directory]::Exists($resolvedPath)) {
+                        syncRemoveDir (trimTrailingPathSep $resolvedPath)
+                      }
+                      elseif ([IO.File]::Exists($resolvedPath)) {
+                        syncRemoveFile $resolvedPath
+                      }
+                      else {
+                        Throw "Not a file-system path or no longer extant: $resolvedPath"
+                      }
+                    }
+                  }
+                  catch {
+                    if ($isDir) {
+                      $exc = $_.Exception
+                      if ($exc.InnerException) { $exc = $exc.InnerException }
+                      if ($targetPath -eq $resolvedPath) {
+                        Write-Error "Removal of directory '$resolvedPath' failed: $exc"
+                      }
+                      else {
+                        Write-Error "Removal of directory '$resolvedPath' failed, because its content could not be (fully) removed: $targetPath`: $exc"
+                      }
+                    }
+                    else {
+                      Write-Error $_
+                    }
+                    continue
+                  }
+                }
+              }
+            }
+          }
+
+          Get-Command makepbo
+          $addonsFolder = "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons"
+          makepbo -P -A -$ -B -X=".bak,.txt" "$addonsFolder\trgmredux"
+          Remove-FileSystemItem "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons\trgmredux\" -Recurse
+          Compress-Archive -Path "$($Env:GITHUB_WORKSPACE)\@TRGMRedux" -DestinationPath "$($Env:GITHUB_WORKSPACE)\TRGM-Redux-Addon.zip"
+        shell: pwsh
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: TRGM-Redux-Addon
+          path: ${{ github.workspace }}/TRGM-Redux-Addon.zip
+          if-no-files-found: error
