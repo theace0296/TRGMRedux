@@ -196,7 +196,7 @@ if (str(_flatPos) != "[0,0,0]") then {
             _markerEventMedi = createMarker [format["_markerEventRescue%1",(floor(random 360))], ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos)];
             _markerEventMedi setMarkerShape "ICON";
             _markerEventMedi setMarkerType "hd_dot";
-            _markerEventMedi setMarkerText "Distress Signal";
+            _markerEventMedi setMarkerText (localize "STR_TRGM2_distressSignal_military");
         //};
     };
 
