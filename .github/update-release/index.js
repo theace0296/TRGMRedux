@@ -85,7 +85,7 @@ const run = async () => {
       for (const commit of commits) {
         const date = Date.parse(commit.commit.author.date);
         if (date > prevReleaseDate) {
-          const commitMessage = commit.commit.message.includes('[') || commit.commit.message.includes('(') ? commit.commit.message : `[${commit.commit.message}](${commit.html_url})`;
+          const commitMessage = commit.commit.message.includes('[') || commit.commit.message.includes('#') ? commit.commit.message : `[${commit.commit.message}](${commit.html_url})`;
           body = `${body}\n* ${commitMessage}`;
         }
       }
