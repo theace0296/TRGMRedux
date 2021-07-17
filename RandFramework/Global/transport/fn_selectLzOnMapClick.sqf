@@ -34,20 +34,25 @@ if (_baseReturnAllowed && _pos distance2D _baseLZPos <= _baseRadius) then {
 
     /* Find a save landing Position */
 
-    _safeLandingZonePosition = nil;
-    _safeLandingZonePosition = [_pos , 0, 50, 20, 0, 0.3, 0,[],[[0,0,0],[0,0,0]],_vehicle] call TRGM_GLOBAL_fnc_findSafePos;
+    _safeLandingZonePosition = _pos;
+    _isHeloCast = ([false, true] select (surfaceIsWater _pos));
+    if !(_isHeloCast) then {
+        _safeLandingZonePosition = [_pos , 0, 50, 20, 0, 0.3, 0,[],[[0,0,0],[0,0,0]],_vehicle] call TRGM_GLOBAL_fnc_findSafePos;
+        //if no zone found within 50 meters of selected pos, then search wider
+        if (_safeLandingZonePosition select 0 isEqualTo 0) then { // no safe zone found
+            _safeLandingZonePosition = [_pos , 0, 200, 20, 0, 0.3, 0,[],[[0,0,0],[0,0,0]],_vehicle] call TRGM_GLOBAL_fnc_findSafePos;
+        };
 
-    //if no zone found within 50 meters of selected pos, then search wider
-    if (_safeLandingZonePosition select 0 isEqualTo 0) then { // no safe zone found
-        _safeLandingZonePosition = [_pos , 0, 200, 20, 0, 0.3, 0,[],[[0,0,0],[0,0,0]],_vehicle] call TRGM_GLOBAL_fnc_findSafePos;
-    };
-
-    if (_safeLandingZonePosition select 0 isEqualTo 0) then { // no safe zone found
-        [(localize "STR_TRGM2_transport_fnselectLzOnMapClick_LessBuildUp")] call TRGM_GLOBAL_fnc_notify;
+        if (_safeLandingZonePosition select 0 isEqualTo 0) then { // no safe zone found
+            [(localize "STR_TRGM2_transport_fnselectLzOnMapClick_LessBuildUp")] call TRGM_GLOBAL_fnc_notify;
+        } else {
+            call _resetMapState;
+            [_safeLandingZonePosition, _vehicle, _isPickup, _isHeloCast] spawn TRGM_GLOBAL_fnc_flyToLZ;
+            //openMap false; //better leave it open ?
+        };
     } else {
         call _resetMapState;
-        [_safeLandingZonePosition, _vehicle, _isPickup] spawn TRGM_GLOBAL_fnc_flyToLZ;
-        //openMap false; //better leave it open ?
+        [_safeLandingZonePosition, _vehicle, _isPickup, _isHeloCast] spawn TRGM_GLOBAL_fnc_flyToLZ;
     };
 
 };

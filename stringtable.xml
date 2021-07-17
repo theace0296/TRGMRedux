@@ -4130,6 +4130,11 @@
                 <English>Military Distress Signal</English>
             </Key>
 
+            <Key ID="STR_TRGM2_jumpIntoWater">
+                <Original>Jump into Water</Original>
+                <English>Jump into Water</English>
+            </Key>
+
         </Container>
     </Package>
 </Project>

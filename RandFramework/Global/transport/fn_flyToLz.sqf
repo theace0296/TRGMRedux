@@ -4,7 +4,8 @@ scopeName "FlyTo";
 params [
     "_destinationPosition",
     ["_vehicle", objNull],
-    ["_isPickup", false]
+    ["_isPickup", false],
+    ["_isHeloCast", false]
 ];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
@@ -166,10 +167,9 @@ _flyToLZ setWaypointSpeed "FULL";
 _flyToLZ setWaypointBehaviour "CARELESS";
 _flyToLZ setWaypointCombatMode "BLUE";
 _flyToLZ setWaypointCompletionRadius 100;
-if (_emergencyLand) then {
-    _flyToLZ setWaypointStatements ["true", "(vehicle this) land 'GET IN'; (vehicle this) setVariable [""landingInProgress"",true,true]; [""LANDING!!!""] call TRGM_GLOBAL_fnc_notify;"];
-}
-else {
+if (_isHeloCast) then {
+    _flyToLZ setWaypointStatements ["true", "(vehicle this) flyInHeight 5; (vehicle this) setVariable [""landingInProgress"",true,true]; [(vehicle this)] spawn TRGM_GLOBAL_fnc_helocastLanding;"];
+} else {
     _flyToLZ setWaypointStatements ["true", "(vehicle this) land 'GET IN'; (vehicle this) setVariable [""landingInProgress"",true,true]"];
 };
 
@@ -217,12 +217,11 @@ if (!(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
     breakOut "FlyTo";
 };
 
-waitUntil { sleep 2; ((!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) || {!canMove _vehicle} || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)); };
+waitUntil { sleep 2; ((!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) || (([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying) && _isHeloCast) || {!canMove _vehicle} || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)); };
 if (!(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
     _vehicle land "NONE";
     [_thisMission] call _cleanupMission;
     breakOut "FlyTo";
-;
 };
 
 sleep 2;

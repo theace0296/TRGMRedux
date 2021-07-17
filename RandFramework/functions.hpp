@@ -190,6 +190,7 @@ class TRGM_GLOBAL {
         class flyToLz {};
         class getTransportName {};
         class helicopterIsFlying {};
+        class helocastLanding {};
         class isLeaderOrAdmin {};
         class isOnlyBoardCrewOnboard {};
         class selectLz {};
