@@ -97,7 +97,7 @@ _lblctrlTitle ctrlCommit 0;
     _inpXPos = ([0, ((2 * _ctrlWidth) + 0.1)] select (_forEachIndex > 12)) + (0.4 * safezoneW + safezoneX);
     _ctrlYPos = ((0.27 + _currentLinePos) * safezoneH + safezoneY);
 
-    _x params ["_lblCtrlID", "_lblText", "_lnpCtrlType", "_Options", "_Values", "_DefaultSelIndex", "_toolTip", "_appendText"];
+    _x params ["_lblCtrlID", "_lblText", "_lnpCtrlType", "_Options", "_Values", "_DefaultValue", "_toolTip", "_appendText"];
     _InpCtrlID = _lblCtrlID + 1;
 
     _display ctrlCreate ["RscText", _lblCtrlID];
@@ -114,20 +114,23 @@ _lblctrlTitle ctrlCommit 0;
         {
             _inpctrl lbAdd _x;
         } forEach _Options;
-        _inpctrl lbSetCurSel (_Values find (TRGM_VAR_AdvancedSettings select _forEachIndex));
+        _savedValue = _Values find (TRGM_VAR_AdvancedSettings select _forEachIndex);
+        _inpctrl lbSetCurSel [_savedValue, _DefaultValue] select (isNil "_savedValue");
     };
     if (_lnpCtrlType isEqualTo "RscEdit") then {
-        _inpctrl ctrlSetText (TRGM_VAR_AdvancedSettings select _forEachIndex);
+        _savedValue = (TRGM_VAR_AdvancedSettings select _forEachIndex);
+        _inpctrl ctrlSetText [_savedValue, _DefaultValue] select (isNil "_savedValue");
     };
     if (_lnpCtrlType isEqualTo "RscXSliderH") then {
         _inpctrl sliderSetRange [_Options, _Values];
         _inpctrl sliderSetSpeed [(_Values / _Options), 1];
-        _inpctrl sliderSetPosition (TRGM_VAR_AdvancedSettings select _forEachIndex);
+        _savedValue = (TRGM_VAR_AdvancedSettings select _forEachIndex);
+        _inpctrl sliderSetPosition [_savedValue, _DefaultValue] select (isNil "_savedValue");
 
         _display ctrlCreate ["ctrlEdit", (_InpCtrlID+500)];
         _valctrl = _display displayCtrl (_InpCtrlID+500);
         _valctrl ctrlSetPosition [_inpXPos+(.75*_ctrlWidth), _ctrlYPos,.25*_ctrlWidth,_ctrlHeight];
-        _valctrl ctrlSetText (str(round (TRGM_VAR_AdvancedSettings select _forEachIndex)) + "s");
+        _valctrl ctrlSetText (str(round ([_savedValue, _DefaultValue] select (isNil "_savedValue"))) + "s");
         _valctrl ctrlCommit 0;
 
         _inpctrl ctrlAddEventHandler ["SliderPosChanged", {
