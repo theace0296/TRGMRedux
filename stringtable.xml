@@ -1087,6 +1087,10 @@
                 <Spanish>empujar</Spanish>
                 <Korean>밀기</Korean>
             </Key>
+            <Key ID="STR_TRGM2_spawnCrew">
+                <Original>Spawn AI crew for %1</Original>
+                <English>Spawn AI crew for %1</English>
+            </Key>
         </Container>
         <Container name="Campaign">
             <Key ID="STR_TRGM2_RecruiteInf_Read">

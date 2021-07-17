@@ -259,6 +259,30 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                         [_spawnedVeh, (units group _caller)] call TRGM_GLOBAL_fnc_initAmmoBox;
                     };
 
+                    if ((typeOf _spawnedVeh) in TRGM_VAR_WestUnarmedHelos) then {
+                        [_spawnedVeh, [format [localize "STR_TRGM2_spawnCrew", gettext (configFile >> "Cfgvehicles" >> (typeOf _spawnedVeh) >> "displayname")], {
+                            params ["_target", "_caller", "_id", "_args"];
+                            createVehicleCrew _target;
+                            [driver _target] joinSilent createGroup TRGM_VAR_FriendlySide;
+                            private _targetCrewMinusDriver = (crew vehicle _target - [driver _target]);
+                            if (!(_targetCrewMinusDriver isEqualTo []) && _targetCrewMinusDriver isEqualType []) then {
+                                _targetCrewMinusDriver joinSilent group driver _target;
+                            };
+                            private _totalTurrets = [typeof _target, true] call BIS_fnc_allTurrets;
+                            {_target lockTurret [_x, true]} forEach _totalTurrets;
+                            { _x disableAI "MOVE"; _x allowDamage false; } forEach crew _target;
+                            [_target] spawn {
+                                waitUntil { !([(_this select 0)] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+                                { _x enableAI "MOVE"; } forEach crew (_this select 0);
+                                [(_this select 0)] call TRGM_GLOBAL_fnc_setVehicleUpright;
+                                {_x setDamage 0;} forEach (crew (_this select 0) + [(_this select 0)]);
+                                if (call TRGM_GETTER_fnc_bTransportEnabled) then {
+                                    [[(_this select 0)]] call TRGM_GLOBAL_fnc_addTransportActions;
+                                };
+                            };
+                        }, [], -99, false, false, "", "_this isEqualTo player && leader group player isEqualTo player && count crew _target isEqualto 0 && alive _target && ((_target distance (getMarkerPos 'mrkHQ')) < 500)"]] remoteExec ["addAction", 0];
+                    };
+
                     _data = [];
                     _vehicleFaction = faction _spawnedVeh;
                     {
