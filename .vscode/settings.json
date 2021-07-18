@@ -15,7 +15,6 @@
         "Tools",
         "Pbo-Tools",
         "Mission-Templates",
-        "@TRGMRedux",
         "mission.sqm",
     ],
     "sqflint.ignoredVariables": [
