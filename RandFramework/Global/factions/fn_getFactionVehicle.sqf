@@ -73,7 +73,7 @@ if (isNil "_className" || isNil "_dispName" || isNil "_calloutName" || isNil "_c
     if (["GMG", _dispName] call BIS_fnc_inString || ["Quadbike", _className] call BIS_fnc_inString || ["Designator", _className] call BIS_fnc_inString || ["Radar", _className] call BIS_fnc_inString || ["SAM", _className] call BIS_fnc_inString) then {
         _returnVeh = _UnarmedCars;
     } else {
-        if (" (" in _category) then {
+        if ([" (", _category] call BIS_fnc_inString) then {
             _category = (_category splitString " (") select 0
         };
         if (_calloutName isEqualTo "mortar" || _className isKindOf "StaticMortar") then {

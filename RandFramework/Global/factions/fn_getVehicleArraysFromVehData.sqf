@@ -11,7 +11,7 @@ _unarmedcars = []; _armedcars = []; _trucks = []; _apcs = []; _tanks = []; _arti
         if (["GMG", _dispName] call BIS_fnc_inString || ["Quadbike", _className] call BIS_fnc_inString || ["Designator", _className] call BIS_fnc_inString || ["Radar", _className] call BIS_fnc_inString || ["SAM", _className] call BIS_fnc_inString) then {
             // Do nothing for these vehs. (Currently removing most "GMG" type vehs, since they are usually OP for small units)
         } else {
-            if (" (" in _category) then {
+            if ([" (", _category] call BIS_fnc_inString) then {
                 _category = (_category splitString " (") select 0
             };
             if (_calloutName isEqualTo "mortar" || _className isKindOf "StaticMortar") then {
