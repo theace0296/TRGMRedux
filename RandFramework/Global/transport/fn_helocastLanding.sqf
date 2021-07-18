@@ -14,7 +14,7 @@ waitUntil { _vehicle getVariable ["landingInProgress", false]; };
         {
             {
                 [[_x], {
-                    sleep floor(random 5) min 1;
+                    sleep (floor(random 5) max 1);
                     unassignVehicle (_this select 0);
                     moveOut (_this select 0);
                 }] remoteExec ["spawn", _x];
