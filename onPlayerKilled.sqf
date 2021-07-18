@@ -1,5 +1,5 @@
 "OnPlayerKilled.sqf" call TRGM_GLOBAL_fnc_log;
-params ["_oldUnit", "_killer", "_respawn", "_respawnDelay"];
+params ["", "_killer"];
 TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "Player Killed";
 TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["KILLED: %1", name player];
 TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["KILLED Distance: %1", player distance getMarkerPos "MrkHQ"];
@@ -10,7 +10,7 @@ if (player distance getMarkerPos "MrkHQ" > TRGM_VAR_SaveZoneRadius) then {
     waitUntil {!(TRGM_Logic getVariable "DeathRunning")};
     TRGM_Logic setVariable ["DeathRunning", true, true];
 
-    _aceSource = player getVariable ["ace_medical_lastDamageSource", objNull];
+    private _aceSource = player getVariable ["ace_medical_lastDamageSource", objNull];
     if (!(_aceSource isEqualTo objNull)) then {
         _killer = _aceSource;
     };
@@ -23,10 +23,10 @@ if (player distance getMarkerPos "MrkHQ" > TRGM_VAR_SaveZoneRadius) then {
         publicVariable "TRGM_VAR_KilledPlayers";
         publicVariable "TRGM_VAR_KilledPositions";
 
-        _iPointsToAdd = 0.2;
+        private _iPointsToAdd = 0.2;
         if !(call TRGM_GETTER_fnc_bIsCampaign) then { //if not campaign, then work out how many rep points team gain when a player is killed
-            _justPlayers = allPlayers - entities "HeadlessClient_F";
-            _iPlayerCount = count _justPlayers;
+            private _justPlayers = allPlayers - entities "HeadlessClient_F";
+            private _iPlayerCount = count _justPlayers;
             _iPointsToAdd = 3 / ((_iPlayerCount / 3) * 1.8);
             _iPointsToAdd = [_iPointsToAdd,1] call BIS_fnc_cutDecimals;
         };
@@ -35,7 +35,7 @@ if (player distance getMarkerPos "MrkHQ" > TRGM_VAR_SaveZoneRadius) then {
         //[_iPointsToAdd,format["Player was killed", name player]] spawn TRGM_GLOBAL_fnc_adjustBadPoints;
         //TRGM_VAR_BadPoints = TRGM_VAR_BadPoints + 0.2; publicVariable "TRGM_VAR_BadPoints"
 
-        _tombStone = selectRandom TRGM_VAR_TombStones createVehicle TRGM_VAR_GraveYardPos;
+        private _tombStone = selectRandom TRGM_VAR_TombStones createVehicle TRGM_VAR_GraveYardPos;
         _tombStone setDir TRGM_VAR_GraveYardDirection;
         _tombStone setVariable ["Message", format[localize "STR_TRGM2_RecruiteInf_KIA",name player],true];
         //_tombStone addAction ["Read",{[format["%1",(_this select 0) getVariable "Message"]] call TRGM_GLOBAL_fnc_notify}];

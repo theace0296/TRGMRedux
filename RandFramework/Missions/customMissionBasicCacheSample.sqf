@@ -8,6 +8,7 @@
 //cleared locations (i.e. AOs that had a task completed)
 MISSION_fnc_CustomRequired = { //used to set any required details for the AO (example, a wide open space or factory nearby)... if this is not found in AO, the engine will scrap the area and loop around again with a different location
 //be careful about using this, some maps may not have what you require, so the engine will never satisfy the requirements here (example, if no airports are on a map and that is what you require)
+    private ["_objectiveMainBuilding", "_centralAO_x", "_centralAO_y", "_result", "_flatPos"];
     _objectiveMainBuilding = _this select 0;
     _centralAO_x = _this select 1;
     _centralAO_y = _this select 2;
@@ -23,7 +24,6 @@ MISSION_fnc_CustomRequired = { //used to set any required details for the AO (ex
 };
 
 MISSION_fnc_CustomVars = { //This is called before the mission function is called below, and the variables below can be adjusted for your mission
-    _CustomMissionEnabled = true; //set this to true to allow this mission to show in the mission selection dialog
     _RequiresNearbyRoad = true;
     _roadSearchRange = 250; //this is how far out the engine will check to make sure a road is within range (if your objective requires a nearby road)
     _MissionTitle = "Meeting Assassination";

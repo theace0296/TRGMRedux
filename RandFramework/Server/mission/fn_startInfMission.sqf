@@ -335,7 +335,6 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     _MissionTitle = "";
     _RequiresNearbyRoad = false;
     _roadSearchRange = 20;
-    _CustomMissionEnabled = false;
 
     _bNewTaskSetup = false;
     _args = [];
@@ -580,7 +579,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                 {
                     if (_x isEqualTo 99999 || _bNewTaskSetup) then {
                         _bCustomRequiredPass = true;
-                        if (_CustomMissionEnabled || _bNewTaskSetup) then {
+                        if (_bNewTaskSetup) then {
                             _bCustomRequiredPass = [_infBuilding,_inf1X,_inf1Y] call MISSION_fnc_CustomRequired;
                         };
                         if (!_bCustomRequiredPass) then {
