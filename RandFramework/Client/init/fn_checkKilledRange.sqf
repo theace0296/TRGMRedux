@@ -10,7 +10,7 @@ while {true} do {
                     if (player distance (_x select 1) < TRGM_VAR_KilledZoneInnerRadius) then {
                         cutText [localize "STR_TRGM2_TRGMInitPlayerLocal_Transfering","BLACK FADED", 0];
                         sleep 1;
-                        player setPos [(getMarkerPos "respawn_west"), (getMarkerPos "respawn_west_HQ")] select (isNil "respawn_west");
+                        player setPos ([(getMarkerPos "respawn_west"), (getMarkerPos "respawn_west_HQ")] select (isNil "respawn_west"));
                     };
                 };
             };

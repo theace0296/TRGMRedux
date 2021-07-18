@@ -21,8 +21,7 @@ if (isNil "_box") exitWith {};
 
 _initBoxItems = [TRGM_VAR_InitialBoxItems, TRGM_VAR_InitialBoxItemsWithAce] select (call TRGM_GLOBAL_fnc_isAceLoaded);
 _initBoxItems params [
-    ["_input",[],[[]]],
-    ["_isVirtual",[],[true]]
+    ["_input",[],[[]]]
 ];
 //--- Weapons
 _list = _input select 0;

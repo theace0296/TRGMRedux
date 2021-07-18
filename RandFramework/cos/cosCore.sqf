@@ -1,5 +1,5 @@
 if (!isServer) exitWith {};
-private ["_groupCount","_localGrpCount","_grp","_rdCount","_n","_r","_tempUnit","_tempVeh"];
+private ["_grp","_rdCount","_n","_tempUnit","_tempVeh"];
 _mkr= (_this select 0);
 _pos = (_this select 1);
 
