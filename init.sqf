@@ -17,7 +17,7 @@ waitUntil { TRGM_VAR_playerIsChoosingHQpos || TRGM_VAR_NeededObjectsAvailable; }
 
 if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {
    waitUntil { TRGM_VAR_HQPosFound };
-   _handle = [TRGM_VAR_foundHQPos] spawn TRGM_SERVER_fnc_createNeededObjects;
+   private _handle = [TRGM_VAR_foundHQPos] spawn TRGM_SERVER_fnc_createNeededObjects;
    waitUntil {scriptDone _handle};
 
    { [[_x], {(_this select 0) allowDamage false}] remoteExec ["call", _x]; } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
@@ -26,7 +26,7 @@ if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {
 
    {
       if (!isPlayer _x) then {
-         _safePos = [TRGM_VAR_foundHQPos, 0,25,15,0,0.15,0,[],[[TRGM_VAR_foundHQPos select 0, TRGM_VAR_foundHQPos select 1],[TRGM_VAR_foundHQPos select 0, TRGM_VAR_foundHQPos select 1]]] call TRGM_GLOBAL_fnc_findSafePos;
+         private _safePos = [TRGM_VAR_foundHQPos, 0,25,15,0,0.15,0,[],[[TRGM_VAR_foundHQPos select 0, TRGM_VAR_foundHQPos select 1],[TRGM_VAR_foundHQPos select 0, TRGM_VAR_foundHQPos select 1]]] call TRGM_GLOBAL_fnc_findSafePos;
          [[_x, _safePos], {
             (_this select 0) setpos (_this select 1);
             (_this select 0) setdamage 0;
