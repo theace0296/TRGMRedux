@@ -98,7 +98,6 @@ class TRGM_GLOBAL {
 
     class logging {
         file = "RandFramework\Global\logging";
-        class copyMissionInfo {};
         class log {};
         class notify {};
         class notifyGlobal {};
