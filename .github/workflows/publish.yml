@@ -27,7 +27,7 @@ jobs:
     - name: Install SQF Lint
       run: python3 -m pip install git+https://github.com/LordGolias/sqf.git
     - name: Lint (sqflint)
-      run: python Tools/sqflint.py -d '$GITHUB_WORKSPACE' -e 'e' -x 'AIS' -x 'fhqtt' -x 'RandFramework\Alias' -x 'RandFramework\Server\units\fn_zenOccupyHouse.sqf'
+      run: python Tools/sqflint.py -e 'w' -x 'AIS' -x 'fhqtt' -x 'RandFramework\Alias' -x 'RandFramework\Server\units\fn_zenOccupyHouse.sqf'
 
   build:
     runs-on: windows-latest

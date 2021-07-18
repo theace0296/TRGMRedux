@@ -112,6 +112,11 @@ def entry_point(args):
 
     exceptions_list = []
 
+    if args.directory is None:
+        args.directory = os.path.join(os.getcwd(), "../")
+        if (os.path.exists("Tools")):
+            args.directory = os.getcwd()
+
     if args.file is None and args.directory is None:
         code = sys.stdin.read()
         analyze(code, writer, exceptions_list)
