@@ -239,8 +239,8 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                 _spawnedVeh attachto [player, _attachPos, "head"];
 
                 _actionReleaseObject = player addAction [format [localize "str_TRGM2_opendialogRequests_vehicleRelease", gettext (configFile >> "Cfgvehicles" >> _classtospawn >> "displayname")], {
-                    params ["_target", "_caller", "_actionId", "_arguments"];
-                    _arguments params ["_spawnedVeh"];
+                    params [["_target", objNull, [objNull]], ["_caller", objNull, [objNull]], ["_actionId", -1, [1]], ["_arguments", [], [[]]]];
+                    _arguments params [["_spawnedVeh", objNull, [objNull]]];
                     detach _spawnedVeh;
                     _spawnedVeh setPos ([_spawnedVeh] call TRGM_GLOBAL_fnc_getRealPos);
                     _spawnedVeh setvectorUp surfaceNormal position _spawnedVeh;
@@ -261,7 +261,7 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
 
                     if ((typeOf _spawnedVeh) in TRGM_VAR_WestUnarmedHelos) then {
                         [_spawnedVeh, [format [localize "STR_TRGM2_spawnCrew", gettext (configFile >> "Cfgvehicles" >> (typeOf _spawnedVeh) >> "displayname")], {
-                            params ["_target", "_caller", "_id", "_args"];
+                            params [["_target", objNull, [objNull]], ["_caller", objNull, [objNull]], ["_id", -1, [1]], ["_args", [], [[]]]];
                             createVehicleCrew _target;
                             [driver _target] joinSilent createGroup TRGM_VAR_FriendlySide;
                             private _targetCrewMinusDriver = (crew vehicle _target - [driver _target]);
@@ -329,7 +329,7 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                     TRGM_VAR_SpawnedVehicles pushBack _spawnedVeh;
                     publicVariable "TRGM_VAR_SpawnedVehicles";
                     _spawnedVeh addEventHandler ["Killed", {
-                        params ["_unit", "_killer", "_instigator", "_useEffects"];
+                        params [["_unit", objNull, [objNull]], ["_killer", objNull, [objNull]], ["_instigator", objNull, [objNull]], ["_useEffects", true, [true]]];
                         [1, format[localize "str_TRGM2_spawnvehicles_KIA", name _unit]] spawn TRGM_GLOBAL_fnc_adjustBadPoints;
                     }];
                 };
