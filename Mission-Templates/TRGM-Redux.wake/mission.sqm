@@ -280,7 +280,7 @@ class Mission
 						rank="SERGEANT";
 						init="call{this setVariable [""UnitRole"",""Teamleader""];}";
 						name="sl";
-						description="Team Leader (Required for setup)";
+						description="Team Leader (Required if no host/admin)";
 						isPlayable=1;
 						class Inventory
 						{

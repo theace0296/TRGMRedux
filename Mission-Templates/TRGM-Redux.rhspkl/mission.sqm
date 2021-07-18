@@ -3311,7 +3311,7 @@ class Mission
 									{
 										init="this setVariable [""UnitRole"",""Teamleader""];";
 										name="sl";
-										description="Team Leader (Required for setup)";
+										description="Team Leader (Required if no host/admin)";
 										isPlayer=1;
 										isPlayable=1;
 										class Inventory
