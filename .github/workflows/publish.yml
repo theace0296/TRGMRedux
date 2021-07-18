@@ -24,10 +24,10 @@ jobs:
     steps:
     - name: Checkout the source code
       uses: actions/checkout@master
+    - name: Install SQF Lint
+      run: python3 -m pip install git+https://github.com/LordGolias/sqf.git
     - name: Lint (sqflint)
-      uses: arma-actions/sqflint@master
-      with:
-          args: --exit e --directory $GITHUB_WORKSPACE
+      run: python Tools/sqflint.py -d '$GITHUB_WORKSPACE' -e 'e' -x 'AIS' -x 'fhqtt' -x 'RandFramework\Alias' -x 'RandFramework\Server\units\fn_zenOccupyHouse.sqf'
 
   build:
     runs-on: windows-latest
