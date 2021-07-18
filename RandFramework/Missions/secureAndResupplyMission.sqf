@@ -130,12 +130,10 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             };
         };
 
-        [
-            TRGM_VAR_EnemySide, // Side of created convoy group
-            [call sTank1ArmedCar, selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), call sTank1ArmedCar], // Classnames of vehicles to create for convoy (size of this array is also the number of vehicles created)
-            _flag getRelPos[2000, random 360], // Spawn position of convoy
-            [_flag] call TRGM_GLOBAL_fnc_getRealPos, // Final destination of convoy
-        ] call TRGM_GLOBAL_fnc_createConvoy;
+        private _convoyVehicles = [call sTank1ArmedCar, selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), call sTank1ArmedCar];
+        private _convoyStartPos = _flag getRelPos[2000, random 360];
+        private _convoyDestPos = [_flag] call TRGM_GLOBAL_fnc_getRealPos;
+        [TRGM_VAR_EnemySide, _convoyVehicles, _convoyStartPos, _convoyDestPos] call TRGM_GLOBAL_fnc_createConvoy;
         sleep 10;
         [TRGM_VAR_EnemySide, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
@@ -245,12 +243,10 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             sleep 2;
             !TRGM_VAR_dropCrate;
         };
-        [
-            TRGM_VAR_EnemySide, // Side of created convoy group
-            [call sTank1ArmedCar, selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), call sTank1ArmedCar], // Classnames of vehicles to create for convoy (size of this array is also the number of vehicles created)
-            _flag getRelPos[2000, random 360], // Spawn position of convoy
-            [_flag] call TRGM_GLOBAL_fnc_getRealPos, // Final destination of convoy
-        ] call TRGM_GLOBAL_fnc_createConvoy;
+        _convoyVehicles = [call sTank1ArmedCar, selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), call sTank1ArmedCar];
+        _convoyStartPos = _flag getRelPos[2000, random 360];
+        _convoyDestPos = [_flag] call TRGM_GLOBAL_fnc_getRealPos;
+        [TRGM_VAR_EnemySide, _convoyVehicles, _convoyStartPos, _convoyDestPos] call TRGM_GLOBAL_fnc_createConvoy;
         sleep 10;
         [TRGM_VAR_EnemySide, _flag getRelPos[5000, random 360], [_flag] call TRGM_GLOBAL_fnc_getRealPos, 3, true, false, false, false, false, true, true] spawn TRGM_GLOBAL_fnc_reinforcements;
         sleep 10;
