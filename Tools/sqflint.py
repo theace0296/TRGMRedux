@@ -20,7 +20,7 @@ def analyze(code, writer, exceptions_list):
     try:
         result = parse(code)
     except SQFParserError as e:
-        if "(not private)" not in e.message:
+        if "(not private)" not in e.message and "<Variable(get)>" not in e.message:
             writer.write('[%d,%d]:%s\n' %
                          (e.position[0], e.position[1] - 1, e.message))
             exceptions_list += [e]
@@ -28,7 +28,7 @@ def analyze(code, writer, exceptions_list):
 
     exceptions = sqf.analyzer.analyze(result).exceptions
     for e in exceptions:
-        if "(not private)" not in e.message:
+        if "(not private)" not in e.message and "<Variable(get)>" not in e.message:
             writer.write('[%d,%d]:%s\n' %
                          (e.position[0], e.position[1] - 1, e.message))
             exceptions_list += [e]
@@ -58,7 +58,7 @@ def analyze_dir(directory, writer, exceptions_list, exclude):
                 if writer_helper.strings:
                     writer.write(os.path.relpath(file_path, directory) + '\n')
                     for string in writer_helper.strings:
-                        if "(not private)" not in string:
+                        if "(not private)" not in string and "<Variable(get)>" not in string:
                             writer.write('\t%s' % string)
     return writer
 
