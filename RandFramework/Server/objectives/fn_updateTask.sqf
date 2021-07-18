@@ -38,9 +38,11 @@ if (!_bCreateTask) then {
     if (_repAmountOnComplete > 0 && _repAmountOnFail isEqualTo 0) then {
         [_repAmountOnComplete, [[_customRepReason, _repReasonOnComplete] select (_customRepReason isEqualTo ""), "Objective Completed."] select (_repReasonOnComplete isEqualTo "")] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
         [[_customHintString, _hintStrOnComplete] select (_customHintString isEqualTo "")] call TRGM_GLOBAL_fnc_notifyGlobal;
-    } else if (_repAmountOnFail > 0) then {
-        [_repAmountOnFail, [_customRepReason, "Objective Failed."] select (_customRepReason isEqualTo "")] spawn TRGM_GLOBAL_fnc_adjustBadPoints;
-        [[_customHintString, _hintStrOnComplete] select (_customHintString isEqualTo "")] call TRGM_GLOBAL_fnc_notifyGlobal;
+    } else {
+        if (_repAmountOnFail > 0) then {
+            [_repAmountOnFail, [_customRepReason, "Objective Failed."] select (_customRepReason isEqualTo "")] spawn TRGM_GLOBAL_fnc_adjustBadPoints;
+            [[_customHintString, _hintStrOnComplete] select (_customHintString isEqualTo "")] call TRGM_GLOBAL_fnc_notifyGlobal;
+        };
     };
 } else {
     if (!([format["InfSide%1",_iTaskIndex]] call FHQ_fnc_ttAreTasksCompleted)) then {
