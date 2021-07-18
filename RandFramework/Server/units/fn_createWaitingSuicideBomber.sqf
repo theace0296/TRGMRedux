@@ -58,7 +58,7 @@ if (count _nearestHidingPlaces > 5) then {
             sleep 2;
         }
         else {
-            sleep 30 + (random 120);
+            sleep (30 + (random 120));
         };
     };
 

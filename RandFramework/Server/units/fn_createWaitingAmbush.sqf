@@ -63,7 +63,7 @@ if (_bAllowAmbush) then {
                 sleep 2;
             }
             else {
-                sleep 30 + (random 120);
+                sleep (30 + (random 120));
             };
         };
 
