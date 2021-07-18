@@ -58,7 +58,8 @@ def analyze_dir(directory, writer, exceptions_list, exclude):
                 if writer_helper.strings:
                     writer.write(os.path.relpath(file_path, directory) + '\n')
                     for string in writer_helper.strings:
-                        writer.write('\t%s' % string)
+                        if "(not private)" not in string:
+                            writer.write('\t%s' % string)
     return writer
 
 
