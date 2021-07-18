@@ -1,6 +1,8 @@
 name: Build-Addon
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -229,7 +231,7 @@ jobs:
           $addonsFolder = "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons"
           Try
           {
-              makepbo -P -A -$ -B -X=".bak,.txt" "$addonsFolder\trgmredux"
+              # makepbo -P -A -$ -B -X=".bak,.txt" "$addonsFolder\trgmredux"
           }
           Catch
           {
@@ -237,7 +239,7 @@ jobs:
               Write-Output "The following error occured while packing the addon:"
               Write-Output $ErrorMessage
           }
-          Remove-FileSystemItem "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons\trgmredux\" -Recurse
+          # Remove-FileSystemItem "$($Env:GITHUB_WORKSPACE)\@TRGMRedux\addons\trgmredux\" -Recurse
           Compress-Archive -Path "$($Env:GITHUB_WORKSPACE)\@TRGMRedux" -DestinationPath "$($Env:GITHUB_WORKSPACE)\TRGM-Redux-Addon.zip"
         shell: pwsh
 
