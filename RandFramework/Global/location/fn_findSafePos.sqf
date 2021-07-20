@@ -32,6 +32,10 @@ switch (typeName _object) do {
 
 private _returnPosition = [_checkPos, _minDistance, _maxDistance, _objectProximity, _waterMode, _maxGradient, _shoreMode, _posBlacklist, _defaultPos] call BIS_fnc_findSafePos;
 
+if (_defaultPos isEqualTypeAll []) then {
+    _defaultPos = _defaultPos select _shoreMode;
+};
+
 private _isPositionAllowedInWater = !(_waterMode isEqualTo 0);
 if (!(_returnPosition isEqualTo _defaultPos) && {!(surfaceIsWater _returnPosition) && {!_isPositionAllowedInWater}}) exitWith {
     _returnPosition;
