@@ -387,8 +387,8 @@ if (isnil "fncMedicalParamedicLight") then {
                 _checkPointGuidePos = _sidePos;
                 _iCount = _iCount - 1;
                 _flatPos = nil;
-                _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
-                if (_flatPos select 0 > 0) then {
+                _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
                     _thisSide = TRGM_VAR_EnemySide;
@@ -408,8 +408,8 @@ if (isnil "fncMedicalParamedicLight") then {
                 _checkPointGuidePos = _sidePos;
                 _iCount = _iCount - 1;
                 _flatPos = nil;
-                _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
-                if (_flatPos select 0 > 0) then {
+                _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
                     _thisSide = TRGM_VAR_EnemySide;

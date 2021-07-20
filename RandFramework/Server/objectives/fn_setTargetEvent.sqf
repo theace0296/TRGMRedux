@@ -116,8 +116,8 @@ if (!_isCache && count _nearestRoads > 0) then {
 
             _thisAreaRange = 20;
             _flatPos = nil;
-            _flatPos = [_posOfTarget , 0, 20, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
-            if (_flatPos select 0 > 0) then {
+            _flatPos = [_posOfTarget , 0, 20, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_posOfTarget,_posOfTarget]] call TRGM_GLOBAL_fnc_findSafePos;
+            if !(_flatPos isEqualTo _posOfTarget) then {
                 _thisPosAreaOfCheckpoint = _flatPos;
                 _thisRoadOnly = true;
                 _thisSide = TRGM_VAR_EnemySide;
@@ -210,8 +210,8 @@ if (_isCache) then {
 
         _thisAreaRange = 20;
         _flatPos = nil;
-        _flatPos = [_posCache , 0, 20, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
-        if (_flatPos select 0 > 0) then {
+        _flatPos = [_posCache , 0, 20, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_posCache,_posCache]] call TRGM_GLOBAL_fnc_findSafePos;
+        if !(_flatPos isEqualTo _posCache) then {
             _thisPosAreaOfCheckpoint = _flatPos;
             _thisRoadOnly = false;
             _thisSide = TRGM_VAR_EnemySide;
@@ -271,20 +271,20 @@ if (!_objectiveCreated) then {
     _flatPosPolice1 = nil;
 
     if (_isMainTask) then {
-        _flatPosPolice1 = [_posOfAO , 20, 400, 10, 0, 0.5, 0,[],[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
+        _flatPosPolice1 = [_posOfAO , 20, 400, 10, 0, 0.5, 0,[],[_posOfAO,_posOfAO]] call TRGM_GLOBAL_fnc_findSafePos;
     }
     else {
         _eventPosFound = false;
         _iAttemptLimit = 15;
         while {!_eventPosFound && _iAttemptLimit > 0} do {
             _iAttemptLimit = _iAttemptLimit - 1;
-            _flatPosPolice1 = [_posOfAO , 500, 1500, 10, 0, 0.5, 0,[],[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
+            _flatPosPolice1 = [_posOfAO , 500, 1500, 10, 0, 0.5, 0,[],[_posOfAO,_posOfAO]] call TRGM_GLOBAL_fnc_findSafePos;
             _farEnoughFromWarzone = true;
             if (!isNil "TRGM_VAR_WarzonePos") then {_farEnoughFromWarzone = (_flatPosPolice1 distance TRGM_VAR_WarzonePos > 500)};
             if (_isMainTask || _farEnoughFromWarzone) then {_eventPosFound = true;};
         };
         if (!_eventPosFound) then {
-            _flatPosPolice1 = [_posOfAO , 500, 1500, 10, 0, 0.5, 0,[],[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
+            _flatPosPolice1 = [_posOfAO , 500, 1500, 10, 0, 0.5, 0,[],[_posOfAO,_posOfAO]] call TRGM_GLOBAL_fnc_findSafePos;
         };
     };
 
@@ -311,8 +311,8 @@ if (!_objectiveCreated) then {
 
     _thisAreaRange = 20;
     _flatPos = nil;
-    _flatPos = [_posObj , 0, 20, 5, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
-    if (_flatPos select 0 > 0) then {
+    _flatPos = [_posObj , 0, 20, 5, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_posObj,_posObj]] call TRGM_GLOBAL_fnc_findSafePos;
+    if !(_flatPos isEqualTo _posObj) then {
         _thisPosAreaOfCheckpoint = _flatPos;
         _thisRoadOnly = false;
         _thisSide = TRGM_VAR_EnemySide;

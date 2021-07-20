@@ -144,7 +144,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _checkPointGuidePos = [_objInformant] call TRGM_GLOBAL_fnc_getRealPos;
             _flatPosSentry = nil;
             _flatPosSentry = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-            if (_flatPosSentry select 0 > 0) then {
+            if !(_flatPosSentry isEqualTo _checkPointGuidePos) then {
                 _thisPosAreaOfCheckpoint = _flatPosSentry;
                 _thisRoadOnly = false;
                 _thisSide = TRGM_VAR_EnemySide;

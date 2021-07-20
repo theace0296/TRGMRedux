@@ -415,7 +415,7 @@ if (!_bFriendlyInsurgents) then {
 
                 _flatPos = [_checkPointGuidePos , 400, _thisAreaRange, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
 
-                if (_flatPos select 0 > 0) then {
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
                     _thisSide = TRGM_VAR_EnemySide;
@@ -439,7 +439,7 @@ if (!_bFriendlyInsurgents) then {
 
                 _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
 
-                if (_flatPos select 0 > 0) then {
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
                     _thisSide = TRGM_VAR_EnemySide;
@@ -458,7 +458,7 @@ if (!_bFriendlyInsurgents) then {
                     _iCount = _iCount - 1;
                     _flatPos = nil;
                     _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if (_flatPos select 0 > 0) then {
+                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
                         _thisPosAreaOfCheckpoint = _flatPos;
                         _thisRoadOnly = true;
                         _thisSide = TRGM_VAR_FriendlySide;
@@ -482,7 +482,7 @@ if (!_bFriendlyInsurgents) then {
 
                 _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
 
-                if (_flatPos select 0 > 0) then {
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
                     _thisSide = TRGM_VAR_EnemySide;
@@ -504,7 +504,7 @@ if (!_bFriendlyInsurgents) then {
                 _iCount = _iCount - 1;
                 _flatPos = nil;
                 _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                if (_flatPos select 0 > 0) then {
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
                     _thisSide = TRGM_VAR_EnemySide;
@@ -526,7 +526,7 @@ if (!_bFriendlyInsurgents) then {
                 _iCount = _iCount - 1;
                 _flatPos = nil;
                 _flatPos = [_checkPointGuidePos , 0, 75, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                if (_flatPos select 0 > 0) then {
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
                     _thisSide = TRGM_VAR_EnemySide;
@@ -548,7 +548,7 @@ if (!_bFriendlyInsurgents) then {
                 _iCount = _iCount - 1;
                 _flatPos = nil;
                 _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                if (_flatPos select 0 > 0) then {
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
                     _thisSide = TRGM_VAR_EnemySide;
@@ -570,7 +570,7 @@ if (!_bFriendlyInsurgents) then {
                 _iCount = _iCount - 1;
                 _flatPos = nil;
                 _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                if (_flatPos select 0 > 0) then {
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = false;
                     _thisSide = TRGM_VAR_EnemySide;
@@ -593,7 +593,7 @@ if (!_bFriendlyInsurgents) then {
                 _iCount = _iCount - 1;
                 _flatPos = nil;
                 _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                if (_flatPos select 0 > 0) then {
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
                     _thisPosAreaOfCheckpoint = _flatPos;
                     _thisRoadOnly = true;
                     _thisSide = TRGM_VAR_FriendlySide;
@@ -706,7 +706,7 @@ if (!_bFriendlyInsurgents) then {
             _iCount = _iCount - 1;
             _flatPos = nil;
             _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-            if (_flatPos select 0 > 0) then {
+            if !(_flatPos isEqualTo _checkPointGuidePos) then {
                 _thisPosAreaOfCheckpoint = _flatPos;
                 _thisRoadOnly = true;
                 _thisSide = TRGM_VAR_EnemySide;
@@ -725,7 +725,7 @@ if (!_bFriendlyInsurgents) then {
             _iCount = _iCount - 1;
             _flatPos = nil;
             _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-            if (_flatPos select 0 > 0) then {
+            if !(_flatPos isEqualTo _checkPointGuidePos) then {
                 _thisPosAreaOfCheckpoint = _flatPos;
                 _thisRoadOnly = false;
                 _thisSide = TRGM_VAR_EnemySide;
