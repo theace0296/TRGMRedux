@@ -32,19 +32,19 @@ switch (typeName _object) do {
 
 private _returnPosition = [_checkPos, _minDistance, _maxDistance, _objectProximity, _waterMode, _maxGradient, _shoreMode, _posBlacklist, _defaultPos] call BIS_fnc_findSafePos;
 
-_defaultPos = _defaultPos param [_waterMode, []];
-if !(_returnPosition isEqualTo _defaultPos) exitWith {
+private _isPositionAllowedInWater = !(_waterMode isEqualTo 0);
+if (!(_returnPosition isEqualTo _defaultPos) && {!(surfaceIsWater _returnPosition) && {!_isPositionAllowedInWater}}) exitWith {
     _returnPosition;
 };
 
 _returnPosition = _checkPos;
 private _spawnPosition = [];
 
-for "_i" from 1 to 3 do {
+for "_i" from 1 to 10 do {
     private _randomOffset = [random (_maxDistance - _maxDistance / 2), random (_maxDistance - _maxDistance / 2), 0];
     _spawnPosition = (_checkPos vectorAdd _randomOffset) findEmptyPosition [_minDistance, _maxDistance, _object];
 
-    if !(_spawnPosition isEqualTo []) exitWith {};
+    if (!(_spawnPosition isEqualTo []) && {!(surfaceIsWater _spawnPosition) && {!_isPositionAllowedInWater}}) exitWith {};
 };
 
 if !(_spawnPosition isEqualTo []) then {
