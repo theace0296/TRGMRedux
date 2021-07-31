@@ -93,7 +93,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: https://uploads.github.com/repos/theace0296/TRGM2.Malden/releases/44698931/assets{?name,label}
+          upload_url: https://uploads.github.com/repos/theace0296/TRGMRedux/releases/44698931/assets{?name,label}
           release_id: 44698931
           asset_path: ./TRGM-Redux-Nightly.zip
           asset_name: TRGM-Redux-Nightly-$$.zip
