@@ -362,7 +362,7 @@ TRGM_VAR_MaxBadPoints = 1; publicVariable "TRGM_VAR_MaxBadPoints";
 
 if (call TRGM_GETTER_fnc_bIsCampaign) then {
     if (isServer) then {
-        call TRGM_SERVER_fnc_initCampaign;
+        [] spawn TRGM_SERVER_fnc_initCampaign;
     };
     // Campaign doesn't load tasks right away, fake mission loaded as to not confuse players.
     [] call TRGM_GLOBAL_fnc_populateLoadingWait;
@@ -371,7 +371,7 @@ if (call TRGM_GETTER_fnc_bIsCampaign) then {
     [] call TRGM_GLOBAL_fnc_populateLoadingWait;
     [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 } else {
-    call TRGM_SERVER_fnc_startMission;
+    [] spawn TRGM_SERVER_fnc_startMission;
 };
 [format["Mission Core: %1", "InitCampaign/StartMission ran"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
