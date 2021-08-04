@@ -3,6 +3,12 @@ _oldUnit = _this select 0;
 _oldProviders = _oldUnit getVariable ["BIS_SUPP_allProviderModules",[]];
 _HQ = _oldUnit getVariable ["BIS_SUPP_HQ",nil];
 
+if (call TRGM_GETTER_fnc_bTransportEnabled) then {
+    removeAllActions _oldUnit;
+    player setVariable ["TRGM_addedActions",[]];
+    [TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;
+};
+
 if (isNil "_HQ") then {_HQ = HQMan;};
 
 if (isNil {player getVariable ["BIS_SUPP_HQ",nil]}) then {
@@ -13,8 +19,8 @@ if (isNil {player getVariable ["BIS_SUPP_HQ",nil]}) then {
                 if (typeOf _x isEqualTo "SupportRequester" && _oldUnit in (synchronizedObjects _x)) then {
                     [player, _x, _providerModule] call BIS_fnc_addSupportLink;
                 };
-            }forEach synchronizedObjects _providerModule;
-        }forEach _oldProviders;
+            } forEach synchronizedObjects _providerModule;
+        } forEach _oldProviders;
     };
 
     player setVariable ["BIS_SUPP_transmitting", false];

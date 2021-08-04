@@ -44,11 +44,14 @@ _actions = [
     ]
 ];
 
-
-// add actions on vehicle
-{
-    [_vehicle, _x] remoteExec ["addAction",0,true];
-    // TODO: ACE alternative
-} foreach _actions;
+private _existingActions = _vehicle getVariable ["TRGM_addedActions", []];
+if (_existingActions isEqualTo []) then {
+    // add actions on vehicle
+    {
+        [_vehicle, _x] remoteExec ["addAction",0,true];
+        // TODO: ACE alternative
+    } foreach _actions;
+    _vehicle setVariable ["TRGM_addedActions", _actions, true];
+};
 
 true;

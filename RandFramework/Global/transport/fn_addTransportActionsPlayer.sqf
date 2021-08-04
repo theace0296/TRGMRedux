@@ -1,8 +1,6 @@
 params ["_vehicles"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-if (!isServer) exitWith {};
-
 /********************* Add Player Actions ****************/
 _useAceInteractionForTransport = false;
 if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
@@ -102,7 +100,13 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
     } forEach _vehicles;
 
     {
-        [_x] remoteExec ["TRGM_GLOBAL_fnc_addPlayerActionPersistent",0,true];
+        if (isServer) then {
+            [_x] remoteExec ["TRGM_GLOBAL_fnc_addPlayerActionPersistent",0,true];
+        } else {
+            if (hasInterface) then {
+                [_x] call TRGM_GLOBAL_fnc_addPlayerActionPersistent;
+            }
+        };
     } foreach _playerActions;
 };
 
