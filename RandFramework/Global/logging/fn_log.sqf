@@ -7,5 +7,6 @@ if (TRGM_VAR_bDebugMode) then {
 };
 
 if (_systemChat) then {
+    [format ["[[TREND - DEBUG]] %1", _message]] remoteExec ["diag_log", 0];
     [format ["[TRGM] %1", _message]] remoteExec ["systemChat", 0];
 };
