@@ -7,4 +7,4 @@ _sUnitType = selectRandom [(call sRiflemanToUse), (call sRiflemanToUse),(call sR
 if (_index isEqualTo 0 && _IncludTeamLeader) then {
     _sUnitType = (call sTeamleaderToUse);
 };
-[_sUnitType, _startPos, _group] call TRGM_GLOBAL_fnc_createUnit;
+[_group, _sUnitType, _startPos, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
