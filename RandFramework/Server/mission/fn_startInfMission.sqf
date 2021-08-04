@@ -798,8 +798,6 @@ else {
 publicVariable "TRGM_VAR_debugMessages";
 [TRGM_VAR_debugMessages, true] call TRGM_GLOBAL_fnc_log;
 
-[(localize "STR_TRGM2_startInfMission_SoItBegin")] call TRGM_GLOBAL_fnc_notify;
-
 ///*orangestest
 [] remoteExec ["TRGM_GLOBAL_fnc_animateAnimals",0,true];
 //orangestest*/

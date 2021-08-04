@@ -22,7 +22,7 @@ switch (_option) do {
         {
             [_x, [localize "STR_TRGM2_SetMissionBoardOptions_StartMission",{[false] spawn TRGM_SERVER_fnc_startMissionPreCheck;}]] remoteExec ["addAction", 0];
         } forEach [endMissionBoard, endMissionBoard2];
-        if (TRGM_GETTER_fnc_bIsCampaign) then {
+        if (call TRGM_GETTER_fnc_bIsCampaign) then {
             [endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_ExitCampaign",{[false] spawn TRGM_SERVER_fnc_exitCampaign;}]] remoteExec ["addAction", 0];
         };
     };
@@ -42,7 +42,7 @@ switch (_option) do {
         if (isMultiplayer) then {
             [endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_EndMission",{_this spawn TRGM_SERVER_fnc_attemptEndMission;}]] remoteExec ["addAction", 0];
         };
-        if (TRGM_GETTER_fnc_bIsCampaign) then {
+        if (call TRGM_GETTER_fnc_bIsCampaign) then {
             [endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_ExitCampaign",{[false] spawn TRGM_SERVER_fnc_exitCampaign;}]] remoteExec ["addAction", 0];
         };
     };
