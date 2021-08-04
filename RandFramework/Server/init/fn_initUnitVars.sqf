@@ -154,7 +154,7 @@ TRGM_GETTER_fnc_bMoreEnemies = { random 1 < ((TRGM_VAR_AdvancedSettings select T
 publicVariable "TRGM_GETTER_fnc_bMoreEnemies";
 TRGM_GETTER_fnc_iMoreEnemies = {
     params [["_modifier", 25]];
-    private _enemyDensity = floor (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX);
+    private _enemyDensity = floor ((TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX) / 2);
     _enemyDensity mod _modifier;
 };
 publicVariable "TRGM_GETTER_fnc_iMoreEnemies";
