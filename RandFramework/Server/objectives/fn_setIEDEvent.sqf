@@ -25,8 +25,7 @@ if (count _nearestRoads > 0) then {
             if (_eventLocationPos distance TRGM_VAR_WarzonePos > 500) then {_eventPosFound = true;};
             _iAttemptLimit = _iAttemptLimit - 1;
         };
-    }
-    else {
+    } else {
         _eventLocationPos = getPos (selectRandom _nearestRoads);
     };
 
@@ -56,8 +55,7 @@ if (count _nearestRoads > 0) then {
                 _connectedRoad = _roadConnectedTo select 0;
                 _direction = [_nearestRoad, _connectedRoad] call BIS_fnc_DirTo;
                 _PosFound = true;
-            }
-            else {
+            } else {
                 _iAttemptLimit = _iAttemptLimit - 1;
             };
         };
@@ -71,8 +69,7 @@ if (count _nearestRoads > 0) then {
             _mainVeh = nil;
             if (isNil "_objIED") then {
                 _mainVeh = createVehicle [selectRandom _ieds,_roadBlockSidePos,[],0,"NONE"];
-            }
-            else {
+            } else {
                 _mainVeh = _objIED;
                 _mainVeh setPos _roadBlockSidePos;
             };
@@ -87,8 +84,7 @@ if (count _nearestRoads > 0) then {
                 _markerstrcache setMarkerShape "ICON";
                 if (_bIsTrap) then {
                     _markerstrcache setMarkerText localize "STR_TRGM2_IEDMarkerText";
-                }
-                else {
+                } else {
                     _markerstrcache setMarkerText "";
                 };
                 _markerstrcache setMarkerType "hd_dot";
@@ -104,8 +100,8 @@ if (count _nearestRoads > 0) then {
                 "_caller distance _target < 5",                        // Condition for the action to progress
                 {},                                                    // Code executed when action starts
                 {
-                    _thisVeh = _this select 0;
-                    _IEDType = (_this select 3) select 1;
+                    params ["_thisVeh", "_caller", "_actionId", "_arguments", "_progress", "_maxProgress"];
+                    _IEDType = _arguments params ["_bIsTrap", "_IEDType"];
                     _alarmActive = _thisVeh getVariable ["alarmActive",false];
                     if (floor (random 30) isEqualTo 0 && _IEDType isEqualTo "CAR" && !_alarmActive) then {
                         [_thisVeh] spawn {
@@ -123,13 +119,13 @@ if (count _nearestRoads > 0) then {
                     };
                 },            // Code executed on every progress tick
                 {
-                    _thisVeh = _this select 0;
-                    _thisPlayer = _this select 1;
-                    _bIsTrap = (_this select 3) select 0;
+                    params ["_thisVeh", "_thisPlayer", "_actionId", "_arguments"];
+                    _arguments params ["_bIsTrap", "_IEDType"];
                     if (_thisPlayer getVariable "unitrole" != "Engineer" && random 1 < .60) then {
                         [localize "STR_TRGM2_IEDSearchFailed"] call TRGM_GLOBAL_fnc_notify;
-                    }
-                    else {
+                    } else {
+                        [_thisVeh] remoteExec ["removeAllActions", 0, true];
+                        [_thisVeh, _actionId] remoteExec ["BIS_fnc_holdActionRemove", 0, true];
                         if (_bIsTrap) then {
                             [localize "STR_TRGM2_IEDSearchFound"] call TRGM_GLOBAL_fnc_notify;
                             [
@@ -142,9 +138,10 @@ if (count _nearestRoads > 0) then {
                                 {},                                                    // Code executed when action starts
                                 {},            // Code executed on every progress tick
                                 {
-                                    _thisVeh = _this select 0;
-                                    _thisPlayer = _this select 1;
-                                    _bIsTrap = (_this select 3) select 0;
+                                    params ["_thisVeh", "_thisPlayer", "_actionId", "_arguments"];
+                                    _arguments params ["_bIsTrap", "_IEDType"];
+                                    [_thisVeh] remoteExec ["removeAllActions", 0, true];
+                                    [_thisVeh, _actionId] remoteExec ["BIS_fnc_holdActionRemove", 0, true];
                                     if (_thisPlayer getVariable "unitrole" != "Engineer" && random 1 < .25) then {
                                         [localize "STR_TRGM2_IEDOhOh"] call TRGM_GLOBAL_fnc_notify;
                                         sleep 1;
@@ -170,13 +167,11 @@ if (count _nearestRoads > 0) then {
                                         _thisVeh setVariable ["isDefused",true, true];
                                         sleep 4;
                                         [localize "STR_TRGM2_IEDOneWay"] call TRGM_GLOBAL_fnc_notifyGlobal;
-                                    }
-                                    else {
+                                    } else {
                                         _thisVeh setVariable ["isDefused",true, true];
                                         [0.2, localize "STR_TRGM2_IEDDefused"] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
-                                        removeAllActions _thisVeh;
                                         [localize "STR_TRGM2_IEDDefused"] call TRGM_GLOBAL_fnc_notifyGlobal;
-                                    }
+                                    };
                                 },                // Code executed on completion
                                 {},                                                    // Code executed on interrupted
                                 [],                                // Arguments passed to the scripts as _this select 3
@@ -185,11 +180,10 @@ if (count _nearestRoads > 0) then {
                                 false,                                                // Remove on completion
                                 false                                                // Show in unconscious state
                             ] remoteExec ["BIS_fnc_holdActionAdd", 0, _thisVeh];    // MP compatible implementation
-                        }
-                        else {
+                        } else {
                             [localize "STR_TRGM2_IEDNoneFound"] call TRGM_GLOBAL_fnc_notify;
                         };
-                    }
+                    };
                 },                // Code executed on completion
                 {},                                                    // Code executed on interrupted
                 [_bIsTrap,_IEDType],                                // Arguments passed to the scripts as _this select 3
@@ -290,8 +284,7 @@ if (count _nearestRoads > 0) then {
 
 
         };
-    }
-    else {
+    } else {
         if (!isNil "_objIED") then {
             deleteVehicle _objIED;
         };
