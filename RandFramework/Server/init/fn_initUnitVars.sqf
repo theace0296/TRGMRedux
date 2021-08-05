@@ -243,7 +243,7 @@ TRGM_VAR_AllowMineField = (TRGM_VAR_iAllowMineField isEqualTo 1); publicVariable
 
 /////// Civ/Ins settings ///////
 if (isNil "TRGM_VAR_iBuildingCountToAllowCivsAndFriendlyInformants") then { TRGM_VAR_iBuildingCountToAllowCivsAndFriendlyInformants =  10; publicVariable "TRGM_VAR_iBuildingCountToAllowCivsAndFriendlyInformants"; };
-if (isNil "TRGM_VAR_bFriendlyInsurgents")                            then { TRGM_VAR_bFriendlyInsurgents =  [false,true,false,false]; publicVariable "TRGM_VAR_bFriendlyInsurgents"; };
+if (isNil "TRGM_VAR_bFriendlyInsurgents")                            then { TRGM_VAR_bFriendlyInsurgents =  [false,false,false,false]; publicVariable "TRGM_VAR_bFriendlyInsurgents"; };
 if (isNil "TRGM_VAR_bCivsOnly")                                      then { TRGM_VAR_bCivsOnly =  [false,false,false,false,false,false]; publicVariable "TRGM_VAR_bCivsOnly"; }; //all false at the moment... may never use this, but keep incase have idea!
 
 /////// Punish settings ///////

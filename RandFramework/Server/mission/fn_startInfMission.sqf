@@ -686,7 +686,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                         publicVariable "TRGM_VAR_ClearedPositions";
                         _markerInformant1 setMarkerText (localize "STR_TRGM2_startInfMission_markerInformant");
                         if (!_SamePrevAO) then {
-                            [[_inf1X,_inf1Y],_iThisTaskType,_infBuilding,_bIsMainObjective, _iTaskIndex, _allowFriendlyIns,true] spawn TRGM_SERVER_fnc_populateSideMission;
+                            [[_inf1X,_inf1Y],_iThisTaskType,_infBuilding,_bIsMainObjective, _iTaskIndex, _allowFriendlyIns, true] spawn TRGM_SERVER_fnc_populateSideMission;
                         };
                     }
                     else {
