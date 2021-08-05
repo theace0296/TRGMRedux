@@ -20,8 +20,15 @@ publicVariable "TRGM_VAR_AODetails";
 _bFriendlyInsurgents = selectRandom TRGM_VAR_bFriendlyInsurgents;
 
 _InsurgentSide = TRGM_VAR_EnemySide;
-if (_bFriendlyInsurgents) then {_InsurgentSide = TRGM_VAR_FriendlySide;};
-if (_bIsMainObjective) then {_InsurgentSide = TRGM_VAR_EnemySide; _bFriendlyInsurgents = false;}; //if main need to make sure not friendly insurgents
+if (_bFriendlyInsurgents) then {
+    _InsurgentSide = TRGM_VAR_FriendlySide;
+    TRGM_VAR_ClearedPositions pushBack [_sidePos];
+    publicVariable "TRGM_VAR_ClearedPositions";
+};
+if (_bIsMainObjective) then {
+    _InsurgentSide = TRGM_VAR_EnemySide; _bFriendlyInsurgents = false; //if main need to make sure not friendly insurgents
+    _bThisMissionCivsOnly = false;
+};
 
 _bThisMissionCivsOnly = selectRandom TRGM_VAR_bCivsOnly;
 _bTownBigenoughForFriendlyInsurgants = true;
@@ -40,13 +47,8 @@ if (!_allowFriendlyIns) then {
     _bFriendlyInsurgents = false;
 };
 
-if (_bIsMainObjective) then {_bThisMissionCivsOnly = false};
-
 if (_ForceCivsOnly) then {
     _bThisMissionCivsOnly = true;
-}
-else {
-    _bThisMissionCivsOnly = false;
 };
 
 _selectRandomW = call {random 1 > .80};;
@@ -55,11 +57,6 @@ if (call TRGM_GETTER_fnc_bMoreEnemies) then {
     _bThisMissionCivsOnly = false;
     _InsurgentSide = TRGM_VAR_EnemySide;
     _bFriendlyInsurgents = false;
-};
-
-if (_bFriendlyInsurgents) then {
-    TRGM_VAR_ClearedPositions pushBack [_sidePos];
-    publicVariable "TRGM_VAR_ClearedPositions";
 };
 
 if ((_sideType isEqualTo 7 || _sideType isEqualTo 5) && _bFriendlyInsurgents) then { //if mission is kill officer or kill officer and in fridnldy area then make him prisoner
