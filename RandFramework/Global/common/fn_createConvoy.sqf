@@ -16,6 +16,8 @@ params [
     ["_allowCaching", false]
 ];
 
+if (isNil "_side" || isNil "_vehicles" || isNil "_startPos" || isNil "_endPos") exitWith {};
+
 _finalGroup = [];
 _group = creategroup _side;
 _group setFormation "FILE";
