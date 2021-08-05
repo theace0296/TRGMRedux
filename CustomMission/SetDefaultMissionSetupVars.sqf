@@ -144,7 +144,7 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
             case 6: { //TRGM_VAR_ADVSET_ENEMY_FACTIONS_IDX
                 for "_i" from 0 to (count TRGM_VAR_AllFactionData - 1) do {
                     (TRGM_VAR_AllFactionData select _i) params ["_className", "_displayName"];
-                    if (_className == _x) then {
+                    if (_className isEqualTo _x) then {
                         TRGM_VAR_AdvancedSettings pushBack _i;
                     };
                 };
@@ -152,7 +152,7 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
             case 7: { //TRGM_VAR_ADVSET_MILITIA_FACTIONS_IDX
                 for "_i" from 0 to (count TRGM_VAR_AllFactionData - 1) do {
                     (TRGM_VAR_AllFactionData select _i) params ["_className", "_displayName"];
-                    if (_className == _x) then {
+                    if (_className isEqualTo _x) then {
                         TRGM_VAR_AdvancedSettings pushBack _i;
                     };
                 };
@@ -160,7 +160,7 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
             case 8: { //TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX
                 for "_i" from 0 to (count TRGM_VAR_AllFactionData - 1) do {
                     (TRGM_VAR_AllFactionData select _i) params ["_className", "_displayName"];
-                    if (_className == _x) then {
+                    if (_className isEqualTo _x) then {
                         TRGM_VAR_AdvancedSettings pushBack _i;
                     };
                 };
