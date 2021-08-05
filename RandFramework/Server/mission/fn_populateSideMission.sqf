@@ -26,7 +26,8 @@ if (_bFriendlyInsurgents) then {
     publicVariable "TRGM_VAR_ClearedPositions";
 };
 if (_bIsMainObjective) then {
-    _InsurgentSide = TRGM_VAR_EnemySide; _bFriendlyInsurgents = false; //if main need to make sure not friendly insurgents
+    _InsurgentSide = TRGM_VAR_EnemySide;
+    _bFriendlyInsurgents = false; //if main need to make sure not friendly insurgents
     _bThisMissionCivsOnly = false;
 };
 
@@ -164,10 +165,10 @@ if (!_bFriendlyInsurgents) then {
         if (_minimission) then {
             if (random 1 < .50) then {
                 if (random 1 < .50) then {
-                    [_sidePos,250 + (floor random 100),[2,3],true,_InsurgentSide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
+                    [_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
                 }
                 else {
-                    [_sidePos getPos [300,0],180 + (floor random 20),[2,3],true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [300,0],180 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                 };
             };
         }
@@ -180,38 +181,38 @@ if (!_bFriendlyInsurgents) then {
                 };
 
                 if (_bIsMainObjective) then {
-                    [_sidePos,250 + (floor random 400),_patrolUnitCounts,true,_InsurgentSide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
-                    [_sidePos,250 + (floor random 100),_patrolUnitCounts,true,_InsurgentSide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
-                    [_sidePos getPos [300,0],180 + (floor random 20),_patrolUnitCounts,true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [300,90],180 + (floor random 20),_patrolUnitCounts,true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [300,180],180 + (floor random 20),_patrolUnitCounts,true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [300,270],180 + (floor random 20),_patrolUnitCounts,true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [600,45],200 + (floor random 50),_patrolUnitCounts,true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [600,135],200 + (floor random 50),_patrolUnitCounts,true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [600,225],200 + (floor random 50),_patrolUnitCounts,true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [600,315],200 + (floor random 50),_patrolUnitCounts,true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos,250 + (floor random 400),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
+                    [_sidePos,250 + (floor random 100),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
+                    [_sidePos getPos [300,0],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [300,90],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [300,180],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [300,270],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [600,45],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [600,135],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [600,225],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [600,315],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                 }
                 else {
-                    [_sidePos,250 + (floor random 100),[2,3],true,_InsurgentSide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
-                    [_sidePos,800 + (floor random 100),[2,3],true,_InsurgentSide, 200] spawn TRGM_SERVER_fnc_buildingPatrol;
-                    [_sidePos getPos [400,0],250 + (floor random 20),[2,3],true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [400,90],250 + (floor random 20),[2,3],true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [400,180],250 + (floor random 20),[2,3],true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
-                    [_sidePos getPos [400,270],250 + (floor random 20),[2,3],true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
+                    [_sidePos,800 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 200] spawn TRGM_SERVER_fnc_buildingPatrol;
+                    [_sidePos getPos [400,0],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [400,90],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [400,180],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos getPos [400,270],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                 };
 
 
             }
             else {
                 if (_bIsMainObjective) then {
-                    [_sidePos,15 + (floor random 150),[2,3],false,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                     if ((call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective)) then {
-                        [_sidePos,15 + (floor random 150),[2,3],false,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                        [_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                     };
                 };
                 if (_selectRandomW) then {
                     //not adding a teamleader to small patrol as we need long dist to have teamleader for CallNearbyPatrols (3rd param for RadiusPatrol is false)
-                    [_sidePos,15 + (floor random 50),[2,3],false,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos,15 + (floor random 50),[2,3],false,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                     _bHasPatrols = true
                 };
 
@@ -219,18 +220,18 @@ if (!_bFriendlyInsurgents) then {
                 //Spawn wide patrol
                 //if main, need a couple of these and always have 2 or 3
                 if (_bIsMainObjective) then {
-                    [_sidePos,500 + (floor random 250),[7,8,9],true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                    [_sidePos,500 + (floor random 250),[7,8,9],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                 }
                 else {
                     if (_selectRandomW) then {
-                        [_sidePos,500 + (floor random 250),[4,5,6],true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                        [_sidePos,500 + (floor random 250),[4,5,6],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                         _bHasPatrols = true
                     };
                 };
 
                 if ((_bIsMainObjective && _selectRandomW)) then {
                     if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
-                        [_sidePos,900 + (floor random 250),[7,8,9,10],true,_InsurgentSide] spawn TRGM_SERVER_fnc_radiusPatrol;
+                        [_sidePos,900 + (floor random 250),[7,8,9,10],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol;
                     };
                 };
 
@@ -238,20 +239,20 @@ if (!_bFriendlyInsurgents) then {
 
                 //Spawn patrol to move from building to building
                 if (_bIsMainObjective || _selectRandomW) then {
-                    [_sidePos,1000 + (floor random 500),[3,4,5],true,_InsurgentSide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
+                    [_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
                     _bHasPatrols = true
                 };
                 if (_bIsMainObjective && call TRGM_GETTER_fnc_bAllowLargerPatrols) then {
-                    [_sidePos,1000 + (floor random 500),[3,4,5],true,_InsurgentSide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
+                    [_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol;
                 };
 
                 //Spawn distant patrol ready to move in (will need to spawn trigger)
                 if (_bIsMainObjective || _selectRandomW ) then {
-                    [_sidePos,1000 + (floor random 500),[5,6],true,_InsurgentSide] spawn TRGM_SERVER_fnc_backForthPatrol;
+                    [_sidePos,1000 + (floor random 500),[5,6],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_backForthPatrol;
                     _bHasPatrols = true
                 };
                 if (_bIsMainObjective && call TRGM_GETTER_fnc_bAllowLargerPatrols) then {
-                    [_sidePos,1000 + (floor random 500),[5,6,7],true,_InsurgentSide] spawn TRGM_SERVER_fnc_backForthPatrol;
+                    [_sidePos,1000 + (floor random 500),[5,6,7],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_backForthPatrol;
                 };
             };
         };
@@ -263,7 +264,7 @@ if (!_bFriendlyInsurgents) then {
         if (random 1 < _chanceOfMortorTeam || _selectRandomW) then {
             _flatPos = _sidePos;
             _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,_sidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-            [_flatPos,  (floor random 300), selectRandom (call sMortarToUse), createGroup _InsurgentSide] call BIS_fnc_spawnVehicle;
+            [_flatPos,  (floor random 300), selectRandom (call sMortarToUse), createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
 
             // if (TRGM_VAR_bDebugMode) then {
             //     _test = nil;
@@ -283,27 +284,27 @@ if (!_bFriendlyInsurgents) then {
             _flatPos = nil;
             _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sTank1ArmedCarToUse)] call TRGM_GLOBAL_fnc_findSafePos;
             if (_minimission) then {
-                [_flatPos,  (floor random 300), (call sTank1ArmedCarToUse), createGroup _InsurgentSide] call BIS_fnc_spawnVehicle;
+                [_flatPos,  (floor random 300), (call sTank1ArmedCarToUse), createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
             }
             else {
                 if (_bIsMainObjective && _selectRandomW) then {
                     _flatPos = nil;
                     _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
-                    [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup _InsurgentSide] call BIS_fnc_spawnVehicle;
+                    [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
                 };
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective && _selectRandomW) then {
                     _flatPos = nil;
                     _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
-                    [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup _InsurgentSide] call BIS_fnc_spawnVehicle;
+                    [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
                 };
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
                     _flatPos = nil;
                     _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
-                    [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup _InsurgentSide] call BIS_fnc_spawnVehicle;
+                    [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
 
                     _flatPos = nil;
                     _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
-                    [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup _InsurgentSide] call BIS_fnc_spawnVehicle;
+                    [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
 
                 };
             };
@@ -314,7 +315,7 @@ if (!_bFriendlyInsurgents) then {
                 _flatPos = nil;
                 _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
                 _vehOneGroup = nil;
-                _vehOneGroup = createGroup _InsurgentSide;
+                _vehOneGroup = createGroup TRGM_VAR_EnemySide;
                 [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], _vehOneGroup] call BIS_fnc_spawnVehicle;
                 [_vehOneGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                 _vehOneGroup setSpeedMode "LIMITED";
@@ -323,7 +324,7 @@ if (!_bFriendlyInsurgents) then {
                     _flatPos = nil;
                     _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
                     _vehTwoGroup = nil;
-                    _vehTwoGroup = createGroup _InsurgentSide;
+                    _vehTwoGroup = createGroup TRGM_VAR_EnemySide;
                     [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], _vehTwoGroup] call BIS_fnc_spawnVehicle;
                     [_vehTwoGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                     _vehTwoGroup setSpeedMode "LIMITED";
@@ -337,7 +338,7 @@ if (!_bFriendlyInsurgents) then {
                 _flatPos = nil;
                 _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
                 _vehScountOneGroup = nil;
-                _vehScountOneGroup = createGroup _InsurgentSide;
+                _vehScountOneGroup = createGroup TRGM_VAR_EnemySide;
                 [_flatPos,  (floor random 300), selectRandom (call UnarmedScoutVehicles), _vehScountOneGroup] call BIS_fnc_spawnVehicle;
                 [_vehScountOneGroup, _sidePos, 3000 ] call bis_fnc_taskPatrol;
                 _vehScountOneGroup setSpeedMode "LIMITED";
@@ -346,7 +347,7 @@ if (!_bFriendlyInsurgents) then {
                 _flatPos = nil;
                 _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
                 _vehScoutTwoGroup = nil;
-                _vehScoutTwoGroup = createGroup _InsurgentSide;
+                _vehScoutTwoGroup = createGroup TRGM_VAR_EnemySide;
                 [_flatPos,  (floor random 300), selectRandom (call UnarmedScoutVehicles), _vehScoutTwoGroup] call BIS_fnc_spawnVehicle;
                 [_vehScoutTwoGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                 _vehScoutTwoGroup setSpeedMode "LIMITED";
@@ -356,21 +357,21 @@ if (!_bFriendlyInsurgents) then {
         };
 
         if (_minimission) then {
-            if (_selectRandomW) then {[_sidePos,100,[1,2,3],_InsurgentSide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;};
+            if (_selectRandomW) then {[_sidePos,100,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;};
         }
         else {
             //if main then 100% occupie houses, and increase number and range
-            [_sidePos,10,[1],_InsurgentSide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
+            [_sidePos,10,[1],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
             if (_bIsMainObjective || _selectRandomW) then {
-                [_sidePos,200,[1,2,3],_InsurgentSide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
-                [_sidePos,500,[4,5,6],_InsurgentSide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
+                [_sidePos,200,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
+                [_sidePos,500,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
-                    [_sidePos,1000,[4,5,6],_InsurgentSide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
+                    [_sidePos,1000,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
                 };
             }
             else {
-                [_sidePos,100,[1,2],_InsurgentSide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
-                [_sidePos,1000,[1,2,3,4],_InsurgentSide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
+                [_sidePos,100,[1,2],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
+                [_sidePos,1000,[1,2,3,4],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses;
             };
         };
 
@@ -381,7 +382,7 @@ if (!_bFriendlyInsurgents) then {
                 if ((call sAAAVehMilitia) != "") then {
                     _flatPos = nil;
                     _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sAAAVehToUse)] call TRGM_GLOBAL_fnc_findSafePos;
-                    _AAAGroup = createGroup _InsurgentSide;
+                    _AAAGroup = createGroup TRGM_VAR_EnemySide;
                     [_flatPos,  (floor random 300), (call sAAAVehToUse), _AAAGroup] call BIS_fnc_spawnVehicle;
                     {
                         _x setskill ["aimingAccuracy",1];
