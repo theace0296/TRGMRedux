@@ -16,7 +16,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=2;
+		nextID=6;
 	};
 	class Camera
 	{
@@ -439,7 +439,7 @@ class Mission
 				class Attribute0
 				{
 					property="groupID";
-					expression="[_this, _value] call CBA_fnc_setCallsign";
+					expression="                            if (isNil 'CBA_fnc_setCallsign') then {                                _this setGroupID [_value];                            } else {                                [_this, _value] call CBA_fnc_setCallsign;                            };                        ";
 					class Value
 					{
 						class data
@@ -609,7 +609,7 @@ class Mission
 				class Attribute0
 				{
 					property="groupID";
-					expression="[_this, _value] call CBA_fnc_setCallsign";
+					expression="                            if (isNil 'CBA_fnc_setCallsign') then {                                _this setGroupID [_value];                            } else {                                [_this, _value] call CBA_fnc_setCallsign;                            };                        ";
 					class Value
 					{
 						class data
@@ -782,7 +782,7 @@ class Mission
 				class Attribute0
 				{
 					property="groupID";
-					expression="[_this, _value] call CBA_fnc_setCallsign";
+					expression="                            if (isNil 'CBA_fnc_setCallsign') then {                                _this setGroupID [_value];                            } else {                                [_this, _value] call CBA_fnc_setCallsign;                            };                        ";
 					class Value
 					{
 						class data
@@ -3717,7 +3717,6 @@ class Mission
 									};
 									id=364;
 									type="B_medic_F";
-									atlOffset=1.9073486e-006;
 									class CustomAttributes
 									{
 										class Attribute0
@@ -4656,6 +4655,7 @@ class Mission
 									};
 									id=373;
 									type="B_recon_medic_F";
+									atlOffset=-3.8146973e-006;
 									class CustomAttributes
 									{
 										class Attribute0
@@ -7650,7 +7650,7 @@ class Mission
 							isPlayable=1;
 							id=422;
 							type="VirtualSpectator_F";
-							atlOffset=1.9073486e-006;
+							atlOffset=-5.7220459e-006;
 							class CustomAttributes
 							{
 								class Attribute0

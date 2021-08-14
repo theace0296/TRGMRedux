@@ -12,7 +12,7 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=4;
+		nextID=10;
 	};
 	class Camera
 	{
@@ -439,7 +439,7 @@ class Mission
 									class PositionInfo
 									{
 										position[]={785.7926,28.921438,12166.88};
-										angles[]={-0,1.6072944,0};
+										angles[]={0,1.6072944,0};
 									};
 									side="West";
 									flags=4;
@@ -896,7 +896,7 @@ class Mission
 									class PositionInfo
 									{
 										position[]={775.61682,28.921438,12162.249};
-										angles[]={-0,1.6072944,0};
+										angles[]={0,1.6072944,0};
 									};
 									side="West";
 									flags=4;
@@ -1550,7 +1550,7 @@ class Mission
 									class PositionInfo
 									{
 										position[]={782.57794,28.921438,12173.435};
-										angles[]={-0,1.530954,0};
+										angles[]={0,1.530954,0};
 									};
 									side="West";
 									flags=4;
@@ -2522,7 +2522,7 @@ class Mission
 									class PositionInfo
 									{
 										position[]={780.76019,28.921438,12145.23};
-										angles[]={-0,1.4181687,0};
+										angles[]={0,1.4181687,0};
 									};
 									side="West";
 									flags=4;
@@ -2582,7 +2582,7 @@ class Mission
 									class PositionInfo
 									{
 										position[]={779.99963,28.921438,12150.172};
-										angles[]={-0,1.4181687,0};
+										angles[]={0,1.4181687,0};
 									};
 									side="West";
 									flags=4;
@@ -2642,7 +2642,7 @@ class Mission
 									class PositionInfo
 									{
 										position[]={777.90955,28.921438,12147.321};
-										angles[]={-0,1.4181687,0};
+										angles[]={0,1.4181687,0};
 									};
 									side="West";
 									flags=4;
@@ -3629,7 +3629,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={779.13586,28.92,12181.062};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs1";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -3741,7 +3741,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={766.94611,28.92,12180.388};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs10";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -3853,7 +3853,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={777.12164,28.920002,12181.007};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs2";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -3966,7 +3966,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={775.31763,28.92,12180.965};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs3";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -4078,7 +4078,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={774.06891,28.92,12180.963};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs4";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -4190,7 +4190,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={772.82428,28.920002,12180.876};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs5";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -4303,7 +4303,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={771.30396,28.920002,12180.771};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs6";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -4416,7 +4416,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={770.12817,28.92,12180.69};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs7";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -4528,7 +4528,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={768.8833,28.92,12180.437};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs8";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";
@@ -4640,7 +4640,7 @@ class Mission
 							class PositionInfo
 							{
 								position[]={767.77563,28.92,12180.446};
-								angles[]={-0,6.0724797,0};
+								angles[]={0,6.0724797,0};
 							};
 							name="vs9";
 							init="call{this setVariable [""MP_ONLY"", true, true];" \n "}";

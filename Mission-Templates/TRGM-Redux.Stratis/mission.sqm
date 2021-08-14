@@ -1,4 +1,4 @@
-version=53;
+version=54;
 class EditorData
 {
 	moveGridStep=1;
@@ -19,6 +19,7 @@ class EditorData
 	};
 };
 binarizationWanted=0;
+sourceName="TRGM-Redux";
 addons[]=
 {
 	"A3_Ui_F",
@@ -217,7 +218,7 @@ class AddonsMetaData
 		class Item20
 		{
 			className="A3_Sounds_F_Enoch";
-			name="Arma 3 Enoch - Sound Effects";
+			name="Arma 3 Contact Platform - Sound Effects";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -271,6 +272,14 @@ class AddonsMetaData
 			url="https://www.arma3.com";
 		};
 	};
+};
+dlcs[]=
+{
+	"Jets",
+	"Expansion",
+	"Heli",
+	"Orange",
+	"Mark"
 };
 randomSeed=12296292;
 class ScenarioData
@@ -1066,7 +1075,7 @@ class Mission
 		{
 			dataType="Trigger";
 			position[]={1845.3988,5.5034971,5560.9614};
-			angle=3.9720254;
+			angle=3.9720252;
 			class Attributes
 			{
 				condition="call{!alive(tank1)}";
