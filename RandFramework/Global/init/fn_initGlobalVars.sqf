@@ -75,6 +75,26 @@ if (isNil "TRGM_VAR_UnfilteredAllFactionData" || {isNil "TRGM_VAR_AllFactionData
     format["Faction data calculated, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 };
 
+if (isNil "TRGM_VAR_allLocationPositions") then {
+    private _worldName = worldName;
+    TRGM_VAR_allLocationPositionsMap = profileNamespace getVariable "TRGM_VAR_allLocationPositionsMap";
+    TRGM_VAR_allLocationPositions = [nil, TRGM_VAR_allLocationPositionsMap get _worldName] select (!(isNil "TRGM_VAR_allLocationPositionsMap"));
+
+    if (isNil "TRGM_VAR_allLocationPositions") then {
+        TRGM_VAR_allLocationPositionsMap = createHashMap;
+        TRGM_VAR_allLocationTypes = [];
+        "TRGM_VAR_allLocationTypes pushBack configName _x" configClasses (configFile >> "CfgLocationTypes");
+        private _allLocations = nearestLocations [(getMarkerPos "mrkHQ"), TRGM_VAR_allLocationTypes, 25000];
+        TRGM_VAR_allLocationPositions = _allLocations apply {[locationPosition _x select 0, locationPosition _x select 1]};
+        TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {((getMarkerPos "mrkHQ") distance _x) > TRGM_VAR_SideMissionMinDistFromBase};
+        TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {count nearestObjects [_x, TRGM_VAR_BasicBuildings, 200] > 0};
+        TRGM_VAR_allLocationPositionsMap set [_worldName, TRGM_VAR_allLocationPositions];
+        profileNamespace setVariable ["TRGM_VAR_allLocationPositionsMap", TRGM_VAR_allLocationPositionsMap];
+        profileNamespace setVariable ["TRGM_VAR_allLocationPositions", TRGM_VAR_allLocationPositions];
+    };
+    publicVariable "TRGM_VAR_allLocationPositions";
+};
+
 // Custom Mission
 TRGM_VAR_UseCustomMission = (["CustomMission", 0] call BIS_fnc_getParamValue) isEqualTo 1;
 publicVariable "TRGM_VAR_UseCustomMission";

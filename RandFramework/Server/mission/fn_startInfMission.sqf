@@ -276,14 +276,15 @@ _buildings = nil;
 
 ["Mission Setup: Gatherthing map info", true] call TRGM_GLOBAL_fnc_log;
 
-TRGM_VAR_allLocationTypes = [];
-"TRGM_VAR_allLocationTypes pushBack configName _x" configClasses (configFile >> "CfgLocationTypes");
-publicVariable "TRGM_VAR_allLocationTypes";
-private _allLocations = nearestLocations [(getMarkerPos "mrkHQ"), TRGM_VAR_allLocationTypes, 25000];
-TRGM_VAR_allLocationPositions = _allLocations apply {[locationPosition _x select 0, locationPosition _x select 1]};
-TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {((getMarkerPos "mrkHQ") distance _x) > TRGM_VAR_SideMissionMinDistFromBase};
-TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {count nearestObjects [_x, TRGM_VAR_BasicBuildings, 200] > 0};
-publicVariable "TRGM_VAR_allLocationPositions";
+if (isNil "TRGM_VAR_allLocationPositions") then {
+    TRGM_VAR_allLocationTypes = [];
+    "TRGM_VAR_allLocationTypes pushBack configName _x" configClasses (configFile >> "CfgLocationTypes");
+    private _allLocations = nearestLocations [(getMarkerPos "mrkHQ"), TRGM_VAR_allLocationTypes, 25000];
+    TRGM_VAR_allLocationPositions = _allLocations apply {[locationPosition _x select 0, locationPosition _x select 1]};
+    TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {((getMarkerPos "mrkHQ") distance _x) > TRGM_VAR_SideMissionMinDistFromBase};
+    TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {count nearestObjects [_x, TRGM_VAR_BasicBuildings, 200] > 0};
+    publicVariable "TRGM_VAR_allLocationPositions";
+};
 
 ["Mission Setup: Map info collected", true] call TRGM_GLOBAL_fnc_log;
 
