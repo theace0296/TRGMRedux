@@ -1,7 +1,7 @@
-params [["_unit", objNull, [objNull]]];
+params [["_unit", objNull, [objNull]], ["_type", "", [""]]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-private _unitClassName = typeOf _unit;
+private _unitClassName = [_type, typeOf _unit] select (_type isEqualTo "");
 private _configPath = (configFile >> "CfgVehicles" >> _unitClassName);
 
 _riflemen = ["B_Soldier_F"];
@@ -90,7 +90,7 @@ if (isNil "_className" ||isNil "_dispName" || isNil "_icon" || isNil "_calloutNa
 };
 
 if (TRGM_VAR_useCustomFriendlyFactionLoadouts || TRGM_VAR_useCustomEnemyFactionLoadouts || TRGM_VAR_useCustomMilitiaFactionLoadouts) exitWith {
-    [_unit] call TRGM_GLOBAL_fnc_setCustomLoadout;
+    [_unit, _type] call TRGM_GLOBAL_fnc_setCustomLoadout;
     true;
 };
 

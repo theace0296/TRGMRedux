@@ -120,6 +120,7 @@ class TRGM_GLOBAL {
         class enemyAirSupport {};
         class fireAOFlares {};
         class fireIllumFlares {};
+        class getUnitType {};
         class getRealPos {};
         class hideTerrainObjects {};
         class initAmmoBox {};

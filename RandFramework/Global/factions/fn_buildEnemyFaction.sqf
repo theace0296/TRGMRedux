@@ -46,6 +46,7 @@ sMachineGunMan     = { _unit = "O_T_Soldier_AR_F"; if (count TRGM_VAR_EastAutori
 sSniper            = { _unit = "O_T_Sniper_F"; if (count TRGM_VAR_EastSnipers > 0) then { _unit = selectRandom TRGM_VAR_EastSnipers; }; _unit; };
 sExpSpec           = { _unit = "O_T_Soldier_Exp_F"; if (count TRGM_VAR_EastExpSpecs > 0) then { _unit = selectRandom TRGM_VAR_EastExpSpecs; }; _unit; };
 sEnemyHeliPilot    = { _unit = "O_T_Helipilot_F"; if (count TRGM_VAR_EastPilots > 0) then { _unit = selectRandom TRGM_VAR_EastPilots; }; _unit; };
+sEnemyUAVOps       = { _unit = "O_T_Soldier_UAV_F"; if (count TRGM_VAR_EastUAVOps > 0) then { _unit = selectRandom TRGM_VAR_EastUAVOps; }; _unit; };
 
 sTank1ArmedCar              = { _veh = "O_T_LSV_02_armed_F"; if (count TRGM_VAR_EastArmedCars > 0) then { _veh = selectRandom TRGM_VAR_EastArmedCars; }; _veh; };
 sTank2APC                   = { _veh = "O_APC_Wheeled_02_rcws_v2_F"; if (count TRGM_VAR_EastAPCs > 0) then { _veh = selectRandom TRGM_VAR_EastAPCs; }; _veh; };
@@ -110,6 +111,7 @@ sMachineGunManMilitia      = { _unit = "I_G_Soldier_AR_F"; if (count TRGM_VAR_Gu
 sSniperMilitia             = { _unit = "I_G_Soldier_M_F"; if (count TRGM_VAR_GuerSnipers > 0) then { _unit = selectRandom TRGM_VAR_GuerSnipers; }; _unit; };
 sExpSpecMilitia            = { _unit = "I_G_Soldier_Exp_F"; if (count TRGM_VAR_GuerExpSpecs > 0) then { _unit = selectRandom TRGM_VAR_GuerExpSpecs; }; _unit; };
 sEnemyHeliPilotMilitia     = { _unit = "I_helipilot_F"; if (count TRGM_VAR_GuerPilots > 0) then { _unit = selectRandom TRGM_VAR_GuerPilots; }; _unit; };
+sEnemyUAVOpsMilitia        = { _unit = "I_soldier_UAV_F"; if (count TRGM_VAR_GuerUAVOps > 0) then { _unit = selectRandom TRGM_VAR_GuerUAVOps; }; _unit; };
 
 sTank1ArmedCarMilitia    = { _veh = "I_C_Offroad_02_LMG_F"; if (count TRGM_VAR_GuerArmedCars > 0) then { _veh = selectRandom TRGM_VAR_GuerArmedCars; }; _veh; };
 sTank2APCMilitia         = { _veh = "I_E_APC_tracked_03_cannon_F"; if (count TRGM_VAR_GuerAPCs > 0) then { _veh = selectRandom TRGM_VAR_GuerAPCs; }; _veh; };
