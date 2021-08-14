@@ -3,3 +3,4 @@ launch.json
 tasks.json
 node_modules/
 lintOutput.txt
+upload-to-workshop/
