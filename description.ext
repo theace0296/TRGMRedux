@@ -190,6 +190,13 @@ class Params
         texts[] = {"Disable","Enable"};
         default = 0;
     };
+    class RecalculateLocationData
+    {
+        title = "Ignores location data saved in profile and re-parses config";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
+    };
 };
 
 class RscTitles

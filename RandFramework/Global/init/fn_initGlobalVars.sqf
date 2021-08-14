@@ -75,12 +75,29 @@ if (isNil "TRGM_VAR_UnfilteredAllFactionData" || {isNil "TRGM_VAR_AllFactionData
     format["Faction data calculated, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 };
 
+/////// Building arrays init ///////
+
+TRGM_VAR_BasicBuildings = [];
+"if (configName _x find 'Land_' isEqualTo 0 && {configName _x isKindOf 'Building' && {getnumber (_x >> 'numberOfDoors')  >= 1 or !(getarray (_x >> 'Ladders')  isEqualTo [])}}) then {TRGM_VAR_BasicBuildings pushBack configName _x}" configClasses (configFile >> "CfgVehicles") apply {configName _x};
+publicVariable "TRGM_VAR_BasicBuildings";
+
+TRGM_VAR_MilBuildings   = [];
+"if (configName _x find 'Land_' isEqualTo 0 && {configName _x isKindOf 'Building' && {(getnumber (_x >> 'numberOfDoors')  >= 1 or !(getarray (_x >> 'Ladders')  isEqualTo [])) && {getText( configFile >> 'CfgEditorSubCategories' >> getText( _x >> 'editorSubcategory' ) >> 'displayName' ) isEqualTo 'Military'}}}) then {TRGM_VAR_MilBuildings pushBack configName _x}" configClasses (configFile >> "CfgVehicles") apply {configName _x};
+publicVariable "TRGM_VAR_MilBuildings";
+
+TRGM_VAR_TowerBuildings = ["Land_TTowerBig_2_F","Land_TTowerBig_1_F (towertest)","land_Objects96","Land_wx_radiomast","LAND_uns_signaltower","rso_radiomast"];//,"Land_TTowerSmall_2_F","Land_TTowerSmall_1_F"];  //these small towers are too small for Altis or Malden.. looks strange if this is the comms tower and nearby is a massive unused tower
+publicVariable "TRGM_VAR_TowerBuildings";
+
+//for min distached to have AO from base... TRGM_VAR_BaseAreaRange is more for patrols and events (thees need to be seperate variables, because if we had main HQ on an island and an AO spawned on the small island away from main land... hen will cause issues spawning in everything else)
+if (isNil "TRGM_VAR_SideMissionMinDistFromBase") then { TRGM_VAR_SideMissionMinDistFromBase = 3000; publicVariable "TRGM_VAR_SideMissionMinDistFromBase"; };
 if (isNil "TRGM_VAR_allLocationPositions") then {
     private _worldName = worldName;
     TRGM_VAR_allLocationPositionsMap = profileNamespace getVariable "TRGM_VAR_allLocationPositionsMap";
     TRGM_VAR_allLocationPositions = [nil, TRGM_VAR_allLocationPositionsMap get _worldName] select (!(isNil "TRGM_VAR_allLocationPositionsMap"));
 
-    if (isNil "TRGM_VAR_allLocationPositions") then {
+    TRGM_VAR_bRecalculateLocationData = [false, true] select ((["RecalculateLocationData", 0] call BIS_fnc_getParamValue) isEqualTo 1);
+
+    if (isNil "TRGM_VAR_allLocationPositions" || TRGM_VAR_bRecalculateLocationData) then {
         TRGM_VAR_allLocationPositionsMap = createHashMap;
         TRGM_VAR_allLocationTypes = [];
         "TRGM_VAR_allLocationTypes pushBack configName _x" configClasses (configFile >> "CfgLocationTypes");
@@ -136,7 +153,6 @@ TRGM_GETTER_fnc_sGetPhoneticName = { _index = _this select 0; _name = format ["%
 
 TRGM_GETTER_fnc_aGetReinforceStartPos = { [random 500, random 500, 0]; }; publicVariable "TRGM_GETTER_fnc_aGetReinforceStartPos";
 
-if (isNil "TRGM_VAR_SideMissionMinDistFromBase") then { TRGM_VAR_SideMissionMinDistFromBase = 3000; publicVariable "TRGM_VAR_SideMissionMinDistFromBase"; }; //for min distached to have AO from base... TRGM_VAR_BaseAreaRange is more for patrols and events (thees need to be seperate variables, because if we had main HQ on an island and an AO spawned on the small island away from main land... hen will cause issues spawning in everything else)
 if (isNil "TRGM_VAR_BaseAreaRange")              then { TRGM_VAR_BaseAreaRange = 1500;              publicVariable "TRGM_VAR_BaseAreaRange"; }; //used to make sure enemy events, patrols etc... doesnt spawn too close to base
 if (isNil "TRGM_VAR_KilledZoneRadius")           then { TRGM_VAR_KilledZoneRadius = 1500;           publicVariable "TRGM_VAR_KilledZoneRadius"; };
 if (isNil "TRGM_VAR_KilledZoneInnerRadius")      then { TRGM_VAR_KilledZoneInnerRadius = 1450;      publicVariable "TRGM_VAR_KilledZoneInnerRadius"; };
