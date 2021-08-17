@@ -10,7 +10,7 @@ sleep 0.1;
 doStop player;
 
 ////INITIATE ANIMATION OVER NETWORK
-[player] remoteExec ["TRGM_CLIENT_fnc_startingMove", -2, true];
+[player] remoteExec ["TRGM_CLIENT_fnc_startingMove", [0, -2] select isMultiplayer, true];
 
 ////WAIT A SECOND
 sleep 1;

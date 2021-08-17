@@ -29,7 +29,7 @@ if (! isNil "_mainAOPos") then {
 };
 
 { _x setVariable ["TRGM_postStartMissionCamRunning", "NOTRUN", true]; } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
-[_isHiddenObj, _bMoveToAO] remoteExec ["TRGM_CLIENT_fnc_postStartMissionCamera", 0, true];
+[_isHiddenObj, _bMoveToAO] remoteExec ["TRGM_CLIENT_fnc_postStartMissionCamera", [0, -2] select isMultiplayer, true];
 
 "FinalCleanup" call TRGM_GLOBAL_fnc_log;
 call TRGM_SERVER_fnc_finalSetupCleaner;
@@ -49,7 +49,7 @@ if (_bMoveToAO) then {
     } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
 };
 
-[] remoteExec ["TRGM_CLIENT_fnc_postStartMissionEndCamera", 0, true];
+[] remoteExec ["TRGM_CLIENT_fnc_postStartMissionEndCamera", [0, -2] select isMultiplayer, true];
 
 sleep 3;
 saveGame;
