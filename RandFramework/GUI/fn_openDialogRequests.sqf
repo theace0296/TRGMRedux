@@ -117,7 +117,7 @@ _btnselectUnit ctrlAddEventHandler ["ButtonClick", {
     } else {
         _currentSpentPoints = call TRGM_GLOBAL_fnc_countSpentPoints;
         if (_currentSpentPoints < (TRGM_VAR_maxBadPoints - TRGM_VAR_BadPoints + 1)) then {
-            private _spawnedUnit = (group player createUnit [_unitClassName, getPos player, [], 10, "NONE"]);
+            private _spawnedUnit = [group player, _unitClassName, getPos player, [], 10, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             addswitchableUnit _spawnedUnit;
             player doFollow player;
             _spawnedUnit setVariable ["Repcost", 0.5, true];
