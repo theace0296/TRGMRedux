@@ -13,6 +13,24 @@ if (isServer) then {
 
 TRGM_VAR_iTimeMultiplier call BIS_fnc_paramTimeAcceleration;
 
+tf_give_personal_radio_to_regular_soldier = true; publicVariable "tf_give_personal_radio_to_regular_soldier";
+tf_no_auto_long_range_radio = true; publicVariable "tf_no_auto_long_range_radio";
+
+call FHQ_fnc_ttiInit;
+call FHQ_fnc_ttiPostInit;
+
+[
+   west,
+      [(localize "STR_TRGM2_Init_Mission"), ""],
+      ["", ""],
+   east,
+      ["", ""],
+      ["", ""],
+   {true},
+      [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_Credits"), "Treendy, Redux by TheAce0296"],
+      [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_ScriptsUsed"), localize "STR_TRGM2_TRGMSetUnitGlobalVars_ScriptsUsed"]
+] call FHQ_fnc_ttAddBriefing;
+
 waitUntil { TRGM_VAR_playerIsChoosingHQpos || TRGM_VAR_NeededObjectsAvailable; };
 
 if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {
@@ -47,25 +65,6 @@ if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {
 if (isServer) then {
     TRGM_VAR_FirstSpottedHasHappend = false; publicVariable "TRGM_VAR_FirstSpottedHasHappend";
 };
-
-tf_give_personal_radio_to_regular_soldier = true; publicVariable "tf_give_personal_radio_to_regular_soldier";
-tf_no_auto_long_range_radio = true; publicVariable "tf_no_auto_long_range_radio";
-
-
-call FHQ_fnc_ttiInit;
-call FHQ_fnc_ttiPostInit;
-
-[
-   west,
-      [(localize "STR_TRGM2_Init_Mission"), ""],
-      ["", ""],
-   east,
-      ["", ""],
-      ["", ""],
-   {true},
-      [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_Credits"), "Treendy, Redux by TheAce0296"],
-      [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_ScriptsUsed"), localize "STR_TRGM2_TRGMSetUnitGlobalVars_ScriptsUsed"]
-] call FHQ_fnc_ttAddBriefing;
 
 "Marker1" setMarkerTextLocal (localize "STR_TRGM2_Init_MarkerText_HQ"); //Head Quarters marker localize
 "transportChopper" setMarkerTextLocal (localize "STR_TRGM2_Init_MarkerText_TransportChopper"); //Transport Chopper marker localize
