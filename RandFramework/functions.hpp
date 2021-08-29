@@ -17,7 +17,6 @@ class TRGM_SERVER {
         file = "RandFramework\Server\campaign";
         class initCampaign {};
         class exitCampaign {};
-        class recruiteInf {};
         class setMissionBoardOptions {};
         class turnInMission {};
     };
