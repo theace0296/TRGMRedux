@@ -119,7 +119,7 @@ private _helo_spawn = {
 
     [_safePos, sizeOf _name] call TRGM_GLOBAL_fnc_hideTerrainObjects;
     private _helo = createVehicle [_name, _safePos, [], 0, "NONE"];
-    createVehicleCrew _helo;
+    [TRGM_VAR_FriendlySide, _helo, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
     crew vehicle _helo joinSilent createGroup TRGM_VAR_FriendlySide;
     _helo allowDamage false;
     _helo setpos _safePos;

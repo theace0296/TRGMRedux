@@ -113,6 +113,7 @@ class TRGM_GLOBAL {
         class convoy {};
         class createConvoy {};
         class createUnit {};
+        class createVehicleCrew {};
         class debugDotMarker {};
         class deleteTrash {};
         class dynamicShowHide {};

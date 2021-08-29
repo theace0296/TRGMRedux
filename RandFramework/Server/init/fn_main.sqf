@@ -140,7 +140,7 @@ if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName !
     {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
     private _safePos = ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos) findEmptyPosition [0, 20, _airTransClassName];
     chopper1 = createVehicle [_airTransClassName, _safePos vectorAdd [0, 0, .1], [], 0, "NONE"];
-    createVehicleCrew chopper1;
+    [TRGM_VAR_FriendlySide, chopper1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
     [driver chopper1] joinSilent createGroup TRGM_VAR_FriendlySide;
     private _chopper1CrewMinusDriver = (crew vehicle chopper1 - [driver chopper1]);
     if (!(_chopper1CrewMinusDriver isEqualTo []) && _chopper1CrewMinusDriver isEqualType []) then {
@@ -180,7 +180,7 @@ if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != ty
     {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
     private _safePos = ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos) findEmptyPosition [0, 20, _airSupClassName];
     chopper2 = createVehicle [_airTransClassName, _safePos vectorAdd [0, 0, .1], [], 0, "NONE"];
-    createVehicleCrew chopper2;
+    [TRGM_VAR_FriendlySide, chopper2, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
     [driver chopper2] joinSilent createGroup TRGM_VAR_FriendlySide;
     private _chopper2CrewMinusDriver = (crew vehicle chopper2 - [driver chopper2]);
     if (!(_chopper2CrewMinusDriver isEqualTo []) && _chopper2CrewMinusDriver isEqualType []) then {
@@ -234,7 +234,7 @@ TRGM_VAR_transportHelosToGetActions = [chopper1];
                         sleep 0.01;
                         private _safePos = _pos findEmptyPosition [0, 20, _newVehClass];
                         private _newVeh = createVehicle [_newVehClass, _safePos vectorAdd [0, 0, .1], [], 0, "NONE"];
-                        createVehicleCrew _newVeh;
+                        [TRGM_VAR_FriendlySide, _newVeh, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
                         [driver _newVeh] joinSilent createGroup TRGM_VAR_FriendlySide;
                         private _newVehCrewMinusDriver = (crew vehicle _newVeh - [driver _newVeh]);
                         if (!(_newVehCrewMinusDriver isEqualTo []) && _newVehCrewMinusDriver isEqualType []) then {

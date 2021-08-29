@@ -262,7 +262,7 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
                     if ((typeOf _spawnedVeh) in TRGM_VAR_WestUnarmedHelos) then {
                         [_spawnedVeh, [format [localize "STR_TRGM2_spawnCrew", gettext (configFile >> "Cfgvehicles" >> (typeOf _spawnedVeh) >> "displayname")], {
                             params [["_target", objNull, [objNull]], ["_caller", objNull, [objNull]], ["_id", -1, [1]], ["_args", [], [[]]]];
-                            createVehicleCrew _target;
+                            [TRGM_VAR_FriendlySide, _target, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
                             [driver _target] joinSilent createGroup TRGM_VAR_FriendlySide;
                             private _targetCrewMinusDriver = (crew vehicle _target - [driver _target]);
                             if (!(_targetCrewMinusDriver isEqualTo []) && _targetCrewMinusDriver isEqualType []) then {

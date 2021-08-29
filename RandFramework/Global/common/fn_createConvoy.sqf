@@ -32,7 +32,7 @@ _pos = _startPos;
         _vehicle = _vehicleClass createvehicle _pos;
         _vehicle allowDamage false;
         _vehicle setDir _dir;
-        createvehiclecrew _vehicle;
+        [_side, _vehicle, _allowCaching] call TRGM_GLOBAL_fnc_createVehicleCrew;
         _crew = crew _vehicle;
         _crew joinSilent _group;
         _group addVehicle _vehicle;

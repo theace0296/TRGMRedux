@@ -165,7 +165,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         private _exitPos = _flag getRelPos[25000, random 360];
 
         airDropHelo1 = createVehicle [_airToUse, [(_spawnPos select 0), (_spawnPos select 1)], [], 0, "FLY"];
-        createVehicleCrew airDropHelo1;
+        [TRGM_VAR_FriendlySide, airDropHelo1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
         crew vehicle airDropHelo1 joinSilent _heloGroup;
         airDropHelo1 flyInHeight 40;
         airDropHelo1 allowDamage false;
@@ -273,7 +273,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _spawnPos = _flag getRelPos[3000, random 360];
         _exitPos = _flag getRelPos[25000, random 360];
         airDropHelo1 = createVehicle [_airToUse, [(_spawnPos select 0), (_spawnPos select 1)], [], 0, "FLY"];
-        createVehicleCrew airDropHelo1;
+        [TRGM_VAR_FriendlySide, airDropHelo1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
         crew vehicle airDropHelo1 joinSilent _heloGroup;
 
         airDropHelo2 flyInHeight 40;
