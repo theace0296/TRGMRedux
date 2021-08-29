@@ -82,16 +82,16 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         if (!isNil "_direction") then {
             _objVehicle setDir (_direction);
         };
-        _guardUnit1 = [(createGroup TRGM_VAR_EnemySide), selectRandom _HVTGuys,_poshVehPos,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+        _guardUnit1 = [(createGroup TRGM_VAR_EnemySide), selectRandom _HVTGuys,_poshVehPos,[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
     }
     else {
         _flatPos = nil;
         _flatPos = [getPos _objectiveMainBuilding, 10, 50, 5, 0, 0.5, 0,[],[getPos _objectiveMainBuilding,getPos _objectiveMainBuilding]] call TRGM_GLOBAL_fnc_findSafePos;
         if ((_flatPos select 0) > 0) then {
-            _guardUnit1 = [(createGroup TRGM_VAR_EnemySide), selectRandom _HVTGuys,_flatPos,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            _guardUnit1 = [(createGroup TRGM_VAR_EnemySide), selectRandom _HVTGuys,_flatPos,[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
         }
         else {
-            _guardUnit1 = [(createGroup TRGM_VAR_EnemySide), selectRandom _HVTGuys,getPos _objectiveMainBuilding,[],20,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            _guardUnit1 = [(createGroup TRGM_VAR_EnemySide), selectRandom _HVTGuys,getPos _objectiveMainBuilding,[],20,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
         };
     };
      (group _guardUnit1) setBehaviour 'CARELESS';
