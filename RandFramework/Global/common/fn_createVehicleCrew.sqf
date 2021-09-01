@@ -56,9 +56,17 @@ private _turrets = [_vehicleType, false] call BIS_fnc_allTurrets;
 {
     if (isNull (_vehicle turretUnit _x)) then {
         private _turretUnit = [_group, _crewType, getPos _vehicle, [], 0, "NONE", _disableDynamicShowHide] call TRGM_GLOBAL_fnc_createUnit;
-        _crew = _crew + [_turretUnit];
-        _turretUnit assignAsTurret _x;
-        _turretUnit moveInTurret _x;
+        try {
+            _crew = _crew + [_turretUnit];
+            _turretUnit assignAsTurret _x;
+            _turretUnit moveInTurret _x;
+        } catch {
+            if (isNull (_vehicle turretUnit _x)) then {
+                deleteVehicle _turretUnit;
+            } else {
+                _vehicle deleteVehicleCrew _turretUnit;
+            };
+        };
     };
 } forEach _turrets;
 
