@@ -119,7 +119,7 @@ def main():
             print("| {} |   ✔    |   ❌   |".format(
                 format_name_for_table(map_name, longest_name_length)))
         else:
-            print("| {} |   ✔    |   ❌   |".format(
+            print("| {} |   ✔    |   ✔    |".format(
                 format_name_for_table(map_name, longest_name_length)))
 
     if (bad_count == 0):
