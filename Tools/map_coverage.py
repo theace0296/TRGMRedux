@@ -112,14 +112,14 @@ def main():
     for map_name in map_list:
         if map_name not in filled_list:
             bad_count = bad_count + 1
-            print("| {} |   N    |   Y   |".format(
+            print("| {} |   ❌   |   ✔    |".format(
                 format_name_for_table(map_name, longest_name_length)))
         elif map_name not in empty_list:
             bad_count = bad_count + 1
-            print("| {} |   Y    |   N   |".format(
+            print("| {} |   ✔    |   ❌   |".format(
                 format_name_for_table(map_name, longest_name_length)))
         else:
-            print("| {} |   Y    |   Y   |".format(
+            print("| {} |   ✔    |   ❌   |".format(
                 format_name_for_table(map_name, longest_name_length)))
 
     if (bad_count == 0):
