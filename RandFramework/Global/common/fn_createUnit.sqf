@@ -123,6 +123,12 @@ if !(_unitType isEqualTo "") then {
 _unit = _group createUnit [_tempUnitType, _position, _markers, _placement, _special];
 if !(_type isEqualTo _tempUnitType) then {
     [_unit, _type] call TRGM_GLOBAL_fnc_setLoadout;
+    private _tempUnit = (createGroup CIVILIAN) createUnit [_type, [0,0,0], [], 0, 'NONE'];
+    private _speaker = speaker _tempUnit;
+    private _face = face _tempUnit;
+    deleteVehicle _tempUnit;
+    _unit setSpeaker _speaker;
+    _unit setFace _face;
 };
 
 if (_unit isEqualTo leader _group && !_disableDynamicShowHide) then {
