@@ -3945,6 +3945,21 @@
                 <English>Valid position, close the map to accept positon, or click anywhere to choose a different position.</English>
             </Key>
 
+            <Key ID="STR_TRGM2_spawnCrewInVehicle">
+                <Original>Spawn a crew for vehicle</Original>
+                <English>Spawn a crew for vehicle</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_spawnCrewInVehicle_lookAtAHelicopter">
+                <Original>Look at a helicopter and select "%1" in the action menu.</Original>
+                <English>Look at a helicopter and select "%1" in the action menu.</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_spawnCrewInVehicle_notAHelicopter">
+                <Original>The target is not a helicopter!</Original>
+                <English>The target is not a helicopter!</English>
+            </Key>
+
             <Key ID="STR_TRGM2_openDialogRequests_RequestUnitsVehicles">
                 <Original>Request Units and Vehicles</Original>
                 <English>Request Units and Vehicles</English>

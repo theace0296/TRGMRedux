@@ -196,6 +196,7 @@ class TRGM_GLOBAL {
         class selectLz {};
         class selectLzCreateBolckedAreaMarker {};
         class selectLzOnMapClick {};
+        class spawnCrew {};
     };
 };
 

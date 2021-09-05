@@ -58,6 +58,14 @@ if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {
                (_this select 0) allowDamage true;
                titleCut ["", "BLACK IN", 5];
             }] remoteExec ["call", _x];
+            [_x, [localize "STR_TRGM2_spawnCrewInVehicle", {
+               private _vehicle = cursorObject;
+               if (isNull _vehicle || _vehicle isKindOf "Helicopter") exitWith {
+                  player setVariable ["TRGM_VAR_SpawningCrew", false];
+                  hint localize "STR_TRGM2_spawnCrewInVehicle_notAHelicopter";
+               };
+               [_vehicle] call TRGM_GLOBAL_fnc_spawnCrew;
+            }, [], 0, true, true, "", "_this isEqualTo player && (player distance laptop1) < 100 && player getVariable ['TRGM_VAR_SpawningCrew', false]"]] remoteExec ["addAction", 0, true];
       };
    } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
 };
@@ -71,6 +79,14 @@ if (isServer) then {
 
 if (isServer) then {
    [laptop1, [localize "STR_TRGM2_openDialogRequests_RequestUnitsVehicles", {player call TRGM_GUI_fnc_openDialogRequests;}, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
+   // [laptop1, [localize "STR_TRGM2_openDialogRequests_RequestUnitsVehicles", {
+   //    player setVariable ["TRGM_VAR_SpawningCrew", true];
+   //    hint format [localize "STR_TRGM2_spawnCrewInVehicle_lookAtAHelicopter", localize "STR_TRGM2_spawnCrewInVehicle"];
+   //    [] spawn {
+   //       waitUntil {!(player getVariable ["TRGM_VAR_SpawningCrew", false]) || (player distance laptop1) > 100};
+   //       player setVariable ["TRGM_VAR_SpawningCrew", false];
+   //    };
+   // }, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
    // [laptop1, [localize "STR_TRGM2_logMissionInfo", {player call TRGM_GLOBAL_fnc_copyMissionInfo;}, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
    [] spawn TRGM_SERVER_fnc_main;
 };
