@@ -40,7 +40,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
     TRGM_VAR_bRecalculateFactionData = [false, true] select ((["RecalculateFactionData", 0] call BIS_fnc_getParamValue) isEqualTo 1);
     TRGM_VAR_bRecalculateFactionData = [TRGM_VAR_bRecalculateFactionData, true] select !(TRGM_VAR_FactionVersion isEqualTo _FactionVersion);
 
-    if (TRGM_VAR_bRecalculateFactionData || 1 isEqualTo 1) then {
+    if (TRGM_VAR_bRecalculateFactionData) then {
         TRGM_VAR_AllFactions = [];
         TRGM_VAR_AllFactionData = [];
         TRGM_VAR_AllFactionMap = createHashMap;
