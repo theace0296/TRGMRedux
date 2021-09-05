@@ -7,4 +7,9 @@ switch (typeName _className) do {
 
 if !(isClass (configFile >> "CfgVehicles" >> _className)) exitWith {false};
 
-getNumber(configFile >> "CfgVehicles" >> _className >> "transportSoldier") >= 8; // 8 Is a weapons squad, so anything that can hold a whole squad can be considered a transport.
+// 8 Is a weapons squad, so anything that can hold a whole squad can be considered a transport.
+// Unless it is a non-wheeled vehicle, then 6 allows for hueys and smaller helicopters to be considered transports.
+if (_className isKindOf "Car") exitWith {
+    getNumber(configFile >> "CfgVehicles" >> _className >> "transportSoldier") >= 8;
+};
+getNumber(configFile >> "CfgVehicles" >> _className >> "transportSoldier") >= 6;

@@ -20,48 +20,56 @@ if (TRGM_Var_iTimeMultiplier isEqualTo 50) then {
 };
 publicVariable "TRGM_VAR_iTimeMultiplier";
 
+if (isNil "TRGM_VAR_FactionVersion") then { TRGM_VAR_FactionVersion = 3;  publicVariable "TRGM_VAR_FactionVersion"; };
+if (isNil "TRGM_VAR_LocationVersion") then { TRGM_VAR_LocationVersion = 2;  publicVariable "TRGM_VAR_LocationVersion"; };
+
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
-if (isNil "TRGM_VAR_UnfilteredAllFactionData" || {isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap"}}) then {
+if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil "TRGM_VAR_AvailableFactions"}}) then {
     format["Get all faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
     private _WestFactionData =  [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
     private _EastFactionData =  [EAST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
     private _GuerFactionData =  [INDEPENDENT] call TRGM_GLOBAL_fnc_getFactionDataBySide;
-    private _AllFactionData = _WestFactionData + _EastFactionData + _GuerFactionData;
-    private _SavedAllFactionData = profileNamespace getVariable ["TRGM_VAR_UnfilteredAllFactionData", []];
+    TRGM_VAR_AvailableFactions = _WestFactionData + _EastFactionData + _GuerFactionData;
+    TRGM_VAR_AvailableFactions = [TRGM_VAR_AvailableFactions, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
+    private _FactionVersion = profileNamespace getVariable ["TRGM_VAR_FactionVersion", 0];
 
-    if (_AllFactionData isEqualTo _SavedAllFactionData) then {
-        format["Get saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-        TRGM_VAR_UnfilteredAllFactionData = _SavedAllFactionData;
-        TRGM_VAR_AllFactionData = profileNamespace getVariable "TRGM_VAR_AllFactionData";
-        TRGM_VAR_AllFactionMap = profileNamespace getVariable "TRGM_VAR_AllFactionMap";
-    };
+    TRGM_VAR_AllFactions = profileNamespace getVariable ["TRGM_VAR_AllFactions", []];
+    TRGM_VAR_AllFactionData = profileNamespace getVariable ["TRGM_VAR_AllFactionData", []];
+    TRGM_VAR_AllFactionMap = profileNamespace getVariable ["TRGM_VAR_AllFactionMap", createHashMap];
 
     TRGM_VAR_bRecalculateFactionData = [false, true] select ((["RecalculateFactionData", 0] call BIS_fnc_getParamValue) isEqualTo 1);
-    if (TRGM_VAR_bRecalculateFactionData || {isNil "TRGM_VAR_UnfilteredAllFactionData" || {isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap"}}}) then {
-        format["Overwrite saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-        TRGM_VAR_UnfilteredAllFactionData = _AllFactionData;
+    TRGM_VAR_bRecalculateFactionData = [TRGM_VAR_bRecalculateFactionData, true] select !(TRGM_VAR_FactionVersion isEqualTo _FactionVersion);
+
+    if (TRGM_VAR_bRecalculateFactionData || 1 isEqualTo 1) then {
+        TRGM_VAR_AllFactions = [];
         TRGM_VAR_AllFactionData = [];
         TRGM_VAR_AllFactionMap = createHashMap;
+    };
+
+    if (TRGM_VAR_bRecalculateFactionData || {count TRGM_VAR_AllFactions isEqualTo 0 || {{!(_x in TRGM_VAR_AllFactions)} count TRGM_VAR_AvailableFactions > 0}}) then {
+        format["Update saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
         {
-            // This is so inefficient, if we're collecting faction info here we should probably just make this a hashMap...
-            _x params ["_className", "_displayName"];
-            private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
-            private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
+            if !(_x in TRGM_VAR_AllFactions) then {
+                _x params ["_className", "_displayName"];
+                private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
+                private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
 
-            private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
-            _appendedData params ["_unitData", "_vehData"];
+                private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
+                _appendedData params ["_unitData", "_vehData"];
 
-            private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
-            private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
+                private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
+                private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
 
-            if ({count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0) then {
-                TRGM_VAR_AllFactionData pushBackUnique _x;
-                TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
+                if ({count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0) then {
+                    TRGM_VAR_AllFactionData pushBackUnique _x;
+                    TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
+                };
             };
-        } forEach TRGM_VAR_UnfilteredAllFactionData;
+        } forEach TRGM_VAR_AvailableFactions;
         TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
-
-        profileNamespace setVariable ["TRGM_VAR_UnfilteredAllFactionData", TRGM_VAR_UnfilteredAllFactionData];
+        TRGM_VAR_AllFactions = TRGM_VAR_AllFactionData apply { _x select 0 };
+        profileNamespace setVariable ["TRGM_VAR_FactionVersion", TRGM_VAR_FactionVersion];
+        profileNamespace setVariable ["TRGM_VAR_AllFactions", TRGM_VAR_AllFactions];
         profileNamespace setVariable ["TRGM_VAR_AllFactionData", TRGM_VAR_AllFactionData];
         profileNamespace setVariable ["TRGM_VAR_AllFactionMap", TRGM_VAR_AllFactionMap];
         saveProfileNamespace;
@@ -69,7 +77,8 @@ if (isNil "TRGM_VAR_UnfilteredAllFactionData" || {isNil "TRGM_VAR_AllFactionData
         format["Using saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
     };
 
-    publicVariable "TRGM_VAR_UnfilteredAllFactionData";
+    publicVariable "TRGM_VAR_AvailableFactions";
+    publicVariable "TRGM_VAR_AllFactions";
     publicVariable "TRGM_VAR_AllFactionData";
     publicVariable "TRGM_VAR_AllFactionMap";
     format["Faction data calculated, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;

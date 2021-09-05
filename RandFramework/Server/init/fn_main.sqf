@@ -213,7 +213,7 @@ TRGM_VAR_transportHelosToGetActions = [chopper1];
     if (isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship"}) then {
         _faction = getText(configFile >> "CfgVehicles" >> typeOf _x >> "faction");
         _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
-        _westFaction = (TRGM_VAR_AllFactionData select _friendlyFactionIndex) select 0;
+        _westFaction = (TRGM_VAR_AvailableFactions select _friendlyFactionIndex) select 0;
         if (getNumber(configFile >> "CfgFactionClasses" >> _faction >> "side") isEqualTo 1 && {_faction != _westFaction}) then {
             _newVehClass = [_x, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
             if (!isNil "_newVehClass") then {

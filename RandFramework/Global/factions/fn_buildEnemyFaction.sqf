@@ -1,7 +1,7 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 private _enemyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENEMY_FACTIONS_IDX;
-(TRGM_VAR_AllFactionData select _enemyFactionIndex) params ["_eastClassName", "_eastDisplayName"];
+(TRGM_VAR_AvailableFactions select _enemyFactionIndex) params ["_eastClassName", "_eastDisplayName"];
 
 private _eastData = TRGM_VAR_AllFactionMap get _eastClassName;
 _eastData params ["_eastUnitArray", "_eastVehArray"];
@@ -66,7 +66,7 @@ EnemyBaseChoppers           = { _veh = ["O_Heli_Light_02_unarmed_F"]; if (count 
 
 
 private _guerFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MILITIA_FACTIONS_IDX;
-(TRGM_VAR_AllFactionData select _guerFactionIndex) params ["_guerClassName", "_guerDisplayName"];
+(TRGM_VAR_AvailableFactions select _guerFactionIndex) params ["_guerClassName", "_guerDisplayName"];
 
 private _guerData = TRGM_VAR_AllFactionMap get _guerClassName;
 _guerData params ["_guerUnitArray", "_guerVehArray"];

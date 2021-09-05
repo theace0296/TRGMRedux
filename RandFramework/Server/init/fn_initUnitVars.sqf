@@ -6,7 +6,7 @@ TRGM_VAR_DefaultMilitiaFactionValue  = [1]; publicVariable "TRGM_VAR_DefaultMili
 TRGM_VAR_DefaultFriendlyFactionValue = [1]; publicVariable "TRGM_VAR_DefaultFriendlyFactionValue"; //default to NATO
 
 /////// Set up faction arrays ///////
-// TRGM_VAR_AllFactionData --- Initialized in initGlobalVars
+// TRGM_VAR_AvailableFactions --- Initialized in initGlobalVars
 
 TRGM_VAR_DefaultEnemyFactionArray        = []; publicVariable "TRGM_VAR_DefaultEnemyFactionArray";
 TRGM_VAR_DefaultEnemyFactionArrayText    = []; publicVariable "TRGM_VAR_DefaultEnemyFactionArrayText";
@@ -15,8 +15,8 @@ TRGM_VAR_DefaultMilitiaFactionArrayText  = []; publicVariable "TRGM_VAR_DefaultM
 TRGM_VAR_DefaultFriendlyFactionArray     = []; publicVariable "TRGM_VAR_DefaultFriendlyFactionArray";
 TRGM_VAR_DefaultFriendlyFactionArrayText = []; publicVariable "TRGM_VAR_DefaultFriendlyFactionArrayText";
 
-for "_i" from 0 to (count TRGM_VAR_AllFactionData - 1) do {
-    (TRGM_VAR_AllFactionData select _i) params ["_className", "_displayName"];
+for "_i" from 0 to (count TRGM_VAR_AvailableFactions - 1) do {
+    (TRGM_VAR_AvailableFactions select _i) params ["_className", "_displayName"];
     TRGM_VAR_DefaultFriendlyFactionArrayText pushBack _displayName;
     TRGM_VAR_DefaultFriendlyFactionArray pushBack _i;
     if (_className isEqualTo "BLU_F") then {
@@ -24,8 +24,8 @@ for "_i" from 0 to (count TRGM_VAR_AllFactionData - 1) do {
     };
 };
 
-for "_i" from 0 to (count TRGM_VAR_AllFactionData - 1) do {
-    (TRGM_VAR_AllFactionData select _i) params ["_className", "_displayName"];
+for "_i" from 0 to (count TRGM_VAR_AvailableFactions - 1) do {
+    (TRGM_VAR_AvailableFactions select _i) params ["_className", "_displayName"];
     TRGM_VAR_DefaultEnemyFactionArrayText pushBack _displayName;
     TRGM_VAR_DefaultEnemyFactionArray pushBack _i;
     if (_className isEqualTo "OPF_F") then {
@@ -33,8 +33,8 @@ for "_i" from 0 to (count TRGM_VAR_AllFactionData - 1) do {
     };
 };
 
-for "_i" from 0 to (count TRGM_VAR_AllFactionData - 1) do {
-    (TRGM_VAR_AllFactionData select _i) params ["_className", "_displayName"];
+for "_i" from 0 to (count TRGM_VAR_AvailableFactions - 1) do {
+    (TRGM_VAR_AvailableFactions select _i) params ["_className", "_displayName"];
     TRGM_VAR_DefaultMilitiaFactionArrayText pushBack _displayName;
     TRGM_VAR_DefaultMilitiaFactionArray pushBack _i;
     if (_className isEqualTo "IND_G_F") then {
