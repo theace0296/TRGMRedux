@@ -50,20 +50,28 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
         format["Update saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
         {
             if !(_x in TRGM_VAR_AllFactions) then {
-                _x params ["_className", "_displayName"];
-                private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
-                private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
+                try
+                {
+                    _x params ["_className", "_displayName"];
+                    private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
+                    private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
 
-                private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
-                _appendedData params ["_unitData", "_vehData"];
+                    private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
+                    _appendedData params ["_unitData", "_vehData"];
 
-                private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
-                private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
+                    private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
+                    private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
 
-                if ({count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0) then {
-                    TRGM_VAR_AllFactionData pushBackUnique _x;
-                    TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
-                };
+                    if (!(isNil "_unitArray") && !(isNil "_vehArray") && {{count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0}) then {
+                        TRGM_VAR_AllFactionData pushBackUnique _x;
+                        TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
+                    };
+                }
+                catch
+                {
+                    ["Exception caught while updating faction data:"] call TRGM_GLOBAL_fnc_log;
+                    format["%1", _exception] call TRGM_GLOBAL_fnc_log;
+                }
             };
         } forEach TRGM_VAR_AvailableFactions;
         TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
