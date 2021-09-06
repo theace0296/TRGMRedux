@@ -211,10 +211,8 @@ class TRGM_GUI {
         class initNotifications {};
         class missionTypeSelection {};
         class openDialogAdvancedMissionSettings {};
-        class openDialogEnemyFaction {};
         class openDialogMissionSelection {};
         class openDialogRequests {};
-        class openDialogTeamLoadouts {};
         class openVehicleCustomizationDialog {};
         class setParamsAndBegin {};
         class timeSliderOnChange {};

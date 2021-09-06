@@ -473,7 +473,6 @@ class TRGM_VAR_DialogSetupParams
 };
 
 
-
 class TRGM_VAR_DialogSetupParamsAdvanced
     {
     idd = 6000;
@@ -582,6 +581,7 @@ class TRGM_VAR_DialogRequests
 
     };
 };
+
 
 class TRGM_VAR_DialogRequests_VehicleCustomization
 {
@@ -880,66 +880,6 @@ class TRGM_VAR_DialogRequests_VehicleCustomization
             colorText[] = {1,1,1,0.15};
             shadow = 0;
         };
-    };
-};
-
-
-
-class TRGM_VAR_DialogSetupEnemyFaction
-    {
-    idd = 7000;
-    movingEnabled = false;
-
-    class controls {
-
-        ////////////////////////////////////////////////////////
-        // GUI EDITOR OUTPUT START (by treendy, v1.063, #Nazety)
-        ////////////////////////////////////////////////////////
-
-        class RscPicture_7901: RscPicture
-        {
-            idc = 7901;
-            text = "RandFramework\Media\table1.paa";
-            x = 0.226718 * safezoneW + safezoneX;
-            y = 0.0446 * safezoneH + safezoneY;
-            w = 0.531094 * safezoneW;
-            h = 0.935 * safezoneH;
-        };
-
-        //class RscText_6933: RscText
-        //{
-        //    idc = 6933;
-        //    text = "Advanced Options"; //--- ToDo: Localize;
-        //    x = 0.298 * safezoneW + safezoneX;
-        //    y = 0.236 * safezoneH + safezoneY;
-        //    w = 0.175341 * safezoneW;
-        //    h = 0.0659856 * safezoneH;
-        //    colorText[] = {0,1,0,1};
-        //};
-
-
-        class btnAdvanced: RscButton
-        {
-            idc = 7903;
-            text = $STR_TRGM2_defines_Cancel; //--- ToDo: Localize;
-            x = 0.608281 * safezoneW + safezoneX;
-            y = 0.7442 * safezoneH + safezoneY;
-            w = 0.0773437 * safezoneW;
-            h = 0.022 * safezoneH;
-            colorBackground[] = {1,0,0,1};
-            colorActive[] = {1,0,0,1};
-            action = "[] spawn TRGM_GUI_fnc_openDialogAdvancedMissionSettings; false";
-        };
-
-
-
-
-        ////////////////////////////////////////////////////////
-        // GUI EDITOR OUTPUT END
-        ////////////////////////////////////////////////////////
-
-
-
     };
 };
 
