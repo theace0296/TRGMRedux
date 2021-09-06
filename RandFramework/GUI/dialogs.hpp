@@ -15,8 +15,89 @@
 #define ONETHIRDSLIDERTIMEW SLIDERTIMEW / 3
 #define TWOTHIRDSLIDERTIMEW ONETHIRDSLIDERTIMEW * 2
 
-class TRGM_VAR_DialogSetupParams
+class TRGM_VAR_DialogSetupObjective
+{
+    idd = 5900;
+    movingEnabled = false;
+    class controls
     {
+        ////////////////////////////////////////////////////////
+        // GUI EDITOR OUTPUT START (by TheAce0296, v1.063, #Hucesa)
+        ////////////////////////////////////////////////////////
+
+        class RscFrame_1800: RscFrame
+        {
+            idc = 5901;
+            x = 6 * UI_GRID_W + UI_GRID_X;
+            y = 4.5 * UI_GRID_H + UI_GRID_Y;
+            w = 27.5 * UI_GRID_W;
+            h = 17 * UI_GRID_H;
+        };
+        class RscButtonMenuOK_2600: RscButtonMenuOK
+        {
+            idc = 5903;
+            x = 15.5 * UI_GRID_W + UI_GRID_X;
+            y = 19.5 * UI_GRID_H + UI_GRID_Y;
+            w = 8.5 * UI_GRID_W;
+            h = 1.5 * UI_GRID_H;
+        };
+        class RscButtonMenuCancel_2700: RscButtonMenuCancel
+        {
+            idc = 5905;
+            x = 24.5 * UI_GRID_W + UI_GRID_X;
+            y = 19.5 * UI_GRID_H + UI_GRID_Y;
+            w = 8.5 * UI_GRID_W;
+            h = 1.5 * UI_GRID_H;
+        };
+        class RscListbox_1500: RscListbox
+        {
+            idc = 5907;
+            x = 6.5 * UI_GRID_W + UI_GRID_X;
+            y = 5 * UI_GRID_H + UI_GRID_Y;
+            w = 26.5 * UI_GRID_W;
+            h = 9.5 * UI_GRID_H;
+        };
+        class RscTextCheckbox_2500: RscTextCheckbox
+        {
+            idc = 5909;
+            text = "Is Heavy Objective?"; //--- ToDo: Localize;
+            x = 6.5 * UI_GRID_W + UI_GRID_X;
+            y = 15 * UI_GRID_H + UI_GRID_Y;
+            w = 8.5 * UI_GRID_W;
+            h = 2 * UI_GRID_H;
+            tooltip = "Set the objective as heavy."; //--- ToDo: Localize;
+            colorText[] = {0.85,0.4,0,1};
+        };
+        class RscTextCheckbox_2501: RscTextCheckbox
+        {
+            idc = 5911;
+            text = "Is Hidden Objective?"; //--- ToDo: Localize;
+            x = 15.5 * UI_GRID_W + UI_GRID_X;
+            y = 15 * UI_GRID_H + UI_GRID_Y;
+            w = 8.5 * UI_GRID_W;
+            h = 2 * UI_GRID_H;
+            tooltip = "Set the objective as hidden."; //--- ToDo: Localize;
+            colorText[] = {0.85,0.4,0,1};
+        };
+        class RscCombo_2100: RscCombo
+        {
+            idc = 5913;
+            text = "Is same AO as?"; //--- ToDo: Localize;
+            x = 24.5 * UI_GRID_W + UI_GRID_X;
+            y = 15 * UI_GRID_H + UI_GRID_Y;
+            w = 8.5 * UI_GRID_W;
+            h = 2 * UI_GRID_H;
+            tooltip = "Set the objective to be in the same AO as another objective."; //--- ToDo: Localize;
+            colorText[] = {0.85,0.4,0,1};
+        };
+        ////////////////////////////////////////////////////////
+        // GUI EDITOR OUTPUT END
+        ////////////////////////////////////////////////////////
+    };
+};
+
+class TRGM_VAR_DialogSetupParams
+{
     idd = 5000;
     movingEnabled = false;
 
