@@ -129,6 +129,8 @@ if (count TRGM_VAR_AdvControls < 14) then {
 // 10 = Heavy full map hidden mission
 // 11 = Three heavy missions
 // 12 = Three hidden heavy missions, full map
+// 13 = Six missions, full map
+// 14 = Six missions, hidden, full map
 // 5  = Campaign
 
 /////// IsCampaign ///////
@@ -274,6 +276,8 @@ localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions5b", //Three Hi
 localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions7",  //Heavy mission (Hidden, full map)
 localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions11", //Three Heavy Missions
 localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions12", //Three Heavy Missions (Hidden, full map)
+localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions13", //Six missions, full map
+localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions14", //Six missions, hidden, full map
 localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions6"   //Campaign
 ];
 publicVariable "TRGM_VAR_MissionTypeDescriptions";
@@ -289,6 +293,8 @@ publicVariable "TRGM_VAR_MissionTypeDescriptions";
 // 10 = Heavy full map hidden mission
 // 11 = Three heavy missions
 // 12 = Three hidden heavy missions, full map
+// 13 = Six missions, full map
+// 14 = Six missions, hidden, full map
 // 5  = Campaign
 
 TRGM_VAR_MissionParamTypes = [
@@ -304,10 +310,12 @@ TRGM_VAR_MissionParamTypes = [
     localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeName7",
     localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeName11",
     localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeName12",
+    localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeName13",
+    localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeName14",
     localize "STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeName6"
 ];
 publicVariable "TRGM_VAR_MissionParamTypes";
-TRGM_VAR_MissionParamTypesValues = [0,6,8,1,2,3,9,4,7,10,11,12,5]; publicVariable "TRGM_VAR_MissionParamTypesValues";
+TRGM_VAR_MissionParamTypesValues = [0,6,8,1,2,3,9,4,7,10,11,12,13,14,5]; publicVariable "TRGM_VAR_MissionParamTypesValues";
 
 
 

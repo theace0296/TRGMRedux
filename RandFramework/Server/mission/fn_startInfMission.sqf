@@ -238,6 +238,34 @@ switch (TRGM_VAR_iMissionParamType) do {
         _bSideMissionsCivOnly = [false,false,false];
         TRGM_VAR_MaxBadPoints = 1;
     };
+    case 13: {
+        TRGM_VAR_IsFullMap =  true; publicVariable "TRGM_VAR_IsFullMap";
+        if (TRGM_VAR_iMissionParamObjective > 0) then {
+            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2,selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse2,selectRandom _SideMissionTasksToUse1];
+        } else {
+            _ThisTaskTypes = [selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2,selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse2,selectRandom _SideMissionTasksToUse1];
+        };
+        _IsMainObjs = [true,false,false,true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
+        _MarkerTypes = ["hd_dot","hd_dot","hd_dot","hd_dot","hd_dot","hd_dot"];
+        _CreateTasks = [true,true,true,true,true,true];
+        _SamePrevAOStats = [false,false,false,false,false,false];
+        _bSideMissionsCivOnly = [false,false,false,false,false,false];
+        TRGM_VAR_MaxBadPoints = 1;
+    };
+    case 14: {
+        TRGM_VAR_IsFullMap =  true; publicVariable "TRGM_VAR_IsFullMap";
+        if (TRGM_VAR_iMissionParamObjective > 0) then {
+            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2,selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse2,selectRandom _SideMissionTasksToUse1];
+        } else {
+            _ThisTaskTypes = [selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2,selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse2,selectRandom _SideMissionTasksToUse1];
+        };
+        _IsMainObjs = [true,false,false,true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
+        _MarkerTypes = ["empty","empty","empty","empty","empty","empty"];
+        _CreateTasks = [false,false,false,false,false,false];
+        _SamePrevAOStats = [false,false,false,false,false,false];
+        _bSideMissionsCivOnly = [false,false,false,false,false,false];
+        TRGM_VAR_MaxBadPoints = 1;
+    };
     default { };
 };
 

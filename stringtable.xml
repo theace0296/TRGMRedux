@@ -3681,6 +3681,22 @@
                 <Original>Three Hidden Heavy Missions (Full map, gather intel)</Original>
                 <English>Three Hidden Heavy Missions (Full map, gather intel)</English>
             </Key>
+            <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeName13">
+                <Original>Six Missions (Full map, gather intel)</Original>
+                <English>Six Missions (Full map, gather intel)</English>
+            </Key>
+            <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions13">
+                <Original>There will be six main objectives.</Original>
+                <English>There will be six main objectives.</English>
+            </Key>
+            <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeName14">
+                <Original>Six Hidden Missions (Full map, gather intel)</Original>
+                <English>Six Hidden Missions (Full map, gather intel)</English>
+            </Key>
+            <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions14">
+                <Original>Six missions, locations are unknown, and tasks are unknown, need to gain intel from locals, recon area, do what ever you can to locate and identity your objectives!</Original>
+                <English>Six missions, locations are unknown, and tasks are unknown, need to gain intel from locals, recon area, do what ever you can to locate and identity your objectives!</English>
+            </Key>
 
             <Key ID="STR_TRGM2_TargetMissionTitle">
                 <Original>Search and Destroy</Original>

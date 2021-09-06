@@ -53,7 +53,7 @@ _ctrl ctrlSetText format["%1",TRGM_VAR_MissionTypeDescriptions select _selectedI
 if (isNil "TRGM_VAR_AllowMissionTypeCampaign") then { TRGM_VAR_AllowMissionTypeCampaign =   false; publicVariable "TRGM_VAR_AllowMissionTypeCampaign"; };
 _selectedTypeID = TRGM_VAR_MissionParamTypesValues select _selectedIndex;
 
-if (_selectedTypeID isEqualTo 5) then {
+if (_selectedTypeID isEqualTo 5 || _selectedTypeID isEqualTo 13 || _selectedTypeID isEqualTo 14) then {
     if (!TRGM_VAR_AllowMissionTypeCampaign) then {
         _ctrlTypes = (findDisplay 5000) displayCtrl 5104;
         _ctrlTypes ctrlEnable false;

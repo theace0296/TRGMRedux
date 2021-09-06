@@ -502,10 +502,10 @@ class TRGM_VAR_DialogSetupParams
             idc = 5201;
 
             text = "RandFramework\Media\TRGMReduxLogo.paa";
-            x = 19.59 * UI_GRID_W + UI_GRID_X;
-            y = 3.49 * UI_GRID_H + UI_GRID_Y;
-            w = 6.60267 * UI_GRID_W;
-            h = 6.04999 * UI_GRID_H;
+            x = 17.93768 * UI_GRID_W + UI_GRID_X;
+            y = 3.973425 * UI_GRID_H + UI_GRID_Y;
+            w = 3.918432 * UI_GRID_W;
+            h = 4.4008 * UI_GRID_H;
         };
         class RscText_1013: RscText
         {
