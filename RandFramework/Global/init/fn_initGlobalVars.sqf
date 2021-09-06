@@ -53,6 +53,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
                 try
                 {
                     _x params ["_className", "_displayName"];
+                    format["Faction data for %1 (%2) not found, recalculating!", _className, _displayName] call TRGM_GLOBAL_fnc_log;
                     private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
                     private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
 
