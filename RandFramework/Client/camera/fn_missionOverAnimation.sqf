@@ -1,6 +1,6 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 sleep 60;
-waituntil {sleep 2; TRGM_VAR_CoreCompleted};
+waituntil {sleep 30; TRGM_VAR_AllInitScriptsFinished};
 _bEnd = false;
 while {!_bEnd} do {
     _bMissionEndedAndPlayersOutOfAO = false;

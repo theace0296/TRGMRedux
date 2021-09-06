@@ -179,7 +179,7 @@ private _airSupClassName = selectRandom (call FriendlyChopper);
 if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != typeOf chopper2}}) then {
     {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
     private _safePos = ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos) findEmptyPosition [0, 20, _airSupClassName];
-    chopper2 = createVehicle [_airTransClassName, _safePos vectorAdd [0, 0, .1], [], 0, "NONE"];
+    chopper2 = createVehicle [_airSupClassName, _safePos vectorAdd [0, 0, .1], [], 0, "NONE"];
     [TRGM_VAR_FriendlySide, chopper2, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
     [driver chopper2] joinSilent createGroup TRGM_VAR_FriendlySide;
     private _chopper2CrewMinusDriver = (crew vehicle chopper2 - [driver chopper2]);
