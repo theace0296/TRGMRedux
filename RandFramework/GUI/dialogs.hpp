@@ -25,6 +25,16 @@ class TRGM_VAR_DialogSetupParams
         // GUI EDITOR OUTPUT START (by TheAce0296, v1.063, #Fiholy)
         ////////////////////////////////////////////////////////
 
+        class RscPicture_7005: RscPicture
+        {
+            idc = 7005;
+            text = "RandFramework\Media\table1.paa";
+            x = 9.06872 * UI_GRID_W + UI_GRID_X;
+            y = 1.115 * UI_GRID_H + UI_GRID_Y;
+            w = 21.24376 * UI_GRID_W;
+            h = 23.375 * UI_GRID_H;
+        };
+
         class RscListbox_1500: RscListBox
         {
             idc = 5500;
@@ -410,7 +420,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5201;
 
-            text = "RandFramework\Media\TRGM7.paa";
+            text = "RandFramework\Media\TRGMReduxLogo.paa";
             x = 19.59 * UI_GRID_W + UI_GRID_X;
             y = 3.49 * UI_GRID_H + UI_GRID_Y;
             w = 6.60267 * UI_GRID_W;
