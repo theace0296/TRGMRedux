@@ -1,4 +1,11 @@
 "OnPlayerKilled.sqf" call TRGM_GLOBAL_fnc_log;
+
+if (isNil "TRGM_VAR_serverFinishedInitGlobal")  then {TRGM_VAR_serverFinishedInitGlobal = false; publicVariable "TRGM_VAR_serverFinishedInitGlobal";};
+if (!TRGM_VAR_serverFinishedInitGlobal) exitWith {};
+
+if (isNil "TRGM_VAR_AllInitScriptsFinished") then {TRGM_VAR_AllInitScriptsFinished = false; publicVariable "TRGM_VAR_AllInitScriptsFinished";};
+if (!TRGM_VAR_AllInitScriptsFinished) exitWith {};
+
 params ["", "_killer"];
 TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "Player Killed";
 TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["KILLED: %1", name player];

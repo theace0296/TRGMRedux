@@ -3,6 +3,18 @@ TRGM_VAR_bDebugMode = [false, true] select ((["DebugMode", 0] call BIS_fnc_getPa
 publicVariable "TRGM_VAR_bDebugMode";
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (isNil "TRGM_VAR_serverFinishedInitGlobal")  then {TRGM_VAR_serverFinishedInitGlobal = false; publicVariable "TRGM_VAR_serverFinishedInitGlobal";};
+if (isNil "TRGM_VAR_clientsFinishedInitGlobal") then {TRGM_VAR_clientsFinishedInitGlobal = []; publicVariable "TRGM_VAR_clientsFinishedInitGlobal";};
+
+if (isServer) then {
+    if (TRGM_VAR_serverFinishedInitGlobal) exitWith {};
+    TRGM_VAR_serverFinishedInitGlobal = false; publicVariable "TRGM_VAR_serverFinishedInitGlobal";
+    TRGM_VAR_clientsFinishedInitGlobal = []; publicVariable "TRGM_VAR_clientsFinishedInitGlobal";
+} else {
+    waitUntil {TRGM_VAR_serverFinishedInitGlobal;};
+    if (clientOwner in TRGM_VAR_clientsFinishedInitGlobal) exitWith {};
+};
+
 if (isNil "TRGM_VAR_debugMessages") then {TRGM_VAR_debugMessages = ""; publicVariable "TRGM_VAR_debugMessages";};
 
 if (isNil "TRGM_VAR_NeededObjectsAvailable") then { TRGM_VAR_NeededObjectsAvailable = false; publicVariable "TRGM_VAR_NeededObjectsAvailable"; };
@@ -20,7 +32,7 @@ if (TRGM_Var_iTimeMultiplier isEqualTo 50) then {
 };
 publicVariable "TRGM_VAR_iTimeMultiplier";
 
-if (isNil "TRGM_VAR_FactionVersion") then { TRGM_VAR_FactionVersion = 3;  publicVariable "TRGM_VAR_FactionVersion"; };
+if (isNil "TRGM_VAR_FactionVersion") then { TRGM_VAR_FactionVersion = 4;  publicVariable "TRGM_VAR_FactionVersion"; };
 if (isNil "TRGM_VAR_LocationVersion") then { TRGM_VAR_LocationVersion = 2;  publicVariable "TRGM_VAR_LocationVersion"; };
 
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
@@ -46,37 +58,56 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
         TRGM_VAR_AllFactionMap = createHashMap;
     };
 
+    publicVariable "TRGM_VAR_AvailableFactions";
+    publicVariable "TRGM_VAR_AllFactions";
+    publicVariable "TRGM_VAR_AllFactionData";
+    publicVariable "TRGM_VAR_AllFactionMap";
+
     if (TRGM_VAR_bRecalculateFactionData || {count TRGM_VAR_AllFactions isEqualTo 0 || {{!(_x in TRGM_VAR_AllFactions)} count TRGM_VAR_AvailableFactions > 0}}) then {
         format["Update saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+        private _factionDataHandles = [];
         {
-            if !(_x in TRGM_VAR_AllFactions) then {
-                try
-                {
-                    _x params ["_className", "_displayName"];
-                    format["Faction data for %1 (%2) not found, recalculating!", _className, _displayName] call TRGM_GLOBAL_fnc_log;
-                    private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
-                    private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
+            if !((_x select 0) in TRGM_VAR_AllFactions) then {
+                private _handle = [_x select 0, _x select 1] spawn {
+                    try
+                    {
+                        params ["_className", "_displayName"];
+                        format["Faction data for %1 (%2) not found, recalculating!", _className, _displayName] call TRGM_GLOBAL_fnc_log;
+                        private _baseUnitData = [_className, _displayName] call TRGM_GLOBAL_fnc_getUnitDataByFaction;
+                        private _baseVehData = [_className, _displayName] call TRGM_GLOBAL_fnc_getVehicleDataByFaction;
 
-                    private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
-                    _appendedData params ["_unitData", "_vehData"];
+                        private _appendedData = [_baseUnitData, _baseVehData, _className, _displayName] call TRGM_GLOBAL_fnc_appendAdditonalFactionData;
+                        _appendedData params ["_unitData", "_vehData"];
 
-                    private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
-                    private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
+                        private _unitArray = [_unitData] call TRGM_GLOBAL_fnc_getUnitArraysFromUnitData;
+                        private _vehArray = [_vehData] call TRGM_GLOBAL_fnc_getVehicleArraysFromVehData;
 
-                    if (!(isNil "_unitArray") && !(isNil "_vehArray") && {{count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0}) then {
-                        TRGM_VAR_AllFactionData pushBackUnique _x;
-                        TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
-                    };
-                }
-                catch
-                {
-                    ["Exception caught while updating faction data:"] call TRGM_GLOBAL_fnc_log;
-                    format["%1", _exception] call TRGM_GLOBAL_fnc_log;
-                }
+                        if (!(isNil "_unitArray") && !(isNil "_vehArray") && {{count _x > 0} count _unitArray > 0 && {count _x > 0} count _vehArray > 0}) then {
+                            TRGM_VAR_AllFactionData pushBackUnique [_className, _displayName];
+                            TRGM_VAR_AllFactionMap set [_className, [_unitArray, _vehArray]];
+                            publicVariable "TRGM_VAR_AllFactionData";
+                            publicVariable "TRGM_VAR_AllFactionMap";
+                        } else {
+                            if !((TRGM_VAR_AvailableFactions find [_className, _displayName]) isEqualTo -1) then {
+                                TRGM_VAR_AvailableFactions deleteAt (TRGM_VAR_AvailableFactions find [_className, _displayName]);
+                                publicVariable "TRGM_VAR_AvailableFactions";
+                            };
+                        };
+                    }
+                    catch
+                    {
+                        ["Exception caught while updating faction data:"] call TRGM_GLOBAL_fnc_log;
+                        format["%1", _exception] call TRGM_GLOBAL_fnc_log;
+                    }
+                };
+                _factionDataHandles = _factionDataHandles + [_handle];
             };
         } forEach TRGM_VAR_AvailableFactions;
+
+        waitUntil { { scriptDone _x; } count _factionDataHandles isEqualTo count _factionDataHandles; };
+
         TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
-        TRGM_VAR_AllFactions = TRGM_VAR_AllFactionData apply { _x select 0 };
+        TRGM_VAR_AllFactions = (_WestFactionData + _EastFactionData + _GuerFactionData) apply { _x select 0 };
         profileNamespace setVariable ["TRGM_VAR_FactionVersion", TRGM_VAR_FactionVersion];
         profileNamespace setVariable ["TRGM_VAR_AllFactions", TRGM_VAR_AllFactions];
         profileNamespace setVariable ["TRGM_VAR_AllFactionData", TRGM_VAR_AllFactionData];
@@ -86,6 +117,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
         format["Using saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
     };
 
+    TRGM_VAR_AvailableFactions = [TRGM_VAR_AvailableFactions, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
     publicVariable "TRGM_VAR_AvailableFactions";
     publicVariable "TRGM_VAR_AllFactions";
     publicVariable "TRGM_VAR_AllFactionData";
@@ -260,4 +292,11 @@ if (isNil "TRGM_VAR_iMissionParamType")                       then {TRGM_VAR_iMi
 if (isNil "TRGM_VAR_iStartLocation")                          then {TRGM_VAR_iStartLocation = 2;                                      publicVariable "TRGM_VAR_iStartLocation";};
 if (isNil "TRGM_VAR_iUseRevive")                              then {TRGM_VAR_iUseRevive = 0;                                          publicVariable "TRGM_VAR_iUseRevive";};
 if (isNil "TRGM_VAR_iWeather")                                then {TRGM_VAR_iWeather = 1;                                            publicVariable "TRGM_VAR_iWeather";};
+
+if (isServer) then {
+    TRGM_VAR_serverFinishedInitGlobal = true; publicVariable "TRGM_VAR_serverFinishedInitGlobal";
+} else {
+    TRGM_VAR_clientsFinishedInitGlobal = TRGM_VAR_clientsFinishedInitGlobal + [clientOwner]; publicVariable "TRGM_VAR_clientsFinishedInitGlobal";
+};
+
 true;

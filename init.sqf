@@ -2,6 +2,9 @@
 
 call TRGM_GLOBAL_fnc_initGlobalVars;
 
+if (isNil "TRGM_VAR_serverFinishedInitGlobal")  then {TRGM_VAR_serverFinishedInitGlobal = false; publicVariable "TRGM_VAR_serverFinishedInitGlobal";};
+waitUntil {TRGM_VAR_serverFinishedInitGlobal;};
+
 if (isServer) then {
    [] spawn {
       while {isNil "TRGM_VAR_AdminPlayer" || isNull TRGM_VAR_AdminPlayer} do {
