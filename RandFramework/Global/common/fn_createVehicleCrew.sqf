@@ -1,6 +1,6 @@
 params [["_side", WEST, [WEST]], ["_vehicle", objNull, [objNull]], ["_disableDynamicShowHide", false, [false]]];
 
-if (isNull _vehicle) exitWith {};
+if (isNull _vehicle) exitWith {[]};
 
 private _vehicleType = typeof _vehicle;
 private _vehicleConfig = configFile >> "CfgVehicles" >> _vehicleType;
@@ -39,17 +39,21 @@ if (_hasDriver && {isNull driver _vehicle}) then {
 private _hasCommander = (getNumber (_vehicleConfig >> "hasCommander")) isEqualTo 1;
 if (_hasCommander && {isNull driver _vehicle}) then {
     private _commander = [_group, _crewType, getPos _vehicle, [], 0, "NONE", _disableDynamicShowHide] call TRGM_GLOBAL_fnc_createUnit;
-    _crew = _crew + [_commander];
-    _commander assignAsCommander _vehicle;
-    _commander moveInCommander _vehicle;
+    if (!(isNil "_commander") && {!(isNull _commander)}) then {
+        _crew = _crew + [_commander];
+        _commander assignAsCommander _vehicle;
+        _commander moveInCommander _vehicle;
+    };
 };
 
 private _hasGunner = (getNumber (_vehicleConfig >> "hasGunner")) isEqualTo 1;
 if (_hasGunner && {isNull gunner _vehicle}) then {
     private _gunner = [_group, _crewType, getPos _vehicle, [], 0, "NONE", _disableDynamicShowHide] call TRGM_GLOBAL_fnc_createUnit;
-    _crew = _crew + [_gunner];
-    _gunner assignAsGunner _vehicle;
-    _gunner moveInGunner _vehicle;
+    if (!(isNil "_gunner") && {!(isNull _gunner)}) then {
+        _crew = _crew + [_gunner];
+        _gunner assignAsGunner _vehicle;
+        _gunner moveInGunner _vehicle;
+    };
 };
 
 private _turrets = [_vehicleType, false] call BIS_fnc_allTurrets;
@@ -57,9 +61,11 @@ private _turrets = [_vehicleType, false] call BIS_fnc_allTurrets;
     if (isNull (_vehicle turretUnit _x)) then {
         private _turretUnit = [_group, _crewType, getPos _vehicle, [], 0, "NONE", _disableDynamicShowHide] call TRGM_GLOBAL_fnc_createUnit;
         try {
-            _crew = _crew + [_turretUnit];
-            _turretUnit assignAsTurret [_vehicle, _x];
-            _turretUnit moveInTurret [_vehicle, _x];
+            if (!(isNil "_turretUnit") && {!(isNull _turretUnit)}) then {
+                _crew = _crew + [_turretUnit];
+                _turretUnit assignAsTurret [_vehicle, _x];
+                _turretUnit moveInTurret [_vehicle, _x];
+            };
         } catch {
             if (isNull (_vehicle turretUnit _x)) then {
                 deleteVehicle _turretUnit;

@@ -124,7 +124,7 @@ switch (_side) do {
 //Debug output of the helo + cargo
 if (_debugMode) then {
     player globalChat format ["Group Selection: %1", _ranGrp];
-    player globalChat format ["Helo Array: %1", _Helo];
+    player globalChat format ["Helo Array: %1", _helo];
     player globalChat format ["Cargo Group: %1", _infGrp];
 };
 
@@ -145,21 +145,22 @@ if (_skill < 1) then {_skill = 1;};
 } forEach units _infGrp;
 
 //Assign the crew to a group & assign cargo to the helo
-{[_x] joinSilent _heloCrew;} forEach crew (_helo select 0);
-{_x assignAsCargo (_helo select 0); _x moveInCargo (_helo select 0);} forEach units _infgrp;
+[_heloCrew, _helo, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
+{[_x] joinSilent _heloCrew;} forEach crew _helo;
+{_x assignAsCargo _helo; _x moveInCargo _helo;} forEach units _infgrp;
 _infgrp deleteGroupWhenEmpty true;
 _heloCrew deleteGroupWhenEmpty true;
 
 //Debug output of the total crew count (cargo counts as crew too)
-if (_debugMode) then {player globalChat format ["Helicopter Total Crew Count: %1", count crew (_helo select 0)];};
+if (_debugMode) then {player globalChat format ["Helicopter Total Crew Count: %1", count crew _helo];};
 
 //Enable body deletion if the _bodyDelete parameter is passed as true
 if (_bodyDelete) then {
-    {_x addMPEventhandler ["MPKilled",{[(_this select 0)] spawn TRGM_GLOBAL_fnc_deleteTrash}]} forEach crew (_helo select 0) + [(_helo select 0)];
+    {_x addMPEventhandler ["MPKilled",{[(_this select 0)] spawn TRGM_GLOBAL_fnc_deleteTrash}]} forEach crew _helo + [_helo];
 };
 
 //Find a flat position around the LZ marker & create an HPad there.
-_flatPos = [_LZMrk , 0, 600, 20, 0, 0.3, 0, [],[_LZMrk,_LZMrk], (_helo select 0)] call TRGM_GLOBAL_fnc_findSafePos;
+_flatPos = [_LZMrk , 0, 600, 20, 0, 0.3, 0, [],[_LZMrk,_LZMrk], _helo] call TRGM_GLOBAL_fnc_findSafePos;
 _hPad = createVehicle ["Land_HelipadEmpty_F", _flatPos, [], 0, "NONE"];
 
 //Debug output map markers
@@ -181,12 +182,12 @@ if (_debugMode) then {
     _mrkLZ  setMarkerColor _color;
     _mrkLZ  setMarkerText "LZ Area";
 
-    _mrkHelo = createMarker [format ["%1", random 10000], getPosATL (_helo select 0)];
+    _mrkHelo = createMarker [format ["%1", random 10000], getPosATL _helo];
     _mrkHelo setMarkerShape "ICON";
     _mrkHelo setMarkerType "o_air";
     _mrkHelo setMarkerSize [1,1];
     _mrkHelo setMarkerColor _color;
-    _mrkHelo setMarkerText format ["%1", (_helo select 0)];
+    _mrkHelo setMarkerText format ["%1", _helo];
 
     _mrkInf = createMarker [format ["%1", random 10000], getPosATL leader _infGrp];
     _mrkInf setMarkerShape "ICON";
@@ -194,7 +195,7 @@ if (_debugMode) then {
     _mrkInf setMarkerSize [1,1];
     _mrkInf setMarkerColor _color;
 
-    [(_helo select 0), _infGrp, _mrkHelo, _mrkInf] spawn {
+    [_helo, _infGrp, _mrkHelo, _mrkInf] spawn {
         while {{alive _x} count units (_this select 1) > 0 || canMove (_this select 0)} do {
             (_this select 2) setMarkerPos getPosATL (_this select 0);
             (_this select 3) setMarkerPos getPosATL leader (_this select 1);
@@ -232,14 +233,14 @@ if (!_paraDrop) then {
         //["test2"] call TRGM_GLOBAL_fnc_notify;
     }
     else {
-        waitUntil {sleep 2; isTouchingGround (_helo select 0) || {!canMove (_helo select 0)}};
+        waitUntil {sleep 2; isTouchingGround _helo || {!canMove _helo}};
         {unAssignVehicle _x; _x action ["eject", vehicle _x]; sleep 0.5;} forEach units _infgrp; //Eject the cargo
     };
 
     //["a"] call TRGM_GLOBAL_fnc_notify;
     //wait Until the infantry group is no longer in the helicopter before assigning a new WP to the helicopter
-    waitUntil {sleep 2; {!alive _x || !(_x in (_helo select 0))} count (units _infGrp) isEqualTo count (units _infGrp)};
-        if (_debugMode) then {player globalChat format ["Helo Cargo Count: %1", {alive _x && (_x in (_helo select 0))} count (units _infGrp)];};
+    waitUntil {sleep 2; {!alive _x || !(_x in _helo)} count (units _infGrp) isEqualTo count (units _infGrp)};
+        if (_debugMode) then {player globalChat format ["Helo Cargo Count: %1", {alive _x && (_x in _helo)} count (units _infGrp)];};
             _heloWp = _heloCrew addWaypoint [[0,0,0], 0];
             _heloWp setWaypointType "MOVE";
             _heloWp setWaypointBehaviour "AWARE";
@@ -252,8 +253,8 @@ if (!_paraDrop) then {
 } else {
 
     //disable collision to avoid deaths and setup the paradrop
-    {_x disableCollisionWith (_helo Select 0)} forEach units _infGrp;
-    (_helo select 0) flyInHeight 200;
+    {_x disableCollisionWith _helo} forEach units _infGrp;
+    _helo flyInHeight 200;
 
     _heloWp = _heloCrew addWaypoint [_hPad, 0];
     _heloWp setWaypointType "MOVE";
@@ -271,7 +272,7 @@ if (!_paraDrop) then {
 };
 
 //wait until cargo is empty & if _sadMode is passed as true, then add a SAD WP on the nearest enemy.. else, go into patrol mode
-    waitUntil {sleep 2; {!alive _x || !(_x in (_helo select 0))} count (units _infGrp) isEqualTo count (units _infGrp)};
+    waitUntil {sleep 2; {!alive _x || !(_x in _helo)} count (units _infGrp) isEqualTo count (units _infGrp)};
     if (_debugMode) then {
         {deleteMarker _x;} forEach [_mrkLZ, _mrkPos];
     };
@@ -322,7 +323,7 @@ if (_sadMode) then {
 // Cycle mode gets a bit too intense for most situations, commenting out to avoid usage...
 // IF _cycleMode is passed as true, then re-run the function (this function!), else do nothing.
 // if (_cycleMode) then {
-//     waitUntil {{alive _x} count units _infgrp + [(_helo select 0)] isEqualTo 0};
+//     waitUntil {{alive _x} count units _infgrp + [_helo] isEqualTo 0};
 //     if (_debugMode) then {
 //         player globalChat "Patrol and helicopter dead";
 //         {deleteMarker _x;} forEach [_mrkHelo, _mrkinf, _mrkTarget];

@@ -21,6 +21,7 @@ if (isNil "TRGM_VAR_NeededObjectsAvailable") then { TRGM_VAR_NeededObjectsAvaila
 if (isNil "TRGM_VAR_playerIsChoosingHQpos")  then { TRGM_VAR_playerIsChoosingHQpos  = false; publicVariable "TRGM_VAR_playerIsChoosingHQpos"; };
 if (isNil "TRGM_VAR_HQPosFound")             then { TRGM_VAR_HQPosFound             = false; publicVariable "TRGM_VAR_HQPosFound"; };
 if (isNil "TRGM_VAR_ManualAOPosFound")       then { TRGM_VAR_ManualAOPosFound       = false; publicVariable "TRGM_VAR_ManualAOPosFound"; };
+if (isNil "TRGM_VAR_FactionSetupCompleted")  then { TRGM_VAR_FactionSetupCompleted  = false; publicVariable "TRGM_VAR_FactionSetupCompleted";};
 if (!isNil "laptop1")                        then { TRGM_VAR_NeededObjectsAvailable = true;  publicVariable "TRGM_VAR_NeededObjectsAvailable"; };
 TRGM_VAR_Mission1Loc = nil; publicVariable "TRGM_VAR_Mission1Loc";
 TRGM_VAR_Mission2Loc = nil; publicVariable "TRGM_VAR_Mission2Loc";

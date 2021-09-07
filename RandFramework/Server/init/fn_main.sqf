@@ -133,6 +133,8 @@ call CUSTOM_MISSION_fnc_SetFriendlyFaction; //if TRGM_VAR_useCustomFriendlyFacti
 if (typeName sCivilian != "ARRAY") then {sCivilian = [sCivilian]};
 // end
 
+TRGM_VAR_FactionSetupCompleted = true; publicVariable "TRGM_VAR_FactionSetupCompleted";
+
 [HQMan] call TRGM_GLOBAL_fnc_setLoadout;
 
 private _airTransClassName = selectRandom (call SupplySupportChopperOptions);

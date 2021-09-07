@@ -362,7 +362,7 @@ if (_SpottedUnitCount > 0) then {
 
         if (!(vehicle _SpottedUnit isKindOf "Car") && !(vehicle _SpottedUnit isKindOf "Air") && _bAllowPatrolChange) then {
 
-            if (TRGM_VAR_bBaseHasChopper) then {
+            if (TRGM_VAR_bBaseHasChopper && {!(isNil "TRGM_VAR_EnemyBaseChopperPilot") && {!(isNull TRGM_VAR_EnemyBaseChopperPilot)}}) then {
 
                 while {(count (waypoints group TRGM_VAR_EnemyBaseChopperPilot)) > 0} do {
                     deleteWaypoint ((waypoints group TRGM_VAR_EnemyBaseChopperPilot) select 0);

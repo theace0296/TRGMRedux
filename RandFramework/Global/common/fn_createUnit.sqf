@@ -1,7 +1,7 @@
 params [["_group", grpNull, [grpNull]], ["_type", nil, [""]], ["_position", nil, [nil, objNull, grpNull, []]], ["_markers", [], [[]]], ["_placement", 0, [0]], ["_special", "NONE", [""]], ["_disableDynamicShowHide", false, [false]]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-if (isNull _group || _type isEqualTo "" || isNil "_position") exitWith {};
+if (isNull _group || _type isEqualTo "" || isNil "_position") exitWith {objNull};
 
 if !(_markers isEqualType []) then {
     _markers = [];

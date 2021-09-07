@@ -83,6 +83,15 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
 
     _objInformant = [createGroup Civilian, selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
+    if (isNil "_objInformant" || {isNull _objInformant}) then {
+        private _iterations = 0;
+        while {(isNil "_objInformant" || {isNull _objInformant}) && {_iterations < 20}} do {
+            _objInformant = [createGroup Civilian, selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
+            _iterations = _iterations + 1;
+        };
+    };
+    if (isNil "_objInformant" || {isNull _objInformant}) exitWith {};
+
     _buildings = nil;
     if (_iTaskIndex isEqualTo 0 && !isNil "TRGM_VAR_Mission1SubLoc") then {
         _buildings = nearestObjects [TRGM_VAR_Mission1SubLoc, TRGM_VAR_BasicBuildings, 100];

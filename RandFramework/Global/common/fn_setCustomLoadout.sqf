@@ -1,6 +1,10 @@
 params [["_unit", objNull, [objNull]], ["_type", "", [""]]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (isNil "TRGM_VAR_useCustomFriendlyFactionLoadouts") then { TRGM_VAR_useCustomFriendlyFactionLoadouts = false; publicVariable "TRGM_VAR_useCustomFriendlyFactionLoadouts"; };
+if (isNil "TRGM_VAR_useCustomEnemyFactionLoadouts")    then { TRGM_VAR_useCustomEnemyFactionLoadouts = false; publicVariable "TRGM_VAR_useCustomEnemyFactionLoadouts"; };
+if (isNil "TRGM_VAR_useCustomMilitiaFactionLoadouts")  then { TRGM_VAR_useCustomMilitiaFactionLoadouts = false; publicVariable "TRGM_VAR_useCustomMilitiaFactionLoadouts"; };
+
 if (TRGM_VAR_useCustomFriendlyFactionLoadouts || TRGM_VAR_useCustomEnemyFactionLoadouts || TRGM_VAR_useCustomMilitiaFactionLoadouts) then {
     private _unitClassName = [_type, typeOf _unit] select (_type isEqualTo "");
     private _configPath = (configFile >> "CfgVehicles" >> _unitClassName);
