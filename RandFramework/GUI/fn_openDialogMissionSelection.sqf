@@ -15,29 +15,32 @@
 disableSerialization;
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-//profileNamespace setVariable [worldname + ":PreviousSettings",Nil];
 
 if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetup) then {
-    TRGM_VAR_InitialLoadedPreviousSettings = profileNamespace getVariable [worldname + ":PreviousSettings",Nil]; //Get this from server only, but use player ID!!!
+    TRGM_VAR_InitialLoadedPreviousSettings = profileNamespace getVariable [format ["%1:PreviousSettings:%2", worldname, TRGM_VAR_SaveDataVersion],Nil]; //Get this from server only, but use player ID!!!
     if (!isNil "TRGM_VAR_InitialLoadedPreviousSettings" && {count TRGM_VAR_InitialLoadedPreviousSettings > 0 && {((["ResetMissionSettings", 0] call BIS_fnc_getParamValue) isEqualTo 0)}}) then {
-        TRGM_VAR_iMissionParamType =  TRGM_VAR_InitialLoadedPreviousSettings select 0; publicVariable "TRGM_VAR_iMissionParamType";
-            //TRGM_VAR_iMissionParamObjective =  TRGM_VAR_InitialLoadedPreviousSettings select 1; publicVariable "TRGM_VAR_iMissionParamObjective";
-            TRGM_VAR_iAllowNVG =  TRGM_VAR_InitialLoadedPreviousSettings select 2; publicVariable "TRGM_VAR_iAllowNVG";
-            TRGM_VAR_iMissionParamRepOption =  TRGM_VAR_InitialLoadedPreviousSettings select 3; publicVariable "TRGM_VAR_iMissionParamRepOption";
-            TRGM_VAR_iWeather =  TRGM_VAR_InitialLoadedPreviousSettings select 4; publicVariable "TRGM_VAR_iWeather";
-            TRGM_VAR_arrayTime = TRGM_VAR_InitialLoadedPreviousSettings select 10; publicVariable "TRGM_VAR_arrayTime";
-            if (isNil "TRGM_VAR_arrayTime") then { TRGM_VAR_arrayTime =  [8, 15]; publicVariable "TRGM_VAR_arrayTime"; };
-            TRGM_VAR_iUseRevive =  TRGM_VAR_InitialLoadedPreviousSettings select 5; publicVariable "TRGM_VAR_iUseRevive";
-            TRGM_VAR_iStartLocation =  TRGM_VAR_InitialLoadedPreviousSettings select 6; publicVariable "TRGM_VAR_iStartLocation";
-
-            TRGM_VAR_AdvancedSettings =  TRGM_VAR_InitialLoadedPreviousSettings select 7; publicVariable "TRGM_VAR_AdvancedSettings";
-            if (isNil "TRGM_VAR_AdvancedSettings") then { TRGM_VAR_AdvancedSettings =   TRGM_VAR_DefaultAdvancedSettings; publicVariable "TRGM_VAR_AdvancedSettings"; };
-
-            TRGM_VAR_EnemyFactionData =  TRGM_VAR_InitialLoadedPreviousSettings select 8; publicVariable "TRGM_VAR_EnemyFactionData";
-            if (isNil "TRGM_VAR_EnemyFactionData") then { TRGM_VAR_EnemyFactionData =   ""; publicVariable "TRGM_VAR_EnemyFactionData"; };
-
-            TRGM_VAR_LoadoutData =  TRGM_VAR_InitialLoadedPreviousSettings select 9; publicVariable "TRGM_VAR_InitialLoadedPreviousSettings";
-            if (isNil "TRGM_VAR_LoadoutData") then { TRGM_VAR_LoadoutData =   ""; publicVariable "TRGM_VAR_LoadoutData"; };
+        TRGM_VAR_InitialLoadedPreviousSettings params [
+            ["_iMissionIsCampaign", false],
+            ["_iMissionParamObjectives", [[0, false, false, false]]],
+            ["_iAllowNVG", 2],
+            ["_iMissionParamRepOption", 0],
+            ["_iWeather", 1],
+            ["_iUseRevive", 0],
+            ["_iStartLocation", 2],
+            ["_AdvancedSettings", TRGM_VAR_DefaultAdvancedSettings],
+            ["_arrayTime", [8, 15]],
+            ["_IsFullMap", false]
+        ];
+        TRGM_VAR_iMissionIsCampaign      = _iMissionIsCampaign; publicVariable "TRGM_VAR_iMissionIsCampaign";
+        TRGM_VAR_iMissionParamObjectives = _iMissionParamObjectives; publicVariable "TRGM_VAR_iMissionParamObjectives";
+        TRGM_VAR_iAllowNVG               = _iAllowNVG; publicVariable "TRGM_VAR_iAllowNVG";
+        TRGM_VAR_iMissionParamRepOption  = _iMissionParamRepOption; publicVariable "TRGM_VAR_iMissionParamRepOption";
+        TRGM_VAR_iWeather                = _iWeather; publicVariable "TRGM_VAR_iWeather";
+        TRGM_VAR_iUseRevive              = _iUseRevive; publicVariable "TRGM_VAR_iUseRevive";
+        TRGM_VAR_iStartLocation          = _iStartLocation; publicVariable "TRGM_VAR_iStartLocation";
+        TRGM_VAR_AdvancedSettings        = _AdvancedSettings; publicVariable "TRGM_VAR_AdvancedSettings";
+        TRGM_VAR_arrayTime               = _arrayTime; publicVariable "TRGM_VAR_arrayTime";
+        TRGM_VAR_IsFullMap               = _IsFullMap; publicVariable "TRGM_VAR_IsFullMap";
     };
 
     if (count TRGM_VAR_AdvancedSettings < 6) then {
@@ -128,10 +131,6 @@ if (!isNull (findDisplay 6000)) then {
         TRGM_VAR_AdvancedSettings pushBack _value;
     } forEach TRGM_VAR_AdvControls;
     publicVariable "TRGM_VAR_AdvancedSettings";
-
-    //_ctrlItem = (findDisplay 6000) displayCtrl 5500;
-    //TRGM_VAR_iMissionParamType = TRGM_VAR_MissionParamTypesValues select lbCurSel _ctrlItem;
-    //publicVariable "TRGM_VAR_iMissionParamType";
 };
 
 closedialog 0;
@@ -145,52 +144,57 @@ if (TRGM_VAR_ForceMissionSetup) then {
 else {
     createDialog "TRGM_VAR_DialogSetupParams";
     waitUntil {!isNull (findDisplay 5000);};
-    //["opening 2dialogB"] call TRGM_GLOBAL_fnc_notify;
 
-    _ctrlItem = (findDisplay 5000) displayCtrl 5500;
-    _optionItem = TRGM_VAR_MissionParamTypes;
-    {
-        _ctrlItem lbAdd _x;
-    } forEach _optionItem;
+    private _display = findDisplay 5000;
 
-    _ctrlTypes = (findDisplay 5000) displayCtrl 5104;
-    _optionTypes = TRGM_VAR_MissionParamObjectives;
+    private _ctrlMessage = _display displayCtrl 5500;
+    _ctrlMessage ctrlShow false;
+
+    private _ctrlTypes = _display displayCtrl 5201;
+    private _optionTypes = TRGM_VAR_MissionParamObjectives;
     {
         _ctrlTypes lbAdd _x;
     } forEach _optionTypes;
 
-    _ctrlNVG = (findDisplay 5000) displayCtrl 5102;
-    _optionNVG = TRGM_VAR_MissionParamNVGOptions;
+    private _ctrlNVG = _display displayCtrl 5102;
+    private _optionNVG = TRGM_VAR_MissionParamNVGOptions;
     {
         _ctrlNVG lbAdd _x;
     } forEach _optionNVG;
 
-    _ctrlRep = (findDisplay 5000) displayCtrl 5100;
-    _optionRep = TRGM_VAR_MissionParamRepOptions;
+    private _ctrlRep = _display displayCtrl 5100;
+    private _optionRep = TRGM_VAR_MissionParamRepOptions;
     {
         _ctrlRep lbAdd _x;
     } forEach _optionRep;
 
-    _ctrlWeather = (findDisplay 5000) displayCtrl 5101;
-    _optionWeathers = TRGM_VAR_MissionParamWeatherOptions;
+    private _ctrlWeather = _display displayCtrl 5101;
+    private _optionWeathers = TRGM_VAR_MissionParamWeatherOptions;
     {
         _ctrlWeather lbAdd _x;
     } forEach _optionWeathers;
 
-    _ctrlRevive = (findDisplay 5000) displayCtrl 5103;
-    _optionRevive = TRGM_VAR_MissionParamReviveOptions;
+    private _ctrlRevive = _display displayCtrl 5103;
+    private _optionRevive = TRGM_VAR_MissionParamReviveOptions;
     {
         _ctrlRevive lbAdd _x;
     } forEach _optionRevive;
 
-    _ctrlLocation = (findDisplay 5000) displayCtrl 2105;
-    _optionLocation = TRGM_VAR_MissionParamLocationOptions;
+    private _ctrlLocation = _display displayCtrl 2105;
+    private _optionLocation = TRGM_VAR_MissionParamLocationOptions;
     {
         _ctrlLocation lbAdd _x;
     } forEach _optionLocation;
 
-    _ctrlItem lbSetCurSel (TRGM_VAR_MissionParamTypesValues find TRGM_VAR_iMissionParamType);
-    _ctrlTypes lbSetCurSel (TRGM_VAR_MissionParamObjectivesValues find TRGM_VAR_iMissionParamObjective);
+    if (isNil "TRGM_VAR_iMissionIsCampaign") then {TRGM_VAR_iMissionIsCampaign = false; publicVariable "TRGM_VAR_iMissionIsCampaign";};
+    private _ctrlMissionType = _display displayCtrl 5501;
+    _ctrlMissionType ctrlSetChecked TRGM_VAR_iMissionIsCampaign;
+
+    if (isNil "TRGM_VAR_IsFullMap") then {TRGM_VAR_IsFullMap = false; publicVariable "TRGM_VAR_IsFullMap";};
+    private _ctrlFullMap = _display displayCtrl 5504;
+    _ctrlFullMap ctrlSetChecked TRGM_VAR_IsFullMap;
+
+    _ctrlTypes lbSetCurSel (TRGM_VAR_MissionParamObjectivesValues find TRGM_VAR_iMissionParamObjectives);
     _ctrlRep lbSetCurSel (TRGM_VAR_MissionParamRepOptionsValues find TRGM_VAR_iMissionParamRepOption);
     _ctrlWeather lbSetCurSel (TRGM_VAR_MissionParamWeatherOptionsValues find TRGM_VAR_iWeather);
     _ctrlNVG lbSetCurSel (TRGM_VAR_MissionParamNVGOptionsValues find TRGM_VAR_iAllowNVG);

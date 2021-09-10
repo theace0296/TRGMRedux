@@ -18,55 +18,46 @@ disableSerialization;
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-if (isNil "TRGM_VAR_iMissionParamObjective2") then { TRGM_VAR_iMissionParamObjective2 =   0; publicVariable "TRGM_VAR_iMissionParamObjective2"; };
-if (isNil "TRGM_VAR_iMissionParamObjective3") then { TRGM_VAR_iMissionParamObjective3 =   0; publicVariable "TRGM_VAR_iMissionParamObjective3"; };
-
 if (!isNull (findDisplay 5000)) then {
-    _ctrlItem = (findDisplay 5000) displayCtrl 5500;
-    TRGM_VAR_iMissionParamType = TRGM_VAR_MissionParamTypesValues select lbCurSel _ctrlItem;
-    publicVariable "TRGM_VAR_iMissionParamType";
+    private _display = findDisplay 5000;
 
-    _ctrlTypes = (findDisplay 5000) displayCtrl 5104;
-    TRGM_VAR_iMissionParamObjective = TRGM_VAR_MissionParamObjectivesValues select lbCurSel _ctrlTypes;
-    publicVariable "TRGM_VAR_iMissionParamObjective";
+    _ctrlMissionType = _display displayCtrl 5501;
+    TRGM_VAR_iMissionIsCampaign = ctrlChecked _ctrlMissionType;
+    publicVariable "TRGM_VAR_iMissionIsCampaign";
 
-    _ctrlNVG = (findDisplay 5000) displayCtrl 5102;
+    _ctrlFullMap = _display displayCtrl 5504;
+    TRGM_VAR_IsFullMap = ctrlChecked _ctrlFullMap;
+    publicVariable "TRGM_VAR_IsFullMap";
+
+    _ctrlTypes = _display displayCtrl 5201;
+    TRGM_VAR_iMissionParamObjectives = TRGM_VAR_MissionParamObjectivesValues select lbCurSel _ctrlTypes;
+    publicVariable "TRGM_VAR_iMissionParamObjectives";
+
+    _ctrlNVG = _display displayCtrl 5102;
     TRGM_VAR_iAllowNVG = TRGM_VAR_MissionParamNVGOptionsValues select lbCurSel _ctrlNVG;
     publicVariable "TRGM_VAR_iAllowNVG";
 
-    _ctrlRep = (findDisplay 5000) displayCtrl 5100;
+    _ctrlRep = _display displayCtrl 5100;
     TRGM_VAR_iMissionParamRepOption = TRGM_VAR_MissionParamRepOptionsValues select lbCurSel _ctrlRep;
     publicVariable "TRGM_VAR_iMissionParamRepOption";
 
 
-    _ctrlWeather = (findDisplay 5000) displayCtrl 5101;
+    _ctrlWeather = _display displayCtrl 5101;
     TRGM_VAR_iWeather = TRGM_VAR_MissionParamWeatherOptionsValues select lbCurSel _ctrlWeather;
     publicVariable "TRGM_VAR_iWeather";
 
-    _ctrlTime = (findDisplay 5000) displayCtrl 5115;
+    _ctrlTime = _display displayCtrl 5115;
     _ctrlTimeValue = (sliderPosition _ctrlTime) * 3600;
     TRGM_VAR_arrayTime = [floor (_ctrlTimeValue / 3600), floor ((_ctrlTimeValue / 60) mod 60)];
     publicVariable "TRGM_VAR_arrayTime";
 
-    _ctrlRevive = (findDisplay 5000) displayCtrl 5103;
+    _ctrlRevive = _display displayCtrl 5103;
     TRGM_VAR_iUseRevive = TRGM_VAR_MissionParamReviveOptionsValues select lbCurSel _ctrlRevive;
     publicVariable "TRGM_VAR_iUseRevive";
 
-    _ctrlLocation = (findDisplay 5000) displayCtrl 2105;
+    _ctrlLocation = _display displayCtrl 2105;
     TRGM_VAR_iStartLocation = TRGM_VAR_MissionParamLocationOptionsValues select lbCurSel _ctrlLocation;
     publicVariable "TRGM_VAR_iStartLocation";
-
-    if (!isNull((findDisplay 5000) displayCtrl 7001)) then {
-        _ctrlTypes1 = (findDisplay 5000) displayCtrl 7001;
-        TRGM_VAR_iMissionParamObjective2 = TRGM_VAR_MissionParamObjectivesValues select lbCurSel _ctrlTypes1;
-        publicVariable "TRGM_VAR_iMissionParamObjective2";
-    };
-
-    if (!isNull((findDisplay 5000) displayCtrl 7002)) then {
-        _ctrlTypes2 = (findDisplay 5000) displayCtrl 7002;
-        TRGM_VAR_iMissionParamObjective3 = TRGM_VAR_MissionParamObjectivesValues select lbCurSel _ctrlTypes2;
-        publicVariable "TRGM_VAR_iMissionParamObjective3";
-    };
 
 };
 

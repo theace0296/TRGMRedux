@@ -24,249 +24,66 @@ _bIsCampaignFinalMission = false;
 _bSideMissionsCivOnly = nil;
 
 _MainMissionTasksToUse = TRGM_VAR_MainMissionTasks;
-_SideMissionTasksToUse1 = TRGM_VAR_SideMissionTasks;
-_SideMissionTasksToUse2 = TRGM_VAR_SideMissionTasks;
-if (TRGM_VAR_iMissionParamObjective > 0) then {
-    _MainMissionTasksToUse = [TRGM_VAR_iMissionParamObjective];
-    _SideMissionTasksToUse1 = [TRGM_VAR_iMissionParamObjective];
-};
-if (TRGM_VAR_iMissionParamObjective2 > 0) then {
-    _SideMissionTasksToUse1 = [TRGM_VAR_iMissionParamObjective2];
-};
-if (TRGM_VAR_iMissionParamObjective3 > 0) then {
-    _SideMissionTasksToUse2 = [TRGM_VAR_iMissionParamObjective3];
-};
+_SideMissionTasksToUse = TRGM_VAR_SideMissionTasks;
+_SideMissionTasksToUse = TRGM_VAR_SideMissionTasks;
+_MissionsThatHaveIntel = TRGM_VAR_MissionsThatHaveIntel;
 
 ["Mission Setup: 14", true] call TRGM_GLOBAL_fnc_log;
 
-TRGM_VAR_iMissionParamType = TRGM_VAR_iMissionParamType; publicVariable "TRGM_VAR_iMissionParamType";
-switch (TRGM_VAR_iMissionParamType) do {
-    case 0: {
-        _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
+if (call TRGM_GETTER_fnc_bIsCampaign) then {
+    _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+    if (_totalRep >= 10) then {
+        _ThisTaskTypes = [selectRandom _MainMissionTasksToUse, selectRandom _MissionsThatHaveIntel, selectRandom _MissionsThatHaveIntel];
         _IsMainObjs = [true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
         _MarkerTypes = ["mil_objective","hd_dot","hd_dot"];
         _CreateTasks = [true,false,false];
         _SamePrevAOStats = [false,false,false];
         _bSideMissionsCivOnly = [false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 1: {
-        _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom TRGM_VAR_MissionsThatHaveIntel,selectRandom TRGM_VAR_MissionsThatHaveIntel];
-        _IsMainObjs = [true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["empty","hd_dot","hd_dot"];
-        _CreateTasks = [true,false,false];
-        _SamePrevAOStats = [false,false,false];
-        _bSideMissionsCivOnly = [false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 2: {
-        _ThisTaskTypes = [selectRandom _MainMissionTasksToUse];
-        _IsMainObjs = [true]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["mil_objective"]; //INFORMANT: changed this back to mil_objective
-        _CreateTasks = [true];
-        _SamePrevAOStats = [false];
-        _bSideMissionsCivOnly = [false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 3: {
+        _bIsCampaignFinalMission = true;
+    } else {
         if (random 1 < .33) then {
-            _ThisTaskTypes = [selectRandom _SideMissionTasksToUse1,4];
+            _ThisTaskTypes = [selectRandom _SideMissionTasksToUse, 4];
             _IsMainObjs = [false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
             _MarkerTypes = ["mil_objective","hd_dot"];
             _CreateTasks = [true,false];
             _SamePrevAOStats = [false,false];
-            TRGM_VAR_MaxBadPoints = 1;
             _bSideMissionsCivOnly = [false,true];
         } else {
-            _ThisTaskTypes = [selectRandom _SideMissionTasksToUse1];
+            _ThisTaskTypes = [selectRandom _SideMissionTasksToUse];
             _IsMainObjs = [false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
             _MarkerTypes = ["mil_objective"];
             _CreateTasks = [true];
             _SamePrevAOStats = [false];
             _bSideMissionsCivOnly = [false];
-            TRGM_VAR_MaxBadPoints = 1;
         };
     };
-    case 4: {
-        if (TRGM_VAR_iMissionParamObjective > 0) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
-        } else {
-            _ThisTaskTypes = [selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
-        };
-
-        _IsMainObjs = [false,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["mil_objective","mil_objective","mil_objective"];
-        _CreateTasks = [true,true,true];
-        _SamePrevAOStats = [false,false,false];
-        _bSideMissionsCivOnly = [false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 5: {
-        _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
-        if (_totalRep >= 10) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom TRGM_VAR_MissionsThatHaveIntel,selectRandom TRGM_VAR_MissionsThatHaveIntel];
-            _IsMainObjs = [true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-            _MarkerTypes = ["mil_objective","hd_dot","hd_dot"];
-            _CreateTasks = [true,false,false];
-            _SamePrevAOStats = [false,false,false];
-            _bSideMissionsCivOnly = [false,false,false];
-            _bIsCampaignFinalMission = true;
-        } else {
-            if (random 1 < .33) then {
-                _ThisTaskTypes = [selectRandom _SideMissionTasksToUse1,4];
-                _IsMainObjs = [false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-                _MarkerTypes = ["mil_objective","hd_dot"];
-                _CreateTasks = [true,false];
-                _SamePrevAOStats = [false,false];
-                _bSideMissionsCivOnly = [false,true];
+    _bIsCampaign = true;
+} else {
+    _ThisTaskTypes = [];
+    _IsMainObjs = [];
+    _MarkerTypes = [];
+    _CreateTasks = [];
+    _SamePrevAOStats = [];
+    _bSideMissionsCivOnly = [];
+    {
+        _x params ["_taskType", "_isHeavy", "_isHidden", "_sameAOAsPrev"];
+        if (_taskType isEqualTo 0) then {
+            if (_isHeavy) then {
+                _ThisTaskTypes = _ThisTaskTypes + [selectRandom _MainMissionTasksToUse];
             } else {
-                _ThisTaskTypes = [selectRandom _SideMissionTasksToUse1];
-                _IsMainObjs = [false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-                _MarkerTypes = ["mil_objective"];
-                _CreateTasks = [true];
-                _SamePrevAOStats = [false];
-                _bSideMissionsCivOnly = [false];
+                _ThisTaskTypes = _ThisTaskTypes + [selectRandom _SideMissionTasksToUse];
             };
-        };
-        _bIsCampaign = true;
-    };
-    case 6: {
-        _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse1];
-        _IsMainObjs = [true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["mil_objective","empty","empty"];
-        _CreateTasks = [true,false,false];
-        _SamePrevAOStats = [false,false,false];
-        _bSideMissionsCivOnly = [false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 7: {
-        if (TRGM_VAR_iMissionParamObjective > 0) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
         } else {
-            _ThisTaskTypes = [selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
+            _ThisTaskTypes = _ThisTaskTypes + [_taskType];
         };
-        _IsMainObjs = [false,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["empty","empty","empty"];
-        _CreateTasks = [true,true,true];
-        _SamePrevAOStats = [false,false,false];
-        _bSideMissionsCivOnly = [false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 8: {
-        if (random 1 < .80) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
-            _IsMainObjs = [true,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-            _MarkerTypes = ["mil_objective","hd_dot"];
-            _CreateTasks = [true,true];
-            _SamePrevAOStats = [false,true];
-            _bSideMissionsCivOnly = [false,false];
-            TRGM_VAR_MaxBadPoints = 1;
-        } else {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,4];
-            _IsMainObjs = [true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-            _MarkerTypes = ["mil_objective","hd_dot","hd_dot"];
-            _CreateTasks = [true,true,false];
-            _SamePrevAOStats = [false,true,false];
-            _bSideMissionsCivOnly = [false,false,true];
-            TRGM_VAR_MaxBadPoints = 1;
-        };
-    };
-    case 9: {
-        if (random 1 < .50) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1];
-            _IsMainObjs = [false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-            _MarkerTypes = ["mil_objective","hd_dot"];
-            _CreateTasks = [true,true];
-            _SamePrevAOStats = [false,true];
-            _bSideMissionsCivOnly = [false,false];
-            TRGM_VAR_MaxBadPoints = 1;
-        } else {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,4];
-            _IsMainObjs = [false,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-            _MarkerTypes = ["mil_objective","hd_dot","hd_dot"];
-            _CreateTasks = [true,true,false];
-            _SamePrevAOStats = [false,true,false];
-            _bSideMissionsCivOnly = [false,false,true];
-            TRGM_VAR_MaxBadPoints = 1;
-        };
-    };
-    case 10: {
-        TRGM_VAR_IsFullMap =  true; publicVariable "TRGM_VAR_IsFullMap";
-        if (random 1 < .50) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse];
-            _IsMainObjs = [true]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-            _MarkerTypes = ["empty"];
-            _CreateTasks = [true];
-            _SamePrevAOStats = [false];
-            _bSideMissionsCivOnly = [false];
-            TRGM_VAR_MaxBadPoints = 1;
-        } else {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,4];
-            _IsMainObjs = [true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-            _MarkerTypes = ["empty","empty","hd_dot"];
-            _CreateTasks = [true,true,false];
-            _SamePrevAOStats = [false,true,false];
-            _bSideMissionsCivOnly = [false,false,true];
-            TRGM_VAR_MaxBadPoints = 1;
-        }
-    };
-    case 11: {
-        if (TRGM_VAR_iMissionParamObjective > 0) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
-        } else {
-            _ThisTaskTypes = [selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
-        };
-
-        _IsMainObjs = [true,true,true]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["mil_objective","mil_objective","mil_objective"];
-        _CreateTasks = [true,true,true];
-        _SamePrevAOStats = [false,false,false];
-        _bSideMissionsCivOnly = [false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 12: {
-        TRGM_VAR_IsFullMap =  true; publicVariable "TRGM_VAR_IsFullMap";
-        if (TRGM_VAR_iMissionParamObjective > 0) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
-        } else {
-            _ThisTaskTypes = [selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2];
-        };
-        _IsMainObjs = [true,true,true]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["empty","empty","empty"];
-        _CreateTasks = [true,true,true];
-        _SamePrevAOStats = [false,false,false];
-        _bSideMissionsCivOnly = [false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 13: {
-        TRGM_VAR_IsFullMap =  true; publicVariable "TRGM_VAR_IsFullMap";
-        if (TRGM_VAR_iMissionParamObjective > 0) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2,selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse2,selectRandom _SideMissionTasksToUse1];
-        } else {
-            _ThisTaskTypes = [selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2,selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse2,selectRandom _SideMissionTasksToUse1];
-        };
-        _IsMainObjs = [true,false,false,true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["hd_dot","hd_dot","hd_dot","hd_dot","hd_dot","hd_dot"];
-        _CreateTasks = [true,true,true,true,true,true];
-        _SamePrevAOStats = [false,false,false,false,false,false];
-        _bSideMissionsCivOnly = [false,false,false,false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    case 14: {
-        TRGM_VAR_IsFullMap =  true; publicVariable "TRGM_VAR_IsFullMap";
-        if (TRGM_VAR_iMissionParamObjective > 0) then {
-            _ThisTaskTypes = [selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2,selectRandom _MainMissionTasksToUse,selectRandom _SideMissionTasksToUse2,selectRandom _SideMissionTasksToUse1];
-        } else {
-            _ThisTaskTypes = [selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse1,selectRandom _SideMissionTasksToUse2,selectRandom TRGM_VAR_SideMissionTasks,selectRandom _SideMissionTasksToUse2,selectRandom _SideMissionTasksToUse1];
-        };
-        _IsMainObjs = [true,false,false,true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-        _MarkerTypes = ["empty","empty","empty","empty","empty","empty"];
-        _CreateTasks = [false,false,false,false,false,false];
-        _SamePrevAOStats = [false,false,false,false,false,false];
-        _bSideMissionsCivOnly = [false,false,false,false,false,false];
-        TRGM_VAR_MaxBadPoints = 1;
-    };
-    default { };
+        _IsMainObjs = _IsMainObjs + [_isHeavy];
+        private _markerType = ["hd_dot", "mil_objective"] select (_isHeavy);
+        _MarkerTypes = _MarkerTypes + [_markerType];
+        _CreateTasks = _CreateTasks + [_isHidden];
+        _SamePrevAOStats = _SamePrevAOStats + [_sameAOAsPrev];
+        _bSideMissionsCivOnly = _bSideMissionsCivOnly + [!_isHeavy];
+    } forEach TRGM_VAR_iMissionParamObjectives;
+    TRGM_VAR_MaxBadPoints = 1;
 };
 
 //HERE.... two objectives at one AO : as above, but also... randomo chance of third mission (inttel or mission)

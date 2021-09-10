@@ -6,20 +6,8 @@ if (TRGM_VAR_OverrideMissionSetup) then {
 
 if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
 
-    /*
-    0=Heavy Mission (with two optional sides)
-    6=Heavy Mission (two hidden optional sides)
-    8=Heavy Mission (two objectives at AO, chance of side)
-    1=Heavy Mission (Intel required for AO Location)
-    2=Heavy Mission Only
-    3=Single Mission
-    9=Single Mission (two objectives at AO, chance of side)
-    4=Three Missions
-    7=Three Hidden Missions
-    10=Heavy Mission, hidden location and type
-    5=Campaign
-    */
-    TRGM_VAR_iMissionParamType = 3;
+    TRGM_VAR_iMissionIsCampaign = false;
+    TRGM_VAR_IsFullMap = false;
 
 
     /*
@@ -41,9 +29,10 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
     16 = Destroy Cache
     99999 = Custom Mission - MUST BE ENABLED VIA 'Enable Custom Mission' parameter in lobby OR 'TRGM_VAR_UseCustomMission' must be set to TRUE above!
     */
-    TRGM_VAR_iMissionParamObjective = 3;
-    //TRGM_VAR_iMissionParamObjective2 = 13;
-    //TRGM_VAR_iMissionParamObjective3 = 7;
+    TRGM_VAR_iMissionParamObjectives = [
+        [3, false, false, false], // Objective 1
+        [2, false, false, false]  // Objective 2
+    ];
 
     TRGM_VAR_iStartLocation = 1;    //0=StartAtHQ 1=StartNearAO
     TRGM_VAR_AOCampOnlyAmmoBox = true; //If true, then if players start at camp near AO, then there will only be an ammo box at the position (you may want to set this to true if you have designed your own camp)
@@ -111,10 +100,9 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
     publicVariable "TRGM_VAR_ForceMissionSetup";
     publicVariable "TRGM_VAR_UseCustomMission";
     publicVariable "TRGM_VAR_MainMissionTitle";
-    publicVariable "TRGM_VAR_iMissionParamType";
-    publicVariable "TRGM_VAR_iMissionParamObjective";
-    publicVariable "TRGM_VAR_iMissionParamObjective2";
-    publicVariable "TRGM_VAR_iMissionParamObjective3";
+    publicVariable "TRGM_VAR_iMissionIsCampaign";
+    publicVariable "TRGM_VAR_IsFullMap";
+    publicVariable "TRGM_VAR_iMissionParamObjectives";
     publicVariable "TRGM_VAR_iStartLocation";
     publicVariable "TRGM_VAR_AOCampOnlyAmmoBox";
     publicVariable "TRGM_VAR_AOCampLocation";

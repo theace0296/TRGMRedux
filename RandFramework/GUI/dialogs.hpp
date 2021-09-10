@@ -7,6 +7,14 @@
 #define UI_GRID_WABS    (safezoneW)
 #define UI_GRID_HABS    (safezoneH)
 
+#define PADDING_W (UI_GRID_W * (2 / 3))
+#define PADDING_H (1.5 * UI_GRID_H)
+
+#define MISSION_TYPE_X (11.5 * UI_GRID_W + UI_GRID_X)
+#define MISSION_TYPE_Y (7.28 * UI_GRID_H + UI_GRID_Y)
+#define MISSION_TYPE_W (5 * UI_GRID_W)
+#define MISSION_TYPE_H (1 * UI_GRID_H)
+
 #define SLIDERTIMEX (15.46 * UI_GRID_W + UI_GRID_X)
 #define SLIDERTIMEY (16.07 * UI_GRID_H + UI_GRID_Y)
 #define SLIDERTIMEW (6.18854 * UI_GRID_W)
@@ -15,117 +23,197 @@
 #define ONETHIRDSLIDERTIMEW SLIDERTIMEW / 3
 #define TWOTHIRDSLIDERTIMEW ONETHIRDSLIDERTIMEW * 2
 
-class TRGM_VAR_DialogSetupObjective
-{
-    idd = 5900;
-    movingEnabled = false;
-    class controls
-    {
-        ////////////////////////////////////////////////////////
-        // GUI EDITOR OUTPUT START (by TheAce0296, v1.063, #Hucesa)
-        ////////////////////////////////////////////////////////
-
-        class RscFrame_1800: RscFrame
-        {
-            idc = 5901;
-            x = 6 * UI_GRID_W + UI_GRID_X;
-            y = 4.5 * UI_GRID_H + UI_GRID_Y;
-            w = 27.5 * UI_GRID_W;
-            h = 17 * UI_GRID_H;
-        };
-        class RscButtonMenuOK_2600: RscButtonMenuOK
-        {
-            idc = 5903;
-            x = 15.5 * UI_GRID_W + UI_GRID_X;
-            y = 19.5 * UI_GRID_H + UI_GRID_Y;
-            w = 8.5 * UI_GRID_W;
-            h = 1.5 * UI_GRID_H;
-        };
-        class RscButtonMenuCancel_2700: RscButtonMenuCancel
-        {
-            idc = 5905;
-            x = 24.5 * UI_GRID_W + UI_GRID_X;
-            y = 19.5 * UI_GRID_H + UI_GRID_Y;
-            w = 8.5 * UI_GRID_W;
-            h = 1.5 * UI_GRID_H;
-        };
-        class RscListbox_1500: RscListbox
-        {
-            idc = 5907;
-            x = 6.5 * UI_GRID_W + UI_GRID_X;
-            y = 5 * UI_GRID_H + UI_GRID_Y;
-            w = 26.5 * UI_GRID_W;
-            h = 9.5 * UI_GRID_H;
-        };
-        class RscTextCheckbox_2500: RscTextCheckbox
-        {
-            idc = 5909;
-            text = "Is Heavy Objective?"; //--- ToDo: Localize;
-            x = 6.5 * UI_GRID_W + UI_GRID_X;
-            y = 15 * UI_GRID_H + UI_GRID_Y;
-            w = 8.5 * UI_GRID_W;
-            h = 2 * UI_GRID_H;
-            tooltip = "Set the objective as heavy."; //--- ToDo: Localize;
-            colorText[] = {0.85,0.4,0,1};
-        };
-        class RscTextCheckbox_2501: RscTextCheckbox
-        {
-            idc = 5911;
-            text = "Is Hidden Objective?"; //--- ToDo: Localize;
-            x = 15.5 * UI_GRID_W + UI_GRID_X;
-            y = 15 * UI_GRID_H + UI_GRID_Y;
-            w = 8.5 * UI_GRID_W;
-            h = 2 * UI_GRID_H;
-            tooltip = "Set the objective as hidden."; //--- ToDo: Localize;
-            colorText[] = {0.85,0.4,0,1};
-        };
-        class RscCombo_2100: RscCombo
-        {
-            idc = 5913;
-            text = "Is same AO as?"; //--- ToDo: Localize;
-            x = 24.5 * UI_GRID_W + UI_GRID_X;
-            y = 15 * UI_GRID_H + UI_GRID_Y;
-            w = 8.5 * UI_GRID_W;
-            h = 2 * UI_GRID_H;
-            tooltip = "Set the objective to be in the same AO as another objective."; //--- ToDo: Localize;
-            colorText[] = {0.85,0.4,0,1};
-        };
-        ////////////////////////////////////////////////////////
-        // GUI EDITOR OUTPUT END
-        ////////////////////////////////////////////////////////
-    };
-};
+#define TRGM_ORANGE {0.85,0.45,0,1}
+#define TRGM_BLUE   {0,0.45,0.85,1}
 
 class TRGM_VAR_DialogSetupParams
 {
     idd = 5000;
     movingEnabled = false;
 
+    class controlsBackground {
+        class RscPicture_1200: RscPicture
+        {
+            idc = 5001;
+
+            text = "RandFramework\Media\TRGMReduxLogo.paa";
+            x = 16.90648 * UI_GRID_W + UI_GRID_X;
+            y = 3.423325 * UI_GRID_H + UI_GRID_Y;
+            w = 5.56832 * UI_GRID_W;
+            h = 4.9509 * UI_GRID_H;
+        };
+        class RscText_1200: RscText
+        {
+            idc = 5002;
+
+            x = 11.01664 * UI_GRID_W + UI_GRID_X;
+            y = 4.325525 * UI_GRID_H + UI_GRID_Y;
+            w = 18.14852 * UI_GRID_W;
+            h = 16.227975 * UI_GRID_H;
+            colorBackground[] = {0.35,0.31,0.30,1};
+            text = "";
+        };
+    };
+
     class controls {
         ////////////////////////////////////////////////////////
         // GUI EDITOR OUTPUT START (by TheAce0296, v1.063, #Fiholy)
         ////////////////////////////////////////////////////////
 
-        class RscPicture_7005: RscPicture
-        {
-            idc = 7005;
-            text = "RandFramework\Media\table1.paa";
-            x = 9.06872 * UI_GRID_W + UI_GRID_X;
-            y = 1.115 * UI_GRID_H + UI_GRID_Y;
-            w = 21.24376 * UI_GRID_W;
-            h = 23.375 * UI_GRID_H;
-        };
-
-        class RscListbox_1500: RscListBox
+        class RscText_5500: RscText
         {
             idc = 5500;
-            onLBSelChanged = "[_this] spawn TRGM_GUI_fnc_missionTypeSelection; false; ";
+            onLoad = "(_this # 0) ctrlShow false;";
 
-            x = 11.96 * UI_GRID_W + UI_GRID_X;
-            y = 7.28 * UI_GRID_H + UI_GRID_Y;
-            w = 7.2199 * UI_GRID_W;
-            h = 5.99879 * UI_GRID_H;
+            x = 13 * UI_GRID_W + UI_GRID_X;
+            y = 13 * UI_GRID_H + UI_GRID_Y;
+            w = 14 * UI_GRID_W;
+            h = 1.1 * UI_GRID_H;
+            colorBackground[] = {0,0,0,1};
+            colorText[] = {1,1,1,1};
+            text = $STR_TRGM2_SetParamsAndBegin_ErrorMsg_NoData;
         };
+
+        class RscTextCheckbox_5501: RscTextCheckBox
+        {
+            idc = 5501;
+
+            x = MISSION_TYPE_X;
+            y = MISSION_TYPE_Y;
+            w = MISSION_TYPE_W;
+            h = MISSION_TYPE_H;
+            strings[] = {$STR_TRGM2_dialogs_IsCampaign_False};
+            checked_strings[] = {$STR_TRGM2_dialogs_IsCampaign_True};
+            tooltips[] = {$STR_TRGM2_dialogs_IsCampaign_Tooltip};
+            values[] = {1};
+            onCheckBoxesSelChanged = "_this spawn TRGM_GUI_fnc_missionTypeSelection; false;";
+
+            colorText[] = TRGM_ORANGE;
+            colorBackground[] = {0,0,0,1};
+            colorTextSelect[] = TRGM_BLUE;
+            colorSelectedBg[] = {0,0,0,1};
+        };
+        class RscButton_5502: RscButton
+        {
+            idc = 5502;
+            action = "hint 'Add objective'";
+
+            text = $STR_TRGM2_dialogs_AddObjective;
+            x = (MISSION_TYPE_X + MISSION_TYPE_W + PADDING_W);
+            y = MISSION_TYPE_Y;
+            w = (MISSION_TYPE_W * (2 / 3));
+            h = MISSION_TYPE_H;
+            colorBackground[] = TRGM_ORANGE;
+            colorActive[] = TRGM_ORANGE;
+        };
+        class RscButton_5503: RscButton
+        {
+            idc = 5503;
+            action = "hint 'Remove objective'";
+
+            text = $STR_TRGM2_dialogs_RemoveObjective;
+            x = (MISSION_TYPE_X + MISSION_TYPE_W + (2 * PADDING_W) + (MISSION_TYPE_W * (2 / 3)));
+            y = MISSION_TYPE_Y;
+            w = (MISSION_TYPE_W * (2 / 3));
+            h = MISSION_TYPE_H;
+            colorBackground[] = TRGM_ORANGE;
+            colorActive[] = TRGM_ORANGE;
+        };
+        class RscTextCheckBox_5504: RscTextCheckBox
+        {
+            idc = 5504;
+
+            x = (MISSION_TYPE_X + MISSION_TYPE_W + (3 * PADDING_W) + (2 * (MISSION_TYPE_W * (2 / 3))));
+            y = MISSION_TYPE_Y;
+            w = (MISSION_TYPE_W * (2 / 3));
+            h = MISSION_TYPE_H;
+            strings[] = {$STR_TRGM2_dialogs_IsFullMap_False};
+            checked_strings[] = {$STR_TRGM2_dialogs_IsFullMap_True};
+            tooltips[] = {$STR_TRGM2_dialogs_IsFullMap_Tooltip};
+            values[] = {1};
+
+            colorText[] = TRGM_ORANGE;
+            colorBackground[] = {0,0,0,1};
+            colorTextSelect[] = TRGM_BLUE;
+            colorSelectedBg[] = {0,0,0,1};
+        };
+
+        class RscText_5200: RscText
+        {
+            idc = 5200;
+
+            text = $STR_TRGM2_dialogs_Objective;
+            x = (11.25 * UI_GRID_W + UI_GRID_X);
+            y = (MISSION_TYPE_Y + PADDING_H);
+            w = (3 * UI_GRID_W);
+            h = (0.6 * UI_GRID_H);
+            colorText[] = TRGM_ORANGE;
+        };
+        class RscCombo_5201: RscCombo
+        {
+            idc = 5201;
+
+            text = $STR_TRGM2_dialogs_Objective;
+            x = (13 * UI_GRID_W + UI_GRID_X);
+            y = (MISSION_TYPE_Y + PADDING_H);
+            w = (6 * UI_GRID_W);
+            h = (0.6 * UI_GRID_H);
+        };
+        class RscTextCheckbox_5202: RscTextCheckBox
+        {
+            idc = 5202;
+
+            x = (19.25 * UI_GRID_W + UI_GRID_X);
+            y = (MISSION_TYPE_Y + PADDING_H);
+            w = (3 * UI_GRID_W);
+            h = (0.6 * UI_GRID_H);
+            strings[] = {"Not heavy objective"};
+            checked_strings[] = {"Heavy objective"};
+            tooltips[] = {"Set the objective as heavy."};
+            values[] = {1};
+
+            colorText[] = TRGM_ORANGE;
+            colorBackground[] = {0,0,0,1};
+            colorTextSelect[] = TRGM_BLUE;
+            colorSelectedBg[] = {0,0,0,1};
+        };
+        class RscTextCheckbox_5203: RscTextCheckBox
+        {
+            idc = 5203;
+
+            x = (22.5 * UI_GRID_W + UI_GRID_X);
+            y = (MISSION_TYPE_Y + PADDING_H);
+            w = (3 * UI_GRID_W);
+            h = (0.6 * UI_GRID_H);
+            strings[] = {"Not hidden objective"};
+            checked_strings[] = {"Hidden objective"};
+            tooltips[] = {"Set the objective as hidden."};
+            values[] = {1};
+
+            colorText[] = TRGM_ORANGE;
+            colorBackground[] = {0,0,0,1};
+            colorTextSelect[] = TRGM_BLUE;
+            colorSelectedBg[] = {0,0,0,1};
+        };
+        class RscTextCheckbox_5204: RscTextCheckBox
+        {
+            idc = 5204;
+
+            x = (25.75 * UI_GRID_W + UI_GRID_X);
+            y = (MISSION_TYPE_Y + PADDING_H);
+            w = (3 * UI_GRID_W);
+            h = (0.6 * UI_GRID_H);
+            strings[] = {"Not in same AO"};
+            checked_strings[] = {"In same AO"};
+            tooltips[] = {"Set the objective to be in the same AO as the objective above this."};
+            values[] = {1};
+
+            colorText[] = TRGM_ORANGE;
+            colorBackground[] = {0,0,0,1};
+            colorTextSelect[] = TRGM_BLUE;
+            colorSelectedBg[] = {0,0,0,1};
+        };
+
         class RscCombo_2100: RscCombo
         {
             idc = 5100;
@@ -136,17 +224,6 @@ class TRGM_VAR_DialogSetupParams
             w = 6.18854 * UI_GRID_W;
             h = 0.54988 * UI_GRID_H;
         };
-        class RscText_1001: RscText
-        {
-            idc = 5001;
-            style = 16;
-
-            text = $STR_TRGM2_dialogs_Details; //--- ToDo: Localize;
-            x = 19.59 * UI_GRID_W + UI_GRID_X;
-            y = 7.28 * UI_GRID_H + UI_GRID_Y;
-            w = 8.45766 * UI_GRID_W;
-            h = 6.04867 * UI_GRID_H;
-        };
         class RscText_1004: RscText
         {
             idc = 5004;
@@ -156,7 +233,7 @@ class TRGM_VAR_DialogSetupParams
             y = 14.42 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
             h = 0.549984 * UI_GRID_H;
-            colorText[] = {0.85,0.4,0,1};
+            colorText[] = TRGM_ORANGE;
         };
         class RscText_1005: RscText
         {
@@ -167,7 +244,7 @@ class TRGM_VAR_DialogSetupParams
             y = 15.25 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
             h = 0.549984 * UI_GRID_H;
-            colorText[] = {0.85,0.4,0,1};
+            colorText[] = TRGM_ORANGE;
         };
         class RscCombo_2101: RscCombo
         {
@@ -188,7 +265,7 @@ class TRGM_VAR_DialogSetupParams
             y = 16.07 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
             h = 0.549984 * UI_GRID_H;
-            colorText[] = {0.85,0.4,0,1};
+            colorText[] = TRGM_ORANGE;
         };
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // Time Slider
@@ -349,7 +426,7 @@ class TRGM_VAR_DialogSetupParams
             y = 16.9 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
             h = 0.549984 * UI_GRID_H;
-            colorText[] = {0.85,0.4,0,1};
+            colorText[] = TRGM_ORANGE;
         };
         class RscCombo_2102: RscCombo
         {
@@ -370,7 +447,7 @@ class TRGM_VAR_DialogSetupParams
             y = 17.72 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
             h = 0.549984 * UI_GRID_H;
-            colorText[] = {0.85,0.4,0,1};
+            colorText[] = TRGM_ORANGE;
         };
         class RscCombo_2103: RscCombo
         {
@@ -391,7 +468,7 @@ class TRGM_VAR_DialogSetupParams
             y = 18.55 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
             h = 0.549984 * UI_GRID_H;
-            colorText[] = {0.85,0.4,0,1};
+            colorText[] = TRGM_ORANGE;
         };
         class RscCombo_2105: RscCombo
         {
@@ -413,8 +490,8 @@ class TRGM_VAR_DialogSetupParams
             y = 16.07 * UI_GRID_H + UI_GRID_Y;
             w = 4.12568 * UI_GRID_W;
             h = 2.36963 * UI_GRID_H;
-            colorBackground[] = {0.85,0.4,0,1};
-            colorActive[] = {0.85,0.4,0,1};
+            colorBackground[] = TRGM_ORANGE;
+            colorActive[] = TRGM_ORANGE;
         };
         class btnAdvanced: RscButton
         {
@@ -426,29 +503,8 @@ class TRGM_VAR_DialogSetupParams
             y = 18.6 * UI_GRID_H + UI_GRID_Y;
             w = 4.12568 * UI_GRID_W;
             h = 0.550001 * UI_GRID_H;
-            colorBackground[] = {0.85,0.4,0,1};
-            colorActive[] = {0.85,0.4,0,1};
-        };
-        class RscText_1002: RscText
-        {
-            idc = 5002;
-
-            text = $STR_TRGM2_dialogs_Objective; //--- ToDo: Localize;
-            x = 11.96 * UI_GRID_W + UI_GRID_X;
-            y = 13.6 * UI_GRID_H + UI_GRID_Y;
-            w = 3.09375 * UI_GRID_W;
-            h = 0.550001 * UI_GRID_H;
-            colorText[] = {0.85,0.4,0,1};
-        };
-        class RscCombo_2104: RscCombo
-        {
-            idc = 5104;
-
-            text = $STR_TRGM2_dialogs_Objective; //--- ToDo: Localize;
-            x = 15.46 * UI_GRID_W + UI_GRID_X;
-            y = 13.6 * UI_GRID_H + UI_GRID_Y;
-            w = 6.18854 * UI_GRID_W;
-            h = 0.54988 * UI_GRID_H;
+            colorBackground[] = TRGM_ORANGE;
+            colorActive[] = TRGM_ORANGE;
         };
         class RscText_1003: RscText
         {
@@ -497,16 +553,6 @@ class TRGM_VAR_DialogSetupParams
             w = 0.619002 * UI_GRID_W;
             h = 0.550001 * UI_GRID_H;
         };
-        class RscPicture_1200: RscPicture
-        {
-            idc = 5201;
-
-            text = "RandFramework\Media\TRGMReduxLogo.paa";
-            x = 17.93768 * UI_GRID_W + UI_GRID_X;
-            y = 3.973425 * UI_GRID_H + UI_GRID_Y;
-            w = 3.918432 * UI_GRID_W;
-            h = 4.4008 * UI_GRID_H;
-        };
         class RscText_1013: RscText
         {
             idc = 1013;
@@ -528,8 +574,8 @@ class TRGM_VAR_DialogSetupParams
             y = 14.42 * UI_GRID_H + UI_GRID_Y;
             w = 4.12502 * UI_GRID_W;
             h = 0.550001 * UI_GRID_H;
-            colorBackground[] = {0.85,0.4,0,1};
-            colorActive[] = {0.85,0.4,0,1};
+            colorBackground[] = TRGM_ORANGE;
+            colorActive[] = TRGM_ORANGE;
             tooltip = $STR_TRGM2_dialogs_LoadLocal_HelpText; //--- ToDo: Localize;
         };
         class btnLoadglobalSave: RscButton
@@ -542,8 +588,8 @@ class TRGM_VAR_DialogSetupParams
             y = 15.25 * UI_GRID_H + UI_GRID_Y;
             w = 4.12502 * UI_GRID_W;
             h = 0.550001 * UI_GRID_H;
-            colorBackground[] = {0.85,0.4,0,1};
-            colorActive[] = {0.85,0.4,0,1};
+            colorBackground[] = TRGM_ORANGE;
+            colorActive[] = TRGM_ORANGE;
             tooltip = $STR_TRGM2_dialogs_LoadGlobal_HelpText; //--- ToDo: Localize;
         };
         class creditsText: RscStructuredText
