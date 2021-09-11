@@ -2648,6 +2648,10 @@
                 <Original>If enabled, enemy units, civilains, and mini missions will spawn over the whole map.</Original>
                 <English>If enabled, enemy units, civilains, and mini missions will spawn over the whole map.</English>
             </Key>
+             <Key ID="STR_TRGM2_dialogs_ObjectiveIndex">
+                <Original>Objective %1:</Original>
+                <English>Objective %1:</English>
+            </Key>
             <Key ID="STR_TRGM2_dialogs_Objective">
                 <Original>Objective</Original>
                 <English>Objective</English>

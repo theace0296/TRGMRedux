@@ -1,31 +1,3 @@
-/*
- * Author: Trendy (Modified by TheAce0296)
- * Does various checks when the mission type is selected,
- * for example, if a triple mission is selected, this function
- * adds the two additional mission task lists to the dialog.
- *
- * Arguments:
- * 0: The list control type that invoked this function.
- *    Arg 0 select 1 is the selected index from the list control.
- *
- * Return Value:
- * true <BOOL>
- *
- * Example:
- * [_this] spawn TRGM_GUI_fnc_missionTypeSelection
- */
-
-#define UI_GRID_X        (safezoneX)
-#define UI_GRID_Y        (safezoneY)
-#define UI_GRID_W        (safezoneW / 40)
-#define UI_GRID_H        (safezoneH / 25)
-#define UI_GRID_WABS     (safezoneW)
-#define UI_GRID_HABS     (safezoneH)
-#define MISSIONLISTX     (15.46 * UI_GRID_W + UI_GRID_X)
-#define MISSIONLISTY     (13.6 * UI_GRID_H + UI_GRID_Y)
-#define MISSIONLISTW     (6.18854 * UI_GRID_W)
-#define MISSIONLISTH     (0.54988 * UI_GRID_H)
-
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 _this params ["_control", "_selectedIndex", "_currentState"];
 

@@ -32,16 +32,6 @@ class TRGM_VAR_DialogSetupParams
     movingEnabled = false;
 
     class controlsBackground {
-        class RscPicture_1200: RscPicture
-        {
-            idc = 5001;
-
-            text = "RandFramework\Media\TRGMReduxLogo.paa";
-            x = 16.90648 * UI_GRID_W + UI_GRID_X;
-            y = 3.423325 * UI_GRID_H + UI_GRID_Y;
-            w = 5.56832 * UI_GRID_W;
-            h = 4.9509 * UI_GRID_H;
-        };
         class RscText_1200: RscText
         {
             idc = 5002;
@@ -53,26 +43,22 @@ class TRGM_VAR_DialogSetupParams
             colorBackground[] = {0.35,0.31,0.30,1};
             text = "";
         };
+        class RscPicture_1200: RscPicture
+        {
+            idc = 5001;
+
+            text = "RandFramework\Media\TRGMReduxLogo.paa";
+            x = 16.90648 * UI_GRID_W + UI_GRID_X;
+            y = 3.423325 * UI_GRID_H + UI_GRID_Y;
+            w = 5.56832 * UI_GRID_W;
+            h = 4.9509 * UI_GRID_H;
+        };
     };
 
     class controls {
         ////////////////////////////////////////////////////////
         // GUI EDITOR OUTPUT START (by TheAce0296, v1.063, #Fiholy)
         ////////////////////////////////////////////////////////
-
-        class RscText_5500: RscText
-        {
-            idc = 5500;
-            onLoad = "(_this # 0) ctrlShow false;";
-
-            x = 13 * UI_GRID_W + UI_GRID_X;
-            y = 13 * UI_GRID_H + UI_GRID_Y;
-            w = 14 * UI_GRID_W;
-            h = 1.1 * UI_GRID_H;
-            colorBackground[] = {0,0,0,1};
-            colorText[] = {1,1,1,1};
-            text = $STR_TRGM2_SetParamsAndBegin_ErrorMsg_NoData;
-        };
 
         class RscTextCheckbox_5501: RscTextCheckBox
         {
@@ -96,7 +82,7 @@ class TRGM_VAR_DialogSetupParams
         class RscButton_5502: RscButton
         {
             idc = 5502;
-            action = "hint 'Add objective'";
+            action = "_this spawn TRGM_GUI_fnc_addObjective;";
 
             text = $STR_TRGM2_dialogs_AddObjective;
             x = (MISSION_TYPE_X + MISSION_TYPE_W + PADDING_W);
@@ -109,7 +95,7 @@ class TRGM_VAR_DialogSetupParams
         class RscButton_5503: RscButton
         {
             idc = 5503;
-            action = "hint 'Remove objective'";
+            action = "_this spawn TRGM_GUI_fnc_removeObjective;";
 
             text = $STR_TRGM2_dialogs_RemoveObjective;
             x = (MISSION_TYPE_X + MISSION_TYPE_W + (2 * PADDING_W) + (MISSION_TYPE_W * (2 / 3)));
@@ -142,8 +128,8 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5200;
 
-            text = $STR_TRGM2_dialogs_Objective;
-            x = (11.25 * UI_GRID_W + UI_GRID_X);
+            text = __EVAL(format [localize "STR_TRGM2_dialogs_ObjectiveIndex", 1]);
+            x = (11.10 * UI_GRID_W + UI_GRID_X);
             y = (MISSION_TYPE_Y + PADDING_H);
             w = (3 * UI_GRID_W);
             h = (0.6 * UI_GRID_H);
@@ -218,7 +204,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5100;
 
-            text = $STR_TRGM2_dialogs_HardcoreReputation; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_HardcoreReputation;
             x = 15.46 * UI_GRID_W + UI_GRID_X;
             y = 14.42 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
@@ -228,7 +214,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5004;
 
-            text = $STR_TRGM2_dialogs_HardcoreReputation; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_HardcoreReputation;
             x = 11.96 * UI_GRID_W + UI_GRID_X;
             y = 14.42 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
@@ -239,7 +225,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5005;
 
-            text = $STR_TRGM2_dialogs_Weather; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_Weather;
             x = 11.96 * UI_GRID_W + UI_GRID_X;
             y = 15.25 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
@@ -250,7 +236,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5101;
 
-            text = $STR_TRGM2_dialogs_Weather; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_Weather;
             x = 15.46 * UI_GRID_W + UI_GRID_X;
             y = 15.25 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
@@ -260,7 +246,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5014;
 
-            text = $STR_TRGM2_dialogs_Time; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_Time;
             x = 11.96 * UI_GRID_W + UI_GRID_X;
             y = 16.07 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
@@ -363,7 +349,7 @@ class TRGM_VAR_DialogSetupParams
         class Hour_2114: ctrlEdit
         {
             idc = 5116;
-            text = "00"; //--- ToDo: Localize;
+            text = "00";
             style = "0x02 + 0x200";
             x = SLIDERTIMEX + TWOTHIRDSLIDERTIMEW;
             y = SLIDERTIMEY;
@@ -371,7 +357,7 @@ class TRGM_VAR_DialogSetupParams
             h = SLIDERTIMEH;
             colorText[] = {1,1,1,1};
             colorBackground[] = {0,0,0,0};
-            tooltip = $STR_3DEN_Attributes_SliderTime_Hour_tooltip; //--- ToDo: Localize;
+            tooltip = $STR_3DEN_Attributes_SliderTime_Hour_tooltip;
             sizeEx = GUI_TEXT_SIZE_MEDIUM;
             font = "EtelkaMonospacePro";
             onKillFocus = "[_this, nil, ""Edit""] call TRGM_GUI_fnc_timeSliderOnChange; false;";
@@ -379,33 +365,33 @@ class TRGM_VAR_DialogSetupParams
         class Minute_2114: Hour_2114
         {
             idc = 5117;
-            text = "00"; //--- ToDo: Localize;
+            text = "00";
             x = SLIDERTIMEX + TWOTHIRDSLIDERTIMEW + (ONETHIRDSLIDERTIMEW / 3);
             y = SLIDERTIMEY;
             w = ONETHIRDSLIDERTIMEW / 3;
             h = SLIDERTIMEH;
             colorText[] = {1,1,1,1};
             colorBackground[] = {0,0,0,0};
-            tooltip = $STR_3DEN_Attributes_SliderTime_Minute_tooltip; //--- ToDo: Localize;
+            tooltip = $STR_3DEN_Attributes_SliderTime_Minute_tooltip;
             sizeEx = GUI_TEXT_SIZE_MEDIUM;
         };
         class Second_2114: Minute_2114
         {
             idc = 5118;
-            text = "00"; //--- ToDo: Localize;
+            text = "00";
             x = SLIDERTIMEX + TWOTHIRDSLIDERTIMEW + (ONETHIRDSLIDERTIMEW / 3) * 2;
             y = SLIDERTIMEY;
             w = ONETHIRDSLIDERTIMEW / 3;
             h = SLIDERTIMEH;
             colorText[] = {1,1,1,1};
             colorBackground[] = {0,0,0,0};
-            tooltip = $STR_3DEN_Attributes_SliderTime_Second_tooltip; //--- ToDo: Localize;
+            tooltip = $STR_3DEN_Attributes_SliderTime_Second_tooltip;
             sizeEx = GUI_TEXT_SIZE_MEDIUM;
         };
         class Separator_2114: ctrlStatic
         {
             idc = -1;
-            text = "  :  :  "; //--- ToDo: Localize;
+            text = "  :  :  ";
             style = 2;
             x = SLIDERTIMEX + TWOTHIRDSLIDERTIMEW;
             y = SLIDERTIMEY;
@@ -421,7 +407,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5006;
 
-            text = $STR_TRGM2_dialogs_NVG; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_NVG;
             x = 11.96 * UI_GRID_W + UI_GRID_X;
             y = 16.9 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
@@ -432,7 +418,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5102;
 
-            text = $STR_TRGM2_dialogs_NVG; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_NVG;
             x = 15.46 * UI_GRID_W + UI_GRID_X;
             y = 16.9 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
@@ -442,7 +428,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5007;
 
-            text = $STR_TRGM2_dialogs_Revive; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_Revive;
             x = 11.96 * UI_GRID_W + UI_GRID_X;
             y = 17.72 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
@@ -453,7 +439,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5103;
 
-            text = $STR_TRGM2_dialogs_Revive; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_Revive;
             x = 15.46 * UI_GRID_W + UI_GRID_X;
             y = 17.72 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
@@ -463,7 +449,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 1012;
 
-            text = $STR_TRGM2_dialogs_StartLocation; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_StartLocation;
             x = 11.96 * UI_GRID_W + UI_GRID_X;
             y = 18.55 * UI_GRID_H + UI_GRID_Y;
             w = 3.29958 * UI_GRID_W;
@@ -474,7 +460,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 2105;
 
-            text = $STR_TRGM2_dialogs_StartLocation; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_StartLocation;
             x = 15.46 * UI_GRID_W + UI_GRID_X;
             y = 18.55 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
@@ -485,7 +471,7 @@ class TRGM_VAR_DialogSetupParams
             idc = 5600;
             action = "[_this] spawn TRGM_GUI_fnc_setParamsAndBegin; false";
 
-            text = $STR_TRGM2_dialogs_Begin; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_Begin;
             x = 23.3 * UI_GRID_W + UI_GRID_X;
             y = 16.07 * UI_GRID_H + UI_GRID_Y;
             w = 4.12568 * UI_GRID_W;
@@ -498,7 +484,7 @@ class TRGM_VAR_DialogSetupParams
             idc = 1603;
             action = "[] spawn TRGM_GUI_fnc_openDialogAdvancedMissionSettings; false";
 
-            text = $STR_TRGM2_dialogs_AdvOpt; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_AdvOpt;
             x = 23.3 * UI_GRID_W + UI_GRID_X;
             y = 18.6 * UI_GRID_H + UI_GRID_Y;
             w = 4.12568 * UI_GRID_W;
@@ -519,12 +505,12 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 5008;
 
-            text = "[?]"; //--- ToDo: Localize;
+            text = "[?]";
             x = 21.65 * UI_GRID_W + UI_GRID_X;
             y = 14.42 * UI_GRID_H + UI_GRID_Y;
             w = 0.619002 * UI_GRID_W;
             h = 0.550001 * UI_GRID_H;
-            tooltip = $STR_TRGM2_dialogs_HardcoreReputation_HelpText; //--- ToDo: Localize;
+            tooltip = $STR_TRGM2_dialogs_HardcoreReputation_HelpText;
         };
         class RscText_1009: RscText
         {
@@ -557,52 +543,67 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 1013;
 
-            text = "[?]"; //--- ToDo: Localize;
+            text = "[?]";
             x = 21.65 * UI_GRID_W + UI_GRID_X;
             y = 18.55 * UI_GRID_H + UI_GRID_Y;
             w = 0.619002 * UI_GRID_W;
             h = 0.550001 * UI_GRID_H;
-            tooltip = $STR_TRGM2_dialogs_StartLocation_HelpText; //--- ToDo: Localize;
+            tooltip = $STR_TRGM2_dialogs_StartLocation_HelpText;
         };
         class btnLoadLocalSave: RscButton
         {
             idc = 1601;
             action = "[_this,1] spawn TRGM_GUI_fnc_setParamsAndBegin; false";
 
-            text = $STR_TRGM2_dialogs_LoadLocal; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_LoadLocal;
             x = 23.3 * UI_GRID_W + UI_GRID_X;
             y = 14.42 * UI_GRID_H + UI_GRID_Y;
             w = 4.12502 * UI_GRID_W;
             h = 0.550001 * UI_GRID_H;
             colorBackground[] = TRGM_ORANGE;
             colorActive[] = TRGM_ORANGE;
-            tooltip = $STR_TRGM2_dialogs_LoadLocal_HelpText; //--- ToDo: Localize;
+            tooltip = $STR_TRGM2_dialogs_LoadLocal_HelpText;
         };
         class btnLoadglobalSave: RscButton
         {
             idc = 1602;
             action = "[_this,2] spawn TRGM_GUI_fnc_setParamsAndBegin; false";
 
-            text = $STR_TRGM2_dialogs_LoadGlobal; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_LoadGlobal;
             x = 23.3 * UI_GRID_W + UI_GRID_X;
             y = 15.25 * UI_GRID_H + UI_GRID_Y;
             w = 4.12502 * UI_GRID_W;
             h = 0.550001 * UI_GRID_H;
             colorBackground[] = TRGM_ORANGE;
             colorActive[] = TRGM_ORANGE;
-            tooltip = $STR_TRGM2_dialogs_LoadGlobal_HelpText; //--- ToDo: Localize;
+            tooltip = $STR_TRGM2_dialogs_LoadGlobal_HelpText;
         };
         class creditsText: RscStructuredText
         {
             idc = 7003;
 
-            text = "<t color='#ccaaaa'>Visit <a href='http://www.trgm2.com'>www.trgm2.com</a> for help and features... or donations : )</t>"; //--- ToDo: Localize;
+            text = "<t color='#ccaaaa'>Visit <a href='http://www.trgm2.com'>www.trgm2.com</a> for help and features... or donations : )</t>";
             x = 15.67 * UI_GRID_W + UI_GRID_X;
             y = 19.65 * UI_GRID_H + UI_GRID_Y;
             w = 9.07386 * UI_GRID_W;
             h = 0.549984 * UI_GRID_H;
             colorText[] = {1,1,0,1};
         };
+
+        class RscText_5500: RscText
+        {
+            idc = 5500;
+            onLoad = "(_this # 0) ctrlShow false;";
+
+            x = 12.73232 * UI_GRID_W + UI_GRID_X;
+            y = 19.32675 * UI_GRID_H + UI_GRID_Y;
+            w = 14 * UI_GRID_W;
+            h = 1.1 * UI_GRID_H;
+            colorBackground[] = {0,0,0,1};
+            colorText[] = {1,1,1,1};
+            text = $STR_TRGM2_SetParamsAndBegin_ErrorMsg_NoData;
+        };
+
         ////////////////////////////////////////////////////////
         // GUI EDITOR OUTPUT END
         ////////////////////////////////////////////////////////
@@ -634,7 +635,7 @@ class TRGM_VAR_DialogSetupParamsAdvanced
         //class RscText_6933: RscText
         //{
         //    idc = 6933;
-        //    text = "Advanced Options"; //--- ToDo: Localize;
+        //    text = "Advanced Options";
         //    x = 0.298 * safezoneW + safezoneX;
         //    y = 0.236 * safezoneH + safezoneY;
         //    w = 0.175341 * safezoneW;
@@ -646,7 +647,7 @@ class TRGM_VAR_DialogSetupParamsAdvanced
         class btnAdvanced: RscButton
         {
             idc = 6903;
-            text = $STR_TRGM2_dialogs_Back; //--- ToDo: Localize;
+            text = $STR_TRGM2_dialogs_Back;
             x = 0.608281 * safezoneW + safezoneX;
             y = 0.7442 * safezoneH + safezoneY;
             w = 0.0773437 * safezoneW;

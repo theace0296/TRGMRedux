@@ -110,6 +110,12 @@ else {
             _ctrl = (findDisplay 5000) displayCtrl 5500;
             _ctrl ctrlSetText (localize "STR_TRGM2_SetParamsAndBegin_ErrorMsg_NoData");
             _ctrl ctrlShow true;
+            [] spawn {
+                disableSerialization;
+                sleep 30;
+                _ctrl = (findDisplay 5000) displayCtrl 5500;
+                _ctrl ctrlShow false;
+            };
         } else {
             TRGM_VAR_InitialLoadedPreviousSettings params [
                 ["_iMissionIsCampaign", true],

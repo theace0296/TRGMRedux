@@ -147,6 +147,12 @@ else {
 
     private _display = findDisplay 5000;
 
+    for [{private _idx = 0}, {_idx < count TRGM_VAR_iMissionParamObjectives}, {_idx = _idx + 1}] do {
+        if (_idx > 0) then {
+            [_idx] call TRGM_GUI_fnc_createObjectiveGroup;
+        };
+    };
+
     private _ctrlMessage = _display displayCtrl 5500;
     _ctrlMessage ctrlShow false;
 
