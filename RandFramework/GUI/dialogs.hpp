@@ -4,8 +4,8 @@
 #define UI_GRID_Y    (safezoneY)
 #define UI_GRID_W    (safezoneW / 40)
 #define UI_GRID_H    (safezoneH / 25)
-#define UI_GRID_WABS    (safezoneW)
-#define UI_GRID_HABS    (safezoneH)
+#define UI_GRID_WABS (safezoneW)
+#define UI_GRID_HABS (safezoneH)
 
 #define PADDING_W (UI_GRID_W * (2 / 3))
 #define PADDING_H (1.5 * UI_GRID_H)
@@ -23,8 +23,104 @@
 #define ONETHIRDSLIDERTIMEW SLIDERTIMEW / 3
 #define TWOTHIRDSLIDERTIMEW ONETHIRDSLIDERTIMEW * 2
 
-#define TRGM_ORANGE {0.85,0.45,0,1}
-#define TRGM_BLUE   {0,0.45,0.85,1}
+#define TRGM_ORANGE    {0.85,0.45,0,1}
+#define TRGM_BLUE      {0,0.45,0.85,1}
+#define TRGM_BLACK     {0,0,0,1}
+#define TRGM_WHITE     {1,1,1,1}
+#define TRGM_INVISIBLE {0,0,0,0}
+
+#define OBJECTIVE_Y (MISSION_TYPE_Y + PADDING_H)
+#define OBJECTIVE_W (3 * UI_GRID_W)
+#define OBJECTIVE_H (0.6 * UI_GRID_H)
+
+#define OBJECTIVE_GROUP(INDEX) class ObjectiveGroup_##INDEX##: RscControlsGroupNoScrollbars\
+{\
+    idc = (5510 + INDEX);\
+    x = (10 * UI_GRID_W + UI_GRID_X);\
+    y = (OBJECTIVE_Y + (INDEX * OBJECTIVE_H));\
+    w = (7 * OBJECTIVE_W);\
+    h = OBJECTIVE_H;\
+    onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";\
+    class controls\
+    {\
+        class RscText_5200: RscText\
+        {\
+            idc = 5200;\
+            text = __EVAL(format [localize "STR_TRGM2_dialogs_ObjectiveIndex", INDEX + 1]);\
+            x = 1.10 * UI_GRID_W;\
+            y = 0;\
+            w = OBJECTIVE_W;\
+            h = OBJECTIVE_H;\
+            colorText[] = TRGM_ORANGE;\
+        };\
+        class RscCombo_5201: RscCombo\
+        {\
+            idc = 5201;\
+            text = $STR_TRGM2_dialogs_Objective;\
+            x = 3.00 * UI_GRID_W;\
+            y = 0;\
+            w = (2 * OBJECTIVE_W);\
+            h = OBJECTIVE_H;\
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";\
+            onLBSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";\
+        };\
+        class RscTextCheckbox_5202: RscTextCheckBox\
+        {\
+            idc = 5202;\
+            x = 9.25 * UI_GRID_W;\
+            y = 0;\
+            w = OBJECTIVE_W;\
+            h = OBJECTIVE_H;\
+            strings[] = {$STR_TRGM2_dialogs_IsHeavy_False};\
+            checked_strings[] = {$STR_TRGM2_dialogs_IsHeavy_True};\
+            tooltips[] = {$STR_TRGM2_dialogs_IsHeavy_Tooltip};\
+            values[] = {1};\
+            colorText[] = TRGM_ORANGE;\
+            colorBackground[] = TRGM_BLACK;\
+            colorTextSelect[] = TRGM_BLUE;\
+            colorSelectedBg[] = TRGM_BLACK;\
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";\
+            onCheckBoxesSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";\
+        };\
+        class RscTextCheckbox_5203: RscTextCheckBox\
+        {\
+            idc = 5203;\
+            x = 12.50 * UI_GRID_W;\
+            y = 0;\
+            w = OBJECTIVE_W;\
+            h = OBJECTIVE_H;\
+            strings[] = {$STR_TRGM2_dialogs_IsHidden_False};\
+            checked_strings[] = {$STR_TRGM2_dialogs_IsHidden_True};\
+            tooltips[] = {$STR_TRGM2_dialogs_IsHidden_Tooltip};\
+            values[] = {1};\
+            colorText[] = TRGM_ORANGE;\
+            colorBackground[] = TRGM_BLACK;\
+            colorTextSelect[] = TRGM_BLUE;\
+            colorSelectedBg[] = TRGM_BLACK;\
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";\
+            onCheckBoxesSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";\
+        };\
+        class RscTextCheckbox_5204: RscTextCheckBox\
+        {\
+            idc = 5204;\
+            x = 15.75 * UI_GRID_W;\
+            y = 0;\
+            w = OBJECTIVE_W;\
+            h = OBJECTIVE_H;\
+            strings[] = {$STR_TRGM2_dialogs_IsSameAO_False};\
+            checked_strings[] = {$STR_TRGM2_dialogs_IsSameAO_True};\
+            tooltips[] = {$STR_TRGM2_dialogs_IsSameAO_Tooltip};\
+            values[] = {1};\
+            colorText[] = TRGM_ORANGE;\
+            colorBackground[] = TRGM_BLACK;\
+            colorTextSelect[] = TRGM_BLUE;\
+            colorSelectedBg[] = TRGM_BLACK;\
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";\
+            onCheckBoxesSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";\
+        };\
+    };\
+}
+
 
 class TRGM_VAR_DialogSetupParams
 {
@@ -72,17 +168,18 @@ class TRGM_VAR_DialogSetupParams
             checked_strings[] = {$STR_TRGM2_dialogs_IsCampaign_True};
             tooltips[] = {$STR_TRGM2_dialogs_IsCampaign_Tooltip};
             values[] = {1};
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
             onCheckBoxesSelChanged = "_this spawn TRGM_GUI_fnc_missionTypeSelection; false;";
 
             colorText[] = TRGM_ORANGE;
-            colorBackground[] = {0,0,0,1};
+            colorBackground[] = TRGM_BLACK;
             colorTextSelect[] = TRGM_BLUE;
-            colorSelectedBg[] = {0,0,0,1};
+            colorSelectedBg[] = TRGM_BLACK;
         };
         class RscButton_5502: RscButton
         {
             idc = 5502;
-            action = "_this spawn TRGM_GUI_fnc_addObjective;";
+            action = "[] spawn TRGM_GUI_fnc_addObjective;";
 
             text = $STR_TRGM2_dialogs_AddObjective;
             x = (MISSION_TYPE_X + MISSION_TYPE_W + PADDING_W);
@@ -95,7 +192,7 @@ class TRGM_VAR_DialogSetupParams
         class RscButton_5503: RscButton
         {
             idc = 5503;
-            action = "_this spawn TRGM_GUI_fnc_removeObjective;";
+            action = "[] spawn TRGM_GUI_fnc_removeObjective;";
 
             text = $STR_TRGM2_dialogs_RemoveObjective;
             x = (MISSION_TYPE_X + MISSION_TYPE_W + (2 * PADDING_W) + (MISSION_TYPE_W * (2 / 3)));
@@ -117,88 +214,23 @@ class TRGM_VAR_DialogSetupParams
             checked_strings[] = {$STR_TRGM2_dialogs_IsFullMap_True};
             tooltips[] = {$STR_TRGM2_dialogs_IsFullMap_Tooltip};
             values[] = {1};
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
+            onCheckBoxesSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";
 
             colorText[] = TRGM_ORANGE;
-            colorBackground[] = {0,0,0,1};
+            colorBackground[] = TRGM_BLACK;
             colorTextSelect[] = TRGM_BLUE;
-            colorSelectedBg[] = {0,0,0,1};
+            colorSelectedBg[] = TRGM_BLACK;
         };
 
-        class RscText_5200: RscText
-        {
-            idc = 5200;
-
-            text = __EVAL(format [localize "STR_TRGM2_dialogs_ObjectiveIndex", 1]);
-            x = (11.10 * UI_GRID_W + UI_GRID_X);
-            y = (MISSION_TYPE_Y + PADDING_H);
-            w = (3 * UI_GRID_W);
-            h = (0.6 * UI_GRID_H);
-            colorText[] = TRGM_ORANGE;
-        };
-        class RscCombo_5201: RscCombo
-        {
-            idc = 5201;
-
-            text = $STR_TRGM2_dialogs_Objective;
-            x = (13 * UI_GRID_W + UI_GRID_X);
-            y = (MISSION_TYPE_Y + PADDING_H);
-            w = (6 * UI_GRID_W);
-            h = (0.6 * UI_GRID_H);
-        };
-        class RscTextCheckbox_5202: RscTextCheckBox
-        {
-            idc = 5202;
-
-            x = (19.25 * UI_GRID_W + UI_GRID_X);
-            y = (MISSION_TYPE_Y + PADDING_H);
-            w = (3 * UI_GRID_W);
-            h = (0.6 * UI_GRID_H);
-            strings[] = {"Not heavy objective"};
-            checked_strings[] = {"Heavy objective"};
-            tooltips[] = {"Set the objective as heavy."};
-            values[] = {1};
-
-            colorText[] = TRGM_ORANGE;
-            colorBackground[] = {0,0,0,1};
-            colorTextSelect[] = TRGM_BLUE;
-            colorSelectedBg[] = {0,0,0,1};
-        };
-        class RscTextCheckbox_5203: RscTextCheckBox
-        {
-            idc = 5203;
-
-            x = (22.5 * UI_GRID_W + UI_GRID_X);
-            y = (MISSION_TYPE_Y + PADDING_H);
-            w = (3 * UI_GRID_W);
-            h = (0.6 * UI_GRID_H);
-            strings[] = {"Not hidden objective"};
-            checked_strings[] = {"Hidden objective"};
-            tooltips[] = {"Set the objective as hidden."};
-            values[] = {1};
-
-            colorText[] = TRGM_ORANGE;
-            colorBackground[] = {0,0,0,1};
-            colorTextSelect[] = TRGM_BLUE;
-            colorSelectedBg[] = {0,0,0,1};
-        };
-        class RscTextCheckbox_5204: RscTextCheckBox
-        {
-            idc = 5204;
-
-            x = (25.75 * UI_GRID_W + UI_GRID_X);
-            y = (MISSION_TYPE_Y + PADDING_H);
-            w = (3 * UI_GRID_W);
-            h = (0.6 * UI_GRID_H);
-            strings[] = {"Not in same AO"};
-            checked_strings[] = {"In same AO"};
-            tooltips[] = {"Set the objective to be in the same AO as the objective above this."};
-            values[] = {1};
-
-            colorText[] = TRGM_ORANGE;
-            colorBackground[] = {0,0,0,1};
-            colorTextSelect[] = TRGM_BLUE;
-            colorSelectedBg[] = {0,0,0,1};
-        };
+        OBJECTIVE_GROUP(7);
+        OBJECTIVE_GROUP(6);
+        OBJECTIVE_GROUP(5);
+        OBJECTIVE_GROUP(4);
+        OBJECTIVE_GROUP(3);
+        OBJECTIVE_GROUP(2);
+        OBJECTIVE_GROUP(1);
+        OBJECTIVE_GROUP(0);
 
         class RscCombo_2100: RscCombo
         {
@@ -209,6 +241,8 @@ class TRGM_VAR_DialogSetupParams
             y = 14.42 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
             h = 0.54988 * UI_GRID_H;
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
+            onLBSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";
         };
         class RscText_1004: RscText
         {
@@ -241,6 +275,8 @@ class TRGM_VAR_DialogSetupParams
             y = 15.25 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
             h = 0.54988 * UI_GRID_H;
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
+            onLBSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";
         };
         class RscText_1014: RscText
         {
@@ -331,9 +367,10 @@ class TRGM_VAR_DialogSetupParams
             y = SLIDERTIMEY;
             w = TWOTHIRDSLIDERTIMEW;
             h = SLIDERTIMEH;
-            colorActive[] = {1,1,1,1};
+            colorActive[] = TRGM_WHITE;
 
-            onSliderPosChanged="[_this select 0, _this select 1, ""Slider""] call TRGM_GUI_fnc_timeSliderOnChange; false;";
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
+            onSliderPosChanged="[_this select 0, _this select 1, ""Slider""] call TRGM_GUI_fnc_timeSliderOnChange; _this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";
         };
         class Frame_2114: ctrlStaticFrame
         {
@@ -342,8 +379,8 @@ class TRGM_VAR_DialogSetupParams
             y = SLIDERTIMEY;
             w = ONETHIRDSLIDERTIMEW;
             h = SLIDERTIMEH;
-            colorText[] = {1,1,1,1};
-            colorBackground[] = {0,0,0,0};
+            colorText[] = TRGM_WHITE;
+            colorBackground[] = TRGM_INVISIBLE;
             sizeEx = GUI_TEXT_SIZE_MEDIUM;
         };
         class Hour_2114: ctrlEdit
@@ -355,8 +392,8 @@ class TRGM_VAR_DialogSetupParams
             y = SLIDERTIMEY;
             w = ONETHIRDSLIDERTIMEW / 3;
             h = SLIDERTIMEH;
-            colorText[] = {1,1,1,1};
-            colorBackground[] = {0,0,0,0};
+            colorText[] = TRGM_WHITE;
+            colorBackground[] = TRGM_INVISIBLE;
             tooltip = $STR_3DEN_Attributes_SliderTime_Hour_tooltip;
             sizeEx = GUI_TEXT_SIZE_MEDIUM;
             font = "EtelkaMonospacePro";
@@ -370,8 +407,8 @@ class TRGM_VAR_DialogSetupParams
             y = SLIDERTIMEY;
             w = ONETHIRDSLIDERTIMEW / 3;
             h = SLIDERTIMEH;
-            colorText[] = {1,1,1,1};
-            colorBackground[] = {0,0,0,0};
+            colorText[] = TRGM_WHITE;
+            colorBackground[] = TRGM_INVISIBLE;
             tooltip = $STR_3DEN_Attributes_SliderTime_Minute_tooltip;
             sizeEx = GUI_TEXT_SIZE_MEDIUM;
         };
@@ -383,8 +420,8 @@ class TRGM_VAR_DialogSetupParams
             y = SLIDERTIMEY;
             w = ONETHIRDSLIDERTIMEW / 3;
             h = SLIDERTIMEH;
-            colorText[] = {1,1,1,1};
-            colorBackground[] = {0,0,0,0};
+            colorText[] = TRGM_WHITE;
+            colorBackground[] = TRGM_INVISIBLE;
             tooltip = $STR_3DEN_Attributes_SliderTime_Second_tooltip;
             sizeEx = GUI_TEXT_SIZE_MEDIUM;
         };
@@ -397,7 +434,7 @@ class TRGM_VAR_DialogSetupParams
             y = SLIDERTIMEY;
             w = ONETHIRDSLIDERTIMEW;
             h = SLIDERTIMEH;
-            colorText[] = {1,1,1,1};
+            colorText[] = TRGM_WHITE;
             colorBackground[] = {0,0,0,0.5};
             sizeEx = GUI_TEXT_SIZE_MEDIUM;
             font="EtelkaMonospacePro";
@@ -423,6 +460,8 @@ class TRGM_VAR_DialogSetupParams
             y = 16.9 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
             h = 0.54988 * UI_GRID_H;
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
+            onLBSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";
         };
         class RscText_1007: RscText
         {
@@ -444,6 +483,8 @@ class TRGM_VAR_DialogSetupParams
             y = 17.72 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
             h = 0.54988 * UI_GRID_H;
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
+            onLBSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";
         };
         class RscText_1012: RscText
         {
@@ -456,15 +497,17 @@ class TRGM_VAR_DialogSetupParams
             h = 0.549984 * UI_GRID_H;
             colorText[] = TRGM_ORANGE;
         };
-        class RscCombo_2105: RscCombo
+        class RscCombo_5104: RscCombo
         {
-            idc = 2105;
+            idc = 5104;
 
             text = $STR_TRGM2_dialogs_StartLocation;
             x = 15.46 * UI_GRID_W + UI_GRID_X;
             y = 18.55 * UI_GRID_H + UI_GRID_Y;
             w = 6.18854 * UI_GRID_W;
             h = 0.54988 * UI_GRID_H;
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
+            onLBSelChanged = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnChange; false;";
         };
         class RscButton_1600: RscButton
         {
@@ -582,7 +625,7 @@ class TRGM_VAR_DialogSetupParams
         {
             idc = 7003;
 
-            text = "<t color='#ccaaaa'>Visit <a href='http://www.trgm2.com'>www.trgm2.com</a> for help and features... or donations : )</t>";
+            text = "<t color='#ccaaaa'>Visit <a href='https://github.com/theace0296/TRGMRedux'>TRGMRedux GitHub</a> for help and features...</t>";
             x = 15.67 * UI_GRID_W + UI_GRID_X;
             y = 19.65 * UI_GRID_H + UI_GRID_Y;
             w = 9.07386 * UI_GRID_W;
@@ -593,14 +636,14 @@ class TRGM_VAR_DialogSetupParams
         class RscText_5500: RscText
         {
             idc = 5500;
-            onLoad = "(_this # 0) ctrlShow false;";
+            onLoad = "_this spawn TRGM_GUI_fnc_missionSetupControlsOnLoad; false;";
 
             x = 12.73232 * UI_GRID_W + UI_GRID_X;
             y = 19.32675 * UI_GRID_H + UI_GRID_Y;
             w = 14 * UI_GRID_W;
             h = 1.1 * UI_GRID_H;
-            colorBackground[] = {0,0,0,1};
-            colorText[] = {1,1,1,1};
+            colorBackground[] = TRGM_BLACK;
+            colorText[] = TRGM_WHITE;
             text = $STR_TRGM2_SetParamsAndBegin_ErrorMsg_NoData;
         };
 
@@ -732,7 +775,7 @@ class TRGM_VAR_DialogRequests_VehicleCustomization
     {
         class BlackLeft: RscText
         {
-            colorBackground[] = {0,0,0,1};
+            colorBackground[] = TRGM_BLACK;
             x = "safezoneXAbs";
             y = "safezoneY";
             w = "safezoneXAbs - safezoneX";
@@ -781,7 +824,7 @@ class TRGM_VAR_DialogRequests_VehicleCustomization
             y = -1;
             w = 0;
             h = 0;
-            colorText[] = {0,0,0,1};
+            colorText[] = TRGM_BLACK;
         };
         class LineTabLeft: RscText
         {
@@ -791,7 +834,7 @@ class TRGM_VAR_DialogRequests_VehicleCustomization
             y = -1;
             w = "0.6 * (((safezoneW / safezoneH) min 1.2) / 40)";
             h = "1.4 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-            colorBackground[] = {0,0,0,1};
+            colorBackground[] = TRGM_BLACK;
         };
         class LineTabLeftSelected: RscText
         {
@@ -810,7 +853,7 @@ class TRGM_VAR_DialogRequests_VehicleCustomization
             y = "safezoneY + 0.5 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
             w = "1.5 * (((safezoneW / safezoneH) min 1.2) / 40)";
             h = "40 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-            colorText[] = {0,0,0,0};
+            colorText[] = TRGM_INVISIBLE;
         };
         class FrameLeft: RscFrame
         {
@@ -820,7 +863,7 @@ class TRGM_VAR_DialogRequests_VehicleCustomization
             y = "safezoneY + 0.5 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
             w = "15 * (((safezoneW / safezoneH) min 1.2) / 40)";
             h = "safezoneH - 2.5 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-            colorText[] = {0,0,0,1};
+            colorText[] = TRGM_BLACK;
         };
         class Message: RscText
         {
@@ -954,13 +997,13 @@ class TRGM_VAR_DialogRequests_VehicleCustomization
             w = "15 * (((safezoneW / safezoneH) min 1.2) / 40)";
             h = "safezoneH - 2.5 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
             sizeEx = "1.4 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-            colorBackground[] = {0,0,0,0};
+            colorBackground[] = TRGM_INVISIBLE;
             colorSelectBackground[] = {1,1,1,0.5};
             colorSelectBackground2[] = {1,1,1,0.5};
-            colorPictureSelected[] = {1,1,1,1};
-            colorSelect[] = {1,1,1,1};
-            colorSelect2[] = {1,1,1,1};
-            colorPictureRightSelected[] = {1,1,1,1};
+            colorPictureSelected[] = TRGM_WHITE;
+            colorSelect[] = TRGM_WHITE;
+            colorSelect2[] = TRGM_WHITE;
+            colorPictureRightSelected[] = TRGM_WHITE;
         };
         class ListDisabledAnimationSources: RscText
         {
@@ -996,13 +1039,13 @@ class TRGM_VAR_DialogRequests_VehicleCustomization
             w = "15 * (((safezoneW / safezoneH) min 1.2) / 40)";
             h = "safezoneH - 2.5 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
             sizeEx = "1.4 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-            colorBackground[] = {0,0,0,0};
+            colorBackground[] = TRGM_INVISIBLE;
             colorSelectBackground[] = {1,1,1,0.5};
             colorSelectBackground2[] = {1,1,1,0.5};
-            colorPictureSelected[] = {1,1,1,1};
-            colorSelect[] = {1,1,1,1};
-            colorSelect2[] = {1,1,1,1};
-            colorPictureRightSelected[] = {1,1,1,1};
+            colorPictureSelected[] = TRGM_WHITE;
+            colorSelect[] = TRGM_WHITE;
+            colorSelect2[] = TRGM_WHITE;
+            colorPictureRightSelected[] = TRGM_WHITE;
         };
         class ListDisabledTextureSources: RscText
         {
@@ -1040,7 +1083,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1062,7 +1105,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1084,7 +1127,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1106,7 +1149,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1128,7 +1171,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1150,7 +1193,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1172,7 +1215,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1194,7 +1237,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1216,7 +1259,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1238,7 +1281,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1260,7 +1303,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1282,7 +1325,7 @@ class KeypadDefuse
             w = 0.0165001 * safezoneW;
             h = 0.022 * safezoneH;
             colorFocused[] = {0.1,0.1,0.1,0.1};
-            colorShadow[] = {0,0,0,0};
+            colorShadow[] = TRGM_INVISIBLE;
             colorBorder[] = {0.5,0.5,0.5,0};
             colorBackground[] = {0.7,0.7,0.7,0};
             colorBackgroundActive[] = {0.1,0.1,0.1,0};
@@ -1328,7 +1371,7 @@ class KeypadDefuse
             y = 0.225 * safezoneH + safezoneY;
             w = 0.020625 * safezoneW;
             h = 0.033 * safezoneH;
-            colorBackground[] = {1,1,1,1};
+            colorBackground[] = TRGM_WHITE;
             soundClick[] = {"",0,0};
             onMouseButtonDown = "playSound 'wire_cut'; ['WHITE'] spawn TRGM_GUI_fnc_wireCompare";
         };

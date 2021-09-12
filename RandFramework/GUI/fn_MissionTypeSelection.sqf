@@ -28,15 +28,15 @@ TRGM_VAR_iMissionIsCampaign = _currentState isEqualTo 1; publicVariable "TRGM_VA
 
 if (TRGM_VAR_iMissionIsCampaign) then {
     if (!TRGM_VAR_AllowMissionTypeCampaign) then {
-        private _ctrlObjectiveTextIdc = 5200;
-        for [{private _idx = 1}, {_idx <= 4}, {_idx = _idx + 1}] do {
-            private _idc = _ctrlObjectiveTextIdc + _idx;
-            private _ctrl = _display displayCtrl _idc;
-            _ctrl ctrlEnable false;
-            if (_idx isEqualTo 1) then {
-                _ctrl lbSetCurSel 0;
-            } else {
-                [_ctrl] call _setTextCheckboxDisabled;
+        for [{private _groupIdx = 0}, {_groupIdx < count TRGM_VAR_iMissionParamObjectives}, {_groupIdx = _groupIdx + 1}] do {
+            private _objectiveControlsGroup = _display displayCtrl (5510 + _groupIdx);
+            for [{private _idx = 1}, {_idx <= 4}, {_idx = _idx + 1}] do {
+                private _idc = 5200 + _idx;
+                private _ctrl = _objectiveControlsGroup controlsGroupCtrl _idc;
+                _ctrl ctrlEnable false;
+                if !(_idx isEqualTo 1) then {
+                    [_ctrl] call _setTextCheckboxDisabled;
+                };
             };
         };
     };
@@ -56,13 +56,20 @@ if (TRGM_VAR_iMissionIsCampaign) then {
 }
 else {
 
-    private _ctrlObjectiveTextIdc = 5200;
-    for [{private _idx = 1}, {_idx <= 4}, {_idx = _idx + 1}] do {
-        private _idc = _ctrlObjectiveTextIdc + _idx;
-        private _ctrl = _display displayCtrl _idc;
-        _ctrl ctrlEnable true;
-        if !(_idc isEqualTo 1) then {
-            [_ctrl] call _setTextCheckboxEnabled;
+    for [{private _groupIdx = 0}, {_groupIdx < count TRGM_VAR_iMissionParamObjectives}, {_groupIdx = _groupIdx + 1}] do {
+        private _objectiveControlsGroup = _display displayCtrl (5510 + _groupIdx);
+        for [{private _idx = 1}, {_idx <= 4}, {_idx = _idx + 1}] do {
+            private _idc = 5200 + _idx;
+            private _ctrl = _objectiveControlsGroup controlsGroupCtrl _idc;
+            _ctrl ctrlEnable true;
+            if !(_idx isEqualTo 1) then {
+                [_ctrl] call _setTextCheckboxEnabled;
+            };
+        };
+        if (_groupIdx isEqualTo 0) then {
+            private _ctrl = _objectiveControlsGroup controlsGroupCtrl 5204;
+            [_ctrl] call _setTextCheckboxDisabled;
+            _ctrl ctrlSetChecked false;
         };
     };
 

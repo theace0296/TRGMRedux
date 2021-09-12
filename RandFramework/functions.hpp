@@ -206,11 +206,12 @@ class TRGM_GUI {
         class addObjective {};
         class codeCompare {};
         class createNotification {};
-        class createObjectiveGroup {};
         class deleteNotification {};
         class downloadData {};
         class handleNotification {};
         class initNotifications {};
+        class missionSetupControlsOnChange {};
+        class missionSetupControlsOnLoad {};
         class missionTypeSelection {};
         class openDialogAdvancedMissionSettings {};
         class openDialogMissionSelection {};

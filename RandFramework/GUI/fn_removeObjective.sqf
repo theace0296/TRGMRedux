@@ -2,13 +2,7 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 disableSerialization;
 
-if (isNil "TRGM_VAR_iMissionIsCampaign") then { TRGM_VAR_iMissionIsCampaign = false; publicVariable "TRGM_VAR_iMissionIsCampaign"; };
-
-if (TRGM_VAR_iMissionIsCampaign) exitWith {};
-
 if (isNil "TRGM_VAR_iMissionParamObjectives") exitWith {};
-
-private _display = findDisplay 5000;
 
 private _currentIndex = (count TRGM_VAR_iMissionParamObjectives) - 1;
 
@@ -18,18 +12,43 @@ if (_currentIndex isEqualTo 0) exitWith {
     _ctrl ctrlShow true;
     [] spawn {
         disableSerialization;
-        sleep 30;
+        sleep 10;
         _ctrl = (findDisplay 5000) displayCtrl 5500;
         _ctrl ctrlShow false;
     };
 };
 
-private _startIdc = 5200 + (10 * _currentIndex);
-private _objectiveControls = [_startIdc + 0, _startIdc + 1, _startIdc + 2, _startIdc + 3, _startIdc + 4];
+private _display = findDisplay 5000;
+private _controlsGroup = _display displayCtrl (5510 + _currentIndex);
+_controlsGroup ctrlEnable false;
+_controlsGroup ctrlShow false;
+_controlsGroup ctrlCommit 0;
+private _startIdc = 5200;
+private _objectiveControls = [
+    [0, "RscText"        ],
+    [1, "RscCombo"       ],
+    [2, "RscTextCheckBox"],
+    [3, "RscTextCheckBox"],
+    [4, "RscTextCheckBox"]
+];
 
 {
-    private _control = _display displayCtrl _x;
-    ctrlDelete _control;
+    _x params ["_idx", "_controlType"];
+    private _idc = _startIdc + _idx;
+    private _control = _controlsGroup controlsGroupCtrl _idc;
+    switch (_controlType) do {
+        case "RscText": {};
+        case "RscCombo": {
+            _control lbSetCurSel 0;
+        };
+        case "RscTextCheckBox": {
+            _control ctrlSetChecked false;
+        };
+        default {};
+    };
+    _control ctrlEnable false;
+    _control ctrlShow false;
+    _control ctrlCommit 0;
 } forEach _objectiveControls;
 
 TRGM_VAR_iMissionParamObjectives deleteAt _currentIndex;

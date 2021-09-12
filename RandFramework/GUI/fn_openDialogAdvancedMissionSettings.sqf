@@ -18,49 +18,6 @@ disableSerialization;
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-if (!isNull (findDisplay 5000)) then {
-    private _display = findDisplay 5000;
-
-    _ctrlMissionType = _display displayCtrl 5501;
-    TRGM_VAR_iMissionIsCampaign = ctrlChecked _ctrlMissionType;
-    publicVariable "TRGM_VAR_iMissionIsCampaign";
-
-    _ctrlFullMap = _display displayCtrl 5504;
-    TRGM_VAR_IsFullMap = ctrlChecked _ctrlFullMap;
-    publicVariable "TRGM_VAR_IsFullMap";
-
-    _ctrlTypes = _display displayCtrl 5201;
-    TRGM_VAR_iMissionParamObjectives = TRGM_VAR_MissionParamObjectivesValues select lbCurSel _ctrlTypes;
-    publicVariable "TRGM_VAR_iMissionParamObjectives";
-
-    _ctrlNVG = _display displayCtrl 5102;
-    TRGM_VAR_iAllowNVG = TRGM_VAR_MissionParamNVGOptionsValues select lbCurSel _ctrlNVG;
-    publicVariable "TRGM_VAR_iAllowNVG";
-
-    _ctrlRep = _display displayCtrl 5100;
-    TRGM_VAR_iMissionParamRepOption = TRGM_VAR_MissionParamRepOptionsValues select lbCurSel _ctrlRep;
-    publicVariable "TRGM_VAR_iMissionParamRepOption";
-
-
-    _ctrlWeather = _display displayCtrl 5101;
-    TRGM_VAR_iWeather = TRGM_VAR_MissionParamWeatherOptionsValues select lbCurSel _ctrlWeather;
-    publicVariable "TRGM_VAR_iWeather";
-
-    _ctrlTime = _display displayCtrl 5115;
-    _ctrlTimeValue = (sliderPosition _ctrlTime) * 3600;
-    TRGM_VAR_arrayTime = [floor (_ctrlTimeValue / 3600), floor ((_ctrlTimeValue / 60) mod 60)];
-    publicVariable "TRGM_VAR_arrayTime";
-
-    _ctrlRevive = _display displayCtrl 5103;
-    TRGM_VAR_iUseRevive = TRGM_VAR_MissionParamReviveOptionsValues select lbCurSel _ctrlRevive;
-    publicVariable "TRGM_VAR_iUseRevive";
-
-    _ctrlLocation = _display displayCtrl 2105;
-    TRGM_VAR_iStartLocation = TRGM_VAR_MissionParamLocationOptionsValues select lbCurSel _ctrlLocation;
-    publicVariable "TRGM_VAR_iStartLocation";
-
-};
-
 closedialog 0;
 
 sleep 0.1;

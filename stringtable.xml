@@ -2652,6 +2652,42 @@
                 <Original>Objective %1:</Original>
                 <English>Objective %1:</English>
             </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHeavy_True">
+                <Original>Heavy objective</Original>
+                <English>Heavy objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHeavy_False">
+                <Original>Not heavy objective</Original>
+                <English>Not heavy objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHeavy_Tooltip">
+                <Original>If enabled, the objective will be occupied by a heavy enemy army.</Original>
+                <English>If enabled, the objective will be occupied by a heavy enemy army.</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHidden_True">
+                <Original>Hidden objective</Original>
+                <English>Hidden objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHidden_False">
+                <Original>Not hidden objective</Original>
+                <English>Not hidden objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHidden_Tooltip">
+                <Original>If enabled, you will need to gather intel to reveal the location of the objective.</Original>
+                <English>If enabled, you will need to gather intel to reveal the location of the objective.</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsSameAO_True">
+                <Original>In same AO</Original>
+                <English>In same AO</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsSameAO_False">
+                <Original>Not in same AO</Original>
+                <English>Not in same AO</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsSameAO_Tooltip">
+                <Original>If enabled, the objective location will be the same as the objective above this one.</Original>
+                <English>If enabled, the objective location will be the same as the objective above this one.</English>
+            </Key>
             <Key ID="STR_TRGM2_dialogs_Objective">
                 <Original>Objective</Original>
                 <English>Objective</English>

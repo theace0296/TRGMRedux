@@ -29,41 +29,7 @@ if (TRGM_VAR_ForceMissionSetup) then {
     closedialog 0;
 }
 else {
-
     if (_SaveType isEqualTo 0) then {
-
-        _ctrlTypes = (findDisplay 5000) displayCtrl 5201;
-        TRGM_VAR_iMissionParamObjectives = TRGM_VAR_MissionParamObjectivesValues select lbCurSel _ctrlTypes;
-        publicVariable "TRGM_VAR_iMissionParamObjectives";
-
-        _ctrlNVG = (findDisplay 5000) displayCtrl 5102;
-        TRGM_VAR_iAllowNVG = TRGM_VAR_MissionParamNVGOptionsValues select lbCurSel _ctrlNVG;
-        publicVariable "TRGM_VAR_iAllowNVG";
-
-        _ctrlRep = (findDisplay 5000) displayCtrl 5100;
-        TRGM_VAR_iMissionParamRepOption = TRGM_VAR_MissionParamRepOptionsValues select lbCurSel _ctrlRep;
-        publicVariable "TRGM_VAR_iMissionParamRepOption";
-
-
-        _ctrlWeather = (findDisplay 5000) displayCtrl 5101;
-        TRGM_VAR_iWeather = TRGM_VAR_MissionParamWeatherOptionsValues select lbCurSel _ctrlWeather;
-        publicVariable "TRGM_VAR_iWeather";
-
-        _ctrlTime = (findDisplay 5000) displayCtrl 5115;
-        _ctrlTimeValue = (sliderPosition _ctrlTime) * 3600;
-        TRGM_VAR_arrayTime = [floor (_ctrlTimeValue / 3600), floor ((_ctrlTimeValue / 60) mod 60)];
-        publicVariable "TRGM_VAR_arrayTime";
-
-        _ctrlRevive = (findDisplay 5000) displayCtrl 5103;
-        TRGM_VAR_iUseRevive = TRGM_VAR_MissionParamReviveOptionsValues select lbCurSel _ctrlRevive;
-        publicVariable "TRGM_VAR_iUseRevive";
-
-        _ctrlLocation = (findDisplay 5000) displayCtrl 2105;
-        TRGM_VAR_iStartLocation = TRGM_VAR_MissionParamLocationOptionsValues select lbCurSel _ctrlLocation;
-        publicVariable "TRGM_VAR_iStartLocation";
-
-        publicVariable "TRGM_VAR_AdvancedSettings";
-
         _savePreviousSettings = [
             TRGM_VAR_iMissionIsCampaign,
             TRGM_VAR_iMissionParamObjectives,
@@ -79,10 +45,8 @@ else {
         profileNamespace setVariable [format ["%1:PreviousSettings:%2", worldname, TRGM_VAR_SaveDataVersion], _savePreviousSettings];
         saveProfileNamespace;
 
-
         TRGM_VAR_bOptionsSet =  true; publicVariable "TRGM_VAR_bOptionsSet";
         closedialog 0;
-
     };
 
     TRGM_VAR_sInitialSLPlayerID =  getPlayerUID player; publicVariable "TRGM_VAR_sInitialSLPlayerID"; //store the uid of the player picking the params at the start of a campaign, so when we save, we know the uid to save against even if he is killed!
@@ -112,7 +76,7 @@ else {
             _ctrl ctrlShow true;
             [] spawn {
                 disableSerialization;
-                sleep 30;
+                sleep 10;
                 _ctrl = (findDisplay 5000) displayCtrl 5500;
                 _ctrl ctrlShow false;
             };
@@ -157,7 +121,21 @@ else {
     };
 };
 
-
 TRGM_VAR_bOptionsSet = true; publicVariable "TRGM_VAR_bOptionsSet";
+
+[format ["[[TRGM - DEBUG]] TRGM_VAR_iMissionIsCampaign     : %1", TRGM_VAR_iMissionIsCampaign]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_iMissionParamObjectives: %1", TRGM_VAR_iMissionParamObjectives]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_iAllowNVG              : %1", TRGM_VAR_iAllowNVG]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_iMissionParamRepOption : %1", TRGM_VAR_iMissionParamRepOption]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_iWeather               : %1", TRGM_VAR_iWeather]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_iUseRevive             : %1", TRGM_VAR_iUseRevive]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_iStartLocation         : %1", TRGM_VAR_iStartLocation]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_BadPoints              : %1", TRGM_VAR_BadPoints]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_MaxBadPoints           : %1", TRGM_VAR_MaxBadPoints]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_BadPointsReason        : %1", TRGM_VAR_BadPointsReason]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_iCampaignDay           : %1", TRGM_VAR_iCampaignDay]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_AdvancedSettings       : %1", TRGM_VAR_AdvancedSettings]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_arrayTime              : %1", TRGM_VAR_arrayTime]] remoteExec ["diag_log", 0];
+[format ["[[TRGM - DEBUG]] TRGM_VAR_IsFullMap              : %1", TRGM_VAR_IsFullMap]] remoteExec ["diag_log", 0];
 
 true;
