@@ -70,7 +70,7 @@ else {
         }] remoteExec ["call", 2]; //Save this to server only
         sleep 0.1;
 
-        if (count TRGM_VAR_SavedData isEqualTo 0) then {
+        if (count TRGM_VAR_SavedData isEqualTo 0 && {!(isNil "TRGM_VAR_InitialLoadedPreviousSettings") && {count TRGM_VAR_InitialLoadedPreviousSettings > 0}}) then {
             _ctrl = (findDisplay 5000) displayCtrl 5500;
             _ctrl ctrlSetText (localize "STR_TRGM2_SetParamsAndBegin_ErrorMsg_NoData");
             _ctrl ctrlShow true;
@@ -89,9 +89,9 @@ else {
                 ["_iWeather", 1],
                 ["_iUseRevive", 0],
                 ["_iStartLocation", 2],
-                ["_BadPoints"],
-                ["_MaxBadPoints"],
-                ["_BadPointsReason"],
+                ["_BadPoints", 0],
+                ["_MaxBadPoints", 1],
+                ["_BadPointsReason", ""],
                 ["_iCampaignDay", 0],
                 ["_AdvancedSettings", TRGM_VAR_DefaultAdvancedSettings],
                 ["_arrayTime", [8, 15]],

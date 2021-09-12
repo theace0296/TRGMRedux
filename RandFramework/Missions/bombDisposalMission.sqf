@@ -96,7 +96,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     if (!(isNil "TRGM_VAR_iMissionParamSubLocations") && {_iTaskIndex < count TRGM_VAR_iMissionParamSubLocations}) then {
         private _manualLocation = (TRGM_VAR_iMissionParamSubLocations select _iTaskIndex);
         if (!((_manualLocation select 0) isEqualTo 0) && !((_manualLocation select 1) isEqualTo 0)) then {
-            _buildings = nearestObjects [, TRGM_VAR_BasicBuildings, 100];
+            _buildings = nearestObjects [_manualLocation, TRGM_VAR_BasicBuildings, 100];
         };
     };
     if (isNil "_buildings") then {
