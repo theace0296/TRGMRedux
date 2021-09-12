@@ -137,10 +137,6 @@ if (count TRGM_VAR_AdvControls < 14) then {
 TRGM_GETTER_fnc_bIsCampaign = { TRGM_VAR_iMissionIsCampaign };
 publicVariable "TRGM_GETTER_fnc_bIsCampaign";
 
-/////// HasThreeChoosableAOLocations ///////
-TRGM_GETTER_fnc_bHasThreeChoosableAOLocations = { TRGM_VAR_iMissionParamType in [0,4,11] };
-publicVariable "TRGM_GETTER_fnc_bHasThreeChoosableAOLocations";
-
 /////// Sandstorm settings ///////
 if (isNil "TRGM_VAR_DefaultSandStormOption") then { TRGM_VAR_DefaultSandStormOption = 2; publicVariable "TRGM_VAR_DefaultSandStormOption"; };
 TRGM_GETTER_fnc_sandStormOption = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SANDSTORM_IDX };

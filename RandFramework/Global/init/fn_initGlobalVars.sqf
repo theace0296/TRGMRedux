@@ -23,9 +23,8 @@ if (isNil "TRGM_VAR_HQPosFound")             then { TRGM_VAR_HQPosFound         
 if (isNil "TRGM_VAR_ManualAOPosFound")       then { TRGM_VAR_ManualAOPosFound       = false; publicVariable "TRGM_VAR_ManualAOPosFound"; };
 if (isNil "TRGM_VAR_FactionSetupCompleted")  then { TRGM_VAR_FactionSetupCompleted  = false; publicVariable "TRGM_VAR_FactionSetupCompleted";};
 if (!isNil "laptop1")                        then { TRGM_VAR_NeededObjectsAvailable = true;  publicVariable "TRGM_VAR_NeededObjectsAvailable"; };
-TRGM_VAR_Mission1Loc = nil; publicVariable "TRGM_VAR_Mission1Loc";
-TRGM_VAR_Mission2Loc = nil; publicVariable "TRGM_VAR_Mission2Loc";
-TRGM_VAR_Mission3Loc = nil; publicVariable "TRGM_VAR_Mission3Loc";
+TRGM_VAR_iMissionParamLocations    = []; publicVariable "TRGM_VAR_iMissionParamLocations";
+TRGM_VAR_iMissionParamSubLocations = []; publicVariable "TRGM_VAR_iMissionParamSubLocations";
 
 TRGM_VAR_iTimeMultiplier = ["TimeMultiplier", 0] call BIS_fnc_getParamValue;
 if (TRGM_Var_iTimeMultiplier isEqualTo 50) then {

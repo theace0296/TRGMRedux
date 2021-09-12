@@ -38,15 +38,16 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
     TRGM_VAR_AOCampOnlyAmmoBox = true; //If true, then if players start at camp near AO, then there will only be an ammo box at the position (you may want to set this to true if you have designed your own camp)
     TRGM_VAR_AOCampLocation = [1674.52,1846.55,0]; //ignored if start location is HQ
 
-    TRGM_VAR_Mission1Loc = [2079.68,3054.64,0];
-    //TRGM_VAR_Mission2Loc = [3153.53,3491.27,0];
-    //TRGM_VAR_Mission3Loc = [2375.46,302.959,0];
+    TRGM_VAR_iMissionParamLocations = [
+        [2079.68,3054.64,0], // Objective 1
+        [3153.53,3491.27,0]  // Objective 2
+    ];
 
     //These are only used if your mission has a sub task (e.g. speak with bomb informant)
-    //However, if you have selected heavy with intel required above (i.e. iMissionParamType = 1), then just select the TRGM_VAR_Mission2Loc to a pos where the informat will be
-    //TRGM_VAR_Mission1SubLoc = [2079.68,3054.64,0];
-    //TRGM_VAR_Mission2SubLoc = [3153.53,3491.27,0];
-    //TRGM_VAR_Mission3SubLoc = [2375.46,302.959,0];
+    TRGM_VAR_iMissionParamSubLocations = [
+        [2079.68,3054.64,0], // Objective 1
+        [3153.53,3491.27,0]  // Objective 2
+    ];
 
     TRGM_VAR_Mission1Title = "Blow dem trucks up!";
     TRGM_VAR_Mission1Desc = "these trucks need to be blown up man.  They are bad and we need rid!";
@@ -106,12 +107,8 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
     publicVariable "TRGM_VAR_iStartLocation";
     publicVariable "TRGM_VAR_AOCampOnlyAmmoBox";
     publicVariable "TRGM_VAR_AOCampLocation";
-    publicVariable "TRGM_VAR_Mission1Loc";
-    publicVariable "TRGM_VAR_Mission2Loc";
-    publicVariable "TRGM_VAR_Mission3Loc";
-    publicVariable "TRGM_VAR_Mission1SubLoc";
-    publicVariable "TRGM_VAR_Mission2SubLoc";
-    publicVariable "TRGM_VAR_Mission3SubLoc";
+    publicVariable "TRGM_VAR_iMissionParamLocations";
+    publicVariable "TRGM_VAR_iMissionParamSubLocations";
     publicVariable "TRGM_VAR_Mission1Title";
     publicVariable "TRGM_VAR_Mission1Desc";
     publicVariable "TRGM_VAR_ForceWarZoneLoc";

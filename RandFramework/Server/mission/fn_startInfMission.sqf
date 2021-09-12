@@ -373,14 +373,11 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     };
 
     _bUserDefinedAO = false;
-    if (_iTaskIndex isEqualTo 0 && {!isNil "TRGM_VAR_Mission1Loc"}) then {
-        _bUserDefinedAO = true;
-    };
-    if (_iTaskIndex isEqualTo 1 && {!isNil "TRGM_VAR_Mission2Loc"}) then {
-        _bUserDefinedAO = true;
-    };
-    if (_iTaskIndex isEqualTo 2 && {!isNil "TRGM_VAR_Mission3Loc"}) then {
-        _bUserDefinedAO = true;
+    if (!(isNil "TRGM_VAR_iMissionParamLocations") && {_iTaskIndex < count TRGM_VAR_iMissionParamLocations}) then {
+        private _manualLocation = (TRGM_VAR_iMissionParamLocations select _iTaskIndex);
+        if (!((_manualLocation select 0) isEqualTo 0) && !((_manualLocation select 1) isEqualTo 0)) then {
+            _bUserDefinedAO = true;
+        };
     };
     [format ["Mission Setup: Task: %1", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
 
@@ -402,14 +399,11 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
         if (!_SamePrevAO || {_bUserDefinedAO || {_attempts > 100}}) then {
             _randLocation = if (!(isNil "TRGM_VAR_allLocationPositions") && {count TRGM_VAR_allLocationPositions > 0 && {_attempts < 10}}) then {selectRandom TRGM_VAR_allLocationPositions} else {[0 + (floor random 25000), 0 + (floor random 25000)]};
-            if (_attempts < 100 && {_iTaskIndex isEqualTo 0 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission1Loc")}}}) then {
-                _randLocation = TRGM_VAR_Mission1Loc;
-            };
-            if (_attempts < 100 && {_iTaskIndex isEqualTo 1 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission2Loc")}}}) then {
-                _randLocation = TRGM_VAR_Mission2Loc;
-            };
-            if (_attempts < 100 && {_iTaskIndex isEqualTo 2 && {!_bIsCampaign && {!(isNil "TRGM_VAR_Mission3Loc")}}}) then {
-                _randLocation = TRGM_VAR_Mission3Loc;
+            if (_attempts < 100 && {!_bIsCampaign && {!(isNil "TRGM_VAR_iMissionParamLocations") && {_iTaskIndex < count TRGM_VAR_iMissionParamLocations}}}) then {
+                private _manualLocation = (TRGM_VAR_iMissionParamLocations select _iTaskIndex);
+                if (!((_manualLocation select 0) isEqualTo 0) && !((_manualLocation select 1) isEqualTo 0)) then {
+                    _randLocation = _manualLocation;
+                };
             };
             _randInfor1X = _randLocation select 0;
             _randInfor1Y = _randLocation select 1;
