@@ -23,8 +23,8 @@ if (_SaveVersion != "") then {
     sleep 0.1;
     [[], {
         _saveData = [
-            TRGM_VAR_iMissionParamType,
-            TRGM_VAR_iMissionParamObjective,
+            TRGM_VAR_iMissionIsCampaign,
+            TRGM_VAR_iMissionParamObjectives,
             TRGM_VAR_iAllowNVG,
             TRGM_VAR_iMissionParamRepOption,
             TRGM_VAR_iWeather,
@@ -35,11 +35,10 @@ if (_SaveVersion != "") then {
             TRGM_VAR_BadPointsReason,
             TRGM_VAR_iCampaignDay,
             TRGM_VAR_AdvancedSettings,
-            TRGM_VAR_EnemyFactionData,
-            TRGM_VAR_LoadoutData,
-            TRGM_VAR_arrayTime
+            TRGM_VAR_arrayTime,
+            TRGM_VAR_IsFullMap
         ];
-        profileNamespace setVariable [TRGM_VAR_sInitialSLPlayerID + ":" + TRGM_VAR_SaveTypeString,_saveData];
+        profileNamespace setVariable [format ["%1:%2:%3", TRGM_VAR_sInitialSLPlayerID, TRGM_VAR_SaveTypeString, TRGM_VAR_SaveDataVersion], _saveData];
         saveProfileNamespace;
     }] remoteExec ["call", 2]; //Save this to server only
 

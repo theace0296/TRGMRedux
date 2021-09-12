@@ -23,9 +23,8 @@ if (isNil "TRGM_VAR_HQPosFound")             then { TRGM_VAR_HQPosFound         
 if (isNil "TRGM_VAR_ManualAOPosFound")       then { TRGM_VAR_ManualAOPosFound       = false; publicVariable "TRGM_VAR_ManualAOPosFound"; };
 if (isNil "TRGM_VAR_FactionSetupCompleted")  then { TRGM_VAR_FactionSetupCompleted  = false; publicVariable "TRGM_VAR_FactionSetupCompleted";};
 if (!isNil "laptop1")                        then { TRGM_VAR_NeededObjectsAvailable = true;  publicVariable "TRGM_VAR_NeededObjectsAvailable"; };
-TRGM_VAR_Mission1Loc = nil; publicVariable "TRGM_VAR_Mission1Loc";
-TRGM_VAR_Mission2Loc = nil; publicVariable "TRGM_VAR_Mission2Loc";
-TRGM_VAR_Mission3Loc = nil; publicVariable "TRGM_VAR_Mission3Loc";
+TRGM_VAR_iMissionParamLocations    = []; publicVariable "TRGM_VAR_iMissionParamLocations";
+TRGM_VAR_iMissionParamSubLocations = []; publicVariable "TRGM_VAR_iMissionParamSubLocations";
 
 TRGM_VAR_iTimeMultiplier = ["TimeMultiplier", 0] call BIS_fnc_getParamValue;
 if (TRGM_Var_iTimeMultiplier isEqualTo 50) then {
@@ -33,7 +32,8 @@ if (TRGM_Var_iTimeMultiplier isEqualTo 50) then {
 };
 publicVariable "TRGM_VAR_iTimeMultiplier";
 
-if (isNil "TRGM_VAR_FactionVersion") then { TRGM_VAR_FactionVersion = 4;  publicVariable "TRGM_VAR_FactionVersion"; };
+if (isNil "TRGM_VAR_SaveDataVersion") then { TRGM_VAR_SaveDataVersion = 2;  publicVariable "TRGM_VAR_SaveDataVersion"; };
+if (isNil "TRGM_VAR_FactionVersion")  then { TRGM_VAR_FactionVersion  = 4;  publicVariable "TRGM_VAR_FactionVersion"; };
 if (isNil "TRGM_VAR_LocationVersion") then { TRGM_VAR_LocationVersion = 2;  publicVariable "TRGM_VAR_LocationVersion"; };
 
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
@@ -239,7 +239,6 @@ if (isNil "TRGM_VAR_CommsTowerPos")                           then {TRGM_VAR_Com
 if (isNil "TRGM_VAR_CoreCompleted")                           then { TRGM_VAR_CoreCompleted = false;                                  publicVariable "TRGM_VAR_CoreCompleted";};
 if (isNil "TRGM_VAR_CurrentZeroMissionTitle")                 then {TRGM_VAR_CurrentZeroMissionTitle = "";                            publicVariable "TRGM_VAR_CurrentZeroMissionTitle";};
 if (isNil "TRGM_VAR_CustomObjectsSet")                        then {TRGM_VAR_CustomObjectsSet = false;                                publicVariable "TRGM_VAR_CustomObjectsSet";};
-if (isNil "TRGM_VAR_EnemyFactionData")                        then {TRGM_VAR_EnemyFactionData = "";                                   publicVariable "TRGM_VAR_EnemyFactionData";};
 if (isNil "TRGM_VAR_EnemyID")                                 then {TRGM_VAR_EnemyID = 1;                                             publicVariable "TRGM_VAR_EnemyID";};
 if (isNil "TRGM_VAR_FinalMissionStarted")                     then {TRGM_VAR_FinalMissionStarted = false;                             publicVariable "TRGM_VAR_FinalMissionStarted";};
 if (isNil "TRGM_VAR_FlareCounter")                            then {TRGM_VAR_FlareCounter = 15;                                       publicVariable "TRGM_VAR_FlareCounter";};
@@ -256,8 +255,6 @@ if (isNil "TRGM_VAR_IsFullMap")                               then {TRGM_VAR_IsF
 if (isNil "TRGM_VAR_IsSnowMap")                               then {TRGM_VAR_IsSnowMap = false;                                       publicVariable "TRGM_VAR_IsSnowMap";};
 if (isNil "TRGM_VAR_KilledPlayers")                           then {TRGM_VAR_KilledPlayers = [];                                      publicVariable "TRGM_VAR_KilledPlayers";};
 if (isNil "TRGM_VAR_KilledPositions")                         then {TRGM_VAR_KilledPositions = [];                                    publicVariable "TRGM_VAR_KilledPositions";};
-if (isNil "TRGM_VAR_LoadoutData")                             then {TRGM_VAR_LoadoutData = "";                                        publicVariable "TRGM_VAR_LoadoutData";};
-if (isNil "TRGM_VAR_LoadoutDataDefault")                      then {TRGM_VAR_LoadoutDataDefault = "";                                 publicVariable "TRGM_VAR_LoadoutDataDefault";};
 if (isNil "TRGM_VAR_MainMissionTitle")                        then {TRGM_VAR_MainMissionTitle = "";                                   publicVariable "TRGM_VAR_MainMissionTitle";};
 if (isNil "TRGM_VAR_MaxBadPoints")                            then {TRGM_VAR_MaxBadPoints = 1;                                        publicVariable "TRGM_VAR_MaxBadPoints";};
 if (isNil "TRGM_VAR_MissionLoaded")                           then {TRGM_VAR_MissionLoaded = false;                                   publicVariable "TRGM_VAR_MissionLoaded";};
@@ -285,11 +282,9 @@ if (isNil "TRGM_VAR_bOptionsSet")                             then {TRGM_VAR_bOp
 if (isNil "TRGM_VAR_bOptionsSet")                             then {TRGM_VAR_bOptionsSet = false;                                     publicVariable "TRGM_VAR_bOptionsSet";};
 if (isNil "TRGM_VAR_iAllowNVG")                               then {TRGM_VAR_iAllowNVG = 2;                                           publicVariable "TRGM_VAR_iAllowNVG";};
 if (isNil "TRGM_VAR_iCampaignDay")                            then {TRGM_VAR_iCampaignDay = 0;                                        publicVariable "TRGM_VAR_iCampaignDay";};
-if (isNil "TRGM_VAR_iMissionParamObjective")                  then {TRGM_VAR_iMissionParamObjective = 0;                              publicVariable "TRGM_VAR_iMissionParamObjective";};
-if (isNil "TRGM_VAR_iMissionParamObjective2")                 then {TRGM_VAR_iMissionParamObjective2 = 0;                             publicVariable "TRGM_VAR_iMissionParamObjective2";};
-if (isNil "TRGM_VAR_iMissionParamObjective3")                 then {TRGM_VAR_iMissionParamObjective3 = 0;                             publicVariable "TRGM_VAR_iMissionParamObjective3";};
+if (isNil "TRGM_VAR_iMissionParamObjectives")                 then {TRGM_VAR_iMissionParamObjectives = [[0, false, false, false]];        publicVariable "TRGM_VAR_iMissionParamObjectives";};
 if (isNil "TRGM_VAR_iMissionParamRepOption")                  then {TRGM_VAR_iMissionParamRepOption = 0;                              publicVariable "TRGM_VAR_iMissionParamRepOption";};
-if (isNil "TRGM_VAR_iMissionParamType")                       then {TRGM_VAR_iMissionParamType = 9;                                   publicVariable "TRGM_VAR_iMissionParamType";};
+if (isNil "TRGM_VAR_iMissionIsCampaign")                      then {TRGM_VAR_iMissionIsCampaign = false;                              publicVariable "TRGM_VAR_iMissionIsCampaign";};
 if (isNil "TRGM_VAR_iStartLocation")                          then {TRGM_VAR_iStartLocation = 2;                                      publicVariable "TRGM_VAR_iStartLocation";};
 if (isNil "TRGM_VAR_iUseRevive")                              then {TRGM_VAR_iUseRevive = 0;                                          publicVariable "TRGM_VAR_iUseRevive";};
 if (isNil "TRGM_VAR_iWeather")                                then {TRGM_VAR_iWeather = 1;                                            publicVariable "TRGM_VAR_iWeather";};

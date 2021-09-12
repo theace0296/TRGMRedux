@@ -2616,6 +2616,78 @@
                 <Spanish>Opciones Avanzadas</Spanish>
                 <Korean>고급 설정</Korean>
             </Key>
+            <Key ID="STR_TRGM2_dialogs_IsCampaign_True">
+                <Original>Campaign</Original>
+                <English>Campaign</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsCampaign_False">
+                <Original>Mission</Original>
+                <English>Mission</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsCampaign_Tooltip">
+                <Original>Sets the game type to either be a campaign or mission. If the game type is "mission," the objectives can be set individually. Otherwise, the objectives are random.</Original>
+                <English>Sets the game type to either be a campaign or mission. If the game type is "mission," the objectives can be set individually. Otherwise, the objectives are random.</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_AddObjective">
+                <Original>Add Objective</Original>
+                <English>Add Objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_RemoveObjective">
+                <Original>Remove Objective</Original>
+                <English>Remove Objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsFullMap_True">
+                <Original>Full Map On</Original>
+                <English>Full Map On</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsFullMap_False">
+                <Original>Full Map Off</Original>
+                <English>Full Map Off</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsFullMap_Tooltip">
+                <Original>If enabled, enemy units, civilains, and mini missions will spawn over the whole map.</Original>
+                <English>If enabled, enemy units, civilains, and mini missions will spawn over the whole map.</English>
+            </Key>
+             <Key ID="STR_TRGM2_dialogs_ObjectiveIndex">
+                <Original>Objective %1:</Original>
+                <English>Objective %1:</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHeavy_True">
+                <Original>Heavy objective</Original>
+                <English>Heavy objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHeavy_False">
+                <Original>Not heavy objective</Original>
+                <English>Not heavy objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHeavy_Tooltip">
+                <Original>If enabled, the objective will be occupied by a heavy enemy army.</Original>
+                <English>If enabled, the objective will be occupied by a heavy enemy army.</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHidden_True">
+                <Original>Hidden objective</Original>
+                <English>Hidden objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHidden_False">
+                <Original>Not hidden objective</Original>
+                <English>Not hidden objective</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsHidden_Tooltip">
+                <Original>If enabled, you will need to gather intel to reveal the location of the objective.</Original>
+                <English>If enabled, you will need to gather intel to reveal the location of the objective.</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsSameAO_True">
+                <Original>In same AO</Original>
+                <English>In same AO</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsSameAO_False">
+                <Original>Not in same AO</Original>
+                <English>Not in same AO</English>
+            </Key>
+            <Key ID="STR_TRGM2_dialogs_IsSameAO_Tooltip">
+                <Original>If enabled, the objective location will be the same as the objective above this one.</Original>
+                <English>If enabled, the objective location will be the same as the objective above this one.</English>
+            </Key>
             <Key ID="STR_TRGM2_dialogs_Objective">
                 <Original>Objective</Original>
                 <English>Objective</English>
@@ -2793,8 +2865,8 @@
                 <Korean>설정이 잘못 되었습니다</Korean>
             </Key>
             <Key ID="STR_TRGM2_SetParamsAndBegin_ErrorMsg_NoData">
-                <Original>No data found! make sure you are using the same profile that you saved the last mission with</Original>
-                <English>No data found! make sure you are using the same profile that you saved the last mission with</English>
+                <Original>No data found! Make sure you are using the same profile that you saved the last mission with!</Original>
+                <English>No data found! Make sure you are using the same profile that you saved the last mission with!</English>
                 <Chinese>沒找到資料! 請確保你當前的使用者是使用之前負責存檔的那個使用者</Chinese>
                 <Chinesesimp>没找到资料! 请确保你当前的使用者是使用之前负责存档的那个使用者</Chinesesimp>
                 <Spanish>Datos no encontrados! asegúrate que usas el mismo perfil con el que guardaste la última misión</Spanish>

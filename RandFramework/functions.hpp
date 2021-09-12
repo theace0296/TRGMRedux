@@ -203,17 +203,21 @@ class TRGM_GLOBAL {
 class TRGM_GUI {
     class gui {
         file = "RandFramework\GUI";
+        class addObjective {};
         class codeCompare {};
         class createNotification {};
         class deleteNotification {};
         class downloadData {};
         class handleNotification {};
         class initNotifications {};
+        class missionSetupControlsOnChange {};
+        class missionSetupControlsOnLoad {};
         class missionTypeSelection {};
         class openDialogAdvancedMissionSettings {};
         class openDialogMissionSelection {};
         class openDialogRequests {};
         class openVehicleCustomizationDialog {};
+        class removeObjective {};
         class setParamsAndBegin {};
         class timeSliderOnChange {};
         class wireCompare {};

@@ -6,20 +6,8 @@ if (TRGM_VAR_OverrideMissionSetup) then {
 
 if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
 
-    /*
-    0=Heavy Mission (with two optional sides)
-    6=Heavy Mission (two hidden optional sides)
-    8=Heavy Mission (two objectives at AO, chance of side)
-    1=Heavy Mission (Intel required for AO Location)
-    2=Heavy Mission Only
-    3=Single Mission
-    9=Single Mission (two objectives at AO, chance of side)
-    4=Three Missions
-    7=Three Hidden Missions
-    10=Heavy Mission, hidden location and type
-    5=Campaign
-    */
-    TRGM_VAR_iMissionParamType = 3;
+    TRGM_VAR_iMissionIsCampaign = false;
+    TRGM_VAR_IsFullMap = false;
 
 
     /*
@@ -41,23 +29,25 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
     16 = Destroy Cache
     99999 = Custom Mission - MUST BE ENABLED VIA 'Enable Custom Mission' parameter in lobby OR 'TRGM_VAR_UseCustomMission' must be set to TRUE above!
     */
-    TRGM_VAR_iMissionParamObjective = 3;
-    //TRGM_VAR_iMissionParamObjective2 = 13;
-    //TRGM_VAR_iMissionParamObjective3 = 7;
+    TRGM_VAR_iMissionParamObjectives = [
+        [3, false, false, false], // Objective 1
+        [2, false, false, false]  // Objective 2
+    ];
 
     TRGM_VAR_iStartLocation = 1;    //0=StartAtHQ 1=StartNearAO
     TRGM_VAR_AOCampOnlyAmmoBox = true; //If true, then if players start at camp near AO, then there will only be an ammo box at the position (you may want to set this to true if you have designed your own camp)
     TRGM_VAR_AOCampLocation = [1674.52,1846.55,0]; //ignored if start location is HQ
 
-    TRGM_VAR_Mission1Loc = [2079.68,3054.64,0];
-    //TRGM_VAR_Mission2Loc = [3153.53,3491.27,0];
-    //TRGM_VAR_Mission3Loc = [2375.46,302.959,0];
+    TRGM_VAR_iMissionParamLocations = [
+        [2079.68,3054.64,0], // Objective 1
+        [3153.53,3491.27,0]  // Objective 2
+    ];
 
     //These are only used if your mission has a sub task (e.g. speak with bomb informant)
-    //However, if you have selected heavy with intel required above (i.e. iMissionParamType = 1), then just select the TRGM_VAR_Mission2Loc to a pos where the informat will be
-    //TRGM_VAR_Mission1SubLoc = [2079.68,3054.64,0];
-    //TRGM_VAR_Mission2SubLoc = [3153.53,3491.27,0];
-    //TRGM_VAR_Mission3SubLoc = [2375.46,302.959,0];
+    TRGM_VAR_iMissionParamSubLocations = [
+        [2079.68,3054.64,0], // Objective 1
+        [3153.53,3491.27,0]  // Objective 2
+    ];
 
     TRGM_VAR_Mission1Title = "Blow dem trucks up!";
     TRGM_VAR_Mission1Desc = "these trucks need to be blown up man.  They are bad and we need rid!";
@@ -111,19 +101,14 @@ if (isServer && {TRGM_VAR_OverrideMissionSetup}) then {
     publicVariable "TRGM_VAR_ForceMissionSetup";
     publicVariable "TRGM_VAR_UseCustomMission";
     publicVariable "TRGM_VAR_MainMissionTitle";
-    publicVariable "TRGM_VAR_iMissionParamType";
-    publicVariable "TRGM_VAR_iMissionParamObjective";
-    publicVariable "TRGM_VAR_iMissionParamObjective2";
-    publicVariable "TRGM_VAR_iMissionParamObjective3";
+    publicVariable "TRGM_VAR_iMissionIsCampaign";
+    publicVariable "TRGM_VAR_IsFullMap";
+    publicVariable "TRGM_VAR_iMissionParamObjectives";
     publicVariable "TRGM_VAR_iStartLocation";
     publicVariable "TRGM_VAR_AOCampOnlyAmmoBox";
     publicVariable "TRGM_VAR_AOCampLocation";
-    publicVariable "TRGM_VAR_Mission1Loc";
-    publicVariable "TRGM_VAR_Mission2Loc";
-    publicVariable "TRGM_VAR_Mission3Loc";
-    publicVariable "TRGM_VAR_Mission1SubLoc";
-    publicVariable "TRGM_VAR_Mission2SubLoc";
-    publicVariable "TRGM_VAR_Mission3SubLoc";
+    publicVariable "TRGM_VAR_iMissionParamLocations";
+    publicVariable "TRGM_VAR_iMissionParamSubLocations";
     publicVariable "TRGM_VAR_Mission1Title";
     publicVariable "TRGM_VAR_Mission1Desc";
     publicVariable "TRGM_VAR_ForceWarZoneLoc";

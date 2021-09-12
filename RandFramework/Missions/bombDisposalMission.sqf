@@ -93,14 +93,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     if (isNil "_objInformant" || {isNull _objInformant}) exitWith {};
 
     _buildings = nil;
-    if (_iTaskIndex isEqualTo 0 && !isNil "TRGM_VAR_Mission1SubLoc") then {
-        _buildings = nearestObjects [TRGM_VAR_Mission1SubLoc, TRGM_VAR_BasicBuildings, 100];
-    };
-    if (_iTaskIndex isEqualTo 1 && !isNil "TRGM_VAR_Mission2SubLoc") then {
-        _buildings = nearestObjects [TRGM_VAR_Mission2SubLoc, TRGM_VAR_BasicBuildings, 100];
-    };
-    if (_iTaskIndex isEqualTo 2 && !isNil "TRGM_VAR_Mission3SubLoc") then {
-        _buildings = nearestObjects [TRGM_VAR_Mission3SubLoc, TRGM_VAR_BasicBuildings, 100];
+    if (!(isNil "TRGM_VAR_iMissionParamSubLocations") && {_iTaskIndex < count TRGM_VAR_iMissionParamSubLocations}) then {
+        private _manualLocation = (TRGM_VAR_iMissionParamSubLocations select _iTaskIndex);
+        if (!((_manualLocation select 0) isEqualTo 0) && !((_manualLocation select 1) isEqualTo 0)) then {
+            _buildings = nearestObjects [_manualLocation, TRGM_VAR_BasicBuildings, 100];
+        };
     };
     if (isNil "_buildings") then {
         _buildings = nearestObjects [[_centralAO_x,_centralAO_y], TRGM_VAR_BasicBuildings, 1800];
