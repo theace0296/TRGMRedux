@@ -35,7 +35,7 @@ if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "
         _LineThree = "location unknown"
     };
 
-    if (!(call TRGM_GETTER_fnc_bIsCampaign)) then {
+    if (!(TRGM_VAR_iMissionIsCampaign)) then {
         _LineOne = "TRGM Redux"
     };
 

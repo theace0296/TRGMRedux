@@ -65,7 +65,7 @@ call TRGM_CLIENT_fnc_endCamera;
 sleep 3;
 
 if (TRGM_VAR_AdminPlayer isEqualTo player) then {
-    if !(call TRGM_GETTER_fnc_bIsCampaign) then {    //if isCampaign, dont allow to select AO
+    if !(TRGM_VAR_iMissionIsCampaign) then {    //if isCampaign, dont allow to select AO
 
         if (call TRGM_GETTER_fnc_bManualAOPlacement) then {
             TRGM_VAR_iMissionParamLocations    = []; publicVariable "TRGM_VAR_iMissionParamLocations";
@@ -192,7 +192,7 @@ else {
     _iRespawnTimer = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_RESPAWN_TIMER_IDX;
     setPlayerRespawnTime _iRespawnTimer;
 
-    //if ((call TRGM_GETTER_fnc_bIsCampaign) && !isMultiplayer) then {
+    //if ((TRGM_VAR_iMissionIsCampaign) && !isMultiplayer) then {
     //    [player, 999] call BIS_fnc_respawnTickets;
     //    TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "\n" + "999 respawn tickets"
     //}

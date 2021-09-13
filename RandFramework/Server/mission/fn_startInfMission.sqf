@@ -30,7 +30,7 @@ _MissionsThatHaveIntel = TRGM_VAR_MissionsThatHaveIntel;
 
 ["Mission Setup: 14", true] call TRGM_GLOBAL_fnc_log;
 
-if (call TRGM_GETTER_fnc_bIsCampaign) then {
+if (TRGM_VAR_iMissionIsCampaign) then {
     _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
     if (_totalRep >= 10) then {
         _ThisTaskTypes = [selectRandom _MainMissionTasksToUse, selectRandom _MissionsThatHaveIntel, selectRandom _MissionsThatHaveIntel];
@@ -542,7 +542,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                         };
                     };
 
-                    if (_iTaskIndex isEqualTo 0 && call TRGM_GETTER_fnc_bIsCampaign) then {_allowFriendlyIns = false};
+                    if (_iTaskIndex isEqualTo 0 && TRGM_VAR_iMissionIsCampaign) then {_allowFriendlyIns = false};
 
                     if (_bSideMissionsCivOnlyToUse && !_bCreateTask) then {
                         TRGM_VAR_ClearedPositions pushBack [_inf1X,_inf1Y];
@@ -612,7 +612,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 _trgComplete = createTrigger ["EmptyDetector", [0,0]];
 _trgComplete setVariable ["DelMeOnNewCampaignDay",true];
 _trgComplete setTriggerArea [0, 0, 0, false];
-if (call TRGM_GETTER_fnc_bIsCampaign) then {
+if (TRGM_VAR_iMissionIsCampaign) then {
     _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
 
     if (_totalRep >= 10 && TRGM_VAR_FinalMissionStarted) then {

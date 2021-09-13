@@ -56,7 +56,7 @@ saveGame;
 sleep 1;
 
 TRGM_VAR_AllInitScriptsFinished = true; publicVariable "TRGM_VAR_AllInitScriptsFinished";
-if (call TRGM_GETTER_fnc_bIsCampaign) then {
+if (TRGM_VAR_iMissionIsCampaign) then {
     [(localize "STR_TRGM2_startInfMission_SoItBegin")] call TRGM_GLOBAL_fnc_notifyGlobal;
 };
 

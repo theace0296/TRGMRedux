@@ -1,6 +1,6 @@
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-_isCampaign = (call TRGM_GETTER_fnc_bIsCampaign);
+_isCampaign = (TRGM_VAR_iMissionIsCampaign);
 
 
 _mrkHQPos = getMarkerPos "mrkHQ";
@@ -164,7 +164,7 @@ if (_bAllowStart) then {
         [(localize "STR_TRGM2_StartMission_Hint")] remoteExec ["TRGM_GLOBAL_fnc_notify", 0];
     };
 
-    if !(call TRGM_GETTER_fnc_bIsCampaign) then {
+    if !(TRGM_VAR_iMissionIsCampaign) then {
         [] remoteExec ["TRGM_SERVER_fnc_postStartMission"];
     };
 

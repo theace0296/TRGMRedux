@@ -313,7 +313,7 @@ waitUntil { TRGM_VAR_CustomObjectsSet };
 [endMissionBoard] remoteExec ["removeAllActions"];
 [endMissionBoard2] remoteExec ["removeAllActions"];
 
-if (call TRGM_GETTER_fnc_bIsCampaign && isMultiplayer && isServer) then {
+if (TRGM_VAR_iMissionIsCampaign && isMultiplayer && isServer) then {
     if (TRGM_VAR_SaveType isEqualTo 0) then {
         [laptop1, [localize "STR_TRGM2_TRGMInitPlayerLocal_SaveLocal",{[1,true] spawn TRGM_SERVER_fnc_serverSave;}]] remoteExec ["addaction"];
         [laptop1, [localize "STR_TRGM2_TRGMInitPlayerLocal_SaveGlobal",{[2,true] spawn TRGM_SERVER_fnc_serverSave;}]] remoteExec ["addaction"];
@@ -366,7 +366,7 @@ TRGM_VAR_BadPointsReason = ""; publicVariable "TRGM_VAR_BadPointsReason";
 TRGM_VAR_MaxBadPoints = 1; publicVariable "TRGM_VAR_MaxBadPoints";
 [format["Mission Core: %1", "BadPointsSet"], true] call TRGM_GLOBAL_fnc_log;
 
-if (call TRGM_GETTER_fnc_bIsCampaign) then {
+if (TRGM_VAR_iMissionIsCampaign) then {
     if (isServer) then {
         [] spawn TRGM_SERVER_fnc_initCampaign;
     };
@@ -392,7 +392,7 @@ waitUntil { TRGM_VAR_MissionLoaded; };
 [format["Mission Core: %1", "DontDeleteSet"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
-if (isMultiplayer && {!(call TRGM_GETTER_fnc_bIsCampaign)}) then {
+if (isMultiplayer && {!(TRGM_VAR_iMissionIsCampaign)}) then {
     [] spawn TRGM_SERVER_fnc_checkAnyPlayersAlive;
 };
 
@@ -425,7 +425,7 @@ if (TRGM_VAR_iAllowNVG isEqualTo 0) then {
 [format["Mission Core: %1", "AnimalStateSet"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
-if (call TRGM_GETTER_fnc_bIsCampaign) then {
+if (TRGM_VAR_iMissionIsCampaign) then {
     [] remoteExec ["TRGM_SERVER_fnc_postStartMission"];
 };
 
@@ -451,7 +451,7 @@ if (_iEnemyFlashLightOption isEqualTo 1) then {
 waitUntil { TRGM_VAR_AllInitScriptsFinished; };
 [format["Mission Core: %1", "Main Init Complete"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
-if !(call TRGM_GETTER_fnc_bIsCampaign) then {
+if !(TRGM_VAR_iMissionIsCampaign) then {
     [(localize "STR_TRGM2_startInfMission_SoItBegin")] call TRGM_GLOBAL_fnc_notifyGlobal;
 };
 

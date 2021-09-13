@@ -112,31 +112,6 @@ TRGM_VAR_DefaultAdvancedSettings = [];
 publicVariable "TRGM_VAR_DefaultAdvancedSettings";
 
 
-/*DONT FORGET TO ADD THIS TO fn_openDialogMissionselection.sqf
-if (count TRGM_VAR_AdvControls < 14) then {
-    TRGM_VAR_AdvControls pushBack (TRGM_VAR_DefaultAdvancedSettings select 13);
-};
-*/
-// 0  = Heavy Mission (with two optional sides)
-// 6  = Heavy Mission (two hidden optional sides)
-// 8  = Heavy Mission (two objectives at AO, chance of side)
-// 1  = Heavy Mission (Intel required for AO Location)
-// 2  = Heavy Mission Only
-// 3  = Single Mission
-// 9  = Single Mission (two objectives at AO, chance of side)
-// 4  = Three Missions
-// 7  = Three Hidden Missions
-// 10 = Heavy full map hidden mission
-// 11 = Three heavy missions
-// 12 = Three hidden heavy missions, full map
-// 13 = Six missions, full map
-// 14 = Six missions, hidden, full map
-// 5  = Campaign
-
-/////// IsCampaign ///////
-TRGM_GETTER_fnc_bIsCampaign = { TRGM_VAR_iMissionIsCampaign };
-publicVariable "TRGM_GETTER_fnc_bIsCampaign";
-
 /////// Sandstorm settings ///////
 if (isNil "TRGM_VAR_DefaultSandStormOption") then { TRGM_VAR_DefaultSandStormOption = 2; publicVariable "TRGM_VAR_DefaultSandStormOption"; };
 TRGM_GETTER_fnc_sandStormOption = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SANDSTORM_IDX };
