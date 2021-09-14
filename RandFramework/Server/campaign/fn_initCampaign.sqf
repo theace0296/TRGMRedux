@@ -8,9 +8,7 @@
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-
-
-
+call CUSTOM_MISSION_fnc_CustomCampaignObjectives;
 
 if (TRGM_VAR_SaveType isEqualTo 0) then {
     ["INIT"] remoteExec ["TRGM_SERVER_fnc_setMissionBoardOptions",0,true];

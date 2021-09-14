@@ -47,6 +47,9 @@ class CfgFunctions {
             class CustomMission {
                 file = "CustomMission\CustomMission.sqf";
             };
+            class CustomCampaignObjectives {
+                file = "CustomMission\CustomCampaignObjectives.sqf";
+            };
         };
 
         class factions {
@@ -165,6 +168,20 @@ class Params
     class CustomMilitiaFactionLoadouts
     {
         title = "Enable Custom Militia Faction Loadouts (Overrides Faction selected in mission set up)";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
+    };
+    class CustomCampaignObjectives
+    {
+        title = "Enable custom exclusions for campaign main objectives. (Configured in CustomMission/CustomCampaignObjectives.sqf)";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
+    };
+    class CustomCampaignSideObjectives
+    {
+        title = "Enable custom exclusions for campaign side objectives. (Configured in CustomMission/CustomCampaignObjectives.sqf)";
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
         default = 0;

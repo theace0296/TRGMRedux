@@ -25,7 +25,6 @@ _bSideMissionsCivOnly = nil;
 
 _MainMissionTasksToUse = TRGM_VAR_MainMissionTasks;
 _SideMissionTasksToUse = TRGM_VAR_SideMissionTasks;
-_SideMissionTasksToUse = TRGM_VAR_SideMissionTasks;
 _MissionsThatHaveIntel = TRGM_VAR_MissionsThatHaveIntel;
 
 ["Mission Setup: 14", true] call TRGM_GLOBAL_fnc_log;
@@ -33,7 +32,13 @@ _MissionsThatHaveIntel = TRGM_VAR_MissionsThatHaveIntel;
 if (TRGM_VAR_iMissionIsCampaign) then {
     _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
     if (_totalRep >= 10) then {
-        _ThisTaskTypes = [selectRandom _MainMissionTasksToUse, selectRandom _MissionsThatHaveIntel, selectRandom _MissionsThatHaveIntel];
+        if !(isNil "TRGM_VAR_MainObjectivesToExcludeFromCampaign") then {
+            _MainMissionTasksToUse = TRGM_VAR_MainMissionTasks - TRGM_VAR_MainObjectivesToExcludeFromCampaign;
+        };
+        if !(isNil "TRGM_VAR_SideObjectivesToExcludeFromCampaign") then {
+            _SideMissionTasksToUse = TRGM_VAR_SideMissionTasks - TRGM_VAR_SideObjectivesToExcludeFromCampaign;
+        };
+        _ThisTaskTypes = [selectRandom _MainMissionTasksToUse, selectRandom _MissionsThatHaveIntel, selectRandom _SideMissionTasksToUse];
         _IsMainObjs = [true,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
         _MarkerTypes = ["mil_objective","hd_dot","hd_dot"];
         _CreateTasks = [true,false,false];

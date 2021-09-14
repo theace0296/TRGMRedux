@@ -319,7 +319,6 @@ Also, add new missions as cases in functions/mission/fn_startInfMission.sqf
 
 // TRGM_VAR_SideMissionTasks   = [17]; publicVariable "TRGM_VAR_SideMissionTasks";
 TRGM_VAR_SideMissionTasks      = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]; publicVariable "TRGM_VAR_SideMissionTasks";
-// TRGM_VAR_MainMissionTasks   = [17]; publicVariable "TRGM_VAR_MainMissionTasks";
 TRGM_VAR_MainMissionTasks      = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]; publicVariable "TRGM_VAR_MainMissionTasks";
 TRGM_VAR_MissionsThatHaveIntel = [1, 4, 5, 6]; publicVariable "TRGM_VAR_MissionsThatHaveIntel";
 
@@ -344,7 +343,7 @@ TRGM_VAR_MissionParamObjectivesValues pushBack 17;
 TRGM_VAR_MissionParamObjectives       pushBack localize "STR_TRGM2_MeetingAssassinationMissionTitle";
 TRGM_VAR_MissionParamObjectivesValues pushBack 18;
 
-TRGM_VAR_MissionParamObjectives       pushBack "Ambush Convoy";
+TRGM_VAR_MissionParamObjectives       pushBack localize "STR_TRGM2_AmbushConvoyMissionTitle";
 TRGM_VAR_MissionParamObjectivesValues pushBack 19;
 
 if (TRGM_VAR_UseCustomMission) then {
@@ -355,6 +354,7 @@ if (TRGM_VAR_UseCustomMission) then {
 
 publicVariable "TRGM_VAR_MissionParamObjectives";
 publicVariable "TRGM_VAR_MissionParamObjectivesValues";
+
 
 
 TRGM_VAR_MissionParamRepOptions            = [localize "STR_TRGM2_TRGMInitPlayerLocal_Enable", localize "STR_TRGM2_TRGMInitPlayerLocal_Disable"]; publicVariable "TRGM_VAR_MissionParamRepOptions";

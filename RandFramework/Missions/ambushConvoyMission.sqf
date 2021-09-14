@@ -21,7 +21,7 @@ MISSION_fnc_CustomVars = { //This is called before the mission function is calle
     _RequiresNearbyRoad = true;
     _roadSearchRange = 20; //this is how far out the engine will check to make sure a road is within range (if your objective requires a nearby road)
     _allowFriendlyIns = false;
-    _MissionTitle = "Ambush Convoy"; //this is what shows in dialog mission selection
+    _MissionTitle = localize "STR_TRGM2_AmbushConvoyMissionTitle"; //this is what shows in dialog mission selection
 };
 
 MISSION_fnc_CustomMission = { //This function is the main script for your mission, some if the parameters passed in must not be changed!!!

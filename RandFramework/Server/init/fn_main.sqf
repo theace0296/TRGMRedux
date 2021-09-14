@@ -271,7 +271,7 @@ if (call TRGM_GETTER_fnc_bTransportEnabled) then {
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 TRGM_VAR_CustomObjectsSet = true; publicVariable "TRGM_VAR_CustomObjectsSet";
-// call compile preprocessFileLineNumbers "RandFramework\setFriendlyObjects.sqf";
+
 [format["Mission Core: %1", "FriendlyObjectsSet"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 

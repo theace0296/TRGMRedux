@@ -773,8 +773,8 @@
                 <Korean>우리의 정보원 중 한명이 적의 전투 계획을 알아냈습니다. 불행히도, 적에 의해 점령되었지만 그는 표시된 지역을 걷고 있습니다. 우리는 이 정보의 도움이 절실히 필요하다고 그는 말합니다.&lt;br/&gt;사진에 있는 둘 중 어느 사진이 원하는 사진인지 확실치 않으므로 두 사진 모두 찾으십시오</Korean>
             </Key>
             <Key ID="STR_TRGM2_startInfMission_MissionTitle5">
-                <Original>interrogate officer</Original>
-                <English>interrogate officer</English>
+                <Original>Interrogate officer</Original>
+                <English>Interrogate officer</English>
                 <Chinese>審問軍官</Chinese>
                 <Chinesesimp>审问军官</Chinesesimp>
                 <Spanish>Interroga al oficial</Spanish>
@@ -3723,8 +3723,8 @@
                 <Korean>만간인 검문수색</Korean>
             </Key>
             <Key ID="STR_TRGM2_CivTalkDead">
-                <Original>you find nothing of interest</Original>
-                <English>you find nothing of interest</English>
+                <Original>You find nothing of interest</Original>
+                <English>You find nothing of interest</English>
                 <Korean>당신은 아무것도 찾을 수 없다</Korean>
             </Key>
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions7">
@@ -3994,6 +3994,14 @@
                 <English>Intel has confirmed that our target %1 is on route to the AO marked on the map","%1 is flying into the area for a short meeting to hand over some documents! We need this HVT terminated!</English>
             </Key>
 
+            <Key ID="STR_TRGM2_AmbushConvoyMissionTitle">
+                <Original>Ambush Convoy</Original>
+                <English>Ambush Convoy</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyMissionDescription">
+                <Original>Intel has confirmed that a convoy is on route to the AO marked on the map</Original>
+                <English>Intel has confirmed that a convoy is on route to the AO marked on the map</English>
+            </Key>
 
             <Key ID="STR_TRGM2_ClearAreaMissionTitle">
                 <Original>Secure and Resupply</Original>
