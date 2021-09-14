@@ -103,6 +103,11 @@ class TRGM_GLOBAL {
         class populateLoadingWait {};
     };
 
+    class ace {
+        file = "RandFramework\Global\ace";
+        class addAceActionToPlayer {};
+    };
+
     class common {
         file = "RandFramework\Global\common";
         class addPlayerActionPersistent {};

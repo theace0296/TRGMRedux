@@ -2,30 +2,23 @@ params ["_vehicles"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 /********************* Add Player Actions ****************/
-_useAceInteractionForTransport = false;
+private _useAceInteractionForTransport = [false, true] select ((["EnableAceActions", 0] call BIS_fnc_getParamValue) isEqualTo 1);
 if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
     //Ace action
 
-    _generateChildActions = {
-        params ["_target", "_player", "_params"];
-        _params params ["_vehicles"];
+    private _generateChildActions = {
+        params ["_target", "_player", "_actionParams"];
+        _actionParams params ["_vehicles"];
 
-        diag_log format ["_insertChildren [%1, %2, %3]", _target, _player, _params];
-
-
-        _actionAdapterPickupAce = {
-            diag_log format ["_adapter %1",  _this];
-            params ["_target", "_player", "_params"];
-            diag_log _this;
-            _params params ["_selectedVehicle"];
-            diag_log _selectedVehicle;
-            [_selectedVehicle,true] spawn TRGM_GLOBAL_fnc_selectLz;
+        private _actionAdapterPickupAce = {
+            params ["_target", "_player", "_actionParams"];
+            _actionParams params ["_selectedVehicle"];
+            [_selectedVehicle, true] spawn TRGM_GLOBAL_fnc_selectLz;
         };
 
-        _childCondition = {
-
-            params ["_target", "_player", "_params"];
-            _params params ["_selectedVehicle"];
+        private _childCondition = {
+            params ["_target", "_player", "_actionParams"];
+            _actionParams params ["_selectedVehicle"];
             alive _selectedVehicle && !(_player in (crew _selectedVehicle));
         };
 
@@ -33,51 +26,53 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
         // Add children to this action
         private _actions = [];
         {
-            _actionName = [_x] call TRGM_GLOBAL_fnc_getTransportName;
-            _action = [format ["vehicle:%1",_x],_actionName, "", _actionAdapterPickupAce, _childCondition , {}, _x] call ace_interact_menu_fnc_createAction;
-            _actions pushBack [_action, [], _x]; // New action, it's children, and the action's target
+            private _vehicle = _x;
+            private _name = [_vehicle] call TRGM_GLOBAL_fnc_getTransportName;
+            private _action = [format ["vehicle:%1", _vehicle], _name, "", _actionAdapterPickupAce, _childCondition, {}, _vehicle] call ACE_interact_menu_fnc_createAction;
+            _actions pushBack [_action, [], _vehicle]; // New action, it's children, and the action's target
         } forEach _vehicles;
-        diag_log format ["actions: %1", _actions];
-
 
         _actions;
     };
 
-    _selfAction = [
+    private _selfActionCondition = {
+        params ["_target", "_player", "_actionParams"];
+        if (call TRGM_GETTER_fnc_bTransportLeaderOnly) exitWith {
+            [_player] call TRGM_GLOBAL_fnc_isLeaderOrAdmin;
+        };
+        true;
+    };
+
+    private _selfAction = [
         'CallTransportChopper',
         localize 'STR_TRGM2_transport_fnaddTransportActionsPlayer_CallTransport',
         '',
         {},
-        {true},
+        _selfActionCondition,
         _generateChildActions,
         [_vehicles]
-    ] call ace_interact_menu_fnc_createAction;
+    ] call ACE_interact_menu_fnc_createAction;
 
-    _code =  {
-        [player, 1, ["ACE_SelfActions"], _this] call ace_interact_menu_fnc_addActionToObject;
-    };
-    //[_selfAction,_code] remoteExec ["call", [0, -2] select isMultiplayer,true];
-    [_selfAction,_code] remoteExec ["call", 0,true];
-
+    [_selfAction] remoteExec ["TRGM_GLOBAL_fnc_addAceActionToPlayer", [0, -2] select isDedicated, true];
 
 } else {
     // Fallback vanilla action
 
-    _actionAdapterPickup = {
-        params ["_target", "_caller", "_ID", "_arguments"];
+    private _actionAdapterPickup = {
+        params ["_target", "_caller", "_id", "_arguments"];
         _arguments params ["_targetVehicle"];
-        [_targetVehicle,true] spawn TRGM_GLOBAL_fnc_selectLz;
+        [_targetVehicle, true] spawn TRGM_GLOBAL_fnc_selectLz;
     };
 
-    _playerActions = [];
+    private _playerActions = [];
     {
         // since you can not access arguments within the condition, use a global unique identifier for the argument variable
         // create a unique variableName with prefix
-        _uniqueVarName = [_x,"TRGM_transport_vehicle_"] call BIS_fnc_objectVar;
+        private _uniqueVarName = [_x,"TRGM_transport_vehicle_"] call BIS_fnc_objectVar;
         publicVariable _uniqueVarName;
-        _condition = format ["alive %1 && !(_this in (crew %1))",_uniqueVarName];
+        private _condition = format ["alive %1 && !(_this in (crew %1))", _uniqueVarName];
         if (call TRGM_GETTER_fnc_bTransportLeaderOnly) then {
-            _condition = format ["[_this] call TRGM_GLOBAL_fnc_isLeaderOrAdmin && alive %1 && !(_this in (crew %1))",_uniqueVarName];
+            _condition = format ["[_this] call TRGM_GLOBAL_fnc_isLeaderOrAdmin && alive %1 && !(_this in (crew %1))", _uniqueVarName];
         };
 
         _name = [_x] call TRGM_GLOBAL_fnc_getTransportName;

@@ -186,6 +186,13 @@ class Params
         texts[] = {"Disable","Enable"};
         default = 0;
     };
+    class EnableAceActions
+    {
+        title = "Enable ACE Actions";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
+    };
     class DebugMode
     {
         title = "Enable Debugging Mode";
