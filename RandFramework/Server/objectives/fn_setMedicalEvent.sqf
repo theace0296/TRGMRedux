@@ -356,8 +356,9 @@ if (isnil "fncMedicalParamedicLight") then {
             _car1 = createVehicle [selectRandom CivCars, _flatPos, [], 0, "CAN_COLLIDE"];
             _car1 setDamage [1,false];
             _car1 setDir (floor(random 360));
-            _objFlame1 = createVehicle ["test_EmptyObjectForFireBig", _flatPos, [], 0, "CAN_COLLIDE"];
-
+            if (call TRGM_GETTER_fnc_bAllowAOFires) then {
+                _objFlame1 = createVehicle ["test_EmptyObjectForFireBig", _flatPos, [], 0, "CAN_COLLIDE"];
+            };
         };
 
         if (_iteration isEqualTo 1 && random 1 < .50) then {

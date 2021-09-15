@@ -80,7 +80,7 @@ if (_sideType isEqualTo 4) then { //if mission is informat, then dont be walkig 
     _InformantObject setPosATL (selectRandom _allpositionsMainBuiding);
 };
 
-if (TRGM_VAR_AllowAOFires && _selectRandomW && !_bThisMissionCivsOnly) then {
+if ((call TRGM_GETTER_fnc_bAllowAOFires) && _selectRandomW && !_bThisMissionCivsOnly) then {
     _fireRootx = ([_sideMainBuilding] call TRGM_GLOBAL_fnc_getRealPos) select 0;
     _fireRooty = ([_sideMainBuilding] call TRGM_GLOBAL_fnc_getRealPos) select 1;
 

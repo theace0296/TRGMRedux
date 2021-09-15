@@ -3940,6 +3940,16 @@
                 <English>Enabled after visit</English>
             </Key>
 
+            <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_AOFires">
+                <Original>AO Fires</Original>
+                <English>AO Fires</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_Tooltip_AOFires">
+                <Original>Enables/Disables fires being placed around the AO.</Original>
+                <English>Enables/Disables fires being placed around the AO.</English>
+            </Key>
+
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_TimeBetweenSpotted">
                 <Original>Friendly Spotted Cooldown</Original>
                 <English>Friendly Spotted Cooldown</English>

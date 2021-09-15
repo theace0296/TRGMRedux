@@ -73,6 +73,7 @@ TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX = 19; publicVariable "TRGM_VAR_
 TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX             = 20; publicVariable "TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX";
 TRGM_VAR_ADVSET_ENABLE_CHECKPOINT_RESPAWN_IDX    = 21; publicVariable "TRGM_VAR_ADVSET_ENABLE_CHECKPOINT_RESPAWN_IDX";
 TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_LEADER_IDX  = 22; publicVariable "TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_LEADER_IDX";
+TRGM_VAR_ADVSET_ALLOW_AO_FIRES_IDX               = 23; publicVariable "TRGM_VAR_ADVSET_ALLOW_AO_FIRES_IDX";
 
 /////// Advanced Settings Set up ///////
 //NOTE the id's must go up in twos!
@@ -100,7 +101,8 @@ TRGM_VAR_AdvControls = [ //IDX,Title,Type,Options,OptionValues,DefaultOptionInde
     [ADVCTRLIDC(TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_REP_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_VehicleReqRep","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable"],[0,1],0,localize "STR_TRGM2_Tooltip_AdvVehicleReqRep"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_VEHICLE_SPAWNING_REQ_LEADER_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_VehicleLeaderOnly","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable"],[0,1],0,localize "STR_TRGM2_Tooltip_VehicleLeaderOnly"],
     [ADVCTRLIDC(TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_EnableTransport","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable", localize "STR_TRGM2_TRGMInitPlayerLocal_EnableLeaderOnly"],[0,1,2],1,localize "STR_TRGM2_Tooltip_EnableTransport"],
-    [ADVCTRLIDC(TRGM_VAR_ADVSET_ENABLE_CHECKPOINT_RESPAWN_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_EnableCheckpointRespawn","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable", localize "STR_TRGM2_Option_EnableAfterVisit"],[0,1,2],1,localize "STR_TRGM2_Tooltip_EnableCheckpointRespawn"]
+    [ADVCTRLIDC(TRGM_VAR_ADVSET_ENABLE_CHECKPOINT_RESPAWN_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_EnableCheckpointRespawn","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable", localize "STR_TRGM2_Option_EnableAfterVisit"],[0,1,2],1,localize "STR_TRGM2_Tooltip_EnableCheckpointRespawn"],
+    [ADVCTRLIDC(TRGM_VAR_ADVSET_ALLOW_AO_FIRES_IDX), localize "STR_TRGM2_TRGMSetUnitGlobalVars_AOFires","RscCombo",[localize "STR_TRGM2_TRGMInitPlayerLocal_Disable", localize "STR_TRGM2_TRGMInitPlayerLocal_Enable"],[0,1],1,localize "STR_TRGM2_Tooltip_AOFires"]
 ];
 publicVariable "TRGM_VAR_AdvControls";
 
@@ -153,6 +155,10 @@ TRGM_GETTER_fnc_bCheckpointRespawnEnabled = { TRGM_VAR_AdvancedSettings select T
 publicVariable "TRGM_GETTER_fnc_bCheckpointRespawnEnabled";
 TRGM_GETTER_fnc_bCheckpointRespawnAfterVisitOnly = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_CHECKPOINT_RESPAWN_IDX isEqualTo 2; };
 publicVariable "TRGM_GETTER_fnc_bCheckpointRespawnAfterVisitOnly";
+
+//////// Random AO Fires ///////
+TRGM_GETTER_fnc_bAllowAOFires = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ALLOW_AO_FIRES_IDX isEqualTo 1; };
+publicVariable "TRGM_GETTER_fnc_bAllowAOFires";
 
 //////// Spotted Delay ///////
 TRGM_GETTER_fnc_iGetSpottedDelay = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_TIME_BETWEEN_SPOTTED_ACTIONS_IDX };

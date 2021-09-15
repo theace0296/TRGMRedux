@@ -69,7 +69,7 @@ if (str(_flatPos) != "[0,0,0]") then {
 
     _wreck = _sVictimVeh createVehicle _flatPos;
     _wreck setDamage [1,false];
-    if (random 1 < .50) then {
+    if (random 1 < .50 && (call TRGM_GETTER_fnc_bAllowAOFires)) then {
         _objFlame1 = createVehicle ["test_EmptyObjectForFireBig", _flatPos, [], 0, "CAN_COLLIDE"];
     };
 
