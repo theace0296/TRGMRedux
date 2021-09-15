@@ -49,4 +49,5 @@
       "editor.autoClosingBrackets": "always",
       "editor.defaultFormatter": "Smith.sqf-formatter"
     },
+    "sqflint.warnings": false,
 }
