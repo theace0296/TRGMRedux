@@ -88,7 +88,7 @@ private _turrets = [_vehicleType, false] call BIS_fnc_allTurrets;
 [_vehicle, "LIEUTENANT"] call BIS_fnc_setRank;
 
 if (_sideOrGroup isEqualType WEST && {!((driver _vehicle) isEqualTo (leader _group))}) then {
-    (leader _group) setLeader (driver _vehicle);
+    [_group, driver _vehicle] remoteExec ["selectLeader", groupOwner _group];
 };
 
 _crew;
