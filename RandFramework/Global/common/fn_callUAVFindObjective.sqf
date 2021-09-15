@@ -1,13 +1,42 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+params ["_missionObjective"];
+
+if (isNil "_missionObjective") exitWith {};
+
+_objParams = [];
+
+switch (typeName _missionObjective) do {
+    case "SCALAR": {
+        _objParams = missionNamespace getVariable (format ["missionObjectiveParams%1", _missionObjective]);
+    };
+    case "STRING": {
+        _objParams = missionNamespace getVariable _missionObjective;
+    };
+    case "OBJECT": {
+        _objParams = _missionObjective getVariable "ObjectiveParams";
+        [_missionObjective] remoteExec ["removeAllActions", 0, true];
+    };
+    default {};
+};
+
+if (_objParams isEqualTo []) exitWith {};
+
+_objParams params ["_markerType","_objectiveMainBuilding","_centralAO_x","_centralAO_y","_roadSearchRange", "_bCreateTask", "_iTaskIndex", "_bIsMainObjective", ["_args", []]];
+
+
+
 [[], {
 
     [HQMan,localize "STR_TRGM2_callUAVFindObjective_UAVInbound"] remoteExecCall ["sideChat",0,false];
     sleep 10;
 
-    //TRGM_VAR_AODetails select 0
-    _sTargetName = format["objInformant%1",(TRGM_VAR_AODetails select 0) select 0];
+    _sTargetName = format["objInformant%1", _iTaskIndex];
     _officerObject = missionNamespace getVariable [_sTargetName , objNull];
     _targetPos = [_officerObject] call TRGM_GLOBAL_fnc_getRealPos;
+
+    if ((_officerObject distance [_centralAO_x, _centralAO_y, 0]) > 25) then {
+        _officerObject setPos ([_centralAO_x, _centralAO_y] getPos [25 * sqrt random 1, random 360]);
+    };
 
     //HEREE  If pos is zero or target is not alive, show message saying that... and fail task too if target not supose to be dead??
     if (!(alive _officerObject) || _targetPos select 0 isEqualTo 0) then {

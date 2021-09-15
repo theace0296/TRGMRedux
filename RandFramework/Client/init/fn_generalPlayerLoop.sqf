@@ -5,7 +5,7 @@ while {true} do {
             if ((Player distance (TRGM_VAR_ObjectivePossitions select 0)) < 25) then {
                 if ((Player getVariable ["calUAVActionID", -1]) isEqualTo -1) then {
                     [(localize "STR_TRGM2_TRGMInitPlayerLocal_UAVAvailable")] call TRGM_GLOBAL_fnc_notify;
-                    _actionID = player addAction [localize "STR_TRGM2_TRGMInitPlayerLocal_CallUAV",{[] spawn TRGM_GLOBAL_fnc_callUAVFindObjective}];
+                    _actionID = player addAction [localize "STR_TRGM2_TRGMInitPlayerLocal_CallUAV",{[0] spawn TRGM_GLOBAL_fnc_callUAVFindObjective}];
                     player setVariable ["calUAVActionID",_actionID];
                 };
             };
