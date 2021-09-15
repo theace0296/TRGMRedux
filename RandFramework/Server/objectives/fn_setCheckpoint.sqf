@@ -330,7 +330,7 @@ if (_PosFound) then {
         dostop [_guardUnit1];
         _guardUnit1 setDir (_direction);
         if (_AllowAnimation) then {
-            [_guardUnit1, "WATCH", "ASIS"] call BIS_fnc_ambientanimCombat;
+            [_guardUnit1, "WATCH", "ASIS"] call BIS_fnc_ambientAnimCombat;
         };
     };
 
@@ -397,11 +397,11 @@ if (_PosFound) then {
             dostop [_guardUnit4];
             _guardUnit4 setDir (_chatDir2);
 
-            // [_guardUnit3, "Stand", "ASIS"] call BIS_fnc_ambientanimCombat;
+            // [_guardUnit3, "Stand", "ASIS"] call BIS_fnc_ambientAnimCombat;
 
             if (_AllowAnimation) then {
                 if (!_bHasParkedCar) then {
-                    [_guardUnit4, "Stand_IA", "ASIS"] call BIS_fnc_ambientanimCombat;
+                    [_guardUnit4, "Stand_IA", "ASIS"] call BIS_fnc_ambientAnimCombat;
                 } else {
                     _Leandir = ([direction _ParkedCar, 45] call TRGM_GLOBAL_fnc_addtodirection);
                     _group3 setFormDir _Leandir;
@@ -412,7 +412,7 @@ if (_PosFound) then {
                     sleep 0.1;
                     _guardUnit4 setPos _LeanPos;
                     sleep 0.1;
-                    [_guardUnit4, "LEAN", "ASIS"] call BIS_fnc_ambientanimCombat;
+                    [_guardUnit4, "LEAN", "ASIS"] call BIS_fnc_ambientAnimCombat;
                 };
             };
         };

@@ -74,7 +74,7 @@ if (_currentATFieldPos select 0 != 0) then {
             };
             dostop [_guardUnit1];
             _guardUnit1 setDir (floor random 360);
-            [_guardUnit1, "WATCH", "ASIS"] call BIS_fnc_ambientanimCombat;
+            [_guardUnit1, "WATCH", "ASIS"] call BIS_fnc_ambientAnimCombat;
 
             _guardUnit2 = [_group, _sUnittype, _pos2, [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             if (isnil "_guardUnit2" || {
@@ -90,7 +90,7 @@ if (_currentATFieldPos select 0 != 0) then {
             };
             dostop [_guardUnit2];
             _guardUnit2 setDir (floor random 360);
-            [_guardUnit2, "WATCH", "ASIS"] call BIS_fnc_ambientanimCombat;
+            [_guardUnit2, "WATCH", "ASIS"] call BIS_fnc_ambientAnimCombat;
 
             [_guardUnit1, ["Ask if needs assistance", {
                 _guardUnit1 = _this select 0;
