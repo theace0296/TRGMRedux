@@ -18,6 +18,7 @@ _ThisTaskTypes = nil;
 _IsMainObjs = nil;
 _MarkerTypes = nil;
 _CreateTasks = nil;
+_HasHiddenObjective = false;
 _SamePrevAOStats = nil;
 _bIsCampaign = false;
 _bIsCampaignFinalMission = false;
@@ -70,6 +71,7 @@ if (TRGM_VAR_iMissionIsCampaign) then {
     _CreateTasks = [];
     _SamePrevAOStats = [];
     _bSideMissionsCivOnly = [];
+    _HasHiddenObjective = false;
     {
         _x params ["_taskType", "_isHeavy", "_isHidden", "_sameAOAsPrev"];
         if (_taskType isEqualTo 0) then {
@@ -83,11 +85,26 @@ if (TRGM_VAR_iMissionIsCampaign) then {
         };
         _IsMainObjs = _IsMainObjs + [_isHeavy];
         private _markerType = ["hd_dot", "mil_objective"] select (_isHeavy);
+        if (_isHidden) then {
+            _markerType = "empty";
+            _HasHiddenObjective = true;
+        };
         _MarkerTypes = _MarkerTypes + [_markerType];
         _CreateTasks = _CreateTasks + [_isHidden];
         _SamePrevAOStats = _SamePrevAOStats + [_sameAOAsPrev];
-        _bSideMissionsCivOnly = _bSideMissionsCivOnly + [!_isHeavy];
+        private _civOnly = [false, !_isHeavy] select (random 1 < .33);
+        _bSideMissionsCivOnly = _bSideMissionsCivOnly + [_civOnly];
     } forEach TRGM_VAR_iMissionParamObjectives;
+
+    if (_HasHiddenObjective) then {
+        _ThisTaskTypes = _ThisTaskTypes + [4];
+        _IsMainObjs = _IsMainObjs + [false];
+        _MarkerTypes = _MarkerTypes + ["hd_dot"];
+        _CreateTasks = _CreateTasks + [false];
+        _SamePrevAOStats = _SamePrevAOStats + [false];
+        _bSideMissionsCivOnly = _bSideMissionsCivOnly + [true];
+    };
+
     TRGM_VAR_MaxBadPoints = 1;
 };
 
