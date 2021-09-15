@@ -7,12 +7,8 @@ if !(_vehicle isKindOf "Helicopter") exitWith {};
 
 [_vehicle, [format [localize "STR_TRGM2_spawnCrew", gettext (configFile >> "Cfgvehicles" >> (typeOf _vehicle) >> "displayname")], {
     params [["_target", objNull, [objNull]], ["_caller", objNull, [objNull]], ["_id", -1, [1]], ["_args", [], [[]]]];
-    [TRGM_VAR_FriendlySide, _target, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
-    [driver _target] joinSilent createGroup TRGM_VAR_FriendlySide;
-    private _targetCrewMinusDriver = (crew vehicle _target - [driver _target]);
-    if (!(_targetCrewMinusDriver isEqualTo []) && _targetCrewMinusDriver isEqualType []) then {
-        _targetCrewMinusDriver joinSilent group driver _target;
-    };
+    private _group = createGroup TRGM_VAR_FriendlySide;
+    [_group, _target, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
     private _totalTurrets = [typeof _target, true] call BIS_fnc_allTurrets;
     {_target lockTurret [_x, true]} forEach _totalTurrets;
     { _x disableAI "MOVE"; _x allowDamage false; } forEach crew _target;

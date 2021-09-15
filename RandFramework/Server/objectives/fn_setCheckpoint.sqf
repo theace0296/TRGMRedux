@@ -214,7 +214,6 @@ if (_PosFound) then {
             _NearTurret1 = createvehicle [selectRandom (call CheckPointTurret), _initItem getPos [1, _direction+180], [], 0, "CAN_COLLIDE"];
             _NearTurret1 setDir (_direction);
             [_thisside, _NearTurret1] call TRGM_GLOBAL_fnc_createvehiclecrew;
-            crew vehicle _NearTurret1 joinSilent creategroup _thisside;
         };
     };
     if (_iBarricadetype isEqualto "NONE") then {

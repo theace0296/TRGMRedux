@@ -1,7 +1,10 @@
-params [["_veh", objNull, [objNull]], ["_side", WEST]];
+params [["_vehClassName", "", [objNull, ""]], ["_side", WEST]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-private _vehClassName = typeOf _veh;
+switch (typeName _vehClassName) do {
+    case ("OBJECT") : {_vehClassName = typeOf _vehClassName};
+};
+
 private _configPath = (configFile >> "CfgVehicles" >> _vehClassName);
 
 private _returnVeh = [_vehClassName];

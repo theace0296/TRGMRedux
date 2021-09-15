@@ -70,7 +70,6 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _objVehicle = _truckType createVehicle [0,0,500];
             _objVehicle setVariable [_sTargetName, _objVehicle, true];
             [TRGM_VAR_EnemySide, _objVehicle, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
-            crew vehicle _objVehicle joinSilent createGroup TRGM_VAR_EnemySide;
             missionNamespace setVariable [_sTargetName, _objVehicle];
             _objVehicle setPos _flatPos;
             _objVehicle disableAI "MOVE";

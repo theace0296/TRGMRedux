@@ -91,8 +91,6 @@ if (TRGM_VAR_iMissionIsCampaign) then {
     TRGM_VAR_MaxBadPoints = 1;
 };
 
-//HERE.... two objectives at one AO : as above, but also... randomo chance of third mission (inttel or mission)
-
 if (!(isNil "IsTraining")) then {
     _ThisTaskTypes = [12,8,3];
     _IsMainObjs = [false,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening

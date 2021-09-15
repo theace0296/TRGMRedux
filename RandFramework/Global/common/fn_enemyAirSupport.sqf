@@ -31,8 +31,7 @@ if (isServer) then {
     sleep 1;
 
     _enemyAirSup1 = createVehicle [_AirVehicle, call TRGM_GETTER_fnc_aGetReinforceStartPos, [], 0, "NONE"];
-    [TRGM_VAR_EnemySide, _enemyAirSup1] call TRGM_GLOBAL_fnc_createVehicleCrew;
-    crew vehicle _enemyAirSup1 joinSilent _groupp1;
+    [_groupp1, _enemyAirSup1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
     _enemyAirSup1 flyInHeight 40;
     _enemyAirSup1 setVehicleAmmo 1;
 

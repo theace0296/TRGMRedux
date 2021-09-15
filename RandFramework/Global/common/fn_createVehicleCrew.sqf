@@ -1,11 +1,20 @@
-params [["_side", WEST, [WEST]], ["_vehicle", objNull, [objNull]], ["_disableDynamicShowHide", false, [false]]];
+params [["_sideOrGroup", WEST, [WEST, grpNull]], ["_vehicle", objNull, [objNull]], ["_disableDynamicShowHide", false, [false]]];
 
 if (isNull _vehicle) exitWith {[]};
 
 private _vehicleType = typeof _vehicle;
 private _vehicleConfig = configFile >> "CfgVehicles" >> _vehicleType;
 
-private _group = createGroup _side;
+private ["_group", "_side"];
+
+if (_sideOrGroup isEqualType WEST) then {
+    _side = _sideOrGroup;
+    _group = createGroup _side;
+} else {
+    _side = side _sideOrGroup;
+    _group = _sideOrGroup;
+};
+
 private _crew = [];
 private _crewType = getText (_vehicleConfig >> "crew");
 if (_crewType isEqualTo "") then {
@@ -77,4 +86,9 @@ private _turrets = [_vehicleType, false] call BIS_fnc_allTurrets;
 } forEach _turrets;
 
 [_vehicle, "LIEUTENANT"] call BIS_fnc_setRank;
+
+if (_sideOrGroup isEqualType WEST && {!((driver _vehicle) isEqualTo (leader _group))}) then {
+    (leader _group) setLeader (driver _vehicle);
+};
+
 _crew;

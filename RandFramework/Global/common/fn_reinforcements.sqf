@@ -145,7 +145,7 @@ if (_skill < 1) then {_skill = 1;};
 } forEach units _infGrp;
 
 //Assign the crew to a group & assign cargo to the helo
-[_heloCrew, _helo, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
+[_side, _helo, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
 {[_x] joinSilent _heloCrew;} forEach crew _helo;
 {_x assignAsCargo _helo; _x moveInCargo _helo;} forEach units _infgrp;
 _infgrp deleteGroupWhenEmpty true;
