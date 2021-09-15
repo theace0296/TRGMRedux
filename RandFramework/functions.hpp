@@ -105,6 +105,7 @@ class TRGM_GLOBAL {
 
     class ace {
         file = "RandFramework\Global\ace";
+        class addAceActionToObject {};
         class addAceActionToPlayer {};
     };
 

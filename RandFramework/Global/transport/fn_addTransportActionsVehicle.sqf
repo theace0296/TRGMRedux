@@ -71,7 +71,7 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
         _generateChildActions
     ] call ACE_interact_menu_fnc_createAction;
 
-    [_vehicle, 1, ["ACE_SelfActions"], _vehicleAction] remoteExec ["ACE_interact_menu_fnc_addActionToObject", [0, -2] select isDedicated, true];
+    [_vehicleAction, _vehicle] call TRGM_GLOBAL_fnc_addAceActionToObject;
 
 } else {
     private _actionAdapter = {
