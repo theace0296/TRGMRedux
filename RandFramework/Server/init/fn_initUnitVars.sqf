@@ -145,7 +145,7 @@ TRGM_GETTER_fnc_bVehiclesLeadersOnly = { TRGM_VAR_AdvancedSettings select TRGM_V
 publicVariable "TRGM_GETTER_fnc_bVehiclesLeadersOnly";
 
 //////// Transport Options ///////
-TRGM_GETTER_fnc_bTransportEnabled = { (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX) in [1,2]; };
+TRGM_GETTER_fnc_bTransportEnabled = { !(TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX isEqualTo 0); };
 publicVariable "TRGM_GETTER_fnc_bTransportEnabled";
 TRGM_GETTER_fnc_bTransportLeaderOnly = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX isEqualTo 2; };
 publicVariable "TRGM_GETTER_fnc_bTransportLeaderOnly";
