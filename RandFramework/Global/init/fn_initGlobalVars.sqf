@@ -282,12 +282,13 @@ if (isNil "TRGM_VAR_bOptionsSet")                             then {TRGM_VAR_bOp
 if (isNil "TRGM_VAR_bOptionsSet")                             then {TRGM_VAR_bOptionsSet = false;                                     publicVariable "TRGM_VAR_bOptionsSet";};
 if (isNil "TRGM_VAR_iAllowNVG")                               then {TRGM_VAR_iAllowNVG = 2;                                           publicVariable "TRGM_VAR_iAllowNVG";};
 if (isNil "TRGM_VAR_iCampaignDay")                            then {TRGM_VAR_iCampaignDay = 0;                                        publicVariable "TRGM_VAR_iCampaignDay";};
-if (isNil "TRGM_VAR_iMissionParamObjectives")                 then {TRGM_VAR_iMissionParamObjectives = [[0, false, false, false]];        publicVariable "TRGM_VAR_iMissionParamObjectives";};
+if (isNil "TRGM_VAR_iMissionParamObjectives")                 then {TRGM_VAR_iMissionParamObjectives = [[0, false, false, false]];    publicVariable "TRGM_VAR_iMissionParamObjectives";};
 if (isNil "TRGM_VAR_iMissionParamRepOption")                  then {TRGM_VAR_iMissionParamRepOption = 0;                              publicVariable "TRGM_VAR_iMissionParamRepOption";};
 if (isNil "TRGM_VAR_iMissionIsCampaign")                      then {TRGM_VAR_iMissionIsCampaign = false;                              publicVariable "TRGM_VAR_iMissionIsCampaign";};
 if (isNil "TRGM_VAR_iStartLocation")                          then {TRGM_VAR_iStartLocation = 2;                                      publicVariable "TRGM_VAR_iStartLocation";};
 if (isNil "TRGM_VAR_iUseRevive")                              then {TRGM_VAR_iUseRevive = 0;                                          publicVariable "TRGM_VAR_iUseRevive";};
 if (isNil "TRGM_VAR_iWeather")                                then {TRGM_VAR_iWeather = 1;                                            publicVariable "TRGM_VAR_iWeather";};
+if (isNil "TRGM_VAR_OverrideSupplyChopperDelay")              then {TRGM_VAR_OverrideSupplyChopperDelay = false;                      publicVariable "TRGM_VAR_OverrideSupplyChopperDelay"; };
 
 if (isServer) then {
     TRGM_VAR_serverFinishedInitGlobal = true; publicVariable "TRGM_VAR_serverFinishedInitGlobal";

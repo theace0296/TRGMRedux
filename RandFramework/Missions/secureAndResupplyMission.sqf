@@ -123,10 +123,10 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _flag getVariable["Lowered", false];
         };
 
-        [_flag] spawn {
-            private _thisFlag = _this select 0;
-            while {missionNamespace getVariable['SupplyDropped_%1', 0] < 2} do {
-                [true, [_thisFlag] call TRGM_GLOBAL_fnc_getRealPos] spawn TRGM_SERVER_fnc_alertNearbyUnits;
+        [_flag, _iTaskIndex] spawn {
+            params ["_flag", "_iTaskIndex"];
+            while {missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] < 2} do {
+                [true, [_flag] call TRGM_GLOBAL_fnc_getRealPos] spawn TRGM_SERVER_fnc_alertNearbyUnits;
                 sleep 60;
             };
         };
@@ -143,7 +143,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [300, _iTaskIndex] spawn {
             params ["_duration", "_taskIndex"];
             _endTime = _duration + time;
-            while {_endTime - time >= 0} do {
+            while {_endTime - time >= 0 && !TRGM_VAR_OverrideSupplyChopperDelay} do {
                 _color = "#45f442";//green
                 _timeLeft = _endTime - time;
                 if (_timeLeft < 16) then {_color = "#eef441";};//yellow
@@ -153,97 +153,22 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                 [[_content, _duration + 1, _taskIndex, _taskIndex], {_this spawn TRGM_GUI_fnc_handleNotification}] remoteExec ["call"]; // After the first run, this will only update the text for the notification with index = _taskIndex
             };
         };
-        sleep 300; //wait 5 mins before supply drop in area
+        _timeout = 300 + time;
+        waitUntil {_timeout - time >= 0 || TRGM_VAR_OverrideSupplyChopperDelay}; //wait 5 mins before supply drop in area
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;
 
-        TRGM_VAR_dropCrate = false;
-        publicVariable "TRGM_VAR_dropCrate";
-
-        private _airToUse = selectRandom(call SupplySupportChopperOptions);
-        private _heloGroup = createGroup TRGM_VAR_FriendlySide;
         private _spawnPos = _flag getRelPos[3000, random 360];
         private _exitPos = _flag getRelPos[25000, random 360];
-
-        airDropHelo1 = createVehicle [_airToUse, [(_spawnPos select 0), (_spawnPos select 1)], [], 0, "FLY"];
-        [TRGM_VAR_FriendlySide, airDropHelo1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
-        crew vehicle airDropHelo1 joinSilent _heloGroup;
-        airDropHelo1 flyInHeight 40;
-        airDropHelo1 allowDamage false;
-        airDropHelo1 enableAttack false;
-        airDropHelo1 setBehaviour "CARELESS";
-        airDropHelo1 setCombatMode "BLUE";
-        airDropHelo1 disableAi "TARGET";
-        airDropHelo1 disableAi "AUTOTARGET";
-        airDropHelo1 disableAi "FSM";
-        airDropHelo1 setCaptive true;
-
-        private _v1wp1 = _heloGroup addWaypoint[[(_spawnPos select 0), (_spawnPos select 1)], 0];
-        [_heloGroup, 0] setWaypointStatements["true", "airDropHelo1 flyInHeight 200;"];
-        [_heloGroup, 0] setWaypointSpeed "FULL";
-        [_heloGroup, 0] setWaypointBehaviour "COMBAT";
-
-        private _v1wp2 = _heloGroup addWaypoint[[_flag] call TRGM_GLOBAL_fnc_getRealPos, 0];
-        [_heloGroup, 1] setWaypointStatements["true", "airDropHelo1 flyInHeight 200; "];
-        [_heloGroup, 1] setWaypointSpeed "FULL";
-
-        private _v1wp3 = _heloGroup addWaypoint[[(_exitPos select 0), (_exitPos select 1)], 0];
-        [_heloGroup, 2] setWaypointStatements["true", "airDropHelo1 flyInHeight 200; TRGM_VAR_dropCrate = true; publicVariable ""TRGM_VAR_dropCrate"";"];
-        [_heloGroup, 2] setWaypointSpeed "FULL";
-
+        private _finishedVariable = format["SupplyDropped_%1", _iTaskIndex];
+        private _finishedValue = 1;
+        private _resupplyUnit = ((allPlayers - (entities "HeadlessClient_F")) select {(_x distance _flag) < 150});
+        [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
         waitUntil {
             sleep 2;
-            TRGM_VAR_dropCrate;
-        };
-        sleep 1;
-
-        private _supplyObjectDummy = "B_supplyCrate_f"
-        createVehicle[0, 0, 200];
-        _supplyObjectDummy allowDamage false;
-        _supplyObjectDummy setPos[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 200];
-
-        waitUntil {
-            sleep 2;
-            ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 < 75
+            missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue;
         };
 
-        private _para = "B_Parachute_02_F"
-        createVehicle[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 100];
-        _supplyObjectDummy attachTo[_para, [0, 0, -1]];
-        _para setPos[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 100];
 
-        waitUntil {
-            sleep 2;
-            ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 >= 0 && ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 <= 1
-        };
-
-        detach _supplyObjectDummy;
-        sleep 0.1;
-        deleteVehicle _para;
-
-        private _finalPos = getPosATL _supplyObjectDummy;
-        sleep 0.1;
-        deleteVehicle _supplyObjectDummy;
-        "SmokeShellBlue"
-        createVehicle _finalPos;
-        sleep 0.1;
-        private _supplyObject = "B_supplyCrate_f"
-        createVehicle _finalPos;
-        [_supplyObject, (units group player)] call TRGM_GLOBAL_fnc_initAmmoBox;
-        _supplyObject allowDamage false;
-        _supplyObject setPosATL _finalPos;
-        _supplyObject setVectorUp surfaceNormal position _supplyObject;
-        _supplyObject allowDamage true;
-        TRGM_VAR_dropCrate = false;
-        publicVariable "TRGM_VAR_dropCrate"; {
-            deleteVehicle _x;
-        }
-        forEach crew(vehicle airDropHelo1) + [vehicle airDropHelo1];
-        missionNamespace setVariable[format["SupplyDropped_%1", _iTaskIndex], 1, true];
-
-        waitUntil {
-            sleep 2;
-            !TRGM_VAR_dropCrate;
-        };
         _convoyVehicles = [call sTank1ArmedCar, selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), call sTank1ArmedCar];
         _convoyStartPos = _flag getRelPos[2000, random 360];
         _convoyDestPos = [_flag] call TRGM_GLOBAL_fnc_getRealPos;
@@ -256,7 +181,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [300, _iTaskIndex] spawn {
             params ["_duration", "_taskIndex"];
             _endTime = _duration + time;
-            while {_endTime - time >= 0} do {
+            while {_endTime - time >= 0 && !TRGM_VAR_OverrideSupplyChopperDelay} do {
                 _color = "#45f442";//green
                 _timeLeft = _endTime - time;
                 if (_timeLeft < 16) then {_color = "#eef441";};//yellow
@@ -266,88 +191,19 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                 [[_content, _duration + 1, _taskIndex, _taskIndex], {_this spawn TRGM_GUI_fnc_handleNotification}] remoteExec ["call"]; // After the first run, this will only update the text for the notification with index = _taskIndex
             };
         };
-        sleep 300; //wait 5 mins before supply drop in area
+        _timeout = 300 + time;
+        waitUntil {_timeout - time >= 0 || TRGM_VAR_OverrideSupplyChopperDelay}; //wait 5 mins before supply drop in area
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;
 
-        _heloGroup = createGroup TRGM_VAR_FriendlySide;
-        _spawnPos = _flag getRelPos[3000, random 360];
-        _exitPos = _flag getRelPos[25000, random 360];
-        airDropHelo1 = createVehicle [_airToUse, [(_spawnPos select 0), (_spawnPos select 1)], [], 0, "FLY"];
-        [TRGM_VAR_FriendlySide, airDropHelo1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
-        crew vehicle airDropHelo1 joinSilent _heloGroup;
 
-        airDropHelo2 flyInHeight 40;
-        airDropHelo2 allowDamage false;
-        airDropHelo2 enableAttack false;
-        airDropHelo2 setBehaviour "CARELESS";
-        airDropHelo2 setCombatMode "BLUE";
-        airDropHelo2 disableAi "TARGET";
-        airDropHelo2 disableAi "AUTOTARGET";
-        airDropHelo2 disableAi "FSM";
-        airDropHelo2 setCaptive true;
-
-        _v1wp1 = _heloGroup addWaypoint[[(_spawnPos select 0), (_spawnPos select 1)], 0];
-        [_heloGroup, 0] setWaypointStatements["true", "airDropHelo2 flyInHeight 200;"];
-        [_heloGroup, 0] setWaypointSpeed "FULL";
-        [_heloGroup, 0] setWaypointBehaviour "COMBAT";
-
-        _v1wp2 = _heloGroup addWaypoint[[_flag] call TRGM_GLOBAL_fnc_getRealPos, 0];
-        [_heloGroup, 1] setWaypointStatements["true", "airDropHelo2 flyInHeight 200; "];
-        [_heloGroup, 1] setWaypointSpeed "FULL";
-
-        _v1wp3 = _heloGroup addWaypoint[[(_exitPos select 0), (_exitPos select 1)], 0];
-        [_heloGroup, 2] setWaypointStatements["true", "airDropHelo2 flyInHeight 200; TRGM_VAR_dropCrate = true; publicVariable ""TRGM_VAR_dropCrate"";"];
-        [_heloGroup, 2] setWaypointSpeed "FULL";
-
+        _finishedValue = 2;
+        [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
         waitUntil {
             sleep 2;
-            TRGM_VAR_dropCrate;
-        };
-        sleep 1;
-
-        _supplyObjectDummy = "B_supplyCrate_f"
-        createVehicle[0, 0, 200];
-        _supplyObjectDummy allowDamage false;
-        _supplyObjectDummy setPos[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 200];
-
-        waitUntil {
-            sleep 2;
-            ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 < 75
+            missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue;
         };
 
-        _para = "B_Parachute_02_F"
-        createVehicle[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 100];
-        _supplyObjectDummy attachTo[_para, [0, 0, -1]];
-        _para setPos[([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 0, ([_flag] call TRGM_GLOBAL_fnc_getRealPos) select 1, 100];
 
-        waitUntil {
-            sleep 2;
-            ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 >= 0 && ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 <= 1
-        };
-
-        detach _supplyObjectDummy;
-        sleep 0.1;
-        deleteVehicle _para;
-
-        _finalPos = getPosATL _supplyObjectDummy;
-        sleep 0.1;
-        deleteVehicle _supplyObjectDummy;
-        "SmokeShellBlue"
-        createVehicle _finalPos;
-        sleep 0.1;
-        _supplyObject = "B_supplyCrate_f"
-        createVehicle _finalPos;
-        [_supplyObject, (units group player)] call TRGM_GLOBAL_fnc_initAmmoBox;
-        _supplyObject allowDamage false;
-        _supplyObject setPosATL _finalPos;
-        _supplyObject setVectorUp surfaceNormal position _supplyObject;
-        _supplyObject allowDamage true;
-        TRGM_VAR_dropCrate = false;
-        publicVariable "TRGM_VAR_dropCrate"; {
-            deleteVehicle _x;
-        }
-        forEach crew(vehicle airDropHelo2) + [vehicle airDropHelo2];
-        missionNamespace setVariable[format["SupplyDropped_%1", _iTaskIndex], 2, true];
         [_flag] spawn TRGM_SERVER_fnc_updateTask;
     };
 };

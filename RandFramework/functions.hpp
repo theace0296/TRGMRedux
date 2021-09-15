@@ -142,6 +142,7 @@ class TRGM_GLOBAL {
         class setMilitiaSkill {};
         class setVehicleUpright {};
         class showIntel {};
+        class supplyHelicopter {};
         class unloadDingy {};
     };
 
