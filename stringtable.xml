@@ -3849,11 +3849,6 @@
                 <English>Location of enemy cache found, destroy it</English>
                 <Korean>적 은닉처 위치를 찾았습니다</Korean>
             </Key>
-            <Key ID="STR_TRGM2_CacheMarkerText">
-                <Original>Target</Original>
-                <English>Target</English>
-                <Korean>목표</Korean>
-            </Key>
 
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MiniMissions">
                 <Original>Make tasks mini missions</Original>

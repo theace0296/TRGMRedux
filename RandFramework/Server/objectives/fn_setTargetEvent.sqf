@@ -200,7 +200,7 @@ if (_isCache) then {
         if (_showMarker) then {
             _markerstrcache = createMarker [format ["IEDLoc%1",_posCache select 0],_posCache];
             _markerstrcache setMarkerShape "ICON";
-            _markerstrcache setMarkerText localize "STR_TRGM2_CacheMarkerText";
+            _markerstrcache setMarkerText localize "STR_TRGM2_TargetMarkerText";
             _markerstrcache setMarkerType "hd_dot";
         };
 
@@ -304,7 +304,7 @@ if (!_objectiveCreated) then {
         if (true) then { //if we failed the above trying to find a pos, then if we place in random place, just show marker
             _markerstrcache = createMarker [format ["IEDLoc%1",_posObj select 0],_posObj];
             _markerstrcache setMarkerShape "ICON";
-            _markerstrcache setMarkerText localize "STR_TRGM2_CacheMarkerText";
+            _markerstrcache setMarkerText localize "STR_TRGM2_TargetMarkerText";
             _markerstrcache setMarkerType "hd_dot";
         };
     };

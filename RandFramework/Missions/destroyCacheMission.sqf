@@ -53,7 +53,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     missionNamespace setVariable [format ["missionObjectiveParams%1", _iTaskIndex], [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
     missionNamespace setVariable [_sTargetName1, _target1];
 
-    [_mainObjPos,100,true,true,_target1, _isCache] spawn TRGM_SERVER_fnc_setTargetEvent;
+    [_mainObjPos,100,!(_markerType isEqualTo "empty"),true,_target1, _isCache] spawn TRGM_SERVER_fnc_setTargetEvent;
 
     [_target1] spawn {
         _target1 = _this select 0;

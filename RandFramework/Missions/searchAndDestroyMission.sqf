@@ -68,7 +68,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _target1 setVariable ["ObjectiveParams", [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
     missionNamespace setVariable [format ["missionObjectiveParams%1", _iTaskIndex], [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
     missionNamespace setVariable [_sTargetName1, _target1];
-    [_mainObjPos,100,true,true,_target1, _isCache] spawn TRGM_SERVER_fnc_setTargetEvent;
+    [_mainObjPos,100,!(_markerType isEqualTo "empty"),true,_target1, _isCache] spawn TRGM_SERVER_fnc_setTargetEvent;
 
     _targetToUse2 = selectRandom _targetVehs;
     _isCache2 = false;
@@ -79,7 +79,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _sTargetName2 = format["objInformant2_%1",_iTaskIndex];
     _target2 setVariable [_sTargetName2, _target2, true];
     missionNamespace setVariable [_sTargetName2, _target2];
-    [_mainObjPos,_spacingBetweenTargets,true,true,_target2, _isCache2] spawn TRGM_SERVER_fnc_setTargetEvent;
+    [_mainObjPos,_spacingBetweenTargets,!(_markerType isEqualTo "empty"),true,_target2, _isCache2] spawn TRGM_SERVER_fnc_setTargetEvent;
 
     _targetToUse3 = selectRandom _targetVehs;
     _isCache3 = true;
@@ -90,7 +90,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _sTargetName3 = format["objInformant3_%1",_iTaskIndex];
     _target3 setVariable [_sTargetName3, _target3, true];
     missionNamespace setVariable [_sTargetName3, _target3];
-    [_mainObjPos,_spacingBetweenTargets,true,true,_target3, _isCache3] spawn TRGM_SERVER_fnc_setTargetEvent;
+    [_mainObjPos,_spacingBetweenTargets,!(_markerType isEqualTo "empty"),true,_target3, _isCache3] spawn TRGM_SERVER_fnc_setTargetEvent;
 
 
     _allTargets = [_target1, _target2, _target3];
