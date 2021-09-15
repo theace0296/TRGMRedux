@@ -126,9 +126,9 @@ if !(_type isEqualTo _tempUnitType) then {
     private _tempUnit = (createGroup CIVILIAN) createUnit [_type, [0,0,0], [], 0, 'NONE'];
     private _speaker = speaker _tempUnit;
     private _face = face _tempUnit;
-	private _pitch = pitch _tempUnit;
-	private _nameSound = nameSound _tempUnit;
-	private _name = name _tempUnit;
+    private _pitch = pitch _tempUnit;
+    private _nameSound = nameSound _tempUnit;
+    private _name = name _tempUnit;
     deleteVehicle _tempUnit;
     [_unit, _face, _speaker, _pitch, _nameSound, _name] call BIS_fnc_setIdentity;
 };
