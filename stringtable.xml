@@ -3786,7 +3786,7 @@
                 <Korean>목표</Korean>
             </Key>
 
-      		<Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MainAOSelect">
+              <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MainAOSelect">
                 <Original>Select main AO Pos</Original>
                 <English>Select main AO Pos</English>
                 <Korean>주요 작전지역 선택</Korean>
