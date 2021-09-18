@@ -1,6 +1,5 @@
 import fnmatch
 import os
-import re
 import sys
 
 if sys.version_info.major == 2:
@@ -27,13 +26,10 @@ def main():
             file_list.append(os.path.join(root, filename))
         for filename in fnmatch.filter(filenames, '*.xml'):
             file_list.append(os.path.join(root, filename))
-        for filename in fnmatch.filter(filenames, '*.sqm'):
-            file_list.append(os.path.join(root, filename))
 
     for filename in file_list:
         try:
             content = open(filename, mode='r', encoding='utf-8-sig').read()
-            content = re.sub(r'\t', '    ', content)
             open(filename, mode='w', encoding='utf-8').write(content)
         except Exception:
             bad_count = bad_count + 1
