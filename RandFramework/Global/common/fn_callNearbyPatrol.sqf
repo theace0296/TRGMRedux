@@ -35,8 +35,6 @@ if (TRGM_VAR_FireFlares) then {
     };
 };
 
-//[_SpottedUnitPos, 1] spawn TRGM_GLOBAL_fnc_enemyAirSupport;
-
 _SpottedUnits = _thisThisList select { alive _x && isPlayer _x };
 
 if (_SpottedUnits isEqualTo []) exitWith {};
@@ -51,11 +49,9 @@ TRGM_VAR_TimeSinceLastSpottedAction = time; publicVariable "TRGM_VAR_TimeSinceLa
 _maxPatrolSearch = 2000;
 
 _SpottedUnitCount = { _x distance _SpottedUnit < 200 } count units group _SpottedUnit;
-//if (TRGM_VAR_bDebugMode) then {[format["pre first spotted count check: %1",_SpottedUnitCount]] call TRGM_GLOBAL_fnc_log;};
 _AlivePlayerCount = { alive _x } count allplayers;
-//["a"] call TRGM_GLOBAL_fnc_log;
+
 if (_SpottedUnitCount > 0) then {
-//["d"] call TRGM_GLOBAL_fnc_log;
     //========First take care of additional support (reinforcements, air to air/ground support etc... based on the type of threat the enemy have spotted)
     _bAllowPatrolChange = true;
     _bAllowNextMortarRounds = true;
@@ -84,9 +80,7 @@ if (_SpottedUnitCount > 0) then {
         _AirMaxCount = 600;
     };
     _currentAODetail = nil;
-    //TRGM_VAR_AODetails = [[AOIndex,InfSpottedCount,VehSpottedCount,AirSpottedCount,bScoutCalled, patrolMoveCounter,MortarAllowedCount]]
     {
-        //[format["HERE: %1, %2", _x select 0,_iTaskIndex]] call TRGM_GLOBAL_fnc_notify;
         if (_x select 0 isEqualTo _iTaskIndex) then {
             _currentAODetail = _x;
             _PatrolMoveCount = (_x select 5);
@@ -221,10 +215,9 @@ if (_SpottedUnitCount > 0) then {
         if ((vehicle _SpottedUnit isKindOf "Car") && _bAllowPatrolChange) then {
             if  ((_SpottedUnitCount > 0)) then {
                 _nearestATs = nearestObjects [_SpottedUnitPos, [(call sATMan),(call sATManMilitia)], _maxPatrolSearch];
-                // if (TRGM_VAR_bDebugMode) then {[format["AT pre count check: %1",count _nearestATs]] call TRGM_GLOBAL_fnc_log; sleep 2;};
+
                 if (count _nearestATs > 0) then {
 
-                    // if (TRGM_VAR_bDebugMode) then {["for than zero - count _nearestATs"] call TRGM_GLOBAL_fnc_log; sleep 2;};
                     _nearestTL = _nearestATs select 0;
                     while {(count (waypoints group _nearestTL)) > 0} do {
                         deleteWaypoint ((waypoints group _nearestTL) select 0);
@@ -268,7 +261,6 @@ if (_SpottedUnitCount > 0) then {
 
         //mortar script
         if  ((_SpottedUnitCount > 0) && _bAllowNextMortarRounds && !TRGM_VAR_bMortarFiring) then {
-            //[format["eee:%1",str(_currentAODetail)]] call TRGM_GLOBAL_fnc_notify;
             _bFiredMortar = false;
             _currentAODetail set [6,1];  //commence counting now fired... when reach zero again, we will wait until round fired again
             _nearestMortars = nearestObjects [_SpottedUnitPos,(call sMortar) + (call sMortarMilitia),_maxPatrolSearch];
@@ -296,42 +288,29 @@ if (_SpottedUnitCount > 0) then {
                         if (!_SpotterFound && (([_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos) distance ([_x] call TRGM_GLOBAL_fnc_getRealPos)) > 55 && side _x isEqualTo TRGM_VAR_EnemySide) then {
 
                             _cansee = [objNull, "VIEW"] checkVisibility [eyePos _x, eyePos _SpottedUnit];
-                            // if (TRGM_VAR_bDebugMode) then {[format["POW4 %1",_cansee]] call TRGM_GLOBAL_fnc_log;};
                             sleep 0.6;
                             if (_cansee > 0.2) then {
-                                //["POW2 POW POW POW"] call TRGM_GLOBAL_fnc_log;
                                 sleep 3;
-                                //Set animation, or view binocs and face player
                                 _SpotterFound = true;
                                 _Spotter = _x;
-                                // if (TRGM_VAR_bDebugMode) then {
-                                //     _test = nil;
-                                //     _test = createMarker [format["SpotterMrk%1%2%3",([_x] call TRGM_GLOBAL_fnc_getRealPos) select 0,([_x] call TRGM_GLOBAL_fnc_getRealPos) select 1,selectRandom[1,2,3,4,5]], ([_x] call TRGM_GLOBAL_fnc_getRealPos)];
-                                //     _test setMarkerShape "ICON";
-                                //     _test setMarkerType "hd_dot";
-                                //     _test setMarkerText "SPOTTER";
-                                //     //["POW POW POW POW"] call TRGM_GLOBAL_fnc_log;
-                                // };
-
                             };
                         };
                     };
 
                 } forEach _menNear;
                 if (_SpotterFound) then {
-                    // if (TRGM_VAR_bDebugMode) then {["SPOTTER FOUND"] call TRGM_GLOBAL_fnc_log; sleep 2;};
                     _Spotter call BIS_fnc_ambientAnim__terminate;
                     _Spotter playMoveNow "Acts_listeningToRadio_loop";
                     _Spotter disableAI "anim";
                     _startPos = [_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos;
-                    //if (TRGM_VAR_bDebugMode) then {[format["spottedStartPos: %1",str(_startPos)]] call TRGM_GLOBAL_fnc_log;};
+
                     sleep 7;
                     if (alive(_Spotter)) then {
                         _Spotter enableAI "anim";
                         _Spotter playMoveNow "Acts_listeningToRadio_out";
                         _endPos = [_SpottedUnit] call TRGM_GLOBAL_fnc_getRealPos;
                         _dDistance = _startPos distance _endPos;
-                        //if (TRGM_VAR_bDebugMode) then {[format["spottedEndPos: %1 - Distance:%2 - PlayersNear:%3 - Chance:%4",str(_endPos), str(_dDistance),str(_nearplayercount),str(_ChancesOfFireMortar)]] call TRGM_GLOBAL_fnc_log;};
+
                         if (_dDistance < 7 && _bAllowMortar) then {
                             _nearestMortar = _nearestMortars select 0;
                             _Ammo = nil;
@@ -390,18 +369,9 @@ if (_SpottedUnitCount > 0) then {
                 _EnemyBaseChopperWP1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
             };
 
-            //if (TRGM_VAR_bDebugMode) then {[format["inFirstGenericIf: %1",_AlivePlayerCount > 7]] call TRGM_GLOBAL_fnc_log; sleep 1;};
-
             if  ((_SpottedUnitCount > 0)) then {
-                //if (TRGM_VAR_bDebugMode) then {[format["inSecondGenericIf: %1",_AlivePlayerCount > 7]] call TRGM_GLOBAL_fnc_log; sleep 2;};
-
-
-                //if (TRGM_VAR_bDebugMode) then {sleep 2};
                 _nearestTLs = nearestObjects [_SpottedUnitPos, [(call sTeamleader),(call sTeamleaderMilitia)], _maxPatrolSearch];
-                //if (TRGM_VAR_bDebugMode) then {[format["pre count check: %1",count _nearestTLs]] call TRGM_GLOBAL_fnc_log; sleep 2;};
                 if (count _nearestTLs > 0) then {
-
-                    //if (TRGM_VAR_bDebugMode) then {["for than zero - count _nearestTLs"] call TRGM_GLOBAL_fnc_log; sleep 2;};
                     _nearestTL = _nearestTLs select 0;
                     while {(count (waypoints group _nearestTL)) > 0} do {
                         deleteWaypoint ((waypoints group _nearestTL) select 0);
@@ -424,10 +394,7 @@ if (_SpottedUnitCount > 0) then {
                     group _nearestTL setSpeedMode "FULL";
                 };
 
-                //_flare1 = "F_40mm_White" createVehicle getPos _nearestTL;
-
                 if (random 1 < .50) then {
-
                     _nearestTanks = nearestObjects [_SpottedUnitPos, [(call sTank1ArmedCar),(call sTank2APC),(call sTank3Tank),(call sTank1ArmedCarMilitia),(call sTank2APCMilitia),(call sTank3TankMilitia)], 3000];
                     if (count _nearestTanks > 0) then {
                         _nearestTank = selectRandom _nearestTanks;
@@ -442,21 +409,13 @@ if (_SpottedUnitCount > 0) then {
                         _SpottedWP5a setWaypointBehaviour "AWARE";
                     };
                 };
-
             };
-
-
-
             _anyTLsCheckAlive = nearestObjects [_SpottedUnitPos, [(call sTeamleader),(call sTeamleaderMilitia)], 3000];
             {
                 if (!(alive _x)) then {
                     deleteVehicle _x;
                 }
             } forEach _anyTLsCheckAlive;
-
-
         };
     };
-
 };
-

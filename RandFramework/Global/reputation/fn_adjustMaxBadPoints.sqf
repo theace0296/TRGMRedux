@@ -1,7 +1,3 @@
-//example: [0.3, _PointsAdjustMessage] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
-
-//if (TRGM_VAR_bDebugMode) then {[format["Points adjusting: %1", TRGM_Logic getVariable "PointsUpdating"]] call TRGM_GLOBAL_fnc_log;};
-
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 if (isNil "TRGM_VAR_CoreCompleted") then { TRGM_VAR_CoreCompleted =   false; publicVariable "TRGM_VAR_CoreCompleted"; };
 if (!TRGM_VAR_CoreCompleted) exitWith {};

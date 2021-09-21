@@ -161,29 +161,26 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         waitUntil {sleep 2; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_PlayersHaveLeftStartingArea};
 
-        if (!TRGM_VAR_bDebugMode) then {
-            _iWait = (420 * (_iTaskIndex + 1)) + floor(random 300);
-            sleep floor(random 120);
-            _sMessageOne = format["The convoy is due to depart at %1", (daytime  + (_iWait/3600) call BIS_fnc_timeToString)];
-            [[TRGM_VAR_FriendlySide, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
-            [_sMessageOne] call TRGM_GLOBAL_fnc_notifyGlobal;
+        _iWait = (420 * (_iTaskIndex + 1)) + floor(random 300);
+        sleep floor(random 120);
+        _sMessageOne = format["The convoy is due to depart at %1", (daytime  + (_iWait/3600) call BIS_fnc_timeToString)];
+        [[TRGM_VAR_FriendlySide, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
+        [_sMessageOne] call TRGM_GLOBAL_fnc_notifyGlobal;
 
-            [_iWait, _iTaskIndex] spawn {
-                params ["_duration", "_taskIndex"];
-                _endTime = _duration + time;
-                while {_endTime - time >= 0} do {
-                    _color = "#45f442";//green
-                    _timeLeft = _endTime - time;
-                    if (_timeLeft < 16) then {_color = "#eef441";};//yellow
-                    if (_timeLeft < 6) then {_color = "#ff0000";};//red
-                    if (_timeLeft < 0) exitWith {};
-                    _content = parseText format ["<t size='0.90'>Time Until Convoy Departs: <t color='%1'>--- %2 ---</t></t>", _color, [(_timeLeft/3600),"HH:MM:SS"] call BIS_fnc_timeToString];
-                    [[_content, _duration + 1, _taskIndex, _taskIndex], {_this spawn TRGM_GUI_fnc_handleNotification}] remoteExec ["call"]; // After the first run, this will only update the text for the notification with index = _taskIndex
-                };
+        [_iWait, _iTaskIndex] spawn {
+            params ["_duration", "_taskIndex"];
+            _endTime = _duration + time;
+            while {_endTime - time >= 0} do {
+                _color = "#45f442";//green
+                _timeLeft = _endTime - time;
+                if (_timeLeft < 16) then {_color = "#eef441";};//yellow
+                if (_timeLeft < 6) then {_color = "#ff0000";};//red
+                if (_timeLeft < 0) exitWith {};
+                _content = parseText format ["<t size='0.90'>Time Until Convoy Departs: <t color='%1'>--- %2 ---</t></t>", _color, [(_timeLeft/3600),"HH:MM:SS"] call BIS_fnc_timeToString];
+                [[_content, _duration + 1, _taskIndex, _taskIndex], {_this spawn TRGM_GUI_fnc_handleNotification}] remoteExec ["call"]; // After the first run, this will only update the text for the notification with index = _taskIndex
             };
-
-            sleep _iWait;
         };
+        sleep _iWait;
 
         {
             [_x, true] remoteExec ["enableSimulationGlobal", 2];

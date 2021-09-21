@@ -1,10 +1,6 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 while {true} do {
-    if (getMarkerPos "mrkHQ" distance player < TRGM_VAR_PunishmentRadius) then {
-        //if (!TRGM_VAR_bDebugMode) then { player allowDamage false};
-    }
-    else {
-        //if (!TRGM_VAR_bDebugMode) then { player allowDamage true;};
+    if (!getMarkerPos "mrkHQ" distance player < TRGM_VAR_PunishmentRadius) then {
         TRGM_VAR_PlayersHaveLeftStartingArea =  true; publicVariable "TRGM_VAR_PlayersHaveLeftStartingArea";
     };
     sleep 1;

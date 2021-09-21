@@ -19,6 +19,7 @@ _IsMainObjs = nil;
 _MarkerTypes = nil;
 _CreateTasks = nil;
 _HasHiddenObjective = false;
+_HasNonHiddenObjective = true;
 _SamePrevAOStats = nil;
 _bIsCampaign = false;
 _bIsCampaignFinalMission = false;
@@ -72,6 +73,7 @@ if (TRGM_VAR_iMissionIsCampaign) then {
     _SamePrevAOStats = [];
     _bSideMissionsCivOnly = [];
     _HasHiddenObjective = false;
+    _HasNonHiddenObjective = false;
     {
         _x params ["_taskType", "_isHeavy", "_isHidden", "_sameAOAsPrev"];
         if (_taskType isEqualTo 0) then {
@@ -88,6 +90,8 @@ if (TRGM_VAR_iMissionIsCampaign) then {
         if (_isHidden) then {
             _markerType = "empty";
             _HasHiddenObjective = true;
+        } else {
+            _HasNonHiddenObjective = true;
         };
         _MarkerTypes = _MarkerTypes + [_markerType];
         _CreateTasks = _CreateTasks + [_isHidden];
@@ -197,7 +201,6 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     _SamePrevAO = _SamePrevAOStats select TRGM_VAR_InfTaskCount; if (isNil "_SamePrevAO") then { _SamePrevAO = false; };
     _allowFriendlyIns = true;
     _bSideMissionsCivOnlyToUse = _bSideMissionsCivOnly select TRGM_VAR_InfTaskCount;
-    _hideTitleAndDesc = false;
 
     if (_MarkerTypes select 0 isEqualTo "empty") then {
         TRGM_VAR_MainIsHidden =  true; publicVariable "TRGM_VAR_MainIsHidden";
@@ -485,7 +488,6 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                     if (_MarkerType isEqualTo "empty") then {
                         TRGM_VAR_HiddenPossitions pushBack [_inf1X,_inf1Y];
                         publicVariable "TRGM_VAR_HiddenPossitions";
-                        _hideTitleAndDesc = true;
                     };
                     _sTaskDescription = "";
                     if (TRGM_VAR_ISUNSUNG) then {
@@ -525,7 +527,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
                     _markerInformant1 setMarkerShape "ICON";
 
-                    _hideAoMarker = false;
+                    _hideAoMarker = _MarkerType isEqualTo "empty";
                     if (!isNil "TRGM_VAR_HideAoMarker") then {
                         _hideAoMarker = TRGM_VAR_HideAoMarker;
                     };
@@ -535,8 +537,6 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                     else {
                         _markerInformant1 setMarkerType _MarkerType;
                     };
-
-                    //_markerInformant1 setMarkerText _MissionTitle;
 
                     _bIsSameMrkPos = false;
                     if (_iTaskIndex > 0) then {
@@ -587,7 +587,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                             publicVariable "TRGM_VAR_ActiveTasks";
                         }
                         else {
-                            if (_hideTitleAndDesc) then {
+                            if (!_HasNonHiddenObjective && _HasHiddenObjective) then {
                                 [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], "Objective unknown, recon the area!", format["%1 : %2",_iTaskIndex+1,"Objective Unknown"],""]] call FHQ_fnc_ttAddTasks;
                             }
                             else {
@@ -598,18 +598,11 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                             publicVariable "TRGM_VAR_ActiveTasks";
                         };
                     };
-
-                    //_triggerSidePassClear = createTrigger ["EmptyDetector", [_inf1X,_inf1Y]];
-                    //_triggerSidePassClear setTriggerArea [2000, 2000, 0, false];
-                    //_triggerSidePassClear setTriggerStatements ["false", "{deleteVehicle _x} forEach nearestObjects [this, [""all""], 2000]", ""];
-
-
                 };
             }
             else {
                 _bInfor1Found = false;
             };
-
         };
         ["Mission Setup: 8-1", true] call TRGM_GLOBAL_fnc_log;
     };
@@ -618,7 +611,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
         TRGM_VAR_CurrentZeroMissionTitle = _MissionTitle; //curently only used for campaign
         if (TRGM_VAR_MainMissionTitle != "") then {TRGM_VAR_CurrentZeroMissionTitle = TRGM_VAR_MainMissionTitle};
         publicVariable "TRGM_VAR_CurrentZeroMissionTitle";
-        if (_hideTitleAndDesc) then {
+        if (!_HasNonHiddenObjective && _HasHiddenObjective) then {
             TRGM_VAR_MainMissionTitle = "Objective Unknown";
         };
     };
@@ -642,11 +635,8 @@ if (TRGM_VAR_iMissionIsCampaign) then {
     else {
         _trgComplete setTriggerStatements ["TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted;", "[(localize ""STR_TRGM2_startInfMission_RTBNextMission"")] call TRGM_GLOBAL_fnc_notify; [""MISSION_COMPLETE""] remoteExec [""TRGM_SERVER_fnc_setMissionBoardOptions"",0,true]; if (TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksSuccessful) then {[1, format[localize ""STR_TRGM2_startInfMission_DayComplete"",str(TRGM_VAR_iCampaignDay)]] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints}; deletevehicle thisTrigger", ""];
     };
-    //TESTTEST = triggerStatements _trgComplete;
 }
 else {
-    //_trgComplete setTriggerStatements ["TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted;", "", ""]; //not sure why this is here... commented out on 5th Jan 2018... delete of no issues sinse
-
     //If not campaign and rep is disabled, then we will not fail the mission if rep low, but will be a task to keep rep above average
     if (TRGM_VAR_iMissionParamRepOption isEqualTo 0) then {
         //CREATE TASK HERE... we fail it in mainInit.sqf when checking rep points
@@ -662,16 +652,10 @@ else {
 };
 
 ["Mission Setup: 6", true] call TRGM_GLOBAL_fnc_log;
-///*orangestest
 
-
-
-///*orangestest
 //now we have all our location positinos, we can set other area stuff
 [] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
-//orangestest*/
 
-//orangestest*/
 ["Mission Setup: 2", true] call TRGM_GLOBAL_fnc_log;
 
 
@@ -681,9 +665,7 @@ else {
 publicVariable "TRGM_VAR_debugMessages";
 [TRGM_VAR_debugMessages, true] call TRGM_GLOBAL_fnc_log;
 
-///*orangestest
 [] remoteExec ["TRGM_GLOBAL_fnc_animateAnimals",0,true];
-//orangestest*/
 
 TRGM_VAR_MissionLoaded = true; publicVariable "TRGM_VAR_MissionLoaded";
 
