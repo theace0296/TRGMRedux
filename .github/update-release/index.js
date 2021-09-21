@@ -67,7 +67,11 @@ const run = async () => {
         for (const existingAsset of existingAssets) {
           if (releaseAssetNames.includes(existingAsset.name)) {
             startGroup('Deleting existing asset: ' + existingAsset.name + '...');
-            await github.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
+            try {
+              await github.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
+            } catch (error) {
+              console.warn(`Unexpected error occured during asset deletion: ${error}`);
+            }
             endGroup();
           }
         }
