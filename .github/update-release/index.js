@@ -59,6 +59,18 @@ const run = async () => {
     }
     endGroup();
 
+    startGroup('Release info:');
+    console.log(JSON.stringify({
+      release,
+      body,
+      releaseAssets,
+      releaseAssetsPath,
+      prerelease,
+      tag,
+      releaseName,
+    }, null, 2));
+    endGroup();
+
     let newAssetsExistAlready = true;
     while (newAssetsExistAlready) {
       const releaseAssetNames = releaseAssets.map(file => basename(file));
