@@ -124,7 +124,7 @@ jobs:
       - name: Install packages
         run: |
           Set-Location ${{ github.workspace }}/.github/update-release/
-          npm install
+          npm ci
         shell: pwsh
 
       - name: Update Release Assets
