@@ -14,7 +14,7 @@ private _mainCtrlGroup = _display displayCtrl 9010;
 private _mainCtrlGroupSize = ctrlPosition _mainCtrlGroup;
 _mainCtrlGroupSize params ["_mainCtrlGroupX", "_mainCtrlGroupY", "_mainCtrlGroupW", "_mainCtrlGroupH"];
 
-_ctrlGroup = [uiNamespace getVariable [format["TRGM_VAR_notification_%1", _notificationIndex], controlNull], controlNull] select (_notificationIndex isEqualTo -1);
+private _ctrlGroup = [uiNamespace getVariable [format["TRGM_VAR_notification_%1", _notificationIndex], controlNull], controlNull] select (_notificationIndex isEqualTo -1);
 if !(isNull _ctrlGroup) then {
     private _textControl = _ctrlGroup controlsGroupCtrl 1000;
     _textControl ctrlSetStructuredText _text;
@@ -29,7 +29,7 @@ if !(isNull _ctrlGroup) then {
     private _ctrlGroupSize = ctrlPosition _ctrlGroup;
     _ctrlGroupSize params ["_ctrlGroupX", "_ctrlGroupY", "_ctrlGroupW", "_ctrlGroupH"];
 
-    _control = _display ctrlCreate ["RscStructuredText", 1000, _ctrlGroup];
+    private _control = _display ctrlCreate ["RscStructuredText", 1000, _ctrlGroup];
     _control ctrlSetStructuredText _text;
     _control ctrlSetPosition [0, 0.01, _ctrlGroupW, 0.05];
     _control ctrlSetBackgroundColor [0, 0, 0, 0.75];

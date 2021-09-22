@@ -19,10 +19,11 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 if (isNil "_box") exitWith {};
 
-_initBoxItems = [TRGM_VAR_InitialBoxItems, TRGM_VAR_InitialBoxItemsWithAce] select (call TRGM_GLOBAL_fnc_isAceLoaded);
+private _initBoxItems = [TRGM_VAR_InitialBoxItems, TRGM_VAR_InitialBoxItemsWithAce] select (call TRGM_GLOBAL_fnc_isAceLoaded);
 _initBoxItems params [
     ["_input",[],[[]]]
 ];
+private ["_list", "_classes", "_values"];
 //--- Weapons
 _list = _input select 0;
 _classes = _list select 0;
@@ -55,7 +56,7 @@ if (count _units > 0) then {
         TRGM_LOCAL_fnc_isMagazineValid = {
             (isClass(configFile >> "CfgMagazines" >> _this) && {getNumber(configFile >> "CfgMagazines" >> _this >> "scope") isEqualTo 2});
         };
-        _weapons = [[primaryWeapon _x, primaryWeaponMagazine _x], [secondaryWeapon _x, secondaryWeaponMagazine _x], [handgunWeapon _x, handgunMagazine _x], ["", magazines _x]];
+        private _weapons = [[primaryWeapon _x, primaryWeaponMagazine _x], [secondaryWeapon _x, secondaryWeaponMagazine _x], [handgunWeapon _x, handgunMagazine _x], ["", magazines _x]];
         {
             _x params ["_weapon", "_mags"];
             if (_weapon != "" && {_weapon call TRGM_LOCAL_fnc_isWeaponValid}) then {

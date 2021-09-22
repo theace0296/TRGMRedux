@@ -3,12 +3,12 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 if (!hasInterface) exitWith {};
 
-_redZonePositions = TRGM_VAR_ObjectivePossitions-TRGM_VAR_ClearedPositions-TRGM_VAR_HiddenPossitions;
-_radius = 900;
-_minimumDistance = 300;
-_markers = [];
+private _redZonePositions = TRGM_VAR_ObjectivePossitions-TRGM_VAR_ClearedPositions-TRGM_VAR_HiddenPossitions;
+private _radius = 900;
+private _minimumDistance = 300;
+private _markers = [];
 
-_baseRadius = 500;
+private _baseRadius = 500;
 
 
 
@@ -16,7 +16,7 @@ _baseRadius = 500;
 // set base LZ for the way back.
 if (objNull isEqualTo (_vehicle getVariable ["baseLZ", objNull])) then {
     // initial setup
-    _flyHeight = 20;
+    private _flyHeight = 20;
     _vehicle flyInHeight _flyHeight;
     _vehicle FlyinheightASL [_flyHeight,_flyHeight,_flyHeight];
     _vehicle enableCopilot true;
@@ -33,8 +33,8 @@ if (objNull isEqualTo (_vehicle getVariable ["baseLZ", objNull])) then {
 } forEach _redZonePositions;
 
 // Base LZ
-_baseLZPos = _vehicle getVariable ["baseLZ",objNull];
-_baseReturnAllowed = _baseLZPos distance _vehicle > _baseRadius;
+private _baseLZPos = _vehicle getVariable ["baseLZ",objNull];
+private _baseReturnAllowed = _baseLZPos distance _vehicle > _baseRadius;
 if (_baseReturnAllowed) then {
     _markers pushBack ([_baseLZPos ,_baseRadius , "ColorGreen" ] call TRGM_GLOBAL_fnc_selectLzCreateBolckedAreaMarker);
 } else {
@@ -43,7 +43,7 @@ if (_baseReturnAllowed) then {
 
 
 // Chopper location when on ground
-_vehiclePositon = objNull;
+private _vehiclePositon = objNull;
 if (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) then {
     _vehiclePositon = position _vehicle;
     if (_baseLZPos distance2D _vehiclePositon > 100) then { // prevent double marker at base (colition with base restriction marker)

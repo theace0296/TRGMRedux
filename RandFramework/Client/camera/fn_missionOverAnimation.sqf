@@ -1,23 +1,23 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 sleep 60;
 waituntil {sleep 30; TRGM_VAR_AllInitScriptsFinished};
-_bEnd = false;
+private _bEnd = false;
 while {!_bEnd} do {
-    _bMissionEndedAndPlayersOutOfAO = false;
-    _bMissionEnded = false;
-    _bAnyPlayersInAOAndAlive = false;
+    private _bMissionEndedAndPlayersOutOfAO = false;
+    private _bMissionEnded = false;
+    private _bAnyPlayersInAOAndAlive = false;
 
     if (TRGM_VAR_iMissionIsCampaign) then {
-        _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+        private _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
         if (TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted && _dCurrentRep >= 10 && TRGM_VAR_FinalMissionStarted) then {_bMissionEnded = true};
     }
     else {
         if (TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted) then {_bMissionEnded = true};
     };
 
-    _justPlayers = allPlayers - entities "HeadlessClient_F";
+    private _justPlayers = allPlayers - entities "HeadlessClient_F";
     {
-        _currentPlayer = _x;
+        private _currentPlayer = _x;
         {
             if (alive(_currentPlayer) && _currentPlayer distance _x < 2000) then {
                 _bAnyPlayersInAOAndAlive = true;
@@ -38,8 +38,8 @@ while {!_bEnd} do {
         sleep 10;
         ["<t font='PuristaMedium' align='center' size='2.9' color='#ffffff'>" + (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_NAME_IDX) + "</t><br/><t font='PuristaMedium' align='center' size='1' color='#ffffff'><br />" + localize "STR_TRGM2_TRGMInitPlayerLocal_RTBDebreif" + "</t>",-1,0.2,6,1,0,789] spawn BIS_fnc_dynamicText;
         sleep 10;
-        _stars = "";
-        _iCount = 0;
+        private _stars = "";
+        private _iCount = 0;
         {
             _iCount = _iCount + 1;
             if (_iCount isEqualTo count allPlayers) then {

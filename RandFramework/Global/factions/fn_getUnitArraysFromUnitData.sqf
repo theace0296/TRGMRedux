@@ -31,7 +31,18 @@ Output for CSAT in format: [[_riflemen], [_leaders], [_atsoldiers], [_aasoldiers
 params["_unitData"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_riflemen = []; _leaders = []; _atsoldiers = []; _aasoldiers = []; _engineers = []; _grenadiers = []; _medics = []; _autoriflemen = []; _snipers = []; _explosiveSpecs = []; _pilots = []; _uavOperators = [];
+private _riflemen = [];
+private _leaders = [];
+private _atsoldiers = [];
+private _aasoldiers = [];
+private _engineers = [];
+private _grenadiers = [];
+private _medics = [];
+private _autoriflemen = [];
+private _snipers = [];
+private _explosiveSpecs = [];
+private _pilots = [];
+private _uavOperators = [];
 {
     _x params ["_className", "_dispName", "_icon", "_calloutName", ["_isMedic", 0], ["_isEngineer", 0], ["_isExpSpecialist", 0], ["_isUAVHacker", 0]];
     if (isNil "_className" ||isNil "_dispName" || isNil "_icon" || isNil "_calloutName") then {

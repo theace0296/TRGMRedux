@@ -29,7 +29,7 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 FPSMAX=60; //60 FPS max
 FPSLIMIT=15; // 15 FPS min
 MAXDELAY=5; // 5 sec max delay
-_AdditionalUnitCreationDelay = ((abs(FPSMAX - diag_fps) / (FPSMAX - FPSLIMIT))^2) * MAXDELAY;
+private _AdditionalUnitCreationDelay = ((abs(FPSMAX - diag_fps) / (FPSMAX - FPSLIMIT))^2) * MAXDELAY;
 
 //arguments definitions
 params [
@@ -67,10 +67,10 @@ if !(_noDelay) then {
     };
 };
 
-_heloCrew = createGroup _side;
+private _heloCrew = createGroup _side;
 
 //set the scope of local variables that are defined in other scope(s), so they can be used over the entire script
-private ["_ranGrp","_helo","_infgrp"];
+private ["_helo","_infgrp"];
 
 //Debug output of the passed arguments
 if (_debugMode) then {
@@ -123,7 +123,6 @@ switch (_side) do {
 
 //Debug output of the helo + cargo
 if (_debugMode) then {
-    player globalChat format ["Group Selection: %1", _ranGrp];
     player globalChat format ["Helo Array: %1", _helo];
     player globalChat format ["Cargo Group: %1", _infGrp];
 };
@@ -160,36 +159,36 @@ if (_bodyDelete) then {
 };
 
 //Find a flat position around the LZ marker & create an HPad there.
-_flatPos = [_LZMrk , 0, 600, 20, 0, 0.3, 0, [],[_LZMrk,_LZMrk], _helo] call TRGM_GLOBAL_fnc_findSafePos;
-_hPad = createVehicle ["Land_HelipadEmpty_F", _flatPos, [], 0, "NONE"];
+private _flatPos = [_LZMrk , 0, 600, 20, 0, 0.3, 0, [],[_LZMrk,_LZMrk], _helo] call TRGM_GLOBAL_fnc_findSafePos;
+private _hPad = createVehicle ["Land_HelipadEmpty_F", _flatPos, [], 0, "NONE"];
 
 //Debug output map markers
 private ["_mrkPos","_mrkLZ","_mrkHelo","_mrkinf","_mrkTarget"];
 if (_debugMode) then {
-    _color = [(((side leader _infGrp) call bis_fnc_sideID) call bis_fnc_sideType),true] call bis_fnc_sidecolor;
+    private _color = [(((side leader _infGrp) call bis_fnc_sideID) call bis_fnc_sideType),true] call bis_fnc_sidecolor;
 
-    _mrkPos = createMarker [format ["%1", random 10000], _flatPos];
+    private _mrkPos = createMarker [format ["%1", random 10000], _flatPos];
     _mrkPos setMarkerShape "ICON";
     _mrkPos setMarkerType "mil_objective";
     _mrkPos setMarkerSize [1,1];
     _mrkPos setMarkerColor _color;
     _mrkPos setMarkerText "Actual LZ";
 
-    _mrkLZ = createMarker [format ["%1", random 10000], _LZMrk];
+    private _mrkLZ = createMarker [format ["%1", random 10000], _LZMrk];
     _mrkLZ  setMarkerShape "ICON";
     _mrkLZ  setMarkerType "mil_dot";
     _mrkLZ  setMarkerSize [1,1];
     _mrkLZ  setMarkerColor _color;
     _mrkLZ  setMarkerText "LZ Area";
 
-    _mrkHelo = createMarker [format ["%1", random 10000], getPosATL _helo];
+    private _mrkHelo = createMarker [format ["%1", random 10000], getPosATL _helo];
     _mrkHelo setMarkerShape "ICON";
     _mrkHelo setMarkerType "o_air";
     _mrkHelo setMarkerSize [1,1];
     _mrkHelo setMarkerColor _color;
     _mrkHelo setMarkerText format ["%1", _helo];
 
-    _mrkInf = createMarker [format ["%1", random 10000], getPosATL leader _infGrp];
+    private _mrkInf = createMarker [format ["%1", random 10000], getPosATL leader _infGrp];
     _mrkInf setMarkerShape "ICON";
     _mrkInf setMarkerType "mil_dot";
     _mrkInf setMarkerSize [1,1];
@@ -208,55 +207,39 @@ if (_debugMode) then {
 //Give the helicopter an unload waypoint onto the hpad
 
 if (!_paraDrop) then {
-    _heloWp = _heloCrew addWaypoint [_hPad, 0];
+    private _heloWp = _heloCrew addWaypoint [_hPad, 0];
     _heloWp setWaypointType "TR UNLOAD";
     _heloWp setWaypointBehaviour "CARELESS";
     _heloWp setWaypointCombatMode "BLUE";
     _heloWp setWaypointSpeed "FULL";
     if (_spawnMrk select 2 isEqualTo 0) then {
-        //_heloWp setWaypointStatements ["true", "[""hmmmm""] call TRGM_GLOBAL_fnc_notify; {_this spawn {unAssignVehicle _x; _x action [""eject"", vehicle _x]; sleep 0.5;} forEach crew vehicle _this;"}];
         _heloWp setWaypointStatements ["true", "{unAssignVehicle _x; _x action [""eject"", vehicle _x]; sleep 0.5;} forEach crew vehicle this;"];
-        //_heloWp setWaypointStatements ["true", "[""hmmmm""] call TRGM_GLOBAL_fnc_notify; {unAssignVehicle _x; _x action [""eject"", vehicle _x]; sleep 0.5;} forEach crew vehicle this;"];
     }
     else {
         _heloWp setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
     };
 
-
     //wait until the helicopter is touching the ground before ejecting the cargo
-
-    if (_spawnMrk select 2 isEqualTo 0) then {
-        //[format["test3: %1 - %2",currentWaypoint _infgrp,fuel _helo]] call TRGM_GLOBAL_fnc_notify;
-
-        //waitUntil {fuel _helo isEqualTo 0};
-
-        //["test2"] call TRGM_GLOBAL_fnc_notify;
-    }
-    else {
+    if !(_spawnMrk select 2 isEqualTo 0) then {
         waitUntil {sleep 2; isTouchingGround _helo || {!canMove _helo}};
         {unAssignVehicle _x; _x action ["eject", vehicle _x]; sleep 0.5;} forEach units _infgrp; //Eject the cargo
     };
 
-    //["a"] call TRGM_GLOBAL_fnc_notify;
     //wait Until the infantry group is no longer in the helicopter before assigning a new WP to the helicopter
     waitUntil {sleep 2; {!alive _x || !(_x in _helo)} count (units _infGrp) isEqualTo count (units _infGrp)};
-        if (_debugMode) then {player globalChat format ["Helo Cargo Count: %1", {alive _x && (_x in _helo)} count (units _infGrp)];};
-            _heloWp = _heloCrew addWaypoint [[0,0,0], 0];
-            _heloWp setWaypointType "MOVE";
-            _heloWp setWaypointBehaviour "AWARE";
-            _heloWp setWaypointCombatMode "RED";
-            _heloWp setWaypointSpeed "FULL";
-            _heloWp setWaypointStatements ["true", "{deleteVehicle _x;} forEach crew (vehicle this) + [vehicle this];"];
-
-    //["b"] call TRGM_GLOBAL_fnc_notify;
-
+    if (_debugMode) then {player globalChat format ["Helo Cargo Count: %1", {alive _x && (_x in _helo)} count (units _infGrp)];};
+    _heloWp = _heloCrew addWaypoint [[0,0,0], 0];
+    _heloWp setWaypointType "MOVE";
+    _heloWp setWaypointBehaviour "AWARE";
+    _heloWp setWaypointCombatMode "RED";
+    _heloWp setWaypointSpeed "FULL";
+    _heloWp setWaypointStatements ["true", "{deleteVehicle _x;} forEach crew (vehicle this) + [vehicle this];"];
 } else {
-
     //disable collision to avoid deaths and setup the paradrop
     {_x disableCollisionWith _helo} forEach units _infGrp;
     _helo flyInHeight 200;
 
-    _heloWp = _heloCrew addWaypoint [_hPad, 0];
+    private _heloWp = _heloCrew addWaypoint [_hPad, 0];
     _heloWp setWaypointType "MOVE";
     _heloWp setWaypointBehaviour "CARELESS";
     _heloWp setWaypointCombatMode "BLUE";
@@ -279,9 +262,8 @@ if (!_paraDrop) then {
 
 if (_sadMode) then {
     if (_debugMode) then {player globalChat "Scanning for targets to enable SAD Mode";};
-    private "_nearestEnemies";
-    _nearestEnemies = [];
-    _nearestMen = nearestObjects [getPosATL leader _infGrp, ["Man"], 1000];
+    private _nearestEnemies = [];
+    private _nearestMen = nearestObjects [getPosATL leader _infGrp, ["Man"], 1000];
         {
             if ( (side _x getFriend (side leader (_infGrp))) < 0.6 && {side _x != CIVILIAN} ) then {
                 _nearestEnemies = _nearestEnemies + [_x];
@@ -289,9 +271,9 @@ if (_sadMode) then {
         } forEach _nearestMen;
 
         if (count _nearestEnemies > 0) then {
-            _enemy = _nearestEnemies call bis_fnc_selectRandom;
-            _attkPos = [_enemy, random 100, random 360] call BIS_fnc_relPos;
-            _infWp = _infGrp addWaypoint [_attkPos, 0];
+            private _enemy = _nearestEnemies call bis_fnc_selectRandom;
+            private _attkPos = [_enemy, random 100, random 360] call BIS_fnc_relPos;
+            private _infWp = _infGrp addWaypoint [_attkPos, 0];
             _infWp setWaypointType "SAD";
             _infWp setWaypointBehaviour "AWARE";
             _infWp setWaypointCombatMode "RED";
@@ -299,8 +281,8 @@ if (_sadMode) then {
 
                 if (_debugMode) then {
                 player globalChat "Target Found. Setting SAD waypoint";
-                _colorTarget = [(((side _enemy) call bis_fnc_sideID) call bis_fnc_sideType),true] call bis_fnc_sidecolor;
-                _mrkTarget = createMarker [format ["%1", random 10000], _attkPos];
+                private _colorTarget = [(((side _enemy) call bis_fnc_sideID) call bis_fnc_sideType),true] call bis_fnc_sidecolor;
+                private _mrkTarget = createMarker [format ["%1", random 10000], _attkPos];
                 _mrkTarget setMarkerShape "ICON";
                 _mrkTarget setMarkerType "mil_dot";
                 _mrkTarget setMarkerSize [1,1];

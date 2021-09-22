@@ -1,7 +1,19 @@
 params["_vehData"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_unarmedcars = []; _armedcars = []; _trucks = []; _apcs = []; _tanks = []; _artillery = []; _antiair = []; _turrets = []; _unarmedhelicopters = []; _armedhelicopters = []; _planes = []; _boats = []; _mortars = [];
+private _unarmedcars = [];
+private _armedcars = [];
+private _trucks = [];
+private _apcs = [];
+private _tanks = [];
+private _artillery = [];
+private _antiair = [];
+private _turrets = [];
+private _unarmedhelicopters = [];
+private _armedhelicopters = [];
+private _planes = [];
+private _boats = [];
+private _mortars = [];
 {
     _x params [["_className", ""], ["_dispName", ""], ["_calloutName", ""], ["_category", ""], ["_isTransport", false], ["_isArmed", false]];
 

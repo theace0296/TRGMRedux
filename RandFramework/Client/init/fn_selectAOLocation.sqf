@@ -22,7 +22,7 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
             if (TRGM_VAR_MapClicked isEqualTo 1) then { // player has clicked the map
                 OnMapSingleClick "TRGM_VAR_MapClicked = 2; publicVariable ""TRGM_VAR_MapClicked""";
                 hintC (localize "STR_TRGM2_InitClickValidPos");
-                _ManualAOPosMarker = createMarker [format ["%1", random 10000], TRGM_VAR_ClickedPos];
+                private _ManualAOPosMarker = createMarker [format ["%1", random 10000], TRGM_VAR_ClickedPos];
                 _ManualAOPosMarker  setMarkerShape "ICON";
                 _ManualAOPosMarker  setMarkerType "hd_dot";
                 _ManualAOPosMarker  setMarkerSize [5,5];

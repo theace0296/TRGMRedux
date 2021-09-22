@@ -14,7 +14,7 @@ TRGM_Logic setVariable ["PointsUpdating", true, true];
 
 params ["_pointsToAdd","_message"];
 
-_totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+private _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
 
 if (_totalRep > 0) then {
     TRGM_VAR_BadPoints = TRGM_VAR_BadPoints + _pointsToAdd;

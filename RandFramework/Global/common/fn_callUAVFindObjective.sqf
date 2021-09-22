@@ -3,7 +3,7 @@ params ["_missionObjective"];
 
 if (isNil "_missionObjective") exitWith {};
 
-_objParams = [];
+private _objParams = [];
 
 switch (typeName _missionObjective) do {
     case "SCALAR": {
@@ -30,9 +30,9 @@ _objParams params ["_markerType","_objectiveMainBuilding","_centralAO_x","_centr
     [HQMan,localize "STR_TRGM2_callUAVFindObjective_UAVInbound"] remoteExecCall ["sideChat",0,false];
     sleep 10;
 
-    _sTargetName = format["objInformant%1", _iTaskIndex];
-    _officerObject = missionNamespace getVariable [_sTargetName , objNull];
-    _targetPos = [_officerObject] call TRGM_GLOBAL_fnc_getRealPos;
+    private _sTargetName = format["objInformant%1", _iTaskIndex];
+    private _officerObject = missionNamespace getVariable [_sTargetName , objNull];
+    private _targetPos = [_officerObject] call TRGM_GLOBAL_fnc_getRealPos;
 
     if ((_officerObject distance [_centralAO_x, _centralAO_y, 0]) > 25) then {
         _officerObject setPos ([_centralAO_x, _centralAO_y] getPos [25 * sqrt random 1, random 360]);
@@ -51,9 +51,8 @@ _objParams params ["_markerType","_objectiveMainBuilding","_centralAO_x","_centr
     }
     else {
         [HQMan,localize "STR_TRGM2_callUAVFindObjective_UAVScanned"] remoteExecCall ["sideChat",0,false];
-        _test = nil;
-        _markerName = format["MrkTargetLocation%1%2",_targetPos select 0, _targetPos select 1];
-        _test = createMarker [_markerName, _targetPos];
+        private _markerName = format["MrkTargetLocation%1%2",_targetPos select 0, _targetPos select 1];
+        private _test = createMarker [_markerName, _targetPos];
         _test setMarkerShape "ICON";
         _test setMarkerType "o_inf";
         _test setMarkerText (localize "STR_TRGM2_callUAVFindObjective_HVTLocation");

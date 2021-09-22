@@ -6,7 +6,7 @@ _unit allowDamage false;
 unassignVehicle _unit;
 moveOut _unit;
 
-_chute = createVehicle ["Steerable_Parachute_F", getPosATL _unit, [], 0, "CAN_COLLIDE"];
+private _chute = createVehicle ["Steerable_Parachute_F", getPosATL _unit, [], 0, "CAN_COLLIDE"];
 _chute attachTo [_unit, [0,0,0]];
 detach _chute;
 _unit moveInDriver _chute;

@@ -5,11 +5,9 @@ params [
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-if (_direction < 0 ||_direction > 360) then {
-    "";
-};
+if (_direction < 0 ||_direction > 360) exitWith { ""; };
 
-_val = round(_direction/45);
+private _val = round(_direction/45);
 if (_words) then {
     switch(_val) do {
         case 8;

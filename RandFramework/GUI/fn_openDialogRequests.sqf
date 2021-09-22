@@ -73,10 +73,10 @@ waitUntil {
     !isNull (findDisplay 8000);
 };
 
-_display = findDisplay 8000;
+private _display = findDisplay 8000;
 
 _display ctrlCreate ["RscCombo", 8011];
-_cboselectUnitClass = _display displayCtrl 8011;
+private _cboselectUnitClass = _display displayCtrl 8011;
 _cboselectUnitClass ctrlsetPosition [0.365954 * safeZoneW + safeZoneX, 0.412003 * safeZoneH + safeZoneY, 0.123734 * safeZoneW, 0.0329991 * safeZoneH];
 {
     private _unitClassName = _x select 0;
@@ -95,7 +95,7 @@ _cboselectUnitClass ctrlAddEventHandler ["LBSelChanged", {
 }];
 
 _display ctrlCreate ["RscCombo", 8007];
-_cboselectUnit = _display displayCtrl 8007;
+private _cboselectUnit = _display displayCtrl 8007;
 _cboselectUnit ctrlsetPosition [0.365954 * safeZoneW + safeZoneX, 0.412003 * safeZoneH + safeZoneY + (1.5 * (0.0329991 * safeZoneH)), 0.123734 * safeZoneW, 0.0329991 * safeZoneH];
 {
     _cboselectUnit lbAdd _x;
@@ -105,7 +105,7 @@ _cboselectUnit ctrlCommit 0;
 _cboselectUnit ctrlsettooltip localize "str_TRGM2_opendialogRequests_RequestUnitdefault";
 
 
-_btnselectUnit = _display displayCtrl 8003;
+private _btnselectUnit = _display displayCtrl 8003;
 _btnselectUnit ctrlAddEventHandler ["ButtonClick", {
     params ["_control"];
     private _classIndex = lbCurSel 8011;
@@ -115,7 +115,7 @@ _btnselectUnit ctrlAddEventHandler ["ButtonClick", {
     if (player != leader group player) then {
         titleText[localize "str_TRGM2_opendialogRequests_notgroupleader", "PLAin"];
     } else {
-        _currentSpentPoints = call TRGM_GLOBAL_fnc_countSpentPoints;
+        private _currentSpentPoints = call TRGM_GLOBAL_fnc_countSpentPoints;
         if (_currentSpentPoints < (TRGM_VAR_maxBadPoints - TRGM_VAR_BadPoints + 1)) then {
             private _spawnedUnit = [group player, _unitClassName, getPos player, [], 10, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             addswitchableUnit _spawnedUnit;
@@ -126,7 +126,7 @@ _btnselectUnit ctrlAddEventHandler ["ButtonClick", {
             [box1, [_spawnedUnit]] call TRGM_GLOBAL_fnc_initAmmoBox;
 
             _spawnedUnit addEventHandler ["killed", {
-                _tombStone = selectRandom TRGM_VAR_tombStones createvehicle TRGM_VAR_GraveYardPos;
+                private _tombStone = selectRandom TRGM_VAR_tombStones createvehicle TRGM_VAR_GraveYardPos;
                 _tombStone setDir TRGM_VAR_GraveYarddirection;
                 _tombStone setVariable ["Message", format[localize "str_TRGM2_Recruiteinf_KIA", name (_this select 0)], true];
                 _tombStone addAction [localize "str_TRGM2_Recruiteinf_Read", {
@@ -148,7 +148,7 @@ _btnselectUnit ctrlAddEventHandler ["ButtonClick", {
 }];
 
 _display ctrlCreate ["RscCombo", 8013];
-_cboselectVehicleClass = _display displayCtrl 8013;
+private _cboselectVehicleClass = _display displayCtrl 8013;
 _cboselectVehicleClass ctrlsetPosition [0.520622 * safeZoneW + safeZoneX, 0.412003 * safeZoneH + safeZoneY, 0.123734 * safeZoneW, 0.0329991 * safeZoneH];
 {
     private _vehicleClassName = _x select 0;
@@ -167,7 +167,7 @@ _cboselectVehicleClass ctrlAddEventHandler ["LBSelChanged", {
 }];
 
 _display ctrlCreate ["RscCombo", 8009];
-_cboselectvehicle = _display displayCtrl 8009;
+private _cboselectvehicle = _display displayCtrl 8009;
 _cboselectvehicle ctrlsetPosition [0.520622 * safeZoneW + safeZoneX, 0.412003 * safeZoneH + safeZoneY + (1.5 * (0.0329991 * safeZoneH)), 0.123734 * safeZoneW, 0.0329991 * safeZoneH];
 {
     _cboselectvehicle lbAdd _x;
@@ -176,13 +176,13 @@ _cboselectvehicle lbsetCurSel 0;
 _cboselectvehicle ctrlCommit 0;
 _cboselectvehicle ctrlsettooltip localize "str_TRGM2_opendialogRequests_Requestvehicledefault";
 
-_btnselectvehicle = _display displayCtrl 8005;
+private _btnselectvehicle = _display displayCtrl 8005;
 _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
     params ["_control"];
     private _classIndex = lbCurSel 8013;
     private _vehIndex = lbCurSel 8009;
     private _vehClassName = ((TRGM_VAR_RecruitVehicleMap select _classIndex) select 1) select _vehIndex;
-    _currentSpentPoints = call TRGM_GLOBAL_fnc_countSpentPoints;
+    private _currentSpentPoints = call TRGM_GLOBAL_fnc_countSpentPoints;
     if ((call TRGM_GETTER_fnc_bVehiclesLeadersOnly) && leader group player != player) then {
         titleText[localize "str_TRGM2_opendialogRequests_notgroupleader", "PLAin"];
     } else {
@@ -261,14 +261,14 @@ _btnselectvehicle ctrlAddEventHandler ["ButtonClick", {
 
                     [_spawnedVeh] call TRGM_GLOBAL_fnc_spawnCrew;
 
-                    _data = [];
-                    _vehicleFaction = faction _spawnedVeh;
+                    private _data = [];
+                    private _vehicleFaction = faction _spawnedVeh;
                     {
-                        _items = [];
+                        private _items = [];
                         {
-                            _configName = configname _x;
-                            _displayName = gettext (_x >> "displayName");
-                            _factions = getarray (_x >> "factions");
+                            private _configName = configname _x;
+                            private _displayName = gettext (_x >> "displayName");
+                            private _factions = getarray (_x >> "factions");
                             if (count _factions isEqualTo 0) then {_factions = [_vehicleFaction];};
                             if (
                                 _displayName != ""

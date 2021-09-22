@@ -34,8 +34,8 @@ if (_baseReturnAllowed && _pos distance2D _baseLZPos <= _baseRadius) then {
 
     /* Find a save landing Position */
 
-    _safeLandingZonePosition = _pos;
-    _isHeloCast = ([false, true] select (surfaceIsWater _pos));
+    private _safeLandingZonePosition = _pos;
+    private _isHeloCast = ([false, true] select (surfaceIsWater _pos));
     if !(_isHeloCast) then {
         _safeLandingZonePosition = [_pos , 0, 50, 20, 0, 0.3, 0,[],[[0,0,0],[0,0,0]],_vehicle] call TRGM_GLOBAL_fnc_findSafePos;
         //if no zone found within 50 meters of selected pos, then search wider

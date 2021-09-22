@@ -24,9 +24,9 @@ If you really want to, you can make a donation via my site www.trgm2.com (paypa
 waitUntil {time > 0};
 
 [] spawn {
-    _unit = player;
+    private _unit = player;
     while {true} do {
-        waitUntil {sleep 2; _unit != player };
+        waitUntil {sleep 5; _unit != player };
         group player selectLeader player;
         //hintSilent " Player has changed";
         [_unit] call TRGM_CLIENT_fnc_transferProviders;
@@ -51,14 +51,14 @@ call TRGM_CLIENT_fnc_missionSetupCamera;
 
 waitUntil { TRGM_VAR_bOptionsSet };
 
-txt5Layer = "txt5" call BIS_fnc_rscLayer;
-_texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>TRGM Redux</t>";
-[_texta, -0, 0.150, 7, 1,0,txt5Layer] spawn BIS_fnc_dynamicText;
+private _txt5Layer = "txt5" call BIS_fnc_rscLayer;
+private _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>TRGM Redux</t>";
+[_texta, -0, 0.150, 7, 1,0,_txt5Layer] spawn BIS_fnc_dynamicText;
 
 
-txt51Layer = "txt51" call BIS_fnc_rscLayer;
+private _txt51Layer = "txt51" call BIS_fnc_rscLayer;
 _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.5' color='#ffffff'>" + localize "STR_TRGM2_TRGMInitPlayerLocal_CantHearMusic" + "</t>";
-[_texta, 0, 0.280, 7, 1,0,txt51Layer] spawn BIS_fnc_dynamicText;
+[_texta, 0, 0.280, 7, 1,0,_txt51Layer] spawn BIS_fnc_dynamicText;
 
 call TRGM_CLIENT_fnc_endCamera;
 
@@ -95,52 +95,17 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
     TRGM_VAR_bAndSoItBegins = true; publicVariable "TRGM_VAR_bAndSoItBegins";
 };
 
-// _fnc_basicInitAndRespawn = {
-//     "_fnc_basicInitAndRespawn called" call TRGM_GLOBAL_fnc_log;
-
-//     if (isMultiplayer) then
-//     {
-//         waitUntil {!(isNull (findDisplay 46))};
-
-//         player setspeaker "NoVoice";
-//         //ShowRad = showRadio false;
-//         //EnabRad = enableRadio false;
-//         player disableConversation true;
-
-//         player addEventHandler
-//         [
-//         "respawn",
-//             {
-//             player setspeaker "NoVoice";
-//             //ShowRad = showRadio false;
-//             //EnabRad = enableRadio false;
-//             player disableConversation true
-//             }
-//         ];
-//     };
-
-//     TRGM_VAR_iAllowGPS = ("OUT_par_AllowGPS" call BIS_fnc_getParamValue);
-//     if (TRGM_VAR_iAllowGPS isEqualTo 0) then {
-//         showGPS false;
-//     };
-
-// };
-// [] spawn _fnc_basicInitAndRespawn;
-// player addEventHandler ["Respawn", { [] spawn _fnc_basicInitAndRespawn; }];
-
 waitUntil { TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet };
 
 [player] spawn TRGM_GLOBAL_fnc_setLoadout;
 
-_isAceRespawnWithGear = false;
+private _isAceRespawnWithGear = false;
 if (call TRGM_GLOBAL_fnc_isCbaLoaded) then {
     // check for ACE respawn with gear setting
     _isAceRespawnWithGear = "ace_respawn_savePreDeathGear" call CBA_settings_fnc_get;
 };
-if (!isNil("_isAceRespawnWithGear")) then {
-    if (!_isAceRespawnWithGear) then {
-        player addEventHandler ["Respawn", { [player] spawn TRGM_GLOBAL_fnc_setLoadout; }];
-    };
+if (!_isAceRespawnWithGear) then {
+    player addEventHandler ["Respawn", { [player] spawn TRGM_GLOBAL_fnc_setLoadout; }];
 };
 
 [] spawn {
@@ -150,7 +115,7 @@ if (!isNil("_isAceRespawnWithGear")) then {
     playMusic "";
 };
 
-_iEnableGroupManagement = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_MANAGE_IDX;
+private _iEnableGroupManagement = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_MANAGE_IDX;
 if (_iEnableGroupManagement isEqualTo 1) then {
     ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client
 };
@@ -186,19 +151,11 @@ if (_isTraining) then {
 
 }
 else {
-    _iTicketCount = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_RESPAWN_TICKET_COUNT_IDX;
+    private _iTicketCount = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_RESPAWN_TICKET_COUNT_IDX;
     [player, _iTicketCount] call BIS_fnc_respawnTickets;
 
-    _iRespawnTimer = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_RESPAWN_TIMER_IDX;
+    private _iRespawnTimer = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_RESPAWN_TIMER_IDX;
     setPlayerRespawnTime _iRespawnTimer;
-
-    //if ((TRGM_VAR_iMissionIsCampaign) && !isMultiplayer) then {
-    //    [player, 999] call BIS_fnc_respawnTickets;
-    //    TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "\n" + "999 respawn tickets"
-    //}
-    //else {
-    //    [player, 1] call BIS_fnc_respawnTickets;
-    //};
 };
 
 
@@ -226,11 +183,6 @@ if (TRGM_VAR_bCirclesOfDeath) then {
     player addEventHandler ["Respawn", { [] spawn TRGM_CLIENT_fnc_drawKilledRanges; }];
 
 };
-
-// if (TRGM_VAR_sArmaGroup isEqualTo "TCF" && isMultiplayer) then {
-//     //_handle=createdialog "DialogMessAround";
-//     //titleText ["!!!WARNING!!!\n\nPoint system in place\n\nDO NOT mess around at base\n\nONLY fly if you know AFM, or are being trained.\n\nDestroying vehicles will mark points and ruin the experience for others!!!", "PLAIN"];
-// };
 
 [] spawn TRGM_CLIENT_fnc_missionOverAnimation;
 player addEventHandler ["Respawn", { [] spawn TRGM_CLIENT_fnc_missionOverAnimation; }];

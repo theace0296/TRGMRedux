@@ -4,31 +4,31 @@ params ["_isHiddenObj", "_bMoveToAO"];
 
 if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "NOTRUN"]) isEqualTo "COMPLETE")}) then {
     player setVariable ["TRGM_postStartMissionCamRunning", "RUNNING", true];
-    _locationText = [TRGM_VAR_ObjectivePossitions select 0] call TRGM_GLOBAL_fnc_getLocationName;
-    _hour = floor daytime;
-    _minute = floor ((daytime - _hour) * 60);
+    private _locationText = [TRGM_VAR_ObjectivePossitions select 0] call TRGM_GLOBAL_fnc_getLocationName;
+    private _hour = floor daytime;
+    private _minute = floor ((daytime - _hour) * 60);
 
-    _strHour = str(_hour);
-    _strMinute = str(_minute);
-    _lenHour = count (_strHour);
-    _lenMin = count (_strMinute);
+    private _strHour = str(_hour);
+    private _strMinute = str(_minute);
+    private _lenHour = count (_strHour);
+    private _lenMin = count (_strMinute);
     if (_lenHour isEqualTo 1) then {
         _strHour = format["0%1",_strHour];
     };
     if (_lenMin isEqualTo 1) then {
         _strMinute = format["0%1",_strMinute];
     };
-    _time24 = text format ["%1:%2",_strHour,_strMinute];
+    private _time24 = text format ["%1:%2",_strHour,_strMinute];
 
     if (!isDedicated) then {
         sleep 5;
     };
 
 
-    _LineOne = format [localize "STR_TRGM2_StartMission_Day",str(TRGM_VAR_iCampaignDay)];
-    _LineTwo = (localize "STR_TRGM2_StartMission_Mission") + TRGM_VAR_CurrentZeroMissionTitle;
-    _LineThree = _locationText;
-    _LineFour = (localize "STR_TRGM2_StartMission_Time") + str(_time24);
+    private _LineOne = format [localize "STR_TRGM2_StartMission_Day",str(TRGM_VAR_iCampaignDay)];
+    private _LineTwo = (localize "STR_TRGM2_StartMission_Mission") + TRGM_VAR_CurrentZeroMissionTitle;
+    private _LineThree = _locationText;
+    private _LineFour = (localize "STR_TRGM2_StartMission_Time") + str(_time24);
 
     if (_isHiddenObj) then {
         _LineTwo = (localize "STR_TRGM2_StartMission_Mission") + "Unknown";
@@ -57,28 +57,28 @@ if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "
     playMusic TRGM_VAR_NewMissionMusic;
     format["StartMission Music: %1", TRGM_VAR_NewMissionMusic] call TRGM_GLOBAL_fnc_log;
 
-    txt1Layer = "txt1" call BIS_fnc_rscLayer;
-    txt2Layer = "txt2" call BIS_fnc_rscLayer;
+    private _txt1Layer = "txt1" call BIS_fnc_rscLayer;
+    private _txt2Layer = "txt2" call BIS_fnc_rscLayer;
 
 
-    _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.6' color='#ffffff'>" + _LineTwo +"</t>";
-    [_texta, 0, 0.220, 7, 1,0,txt1Layer] spawn BIS_fnc_dynamicText;
+    private _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.6' color='#ffffff'>" + _LineTwo +"</t>";
+    [_texta, 0, 0.220, 7, 1,0,_txt1Layer] spawn BIS_fnc_dynamicText;
 
 
-    txt5Layer = "txt5" call BIS_fnc_rscLayer;
-    txt6Layer = "txt6" call BIS_fnc_rscLayer;
+    private _txt5Layer = "txt5" call BIS_fnc_rscLayer;
+    private _txt6Layer = "txt6" call BIS_fnc_rscLayer;
 
 
     _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>" + _LineOne +"</t>";
-    [_texta, -0, 0.150, 7, 1,0,txt5Layer] spawn BIS_fnc_dynamicText;
+    [_texta, -0, 0.150, 7, 1,0,_txt5Layer] spawn BIS_fnc_dynamicText;
 
     _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>" + (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_NAME_IDX) + "</t>";
-    [_texta, -0, 0.350, 7, 1,0,txt6Layer] spawn BIS_fnc_dynamicText;
+    [_texta, -0, 0.350, 7, 1,0,_txt6Layer] spawn BIS_fnc_dynamicText;
 
     showcinemaborder true;
 
-    _pos1 = nil;
-    _pos2 = nil;
+    private _pos1 = nil;
+    private _pos2 = nil;
     if (_bMoveToAO) then {
         _pos1 = (TRGM_VAR_AOCampPos getPos [(floor(random 100))+50, (floor(random 360))]);
         _pos2 = (TRGM_VAR_AOCampPos getPos [(floor(random 100))+50, (floor(random 360))]);

@@ -1,8 +1,9 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 if (isNil "TRGM_VAR_BadPoints") then {TRGM_VAR_BadPoints = 0; publicVariable "TRGM_VAR_BadPoints";};
-_lastRepPoints = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
-_lastBadPoints = TRGM_VAR_BadPoints;
-_LastRank = 0;
+
+private _lastRepPoints = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+private _lastBadPoints = TRGM_VAR_BadPoints;
+private _LastRank = 0;
 if (_lastRepPoints >= 10) then {_LastRank = 5;};
 if (_lastRepPoints < 10) then {_LastRank = 4;};
 if (_lastRepPoints < 7) then {_LastRank = 3;};
@@ -10,8 +11,8 @@ if (_lastRepPoints < 5) then {_LastRank = 2;};
 if (_lastRepPoints < 3) then {_LastRank = 1;};
 if (_lastRepPoints < 1) then {_LastRank = 0;};
 while {true} do {
-    _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
-    _CurrentRank = _LastRank;
+    private _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+    private _CurrentRank = _LastRank;
     if (_dCurrentRep >= 10) then {_CurrentRank = 5;};
     if (_dCurrentRep < 10) then {_CurrentRank = 4;};
     if (_dCurrentRep < 7) then {_CurrentRank = 3;};
@@ -26,13 +27,12 @@ while {true} do {
     };
 
     if (_lastBadPoints != TRGM_VAR_BadPoints) then {
-
-        _bRepWorse = false;
+        private _bRepWorse = false;
         if (TRGM_VAR_BadPoints > _lastBadPoints) then {_bRepWorse = true};
         _lastBadPoints = TRGM_VAR_BadPoints;
         if (TRGM_VAR_iMissionIsCampaign) then {
             if (_dCurrentRep <= 0 && {TRGM_VAR_iMissionParamRepOption isEqualTo 1}) then {
-                _iCurrentTaskCount = 0;
+                private _iCurrentTaskCount = 0;
                 ["tskKeepAboveAverage", "failed"] call FHQ_fnc_ttSetTaskState;
                 while {_iCurrentTaskCount < count TRGM_VAR_ActiveTasks} do {
                     if (!(TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted)) then {
@@ -53,12 +53,12 @@ while {true} do {
         };
     };
     if (_LastRank != _CurrentRank) then {
-        _bRepWorse = true;
+        private _bRepWorse = true;
         if (_CurrentRank > _LastRank) then {_bRepWorse = false};
         _LastRank = _CurrentRank;
         if (TRGM_VAR_iMissionIsCampaign) then {
-            _sRankIcon = "";
-            _sRankMessage = "";
+            private _sRankIcon = "";
+            private _sRankMessage = "";
             //HERE HERE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!
             //!!!!!! rank cound go from 2.2 to 3.2 and would not show icon... so need to check if =< 3 and if rank has actually changed!
             if (_dCurrentRep >= 10) then {_sRankIcon = "<img image='RandFramework\Media\Rank5.jpg' size='3.5' />";};
@@ -86,5 +86,5 @@ while {true} do {
     if (isServer) then {
         "transportChopper" setMarkerPos getPos chopper1;
     };
-    sleep 1;
+    sleep 5;
 };

@@ -39,19 +39,19 @@
 
     ("Layer_Download_Data" call BIS_fnc_rscLayer) cutRsc ["Download_Data", "PLAIN", 0.01, false];
     waitUntil {!isNull (uiNamespace getVariable ["disp_downloadingData", displayNull]);};
-    _display = uiNamespace getVariable "disp_downloadingData";
+    private _display = uiNamespace getVariable "disp_downloadingData";
 
     (_display displayCtrl 200) ctrlSetText _text;
 
-    _downloaded = 0;
-    _increment = 1;
+    private _downloaded = 0;
+    private _increment = 1;
 
     while {_downloaded < 100 && "Layer_Download_Data" in allCutLayers} do
     {
         _downloaded = _downloaded + _increment;
-        _multiplier = ({alive _x && _x distance2d getPosATL _target <= 20} count units group _caller);
+        private _multiplier = ({alive _x && _x distance2d getPosATL _target <= 20} count units group _caller);
         if (_multiplier < 1) then {_multiplier = 1;}; //No dividing by zero here!
-        _signalRet = [_caller, _target] call _getSignal;
+        private _signalRet = [_caller, _target] call _getSignal;
         _signalRet params ["_signalIcon", "_signalMultiplier"];
         (_display displayCtrl 300) ctrlSetText format ["%1", _multiplier];
         (_display displayCtrl 400) progressSetPosition (_downloaded / 100);

@@ -8,7 +8,7 @@ if !(_units isEqualType []) then {
 };
 
 {
-    _unit = _x;
+    private _unit = _x;
     _unit setCaptive true;
     _unit setBehaviour "CARELESS";
     {_unit disableAI _x} forEach ["TARGET", "AUTOTARGET", "FSM", "SUPPRESSION", "CHECKVISIBLE", "AUTOCOMBAT", "COVER"];

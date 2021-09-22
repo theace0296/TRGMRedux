@@ -6,18 +6,18 @@ if (!TRGM_VAR_FactionSetupCompleted) exitWith {};
 private _unitClassName = [_type, typeOf _unit] select (_type isEqualTo "");
 private _configPath = (configFile >> "CfgVehicles" >> _unitClassName);
 
-_riflemen = ["B_Soldier_F"];
-_leaders = _riflemen;
-_atsoldiers = _riflemen;
-_aasoldiers = _riflemen;
-_engineers = _riflemen;
-_grenadiers = _riflemen;
-_medics = _riflemen;
-_autoriflemen = _riflemen;
-_snipers = _riflemen;
-_explosiveSpecs = _riflemen;
-_pilots = _riflemen;
-_uavOps = _riflemen;
+private _riflemen = ["B_Soldier_F"];
+private _leaders = _riflemen;
+private _atsoldiers = _riflemen;
+private _aasoldiers = _riflemen;
+private _engineers = _riflemen;
+private _grenadiers = _riflemen;
+private _medics = _riflemen;
+private _autoriflemen = _riflemen;
+private _snipers = _riflemen;
+private _explosiveSpecs = _riflemen;
+private _pilots = _riflemen;
+private _uavOps = _riflemen;
 
 switch (side _unit) do {
     case WEST: {

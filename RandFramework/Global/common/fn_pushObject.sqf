@@ -41,7 +41,7 @@ else {
         _Object attachTo [player, _attachPos, "head"];
         _Object removeAction _id;
     } else {
-        _newPos = _Object getPos [3, [_caller, _Object] call BIS_fnc_dirTo];
+        private _newPos = _Object getPos [3, [_caller, _Object] call BIS_fnc_dirTo];
         _Object setPos _newPos;
     };
 };

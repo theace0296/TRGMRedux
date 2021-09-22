@@ -22,7 +22,7 @@ if (side player isEqualTo civilian) then {
 
     player addaction ["Teleport",{titleText[localize "STR_TRGM2_tele_SelectPosition", "PLAIN"]; onMapSingleClick "vehicle player setPos _pos; onMapSingleClick '';true;";}];
     player addaction ["Toggle Fast Run",{
-        _bCurrentFastRun = player getVariable ["fastRun",false];
+        private _bCurrentFastRun = player getVariable ["fastRun",false];
         player setVariable ["fastRun",!_bCurrentFastRun];
     }];
 
@@ -55,7 +55,7 @@ if (TRGM_VAR_iAllowNVG isEqualTo 2) then {
     call TRGM_GLOBAL_fnc_nvScript;
 };
 
-_trg = createTrigger["EmptyDetector", [player] call TRGM_GLOBAL_fnc_getRealPos];
+private _trg = createTrigger["EmptyDetector", [player] call TRGM_GLOBAL_fnc_getRealPos];
 _trg setTriggerActivation["ALPHA", "PRESENT", true];
 _trg setTriggerText "Illuminate your position for 5 mins (eta 60 seconds)";
 _trg setTriggerStatements["this", "[player] spawn TRGM_GLOBAL_fnc_fireIllumFlares;", ""];

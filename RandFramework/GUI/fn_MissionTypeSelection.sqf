@@ -40,18 +40,18 @@ if (TRGM_VAR_iMissionIsCampaign) then {
             };
         };
     };
-    _ctrlRep = _display displayCtrl 5100;
+    private _ctrlRep = _display displayCtrl 5100;
     _ctrlRep ctrlEnable false;
     _ctrlRep lbSetCurSel 1;
-    _ctrlWeather = _display displayCtrl 5101;
+    private _ctrlWeather = _display displayCtrl 5101;
     _ctrlWeather ctrlEnable false;
     _ctrlWeather lbSetCurSel 0;
 
-    _ctrlAddObjective = _display displayCtrl 5502;
+    private _ctrlAddObjective = _display displayCtrl 5502;
     _ctrlAddObjective ctrlEnable false;
-    _ctrlRemoveObjective = _display displayCtrl 5503;
+    private _ctrlRemoveObjective = _display displayCtrl 5503;
     _ctrlRemoveObjective ctrlEnable false;
-    _ctrlFullMap = _display displayCtrl 5504;
+    private _ctrlFullMap = _display displayCtrl 5504;
     [_ctrlFullMap] call _setTextCheckboxDisabled;
 }
 else {
@@ -73,23 +73,23 @@ else {
         };
     };
 
-    _ctrlRep = _display displayCtrl 5100;
+    private _ctrlRep = _display displayCtrl 5100;
     _ctrlRep ctrlEnable true;
-    _ctrlWeather = _display displayCtrl 5101;
+    private _ctrlWeather = _display displayCtrl 5101;
     _ctrlWeather ctrlEnable true;
 
-    _ctrlAddObjective = _display displayCtrl 5502;
+    private _ctrlAddObjective = _display displayCtrl 5502;
     _ctrlAddObjective ctrlEnable true;
-    _ctrlRemoveObjective = _display displayCtrl 5503;
+    private _ctrlRemoveObjective = _display displayCtrl 5503;
     _ctrlRemoveObjective ctrlEnable true;
-    _ctrlFullMap = _display displayCtrl 5504;
+    private _ctrlFullMap = _display displayCtrl 5504;
     _ctrlFullMap ctrlEnable true;
     [_ctrlFullMap] call _setTextCheckboxEnabled;
 };
 
 if (!isMultiplayer) then {
-    _ctrlLoadLocal = _display displayCtrl 1601;
-    _ctrlLoadGlobal = _display displayCtrl 1602;
+    private _ctrlLoadLocal = _display displayCtrl 1601;
+    private _ctrlLoadGlobal = _display displayCtrl 1602;
     _ctrlLoadLocal  ctrlShow false;
     _ctrlLoadGlobal  ctrlShow false;
 };

@@ -15,25 +15,25 @@ if !(_special in ["NONE", "FORM", "CAN_COLLIDE", "CARGO"]) then {
     _special = "NONE";
 };
 
-_side = side _group;
-_unitType = [_type, _side] call TRGM_GLOBAL_fnc_getUnitType;
-_tempUnitType = _type;
+private _side = side _group;
+private _unitType = [_type, _side] call TRGM_GLOBAL_fnc_getUnitType;
+private _tempUnitType = _type;
 
 if !(_unitType isEqualTo "") then {
     private _configPath = (configFile >> "CfgVehicles" >> _type);
 
-    _riflemen       = _type;
-    _leaders        = _riflemen;
-    _atsoldiers     = _riflemen;
-    _aasoldiers     = _riflemen;
-    _engineers      = _riflemen;
-    _grenadiers     = _riflemen;
-    _medics         = _riflemen;
-    _autoriflemen   = _riflemen;
-    _snipers        = _riflemen;
-    _explosiveSpecs = _riflemen;
-    _pilots         = _riflemen;
-    _uavOps         = _riflemen;
+    private _riflemen       = _type;
+    private _leaders        = _riflemen;
+    private _atsoldiers     = _riflemen;
+    private _aasoldiers     = _riflemen;
+    private _engineers      = _riflemen;
+    private _grenadiers     = _riflemen;
+    private _medics         = _riflemen;
+    private _autoriflemen   = _riflemen;
+    private _snipers        = _riflemen;
+    private _explosiveSpecs = _riflemen;
+    private _pilots         = _riflemen;
+    private _uavOps         = _riflemen;
 
     switch (_side) do {
         case WEST: {
@@ -120,7 +120,7 @@ if !(_unitType isEqualTo "") then {
     };
 };
 
-_unit = _group createUnit [_tempUnitType, _position, _markers, _placement, _special];
+private _unit = _group createUnit [_tempUnitType, _position, _markers, _placement, _special];
 if !(_type isEqualTo _tempUnitType) then {
     [_unit, _type] call TRGM_GLOBAL_fnc_setLoadout;
     private _tempUnit = (createGroup CIVILIAN) createUnit [_type, [0,0,0], [], 0, 'NONE'];

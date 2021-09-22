@@ -64,7 +64,7 @@ if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetu
     };
 
     if !(TRGM_VAR_AdvancedSettings select 6 in TRGM_VAR_DefaultEnemyFactionArray) then {
-        _bFound = false;
+        private _bFound = false;
         {
             if (!_bFound && _x in TRGM_VAR_DefaultEnemyFactionArray) then {
                 _bFound = true;
@@ -74,7 +74,7 @@ if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetu
     };
 
     if !(TRGM_VAR_AdvancedSettings select 7 in TRGM_VAR_DefaultMilitiaFactionArray) then {
-        _bFound = false;
+        private _bFound = false;
         {
             if (!_bFound && _x in TRGM_VAR_DefaultMilitiaFactionArray) then {
                 _bFound = true;
@@ -84,7 +84,7 @@ if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetu
     };
 
     if !(TRGM_VAR_AdvancedSettings select 8 in TRGM_VAR_DefaultFriendlyFactionArray) then {
-        _bFound = false;
+        private _bFound = false;
         {
             if (!_bFound && _x in TRGM_VAR_DefaultFriendlyFactionArray) then {
                 _bFound = true;
@@ -110,14 +110,14 @@ if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetu
 if (!isNull (findDisplay 6000)) then {
     TRGM_VAR_AdvancedSettings = [];
     {
-        _CurrentControl = _x;
-        _lnpCtrlType = _x select 2;
-        _ThisControlOptions = (_x select 4);
-        _ThisControlIDX = (_x select 0) + 1;
-        _ctrlItem = (findDisplay 6000) displayCtrl _ThisControlIDX;
+        private _CurrentControl = _x;
+        private _lnpCtrlType = _x select 2;
+        private _ThisControlOptions = (_x select 4);
+        private _ThisControlIDX = (_x select 0) + 1;
+        private _ctrlItem = (findDisplay 6000) displayCtrl _ThisControlIDX;
         TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "\n\n" + str(lbCurSel _ctrlItem);
         publicVariable "TRGM_VAR_debugMessages";
-        _value = nil;
+        private _value = nil;
         if (_lnpCtrlType isEqualTo "RscCombo") then {
             TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "\n\nHERE80:" + str(lbCurSel _ctrlItem);
             _value = _ThisControlOptions select ([lbCurSel _ctrlItem, 0] select (lbCurSel _ctrlItem isEqualTo -1));

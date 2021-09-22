@@ -9,16 +9,16 @@ params [
 ];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_radius = 900;
-_airEscort = false;
-_isHiddenObj = false;
+private _radius = 900;
+private _airEscort = false;
+private _isHiddenObj = false;
 //{
 //    if ((_x distance2D _destinationPosition) < _radius) then {
 //        _airEscort = true;
 //    };
 //} forEach TRGM_VAR_ClearedPositions;
 
-_mainAOPos = TRGM_VAR_ObjectivePossitions select 0;
+private _mainAOPos = TRGM_VAR_ObjectivePossitions select 0;
 if (! isNil "_mainAOPos") then {
     if (_mainAOPos in TRGM_VAR_ClearedPositions  && (_mainAOPos distance2D _destinationPosition) < _radius) then {
         _airEscort = true;
@@ -58,26 +58,26 @@ deleteMarker (_vehicle getVariable ["lzMarker",""]);
 /** New Tranport Mission starts here **/
 
 // set mission number -> invalidates old instances of this script running.
-_thisMissionNr = (_vehicle getVariable ["missionNr",0]) + 1;
+private _thisMissionNr = (_vehicle getVariable ["missionNr",0]) + 1;
 _vehicle setVariable ["missionNr", _thisMissionNr, true];
 
-_thisMission = [_vehicle,_thisMissionNr];
+private _thisMission = [_vehicle,_thisMissionNr];
 
 _cleanupMission = {
     params ["_mission"];
 
-    _markerName = str(_mission select 0) + "LZ" + str(_mission select 1);
+    private _markerName = str(_mission select 0) + "LZ" + str(_mission select 1);
     deleteMarker _markerName;
 };
 
 _vehicle setVariable ["targetPos",_destinationPosition,true];
-_driver = driver _vehicle;
+private _driver = driver _vehicle;
 
 /* Set landing zone map marker */
 
-_markerName = str(_vehicle) + "LZ" + str(_thisMissionNr);
+private _markerName = str(_vehicle) + "LZ" + str(_thisMissionNr);
 
-_mrkcustomLZ1 = createMarker [_markerName, _destinationPosition];
+private _mrkcustomLZ1 = createMarker [_markerName, _destinationPosition];
 _mrkcustomLZ1 setMarkerShape "ICON";
 _mrkcustomLZ1 setMarkerSize [1,1];
 _mrkcustomLZ1 setMarkerColor "colorBLUFOR";
@@ -85,7 +85,7 @@ _mrkcustomLZ1 setMarkerType "hd_pickup";
 _mrkcustomLZ1 setMarkerText (format ["LZ %1", [_vehicle] call TRGM_GLOBAL_fnc_getTransportName]);
 _vehicle setVariable ["lzMarker",_mrkcustomLZ1,true];
 
-_heliPad = "Land_HelipadEmpty_F" createVehicle _destinationPosition; // invisible landingpad to specify exact landing position
+private _heliPad = "Land_HelipadEmpty_F" createVehicle _destinationPosition; // invisible landingpad to specify exact landing position
 _vehicle setVariable ["targetPad",_heliPad,true];
 
 {
@@ -94,19 +94,19 @@ _vehicle setVariable ["targetPad",_heliPad,true];
 
 _vehicle setVariable ["landingInProgress",false,true];
 
-_emergencyLand = false;
-_waypointIndex = 0;
+private _emergencyLand = false;
+private _waypointIndex = 0;
 /* Set Waypoint,Takeoff */
 if (!_airEscort) then {
-    _iSaftyCount = 500;
-    _bHalfWayWaypoint = false;
-    _DirAtoB = [[_vehicle] call TRGM_GLOBAL_fnc_getRealPos, _destinationPosition] call BIS_fnc_DirTo;
-    _AvoidZonePos = TRGM_VAR_ObjectivePossitions select 0;
+    private _iSaftyCount = 500;
+    private _bHalfWayWaypoint = false;
+    private _DirAtoB = [[_vehicle] call TRGM_GLOBAL_fnc_getRealPos, _destinationPosition] call BIS_fnc_DirTo;
+    private _AvoidZonePos = TRGM_VAR_ObjectivePossitions select 0;
 
     if (! isNil "_AvoidZonePos" ) then {
-        _stepPos = [_vehicle] call TRGM_GLOBAL_fnc_getRealPos;
-        _stepDistLeft = _vehicle distance _destinationPosition;
-        _bEndSteps = false;
+        private _stepPos = [_vehicle] call TRGM_GLOBAL_fnc_getRealPos;
+        private _stepDistLeft = _vehicle distance _destinationPosition;
+        private _bEndSteps = false;
         while {!_bEndSteps && _iSaftyCount > 0} do {
             _iSaftyCount = _iSaftyCount - 1;
             _stepPos = _stepPos getPos [100,_DirAtoB];
@@ -114,8 +114,8 @@ if (!_airEscort) then {
             _stepDistLeft = _stepPos distance _destinationPosition;
 
             if (false) then {
-                _markerNameSteps = str(_vehicle) + "Step_" + str(500 - _iSaftyCount);
-                _mrkcustomSteps = createMarker [_markerNameSteps, _stepPos];
+                private _markerNameSteps = str(_vehicle) + "Step_" + str(500 - _iSaftyCount);
+                private _mrkcustomSteps = createMarker [_markerNameSteps, _stepPos];
                 _mrkcustomSteps setMarkerShape "ICON";
                 _mrkcustomSteps setMarkerSize [1,1];
                 _mrkcustomSteps setMarkerType "hd_dot";
@@ -132,13 +132,13 @@ if (!_airEscort) then {
                 }
                 else {
                     _bEndSteps = true;
-                    _divertDirectionA = ([_DirAtoB,80] call TRGM_GLOBAL_fnc_addToDirection);
-                    _newPosA = _AvoidZonePos getPos [2000,_divertDirectionA];
-                    _divertDirectionB = ([_DirAtoB,-80] call TRGM_GLOBAL_fnc_addToDirection);
-                    _newPosB = _AvoidZonePos getPos [2000,_divertDirectionB];
-                    _totalDistA = (_vehicle distance _newPosA) + (_newPosA distance _destinationPosition);
-                    _totalDistB = (_vehicle distance _newPosB) + (_newPosB distance _destinationPosition);
-                    _newPos = nil;
+                    private _divertDirectionA = ([_DirAtoB,80] call TRGM_GLOBAL_fnc_addToDirection);
+                    private _newPosA = _AvoidZonePos getPos [2000,_divertDirectionA];
+                    private _divertDirectionB = ([_DirAtoB,-80] call TRGM_GLOBAL_fnc_addToDirection);
+                    private _newPosB = _AvoidZonePos getPos [2000,_divertDirectionB];
+                    private _totalDistA = (_vehicle distance _newPosA) + (_newPosA distance _destinationPosition);
+                    private _totalDistB = (_vehicle distance _newPosB) + (_newPosB distance _destinationPosition);
+                    private _newPos = nil;
                     if (_totalDistA < _totalDistB) then {
                         _newPos = _newPosA;
                     }
@@ -146,7 +146,7 @@ if (!_airEscort) then {
                         _newPos = _newPosB;
                     };
                     _waypointIndex = _waypointIndex + 1;
-                    _flyToLZMid = group _driver addWaypoint [_newPos,0,0];
+                    private _flyToLZMid = group _driver addWaypoint [_newPos,0,0];
                     _flyToLZMid setWaypointType "MOVE";
                     _flyToLZMid setWaypointSpeed "FULL";
                     _flyToLZMid setWaypointBehaviour "CARELESS";
@@ -161,7 +161,7 @@ if (!_airEscort) then {
     }
 };
 
-_flyToLZ = group _driver addWaypoint [_destinationPosition,0,_waypointIndex];
+private _flyToLZ = group _driver addWaypoint [_destinationPosition,0,_waypointIndex];
 _flyToLZ setWaypointType "MOVE";
 _flyToLZ setWaypointSpeed "FULL";
 _flyToLZ setWaypointBehaviour "CARELESS";
@@ -176,11 +176,11 @@ if (_isHeloCast) then {
 //also, further above, set AOISHIDDEN
 
 if (_airEscort) then {
-    _escortPilot = driver chopper2;
+    private _escortPilot = driver chopper2;
     {
         deleteWaypoint _x
     } foreach waypoints group _escortPilot;
-    _escortFlyToLZ = group _escortPilot addWaypoint [_destinationPosition,0,0];
+    private _escortFlyToLZ = group _escortPilot addWaypoint [_destinationPosition,0,0];
     _escortFlyToLZ setWaypointBehaviour "AWARE";
     _escortFlyToLZ setWaypointCombatMode "RED";
     _escortFlyToLZ setWaypointType "LOITER";
@@ -190,8 +190,8 @@ if (_airEscort) then {
 
 
 if (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) then {
-    _locationText = [position _vehicle,true] call TRGM_GLOBAL_fnc_getLocationName;
-    _text = format [localize "STR_TRGM2_transport_fnflyToLz_ClearTakeoff", [_vehicle] call TRGM_GLOBAL_fnc_getTransportName,_locationText];
+    private _locationText = [position _vehicle,true] call TRGM_GLOBAL_fnc_getLocationName;
+    private _text = format [localize "STR_TRGM2_transport_fnflyToLz_ClearTakeoff", [_vehicle] call TRGM_GLOBAL_fnc_getTransportName,_locationText];
     [_text] call TRGM_GLOBAL_fnc_commsHQ;
 };
 

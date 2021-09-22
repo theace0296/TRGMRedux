@@ -6,7 +6,7 @@ if !(_side in [WEST, INDEPENDENT, EAST]) exitWith { ""; };
 private _configPath = (configFile >> "CfgVehicles" >> _type);
 [_type, getText(_configPath >> "displayName"), getText(_configPath >> "icon"), getText(_configPath >> "textSingular"), getNumber(_configPath >> "attendant"), getNumber(_configPath >> "engineer"), getNumber(_configPath >> "canDeactivateMines"), getNumber(_configPath >> "uavHacker")] params ["_className", "_dispName", "_icon", "_calloutName", "_isMedic", "_isEngineer", "_isExpSpecialist", "_isUAVHacker"];
 
-_returnType = "riflemen";
+private _returnType = "riflemen";
 if (isNil "_className" ||isNil "_dispName" || isNil "_icon" || isNil "_calloutName") then {
 
 } else {

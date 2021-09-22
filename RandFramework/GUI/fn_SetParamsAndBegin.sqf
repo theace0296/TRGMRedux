@@ -52,7 +52,7 @@ else {
     TRGM_VAR_sInitialSLPlayerID =  getPlayerUID player; publicVariable "TRGM_VAR_sInitialSLPlayerID"; //store the uid of the player picking the params at the start of a campaign, so when we save, we know the uid to save against even if he is killed!
     sleep 0.1;
 
-    _LoadVersion = "";
+    private _LoadVersion = "";
     if (_SaveType isEqualTo 1) then {
         _LoadVersion = worldName;
     };
@@ -71,7 +71,7 @@ else {
         sleep 0.1;
 
         if (count TRGM_VAR_SavedData isEqualTo 0 && {!(isNil "TRGM_VAR_InitialLoadedPreviousSettings") && {count TRGM_VAR_InitialLoadedPreviousSettings > 0}}) then {
-            _ctrl = (findDisplay 5000) displayCtrl 5500;
+            private _ctrl = (findDisplay 5000) displayCtrl 5500;
             _ctrl ctrlSetText (localize "STR_TRGM2_SetParamsAndBegin_ErrorMsg_NoData");
             _ctrl ctrlShow true;
             [] spawn {

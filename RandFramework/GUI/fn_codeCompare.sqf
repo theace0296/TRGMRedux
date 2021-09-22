@@ -16,11 +16,11 @@
 params ["_inputCode"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_thisBomb = player getVariable["missionBomb", nil];
-_code = _thisBomb getVariable["missionBombCODE", "NONE"];
+private _thisBomb = player getVariable["missionBomb", nil];
+private _code = _thisBomb getVariable["missionBombCODE", "NONE"];
 
-_compare = [_code, _inputCode] call BIS_fnc_areEqual;
-_isWireCut = _thisBomb getVariable["_wireCut", false];
+private _compare = [_code, _inputCode] call BIS_fnc_areEqual;
+private _isWireCut = _thisBomb getVariable["_wireCut", false];
 
 if (_compare && _isWireCut) then {
     cutText[localize "STR_TRGM2_BombCodeEntered", "PLAIN DOWN"];

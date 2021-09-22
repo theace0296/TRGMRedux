@@ -7,9 +7,9 @@ switch (typeName _className) do {
 
 if !(isClass (configFile >> "CfgVehicles" >> _className)) exitWith {false};
 
-_configPath = (configFile >> "CfgVehicles" >> _className);
+private _configPath = (configFile >> "CfgVehicles" >> _className);
 
-_isArmed = false;
+private _isArmed = false;
 
 if (_className isKindOf "CAManBase") then {
     _isArmed = count ((getArray(_configPath >> "Weapons")) - ["Throw","Put","FakeWeapon"]) > 0;

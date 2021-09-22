@@ -1,7 +1,5 @@
-private ["_unit","_move"];
+params [["_unit", objNull, [objNull]], ["_move", "AmovPercMstpSlowWrflDnon", [""]]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-_unit = [_this,0,objNull,[objNull]] call BIS_fnc_param;
-_move = [_this,1,"AmovPercMstpSlowWrflDnon",[""]] call BIS_fnc_param;
 if !(isNull _unit) then {
     _unit switchMove _move;
 };

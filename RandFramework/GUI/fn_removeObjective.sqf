@@ -7,7 +7,7 @@ if (isNil "TRGM_VAR_iMissionParamObjectives") exitWith {};
 private _currentIndex = (count TRGM_VAR_iMissionParamObjectives) - 1;
 
 if (_currentIndex isEqualTo 0) exitWith {
-    _ctrl = (findDisplay 5000) displayCtrl 5500;
+    private _ctrl = (findDisplay 5000) displayCtrl 5500;
     _ctrl ctrlSetText ("Cannot remove first objective!");
     _ctrl ctrlShow true;
     [] spawn {

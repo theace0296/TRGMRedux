@@ -7,7 +7,7 @@ if (isNil "TRGM_VAR_iMissionParamObjectives") exitWith {};
 private _newIndex = count TRGM_VAR_iMissionParamObjectives;
 
 if (_newIndex > 7) exitWith {
-    _ctrl = (findDisplay 5000) displayCtrl 5500;
+    private _ctrl = (findDisplay 5000) displayCtrl 5500;
     _ctrl ctrlSetText ("Already at maximum number of objectives!");
     _ctrl ctrlShow true;
     [] spawn {

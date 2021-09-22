@@ -17,7 +17,7 @@ if (!(_units isEqualType []) && {!(_units isEqualTypeAll objNull)}) exitWith {};
     [[_x], {
         params ["_unit"];
         waitUntil { ([_unit] call TRGM_GLOBAL_fnc_getRealPos) select 2 < 250};
-        _chute = createVehicle ["Steerable_Parachute_F", getPosATL _unit, [], 0, "CAN_COLLIDE"];
+        private _chute = createVehicle ["Steerable_Parachute_F", getPosATL _unit, [], 0, "CAN_COLLIDE"];
         _chute attachTo [_unit,[0,0,0]];
         detach _chute;
         _unit moveInDriver _chute;

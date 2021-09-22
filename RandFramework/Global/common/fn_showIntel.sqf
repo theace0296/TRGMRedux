@@ -2,8 +2,8 @@ params ["_AllowedIntelToShow", "_FoundViaType"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (side player isEqualTo TRGM_VAR_FriendlySide) then {
-    _IntelToShow = 0;
-    _iAttemptCount = 0;
+    private _IntelToShow = 0;
+    private _iAttemptCount = 0;
     while {_IntelToShow isEqualTo 0 && _iAttemptCount < 100} do {
         _iAttemptCount = _iAttemptCount + 1;
         _IntelToShow = selectRandom _AllowedIntelToShow;
@@ -35,11 +35,10 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
             publicVariable "TRGM_VAR_TempIntelShowPos";
         }] remoteExec ["call", 2];
         waitUntil {sleep 2; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
-        _iCount = count TRGM_VAR_TempIntelShowPos;
+        private _iCount = count TRGM_VAR_TempIntelShowPos;
         if (_iCount > 0) then {
             {
-                _test = nil;
-                _test = createMarker [format["MrkIntelMortor%1",_forEachIndex], getPos _x];
+                private _test = createMarker [format["MrkIntelMortor%1",_forEachIndex], getPos _x];
                 _test setMarkerShape "ICON";
                 _test setMarkerType "o_art";
                 _test setMarkerText "Mortar";
@@ -56,12 +55,11 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
             publicVariable "TRGM_VAR_TempIntelShowPos";
         }] remoteExec ["call", 2];
         waitUntil {sleep 2; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
-        _iCount = count TRGM_VAR_TempIntelShowPos;
-        _iStep = 0;
+        private _iCount = count TRGM_VAR_TempIntelShowPos;
+        private _iStep = 0;
         if (_iCount > 0) then {
             {
-                _test = nil;
-                _test = createMarker [format["MrkIntelAAA%1",_forEachIndex], getPos _x];
+                private _test = createMarker [format["MrkIntelAAA%1",_forEachIndex], getPos _x];
                 _test setMarkerShape "ICON";
                 _test setMarkerType "o_art";
                 _test setMarkerText (localize "STR_TRGM2_showIntel_AAAMarker");
@@ -75,8 +73,7 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
     };
     if (_IntelToShow isEqualTo 3) then { //Comms tower location
         if (TRGM_VAR_bHasCommsTower) then {
-            _test = nil;
-            _test = createMarker ["CommsIntelAAA1", TRGM_VAR_CommsTowerPos];
+            private _test = createMarker ["CommsIntelAAA1", TRGM_VAR_CommsTowerPos];
             _test setMarkerShape "ICON";
             _test setMarkerType "mil_destroy";
             _test setMarkerText (localize "STR_TRGM2_showIntel_CommsTowerMarker");
@@ -87,14 +84,13 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
         };
     };
     if (_IntelToShow isEqualTo 4) then { //All checkpoints
-        _bFoundcheckpoints = false;
+        private _bFoundcheckpoints = false;
         {
-            _distanceToCheckPoint = (_x select 0) distance (TRGM_VAR_ObjectivePossitions select 0);
-            _checkpointPos = _x select 0;
+            private _distanceToCheckPoint = (_x select 0) distance (TRGM_VAR_ObjectivePossitions select 0);
+            private _checkpointPos = _x select 0;
             if (_distanceToCheckPoint < 1000) then {
                 _bFoundcheckpoints = true;
-                _test = nil;
-                _test = createMarker [format["MrkIntelCheckpoint%1%2",_checkpointPos select 0, _checkpointPos select 1], _checkpointPos];
+                private _test = createMarker [format["MrkIntelCheckpoint%1%2",_checkpointPos select 0, _checkpointPos select 1], _checkpointPos];
                 _test setMarkerShape "ICON";
                 _test setMarkerType "o_inf";
                 _test setMarkerText (localize "STR_TRGM2_setCheckpoint_MarkerText");
@@ -114,8 +110,7 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
         }
         else {
             {
-                _test = nil;
-                _test = createMarker [format["ATIntel%1%2",_x select 0,_x select 1], _x];
+                private _test = createMarker [format["ATIntel%1%2",_x select 0,_x select 1], _x];
                 _test setMarkerShape "ICON";
                 _test setMarkerType "mil_warning";
                 _test setMarkerText (localize "STR_TRGM2_showIntel_ATAreaMarker");

@@ -9,18 +9,18 @@ private _configPath = (configFile >> "CfgVehicles" >> _vehClassName);
 
 private _returnVeh = [_vehClassName];
 
-_UnarmedCars = ["B_Truck_01_covered_F"];
-_ArmedCars = ["B_MRAP_01_hmg_F"];
-_APCs = ["B_T_LSV_01_unarmed_F"];
-_Tanks = ["B_MBT_01_cannon_F"];
-_Artillery = ["B_MBT_01_arty_F"];
-_AntiAir = ["B_APC_Tracked_01_AA_F"];
-_Turrets = ["B_G_HMG_02_high_F"];
-_UnarmedHelos = ["B_Heli_Transport_03_unarmed_F"];
-_ArmedHelos = ["B_Heli_Transport_01_camo_F"];
-_Planes = ["B_Plane_Fighter_01_Stealth_F"];
-_Boats = ["B_Boat_Transport_01_F"];
-_Mortars = ["B_Mortar_01_F"];
+private _UnarmedCars = ["B_Truck_01_covered_F"];
+private _ArmedCars = ["B_MRAP_01_hmg_F"];
+private _APCs = ["B_T_LSV_01_unarmed_F"];
+private _Tanks = ["B_MBT_01_cannon_F"];
+private _Artillery = ["B_MBT_01_arty_F"];
+private _AntiAir = ["B_APC_Tracked_01_AA_F"];
+private _Turrets = ["B_G_HMG_02_high_F"];
+private _UnarmedHelos = ["B_Heli_Transport_03_unarmed_F"];
+private _ArmedHelos = ["B_Heli_Transport_01_camo_F"];
+private _Planes = ["B_Plane_Fighter_01_Stealth_F"];
+private _Boats = ["B_Boat_Transport_01_F"];
+private _Mortars = ["B_Mortar_01_F"];
 // [count _UnarmedCars, count _ArmedCars, count _APCs, count _Tanks, count _Artillery, count _AntiAir, count _Turrets, count _UnarmedHelos, count _ArmedHelos, count _Planes, count _Boats, count _Mortars];
 
 switch (_side) do {

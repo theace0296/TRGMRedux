@@ -75,8 +75,8 @@ if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
             _condition = format ["[_this] call TRGM_GLOBAL_fnc_isLeaderOrAdmin && alive %1 && !(_this in (crew %1))", _uniqueVarName];
         };
 
-        _name = [_x] call TRGM_GLOBAL_fnc_getTransportName;
-        _actionName = format [localize "STR_TRGM2_TRGMInitPlayerLocal_CallHeliTransport",_name];
+        private _name = [_x] call TRGM_GLOBAL_fnc_getTransportName;
+        private _actionName = format [localize "STR_TRGM2_TRGMInitPlayerLocal_CallHeliTransport",_name];
 
         _playerActions pushBack [
             _actionName,

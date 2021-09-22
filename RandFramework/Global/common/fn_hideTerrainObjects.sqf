@@ -14,7 +14,7 @@ if !(isServer) exitWith {};
 
 private _clearTypes  = [];
 {
-    _id = CATEGORIES find _x;
+    private _id = CATEGORIES find _x;
     if (_id isEqualTo -1) exitWith { _clearTypes pushBackUnique _x; };
     {
         _clearTypes pushBackUnique _x;

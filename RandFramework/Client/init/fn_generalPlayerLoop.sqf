@@ -5,7 +5,7 @@ while {true} do {
             if ((Player distance (TRGM_VAR_ObjectivePossitions select 0)) < 25) then {
                 if ((Player getVariable ["calUAVActionID", -1]) isEqualTo -1) then {
                     [(localize "STR_TRGM2_TRGMInitPlayerLocal_UAVAvailable")] call TRGM_GLOBAL_fnc_notify;
-                    _actionID = player addAction [localize "STR_TRGM2_TRGMInitPlayerLocal_CallUAV",{[0] spawn TRGM_GLOBAL_fnc_callUAVFindObjective}];
+                    private _actionID = player addAction [localize "STR_TRGM2_TRGMInitPlayerLocal_CallUAV",{[0] spawn TRGM_GLOBAL_fnc_callUAVFindObjective}];
                     player setVariable ["calUAVActionID",_actionID];
                 };
             };
@@ -21,7 +21,7 @@ while {true} do {
             if (TRGM_VAR_iMissionIsCampaign) then {
                 if (TRGM_VAR_CampaignInitiated) then {
 
-                    _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+                    private _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
                     //TESTTEST = format["A:%1 - B:%2 - C:%3",TRGM_VAR_MaxBadPoints,TRGM_VAR_BadPoints,_dCurrentRep];
                     //[TESTTEST] call TRGM_GLOBAL_fnc_notify;
                     if (_dCurrentRep >= 1) then {
