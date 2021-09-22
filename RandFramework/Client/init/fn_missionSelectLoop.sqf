@@ -23,7 +23,7 @@ while {!TRGM_VAR_bAndSoItBegins} do {
             } else {
                 if (!isPlayer sl && !isNull TRGM_VAR_AdminPlayer) then {
                     private _txt5Layer = "txt5" call BIS_fnc_rscLayer;
-                    private  = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>" + localize "STR_TRGM2_TRGMInitPlayerLocal_TopSlotMustPlayer" + "</t>";
+                    private _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>" + localize "STR_TRGM2_TRGMInitPlayerLocal_TopSlotMustPlayer" + "</t>";
                     [_texta, -0, 0.150, 7, 1,0,_txt5Layer] spawn BIS_fnc_dynamicText;
                 } else {
                     private _txt1Layer = "txt1" call BIS_fnc_rscLayer;

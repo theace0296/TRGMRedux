@@ -19,7 +19,7 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
         while {true} do {
             if (TRGM_VAR_MapClicked isEqualTo 1) then { // player has clicked the map
                 private _foundPickupPos = [TRGM_VAR_ClickedPos, 0,50,25,0,0.15,0,[],[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos; // find a valid pos
-                _private nearRoad = [_foundPickupPos,20] call BIS_fnc_nearestRoad;
+                private _nearRoad = [_foundPickupPos,20] call BIS_fnc_nearestRoad;
                 if ((!isNull _nearRoad) || ((0 isEqualTo (_foundPickupPos select 0)) && (0 isEqualTo (_foundPickupPos select 1))) || (TRGM_VAR_ClickedPos isEqualTo _foundPickupPos)) then {
                     // INVALID POS
                     TRGM_VAR_MapClicked = false;
