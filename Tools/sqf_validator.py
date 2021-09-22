@@ -3,10 +3,19 @@
 import fnmatch
 import os
 import sys
+import re
 
 if sys.version_info.major == 2:
     import codecs
     open = codecs.open
+
+
+def getPublicVariables(content):
+    pattern = re.compile(r"publicVariable [\"']([^\"']+)[\"']", re.I)
+    matches = pattern.findall(content)
+    if (matches is not None):
+        return matches
+    return []
 
 
 def validKeyWordAfterCode(content, index):
@@ -21,11 +30,14 @@ def validKeyWordAfterCode(content, index):
     return False
 
 
-def check_sqf_syntax(filepath):
+def check_sqf_syntax(filepath, publicVariables):
     bad_count_file = 0
 
     with open(filepath, 'r', encoding='utf-8', errors='ignore') as file:
         content = file.read()
+        for publicVariable in getPublicVariables(content):
+            if (publicVariable not in publicVariables):
+                publicVariables.append(publicVariable)
 
         # Store all brackets we find in this file, so we can validate everything on the end
         brackets_list = []
@@ -175,15 +187,17 @@ def main():
         for filename in fnmatch.filter(filenames, '*.sqf'):
             sqf_list.append(os.path.join(root, filename))
 
+    publicVariables = []
     for filename in sqf_list:
-        bad_count = bad_count + check_sqf_syntax(filename)
-
+        bad_count = bad_count + check_sqf_syntax(filename, publicVariables)
     print(
         "------\nChecked {0} files\nErrors detected: {1}".format(len(sqf_list), bad_count))
     if (bad_count == 0):
         print("SQF validation PASSED")
     else:
         print("SQF validation FAILED")
+
+    print(f"Number of unique public variables: {len(publicVariables)}")
 
     return bad_count
 
