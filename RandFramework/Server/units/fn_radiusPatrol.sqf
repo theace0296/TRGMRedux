@@ -60,8 +60,8 @@ while {surfaceIsWater _wp4bPos} do {
 
 //Spawn in units
 
-_iCount = 0; //_unitCount
-while {_iCount <= _unitCount} do
+_iCount = 0; //_unitCounts
+while {_iCount <= _unitCounts} do
 {
     [_wayX,_wayY,_group,_iCount,_IncludTeamLeader] call TRGM_SERVER_fnc_spawnPatrolUnit;
     _iCount = _iCount + 1;
