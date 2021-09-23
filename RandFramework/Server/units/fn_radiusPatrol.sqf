@@ -1,6 +1,7 @@
 params ["_sidePos","_distFromCent", "_unitCounts","_IncludTeamLeader",["_InsurgentSide", EAST]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+private _unitCount = selectRandom _unitCounts;
 private _group = createGroup _InsurgentSide;
 private _wayX = (_sidePos select 0);
 private _wayY = (_sidePos select 1);
@@ -60,8 +61,8 @@ while {surfaceIsWater _wp4bPos} do {
 
 //Spawn in units
 
-_iCount = 0; //_unitCounts
-while {_iCount <= _unitCounts} do
+_iCount = 0; //_unitCount
+while {_iCount <= _unitCount} do
 {
     [_wayX,_wayY,_group,_iCount,_IncludTeamLeader] call TRGM_SERVER_fnc_spawnPatrolUnit;
     _iCount = _iCount + 1;
