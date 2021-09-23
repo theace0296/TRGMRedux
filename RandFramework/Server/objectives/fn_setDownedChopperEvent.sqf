@@ -2,7 +2,7 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 call TRGM_SERVER_fnc_initMissionVars;
 
-private _iVictimType = selectRandom [1,2,3];  //1=reporter, 2=medic, 3=friendlyPilot
+private _iVictimType = selectRandom [0,1,2];  //0=reporter, 1=medic, 2=friendlyPilot
 private _completedMessage = ["The stranded reporter has returned to base in one piece!, well done!", "The stranded medic has returned to base in one piece!, well done!", "Our stranded guy has returned to base in one piece!, well done!"] select _iVictimType;
 private _PointsAdjustMessage = ["Reporter rescued", "Paramedic rescued", "Friendly unit rescued"] select _iVictimType;
 private _sVictim = selectRandom ([Reporters, Paramedics, FriendlyVictims] select _iVictimType);
