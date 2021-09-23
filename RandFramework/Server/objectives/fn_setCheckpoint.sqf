@@ -394,16 +394,18 @@ if (_PosFound) then {
                 if (!_bHasParkedCar) then {
                     [_guardUnit4, "Stand_IA", "ASIS"] call BIS_fnc_ambientAnimCombat;
                 } else {
-                    private _Leandir = ([direction _ParkedCar, 45] call TRGM_GLOBAL_fnc_addtodirection);
-                    _group3 setFormDir _Leandir;
-                    dostop [_guardUnit4];
-                    _guardUnit4 setDir (_Leandir);
-                    sleep 0.1;
-                    private _LeanPos = _ParkedCar getPos [1, _Leandir];
-                    sleep 0.1;
-                    _guardUnit4 setPos _LeanPos;
-                    sleep 0.1;
-                    [_guardUnit4, "LEAN", "ASIS"] call BIS_fnc_ambientAnimCombat;
+                    if !(isNil "_ParkedCar") then {
+                        private _Leandir = ([direction _ParkedCar, 45] call TRGM_GLOBAL_fnc_addtodirection);
+                        _group3 setFormDir _Leandir;
+                        dostop [_guardUnit4];
+                        _guardUnit4 setDir (_Leandir);
+                        sleep 0.1;
+                        private _LeanPos = _ParkedCar getPos [1, _Leandir];
+                        sleep 0.1;
+                        _guardUnit4 setPos _LeanPos;
+                        sleep 0.1;
+                        [_guardUnit4, "LEAN", "ASIS"] call BIS_fnc_ambientAnimCombat;
+                    };
                 };
             };
         };
