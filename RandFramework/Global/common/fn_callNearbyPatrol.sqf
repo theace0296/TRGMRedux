@@ -13,8 +13,8 @@ if (_FirstPos isEqualTo []) exitWith {};
 if (isNull _thisThis) exitWith {};
 if (_thisThisList isEqualTo []) exitWith {};
 
-private _MainObjectivePos = TRGM_VAR_ObjectivePossitions select _iTaskIndex;
-if (isNil "_MainObjectivePos") then {_MainObjectivePos = TRGM_VAR_ObjectivePossitions select 0;};
+private _MainObjectivePos = TRGM_VAR_ObjectivePositions select _iTaskIndex;
+if (isNil "_MainObjectivePos") then {_MainObjectivePos = TRGM_VAR_ObjectivePositions select 0;};
 
 format["Spotted: %1", _thisThisList] call TRGM_GLOBAL_fnc_log;
 

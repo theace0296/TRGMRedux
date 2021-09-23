@@ -1,6 +1,6 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_iWeatherOption = call TRGM_GETTER_fnc_aWeatherOption;
+private _iWeatherOption = call TRGM_GETTER_fnc_aWeatherOption;
 if (_iWeatherOption >= 11 && {_iWeatherOption != 99}) then {
     [format["Mission Core: %1", "Weather Dependant AI Skill"], true] call TRGM_GLOBAL_fnc_log;
     //Set enemy skill

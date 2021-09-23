@@ -7,7 +7,7 @@ sleep 2;
 
 
 
-_bMoveToAO = false;
+private _bMoveToAO = false;
 if (TRGM_VAR_iStartLocation isEqualTo 2) then {
     _bMoveToAO = random 1 < .50;
 };
@@ -20,8 +20,8 @@ if (_bMoveToAO) then {
 
 TRGM_VAR_MissionLoaded = true; publicVariable "TRGM_VAR_MissionLoaded";
 
-_isHiddenObj = false;
-_mainAOPos = TRGM_VAR_ObjectivePossitions select 0;
+private _isHiddenObj = false;
+private _mainAOPos = TRGM_VAR_ObjectivePositions select 0;
 if (! isNil "_mainAOPos") then {
     if (_mainAOPos in TRGM_VAR_HiddenPossitions ) then {
         _isHiddenObj = true;

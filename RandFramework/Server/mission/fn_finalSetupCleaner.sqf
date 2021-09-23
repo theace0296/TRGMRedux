@@ -3,8 +3,8 @@
 //if so, delete any friendly units
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 {
-    _currentFriendCpPos = _x;
-    _enemyNear = false;
+    private _currentFriendCpPos = _x;
+    private _enemyNear = false;
     //check if enemy near
     {
         if (side _x isEqualTo TRGM_VAR_EnemySide) then {

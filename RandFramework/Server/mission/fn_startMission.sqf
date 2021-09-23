@@ -1,18 +1,18 @@
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-_isCampaign = (TRGM_VAR_iMissionIsCampaign);
+private _isCampaign = (TRGM_VAR_iMissionIsCampaign);
 
 
-_mrkHQPos = getMarkerPos "mrkHQ";
-_AOCampPos = ([endMissionBoard2] call TRGM_GLOBAL_fnc_getRealPos);
-bAllAtBase2 = ({(alive _x)&&((_x distance _mrkHQPos < 500)||(_x distance _AOCampPos < 500))} count (call BIS_fnc_listPlayers)) isEqualTo ({ (alive _x) } count (call BIS_fnc_listPlayers));
+private _mrkHQPos = getMarkerPos "mrkHQ";
+private _AOCampPos = ([endMissionBoard2] call TRGM_GLOBAL_fnc_getRealPos);
+private _bAllAtBase2 = ({(alive _x)&&((_x distance _mrkHQPos < 500)||(_x distance _AOCampPos < 500))} count (call BIS_fnc_listPlayers)) isEqualTo ({ (alive _x) } count (call BIS_fnc_listPlayers));
 
 
 
 
 //Need to move the below to function that fires for player who called addAction, then inside that function can call StartMission for all
 //Also... in this extra file, we can set a publicVariable for "IntroPlayed=false", then after played set IntroPlayed=true... so will only play when mission starts or next mission picked
-_bAllowStart = true;
+private _bAllowStart = true;
 //if (_isCampaign && isMultiplayer) then {
 //    _bSLAlive = false;
 //    _bK1_1Alive = false;
@@ -41,7 +41,7 @@ _bAllowStart = true;
 
 if (_bAllowStart) then {
 
-    if ((bAllAtBase2 && TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted) || !_isCampaign) then {
+    if ((_bAllAtBase2 && TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted) || !_isCampaign) then {
         // player allowdamage false;
         // titleText [localize "STR_TRGM2_mainInit_Loading", "BLACK FADED", 5];
         //sleep 3;
@@ -92,10 +92,10 @@ if (_bAllowStart) then {
             TRGM_VAR_ATFieldPos =  []; publicVariable "TRGM_VAR_ATFieldPos";
 
             {
-                _y = _x;
+                private _y = _x;
                 {
                     //if (_y distance getPos _x > TRGM_VAR_PunishmentRadius) then {
-                    _isZeuzModule = false;
+                    private _isZeuzModule = false;
                     if (["ModuleCurator", str(TypeOf (_x))] call BIS_fnc_inString) then {_isZeuzModule = true;};
                     if (["Zeus", str(_x)] call BIS_fnc_inString) then {_isZeuzModule = true;};
                     if !(isNil {_x getVariable "ObjectiveParams"}) then {
@@ -106,11 +106,11 @@ if (_bAllowStart) then {
                     };
                     //};
                 } forEach nearestObjects [_y, ["all"], 4000];
-            } forEach TRGM_VAR_ObjectivePossitions;
+            } forEach TRGM_VAR_ObjectivePositions;
 
             {
-                _mrkPos = getMarkerPos _x;
-                _mrkHQPos = getMarkerPos "mrkHQ";
+                private _mrkPos = getMarkerPos _x;
+                private _mrkHQPos = getMarkerPos "mrkHQ";
                 if (_mrkPos distance _mrkHQPos > TRGM_VAR_PunishmentRadius) then {
                     deleteMarker _x;
                 };
@@ -129,7 +129,7 @@ if (_bAllowStart) then {
 
             TRGM_VAR_InfTaskCount =  0; publicVariable "TRGM_VAR_InfTaskCount";
             TRGM_VAR_ActiveTasks =  []; publicVariable "TRGM_VAR_ActiveTasks";
-            TRGM_VAR_ObjectivePossitions =  []; publicVariable "TRGM_VAR_ObjectivePossitions";
+            TRGM_VAR_ObjectivePositions =  []; publicVariable "TRGM_VAR_ObjectivePositions";
             TRGM_VAR_bCommsBlocked =  false; publicVariable "TRGM_VAR_bCommsBlocked";
             TRGM_VAR_bBaseHasChopper =  false; publicVariable "TRGM_VAR_bBaseHasChopper";
             TRGM_VAR_ParaDropped =  false; publicVariable "TRGM_VAR_ParaDropped";

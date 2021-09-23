@@ -11,15 +11,15 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 call TRGM_SERVER_fnc_initMissionVars;
 
-_dAngleAdustPerLoop = 0;
-_bHasVehicle = false;
+private _dAngleAdustPerLoop = 0;
+private _bHasVehicle = false;
 
 TRGM_VAR_AODetails pushBack [_iTaskIndex,0,0,0,false,0,0];
 publicVariable "TRGM_VAR_AODetails";
 
-_bFriendlyInsurgents = selectRandom TRGM_VAR_bFriendlyInsurgents;
-
-_InsurgentSide = TRGM_VAR_EnemySide;
+private _bFriendlyInsurgents = selectRandom TRGM_VAR_bFriendlyInsurgents;
+private _bThisMissionCivsOnly = false;
+private _InsurgentSide = TRGM_VAR_EnemySide;
 if (_bFriendlyInsurgents) then {
     _InsurgentSide = TRGM_VAR_FriendlySide;
     TRGM_VAR_ClearedPositions pushBack [_sidePos];
@@ -32,9 +32,9 @@ if (_bIsMainObjective) then {
 };
 
 _bThisMissionCivsOnly = selectRandom TRGM_VAR_bCivsOnly;
-_bTownBigenoughForFriendlyInsurgants = true;
-_allBuildingsNearAO = nearestObjects [_sidePos, TRGM_VAR_BasicBuildings, 100];
-_allBuildingsNearAOCount = count _allBuildingsNearAO;
+private _bTownBigenoughForFriendlyInsurgants = true;
+private _allBuildingsNearAO = nearestObjects [_sidePos, TRGM_VAR_BasicBuildings, 100];
+private _allBuildingsNearAOCount = count _allBuildingsNearAO;
 if (_allBuildingsNearAOCount <= TRGM_VAR_iBuildingCountToAllowCivsAndFriendlyInformants) then {
     _bThisMissionCivsOnly = false;
     _bTownBigenoughForFriendlyInsurgants = false;
@@ -52,7 +52,7 @@ if (_ForceCivsOnly) then {
     _bThisMissionCivsOnly = true;
 };
 
-_selectRandomW = call {random 1 > .80};;
+private _selectRandomW = call {random 1 > .80};
 if (call TRGM_GETTER_fnc_bMoreEnemies) then {
     _selectRandomW = call {random 1 > .65};
     _bThisMissionCivsOnly = false;
@@ -61,48 +61,48 @@ if (call TRGM_GETTER_fnc_bMoreEnemies) then {
 };
 
 if ((_sideType isEqualTo 7 || _sideType isEqualTo 5) && _bFriendlyInsurgents) then { //if mission is kill officer or kill officer and in fridnldy area then make him prisoner
-    sOfficerName = format["objInformant%1",_iTaskIndex];
-    _officerObject = missionNamespace getVariable [sOfficerName , objNull];
+    private _sOfficerName = format["objInformant%1",_iTaskIndex];
+    private _officerObject = missionNamespace getVariable [_sOfficerName , objNull];
     _officerObject disableAI "anim";
     _officerObject switchMove "Acts_ExecutionVictim_Loop";
     _officerObject disableAI "anim";
     _officerObject setCaptive true;
     _officerObject setVariable ["StopWalkScript", true];
-    _allpositionsMainBuiding = _sideMainBuilding buildingPos -1;
+    private _allpositionsMainBuiding = _sideMainBuilding buildingPos -1;
     _officerObject setPosATL (selectRandom _allpositionsMainBuiding);
     removeAllWeapons _officerObject;
 };
 if (_sideType isEqualTo 4) then { //if mission is informat, then dont be walkig around
-    sInformantName = format["objInformant%1",_iTaskIndex];
-    _InformantObject = missionNamespace getVariable [sInformantName , objNull];
+    private _sInformantName = format["objInformant%1",_iTaskIndex];
+    private _InformantObject = missionNamespace getVariable [_sInformantName , objNull];
     _InformantObject setVariable ["StopWalkScript", true];
-    _allpositionsMainBuiding = _sideMainBuilding buildingPos -1;
+    private _allpositionsMainBuiding = _sideMainBuilding buildingPos -1;
     _InformantObject setPosATL (selectRandom _allpositionsMainBuiding);
 };
 
 if ((call TRGM_GETTER_fnc_bAllowAOFires) && _selectRandomW && !_bThisMissionCivsOnly) then {
-    _fireRootx = ([_sideMainBuilding] call TRGM_GLOBAL_fnc_getRealPos) select 0;
-    _fireRooty = ([_sideMainBuilding] call TRGM_GLOBAL_fnc_getRealPos) select 1;
+    private _fireRootx = ([_sideMainBuilding] call TRGM_GLOBAL_fnc_getRealPos) select 0;
+    private _fireRooty = ([_sideMainBuilding] call TRGM_GLOBAL_fnc_getRealPos) select 1;
 
-    _firePos1 = [_fireRootx+5+(floor random 15),_fireRooty+5+(floor random 15)];
-    _objFlame1 = "test_EmptyObjectForFireBig" createVehicle _firePos1;
+    private _firePos1 = [_fireRootx+5+(floor random 15),_fireRooty+5+(floor random 15)];
+    private _objFlame1 = "test_EmptyObjectForFireBig" createVehicle _firePos1;
     if (isOnRoad _firePos1) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle ([_objFlame1] call TRGM_GLOBAL_fnc_getRealPos);};
 
     if (_selectRandomW) then {
-        _firePos2 = [_fireRootx-5-(floor random 15),_fireRooty-5-(floor random 15)];
-        _objFlame2 = "test_EmptyObjectForFireBig" createVehicle _firePos2;
+        private _firePos2 = [_fireRootx-5-(floor random 15),_fireRooty-5-(floor random 15)];
+        private _objFlame2 = "test_EmptyObjectForFireBig" createVehicle _firePos2;
         if (isOnRoad _firePos2) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle ([_objFlame2] call TRGM_GLOBAL_fnc_getRealPos);};
     };
 
     if (_selectRandomW) then {
-        _firePos3 = [_fireRootx+5+(floor random 15),_fireRooty-5-(floor random 15)];
-        _objFlame3 = "test_EmptyObjectForFireBig" createVehicle _firePos3;
+        private _firePos3 = [_fireRootx+5+(floor random 15),_fireRooty-5-(floor random 15)];
+        private _objFlame3 = "test_EmptyObjectForFireBig" createVehicle _firePos3;
         if (isOnRoad _firePos3) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle ([_objFlame3] call TRGM_GLOBAL_fnc_getRealPos);};
 
     };
     if (_selectRandomW) then {
-        _firePos4 = [_fireRootx-5-(floor random 15),_fireRooty+5+(floor random 15)];
-        _objFlame4 = "test_EmptyObjectForFireBig" createVehicle _firePos4;
+        private _firePos4 = [_fireRootx-5-(floor random 15),_fireRooty+5+(floor random 15)];
+        private _objFlame4 = "test_EmptyObjectForFireBig" createVehicle _firePos4;
         if (isOnRoad _firePos4) then {selectRandom TRGM_VAR_WreckCarClasses createVehicle ([_objFlame4] call TRGM_GLOBAL_fnc_getRealPos);};
     };
 };
@@ -114,11 +114,10 @@ if ((_bThisMissionCivsOnly || (!_bIsMainObjective && random 1 < .25))) then {
 };
 
 TRGM_VAR_sideAllBuildingPos = _sideMainBuilding buildingPos -1;
-_inf1X = _sidePos select 0;
-_inf1Y = _sidePos select 1;
+private _inf1X = _sidePos select 0;
+private _inf1Y = _sidePos select 1;
 
-_trgCustomAIScript = nil;
-_trgCustomAIScript = createTrigger ["EmptyDetector", _sidePos];
+private _trgCustomAIScript = createTrigger ["EmptyDetector", _sidePos];
 _trgCustomAIScript setVariable ["DelMeOnNewCampaignDay",true];
 _trgCustomAIScript setTriggerArea [1250, 1250, 0, false];
 _trgCustomAIScript setTriggerActivation [TRGM_VAR_FriendlySideString, format["%1 D", TRGM_VAR_EnemySideString], true];
@@ -126,8 +125,7 @@ _trgCustomAIScript setTriggerStatements ["this && {(time - TRGM_VAR_TimeSinceLas
 
 //Create extra detected trigger for more reinforcements
 if (call TRGM_GETTER_fnc_bMoreReinforcements) then {
-    _trgCustomAIScript2 = nil;
-    _trgCustomAIScript2 = createTrigger ["EmptyDetector", _sidePos];
+    private _trgCustomAIScript2 = createTrigger ["EmptyDetector", _sidePos];
     _trgCustomAIScript2 setVariable ["DelMeOnNewCampaignDay",true];
     _trgCustomAIScript2 setTriggerArea [1250, 1250, 0, false];
     _trgCustomAIScript2 setTriggerActivation [TRGM_VAR_FriendlySideString, format["%1 D", TRGM_VAR_EnemySideString], true];
@@ -139,7 +137,7 @@ TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["\n\ntrendFunctions.sqf
 if (!_bFriendlyInsurgents) then {
     if (!_bThisMissionCivsOnly) then {
 
-        _minimission = false;
+        private _minimission = false;
         if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MINIMISSIONS_IDX isEqualTo 1) then {
             _minimission = true;
         };
@@ -157,7 +155,7 @@ if (!_bFriendlyInsurgents) then {
             [_sidePos] spawn TRGM_SERVER_fnc_createEnemySniper;
         };
         ["EndSniperCreator", true] call TRGM_GLOBAL_fnc_log;
-        _bHasPatrols = false;
+        private _bHasPatrols = false;
         if (_bIsMainObjective) then {_bHasPatrols = true};
 
         _bSmallerAllOverPatrols = random 1 < .50 || TRGM_VAR_PatrolType isEqualTo 1 || TRGM_VAR_PatrolType isEqualTo 2; //if single mission and random 50/50, or if forced by custom mission
@@ -175,7 +173,7 @@ if (!_bFriendlyInsurgents) then {
         else {
             if (_bSmallerAllOverPatrols) then {
                 _bHasPatrols = true;
-                _patrolUnitCounts = [2,3];
+                private _patrolUnitCounts = [2,3];
                 if (TRGM_VAR_PatrolType isEqualTo 2) then {
                     _patrolUnitCounts = [4,4,4,4,4,4,5,5,5,5,5,5];
                 };
@@ -257,45 +255,39 @@ if (!_bFriendlyInsurgents) then {
             };
         };
 
-        _chanceOfMortorTeam = .50;
+        private _chanceOfMortorTeam = .50;
         if (_bIsMainObjective) then {_chanceOfMortorTeam = 1};
         if (_minimission) then {_chanceOfMortorTeam = .15;};
         //Spawn Mortar team
         if (random 1 < _chanceOfMortorTeam || _selectRandomW) then {
-            _flatPos = _sidePos;
+            private _flatPos = _sidePos;
             _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,_sidePos]] call TRGM_GLOBAL_fnc_findSafePos;
             [_flatPos,  (floor random 300), selectRandom (call sMortarToUse), createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
         };
 
         //Spawn vehicle
-        _chanceOfVeh = .50;
+        private _chanceOfVeh = .50;
         if (_bIsMainObjective) then {_chanceOfVeh = 1};
         if (_minimission) then {_chanceOfVeh = .15;};
         //if main, spawn 1 or two, and also, spawn 2 or three in larger radius
         if (random 1 < _chanceOfVeh || _selectRandomW) then {
-            _flatPos = nil;
-            _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sTank1ArmedCarToUse)] call TRGM_GLOBAL_fnc_findSafePos;
             if (_minimission) then {
+                private _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sTank1ArmedCarToUse)] call TRGM_GLOBAL_fnc_findSafePos;
                 [_flatPos,  (floor random 300), (call sTank1ArmedCarToUse), createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
-            }
-            else {
+            } else {
                 if (_bIsMainObjective && _selectRandomW) then {
-                    _flatPos = nil;
-                    _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
+                    private _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
                     [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
                 };
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective && _selectRandomW) then {
-                    _flatPos = nil;
-                    _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
+                    private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
                     [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
                 };
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
-                    _flatPos = nil;
-                    _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
+                    private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
                     [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
 
-                    _flatPos = nil;
-                    _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
+                    private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
                     [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], createGroup TRGM_VAR_EnemySide] call BIS_fnc_spawnVehicle;
 
                 };
@@ -304,19 +296,15 @@ if (!_bFriendlyInsurgents) then {
         };
         if (!_minimission) then {
             if (_bIsMainObjective || _selectRandomW) then {
-                _flatPos = nil;
-                _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
-                _vehOneGroup = nil;
-                _vehOneGroup = createGroup TRGM_VAR_EnemySide;
+                private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _vehOneGroup = createGroup TRGM_VAR_EnemySide;
                 [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], _vehOneGroup] call BIS_fnc_spawnVehicle;
                 [_vehOneGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                 _vehOneGroup setSpeedMode "LIMITED";
 
                 if (_bIsMainObjective && _selectRandomW) then {
-                    _flatPos = nil;
-                    _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
-                    _vehTwoGroup = nil;
-                    _vehTwoGroup = createGroup TRGM_VAR_EnemySide;
+                    private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)]] call TRGM_GLOBAL_fnc_findSafePos;
+                    private _vehTwoGroup = createGroup TRGM_VAR_EnemySide;
                     [_flatPos,  (floor random 300), selectRandom[(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)], _vehTwoGroup] call BIS_fnc_spawnVehicle;
                     [_vehTwoGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                     _vehTwoGroup setSpeedMode "LIMITED";
@@ -327,19 +315,15 @@ if (!_bFriendlyInsurgents) then {
 
         if (_bIsMainObjective || _selectRandomW) then {
             if (!_minimission || (_minimission && _selectRandomW)) then {
-                _flatPos = nil;
-                _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
-                _vehScountOneGroup = nil;
-                _vehScountOneGroup = createGroup TRGM_VAR_EnemySide;
+                private _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
+                private _vehScountOneGroup = createGroup TRGM_VAR_EnemySide;
                 [_flatPos,  (floor random 300), selectRandom (call UnarmedScoutVehicles), _vehScountOneGroup] call BIS_fnc_spawnVehicle;
                 [_vehScountOneGroup, _sidePos, 3000 ] call bis_fnc_taskPatrol;
                 _vehScountOneGroup setSpeedMode "LIMITED";
             };
             if (_bIsMainObjective && _selectRandomW) then {
-                _flatPos = nil;
-                _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
-                _vehScoutTwoGroup = nil;
-                _vehScoutTwoGroup = createGroup TRGM_VAR_EnemySide;
+                private _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
+                private _vehScoutTwoGroup = createGroup TRGM_VAR_EnemySide;
                 [_flatPos,  (floor random 300), selectRandom (call UnarmedScoutVehicles), _vehScoutTwoGroup] call BIS_fnc_spawnVehicle;
                 [_vehScoutTwoGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                 _vehScoutTwoGroup setSpeedMode "LIMITED";
@@ -372,9 +356,8 @@ if (!_bFriendlyInsurgents) then {
         //Spawn nasty surprise (AAA, IEDs, wider patrol)
             if ((_bIsMainObjective && _selectRandomW) || (!_bIsMainObjective && _selectRandomW)) then {
                 if ((call sAAAVehMilitia) != "") then {
-                    _flatPos = nil;
-                    _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sAAAVehToUse)] call TRGM_GLOBAL_fnc_findSafePos;
-                    _AAAGroup = createGroup TRGM_VAR_EnemySide;
+                    private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sAAAVehToUse)] call TRGM_GLOBAL_fnc_findSafePos;
+                    private _AAAGroup = createGroup TRGM_VAR_EnemySide;
                     [_flatPos,  (floor random 300), (call sAAAVehToUse), _AAAGroup] call BIS_fnc_spawnVehicle;
                     {
                         _x setskill ["aimingAccuracy",1];
@@ -395,23 +378,21 @@ if (!_bFriendlyInsurgents) then {
 
         if (TRGM_VAR_MainIsHidden || _minimission) then {
             //spawn wide map checkpoints
-            _iCount = ([10] call TRGM_GETTER_fnc_iMoreEnemies);
+            private _iCount = ([10] call TRGM_GETTER_fnc_iMoreEnemies);
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
-                _thisAreaRange = 20000;
-                _checkPointGuidePos = _sidePos;
+                private _thisAreaRange = 20000;
+                private _checkPointGuidePos = _sidePos;
                 _iCount = _iCount - 1;
-                _flatPos = nil;
-
-                _flatPos = [_checkPointGuidePos , 400, _thisAreaRange, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _flatPos = [_checkPointGuidePos , 400, _thisAreaRange, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
 
                 if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    _thisPosAreaOfCheckpoint = _flatPos;
-                    _thisRoadOnly = false;
-                    _thisSide = TRGM_VAR_EnemySide;
-                    _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    _thisAllowBarakade = _selectRandomW;
-                    _thisIsDirectionAwayFromAO = true;
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = false;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = _selectRandomW;
+                    private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
             };
@@ -419,66 +400,61 @@ if (!_bFriendlyInsurgents) then {
 
         if (_minimission) then {
             //spawn inner random sentrys
-            _iCount = ([30] call TRGM_GETTER_fnc_iMoreEnemies);
+            private _iCount = ([30] call TRGM_GETTER_fnc_iMoreEnemies);
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
-                _thisAreaRange = 50;
-                _checkPointGuidePos = _sidePos;
+                private _thisAreaRange = 50;
+                private _checkPointGuidePos = _sidePos;
                 _iCount = _iCount - 1;
-                _flatPos = nil;
-
-                _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
 
                 if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    _thisPosAreaOfCheckpoint = _flatPos;
-                    _thisRoadOnly = false;
-                    _thisSide = TRGM_VAR_EnemySide;
-                    _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    _thisAllowBarakade = false;
-                    _thisIsDirectionAwayFromAO = true;
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = false;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = false;
+                    private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
+            };
 
-                _iCount = 1;
-                if (!_bIsMainObjective) then {_iCount = 2;};
-                if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-                while {_iCount > 0} do {
-                    _thisAreaRange = 500;
-                    _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
-                    _iCount = _iCount - 1;
-                    _flatPos = nil;
-                    _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        _thisPosAreaOfCheckpoint = _flatPos;
-                        _thisRoadOnly = true;
-                        _thisSide = TRGM_VAR_FriendlySide;
-                        _thisUnitTypes = (call FriendlyCheckpointUnits);
-                        _thisAllowBarakade = true;
-                        _thisIsDirectionAwayFromAO = false;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+            _iCount = 1;
+            if (!_bIsMainObjective) then {_iCount = 2;};
+            if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
+            while {_iCount > 0} do {
+                private _thisAreaRange = 500;
+                private _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
+                _iCount = _iCount - 1;
+                private _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_FriendlySide;
+                    private _thisUnitTypes = (call FriendlyCheckpointUnits);
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = false;
+                    [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
             };
         }
         else {
             //spawn inner random sentrys
-            _iCount = ([25] call TRGM_GETTER_fnc_iMoreEnemies);
+            private _iCount = ([25] call TRGM_GETTER_fnc_iMoreEnemies);
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
-                _thisAreaRange = 50;
-                _checkPointGuidePos = _sidePos;
+                private _thisAreaRange = 50;
+                private _checkPointGuidePos = _sidePos;
                 _iCount = _iCount - 1;
-                _flatPos = nil;
-
-                _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
 
                 if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    _thisPosAreaOfCheckpoint = _flatPos;
-                    _thisRoadOnly = false;
-                    _thisSide = TRGM_VAR_EnemySide;
-                    _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    _thisAllowBarakade = false;
-                    _thisIsDirectionAwayFromAO = true;
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = false;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = false;
+                    private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
             };
@@ -489,18 +465,17 @@ if (!_bFriendlyInsurgents) then {
             if ((!_bIsMainObjective && !_bHasPatrols) || _selectRandomW) then {_iCount = ([45] call TRGM_GETTER_fnc_iMoreEnemies);};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
-                _thisAreaRange = 50;
-                _checkPointGuidePos = _sidePos;
+                private _thisAreaRange = 50;
+                private _checkPointGuidePos = _sidePos;
                 _iCount = _iCount - 1;
-                _flatPos = nil;
-                _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
                 if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    _thisPosAreaOfCheckpoint = _flatPos;
-                    _thisRoadOnly = true;
-                    _thisSide = TRGM_VAR_EnemySide;
-                    _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    _thisAllowBarakade = true;
-                    _thisIsDirectionAwayFromAO = true;
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
             };
@@ -511,18 +486,17 @@ if (!_bFriendlyInsurgents) then {
             if ((!_bIsMainObjective && !_bHasPatrols) || _selectRandomW) then {_iCount = ([40] call TRGM_GETTER_fnc_iMoreEnemies);};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
-                _thisAreaRange = 75;
-                _checkPointGuidePos = _sidePos getPos [250, floor(random 360)];
+                private _thisAreaRange = 75;
+                private _checkPointGuidePos = _sidePos getPos [250, floor(random 360)];
                 _iCount = _iCount - 1;
-                _flatPos = nil;
-                _flatPos = [_checkPointGuidePos , 0, 75, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _flatPos = [_checkPointGuidePos , 0, 75, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
                 if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    _thisPosAreaOfCheckpoint = _flatPos;
-                    _thisRoadOnly = true;
-                    _thisSide = TRGM_VAR_EnemySide;
-                    _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    _thisAllowBarakade = true;
-                    _thisIsDirectionAwayFromAO = true;
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),300] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
             };
@@ -533,18 +507,17 @@ if (!_bFriendlyInsurgents) then {
             if ((!_bIsMainObjective && !_bHasPatrols) || _selectRandomW) then {_iCount = ([55] call TRGM_GETTER_fnc_iMoreEnemies);};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
-                _thisAreaRange = 250;
-                _checkPointGuidePos = _sidePos getPos [1000, floor(random 360)];
+                private _thisAreaRange = 250;
+                private _checkPointGuidePos = _sidePos getPos [1000, floor(random 360)];
                 _iCount = _iCount - 1;
-                _flatPos = nil;
-                _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
                 if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    _thisPosAreaOfCheckpoint = _flatPos;
-                    _thisRoadOnly = true;
-                    _thisSide = TRGM_VAR_EnemySide;
-                    _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    _thisAllowBarakade = true;
-                    _thisIsDirectionAwayFromAO = true;
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
             };
@@ -555,18 +528,17 @@ if (!_bFriendlyInsurgents) then {
             if ((!_bIsMainObjective && !_bHasPatrols) || _selectRandomW) then {_iCount = ([65] call TRGM_GETTER_fnc_iMoreEnemies);};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
-                _thisAreaRange = 250;
-                _checkPointGuidePos = _sidePos getPos [1200, floor(random 360)];
+                private _thisAreaRange = 250;
+                private _checkPointGuidePos = _sidePos getPos [1200, floor(random 360)];
                 _iCount = _iCount - 1;
-                _flatPos = nil;
-                _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
                 if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    _thisPosAreaOfCheckpoint = _flatPos;
-                    _thisRoadOnly = false;
-                    _thisSide = TRGM_VAR_EnemySide;
-                    _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    _thisAllowBarakade = false;
-                    _thisIsDirectionAwayFromAO = true;
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = false;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = false;
+                    private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
             };
@@ -578,29 +550,28 @@ if (!_bFriendlyInsurgents) then {
             if (!_bIsMainObjective || _selectRandomW) then {_iCount = 2;};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             while {_iCount > 0} do {
-                _thisAreaRange = 500;
-                _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
+                private _thisAreaRange = 500;
+                private _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
                 _iCount = _iCount - 1;
-                _flatPos = nil;
-                _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
                 if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    _thisPosAreaOfCheckpoint = _flatPos;
-                    _thisRoadOnly = true;
-                    _thisSide = TRGM_VAR_FriendlySide;
-                    _thisUnitTypes = (call FriendlyCheckpointUnits);
-                    _thisAllowBarakade = true;
-                    _thisIsDirectionAwayFromAO = false;
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_FriendlySide;
+                    private _thisUnitTypes = (call FriendlyCheckpointUnits);
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = false;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
             };
         };
 
         //Spawn Mil occupy units
-        _MilSearchDistFromCent = 3000;
+        private _MilSearchDistFromCent = 3000;
         //occupy miletary building
-        _allMilBuildings = nearestObjects [_sidePos, TRGM_VAR_MilBuildings, _MilSearchDistFromCent];
-        _iCount = 0;
-        _milOccupyOdds = [true,false,false];
+        private _allMilBuildings = nearestObjects [_sidePos, TRGM_VAR_MilBuildings, _MilSearchDistFromCent];
+        private _iCount = 0;
+        private _milOccupyOdds = [true,false,false];
         if (_bIsMainObjective) then {
             _milOccupyOdds = [true,false];
         };
@@ -609,18 +580,14 @@ if (!_bFriendlyInsurgents) then {
         };
         if (count _allMilBuildings > 0) then {
             {
-                _thisMilBuilPos = getPos _x;
-                _distanceFromBase = getMarkerPos "mrkHQ" distance getPos _x;
+                private _thisMilBuilPos = getPos _x;
+                private _distanceFromBase = getMarkerPos "mrkHQ" distance getPos _x;
                 if (SelectRandom _milOccupyOdds && _distanceFromBase > TRGM_VAR_BaseAreaRange && !(_thisMilBuilPos in TRGM_VAR_OccupiedHousesPos)) then {
                     _iCount = _iCount + 1;
-                    _MilGroup1 = nil;
-                    _objMilUnit1 = nil;
-                    _objMilUnit2 = nil;
-                    _objMilUnit3 = nil;
-                    _MilGroup1 = createGroup TRGM_VAR_EnemySide;
-                    _objMilUnit1 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1000,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                    _objMilUnit2 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1002,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                    _objMilUnit3 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1003,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    private _MilGroup1 = createGroup TRGM_VAR_EnemySide;
+                    private _objMilUnit1 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1000,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    private _objMilUnit2 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1002,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    private _objMilUnit3 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1003,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                     TRGM_VAR_OccupiedHousesPos = TRGM_VAR_OccupiedHousesPos + [_thisMilBuilPos];
                     [getPos _x, [_objMilUnit1,_objMilUnit2,_objMilUnit3], -1, true, false,true] spawn TRGM_SERVER_fnc_zenOccupyHouse;
                     sleep 0.2;
@@ -629,25 +596,24 @@ if (!_bFriendlyInsurgents) then {
                     _objMilUnit3 setUnitPos "up";
                     {deleteVehicle _x} forEach nearestObjects [[-1000,0,0], ["all"], 100];
 
-                    _ParkedCar = nil;
+                    private _ParkedCar = nil;
                     if (_selectRandomW) then {
-                        _flatPos = nil;
-                        _flatPos = [getpos _x , 0, 20, 10, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[getpos _x,getpos _x],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
+                        private _flatPos = [getpos _x , 0, 20, 10, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[getpos _x,getpos _x],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
                         _ParkedCar = selectRandom (call UnarmedScoutVehicles) createVehicle _flatPos;
                         _ParkedCar setDir (floor(random 360));
                     };
 
                     if (_selectRandomW) then {
-                        _MilGroup4 = createGroup TRGM_VAR_EnemySide;
-                        _sCheckpointGuyName = format["objMilGuyName%1",(floor(random 999999))];
-                        _pos5 = [getpos _x , 0, 30, 5, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[getpos _x,getpos _x]] call TRGM_GLOBAL_fnc_findSafePos;
-                        _guardUnit5 = [_MilGroup4, (call sRiflemanToUse),_pos5,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                        private _MilGroup4 = createGroup TRGM_VAR_EnemySide;
+                        private _sCheckpointGuyName = format["objMilGuyName%1",(floor(random 999999))];
+                        private _pos5 = [getpos _x , 0, 30, 5, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[getpos _x,getpos _x]] call TRGM_GLOBAL_fnc_findSafePos;
+                        private _guardUnit5 = [_MilGroup4, (call sRiflemanToUse),_pos5,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                         _guardUnit5 setVariable [_sCheckpointGuyName, _guardUnit5, true];
                         missionNamespace setVariable [_sCheckpointGuyName, _guardUnit5];
                         TRGM_LOCAL_fnc_walkingGuyLoop = {
-                            _objManName = _this select 0;
-                            _thisInitPos = _this select 1;
-                            _objMan = missionNamespace getVariable _objManName;
+                            private _objManName = _this select 0;
+                            private _thisInitPos = _this select 1;
+                            private _objMan = missionNamespace getVariable _objManName;
 
                             group _objMan setSpeedMode "LIMITED";
                             group _objMan setBehaviour "SAFE";
@@ -662,12 +628,12 @@ if (!_bFriendlyInsurgents) then {
                         [_sCheckpointGuyName,_pos5] spawn TRGM_LOCAL_fnc_walkingGuyLoop;
                     };
                     //because we have a base, we see if a helipad is aviable for an attack chopper
-                    _HeliPads = nearestObjects [getPos _x, ["Land_HelipadCircle_F","Land_HelipadSquare_F"], 200];
+                    private _HeliPads = nearestObjects [getPos _x, ["Land_HelipadCircle_F","Land_HelipadSquare_F"], 200];
                     if (count _HeliPads > 0 && !TRGM_VAR_bBaseHasChopper && _selectRandomW) then {
                         TRGM_VAR_baseHeliPad =  selectRandom _HeliPads; publicVariable "TRGM_VAR_baseHeliPad";
                         TRGM_VAR_bBaseHasChopper =  true; publicVariable "TRGM_VAR_bBaseHasChopper";
-                        _BaseChopperGroup = createGroup TRGM_VAR_EnemySide;
-                        _EnemyBaseChopper = selectRandom (call EnemyBaseChoppers) createVehicle getPosATL TRGM_VAR_baseHeliPad;
+                        private _BaseChopperGroup = createGroup TRGM_VAR_EnemySide;
+                        private _EnemyBaseChopper = selectRandom (call EnemyBaseChoppers) createVehicle getPosATL TRGM_VAR_baseHeliPad;
                         _EnemyBaseChopper setDir direction TRGM_VAR_baseHeliPad;
                         [_BaseChopperGroup, call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+10,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                         [_BaseChopperGroup, call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+11,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
@@ -676,7 +642,7 @@ if (!_bFriendlyInsurgents) then {
                         } forEach units _BaseChopperGroup;
 
                         //EnemyBaseChopperPilot = getNEAREST (call sEnemyHeliPilot) to chopper
-                        _EnemyBaseChopperPilots = nearestObjects [getPos TRGM_VAR_baseHeliPad, [(call sEnemyHeliPilotToUse)], 250];
+                        private _EnemyBaseChopperPilots = nearestObjects [getPos TRGM_VAR_baseHeliPad, [(call sEnemyHeliPilotToUse)], 250];
                         TRGM_VAR_EnemyBaseChopperPilot =  _EnemyBaseChopperPilots select 0; publicVariable "TRGM_VAR_EnemyBaseChopperPilot";
                         // _BaseChopperGroup
 
@@ -688,21 +654,20 @@ if (!_bFriendlyInsurgents) then {
     }
     else { //else if _bThisMissionCivsOnly
         //spawn inner checkpoints
-        _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
+        private _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
         if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
         while {_iCount > 0} do {
-            _thisAreaRange = 50;
-            _checkPointGuidePos = _sidePos;
+            private _thisAreaRange = 50;
+            private _checkPointGuidePos = _sidePos;
             _iCount = _iCount - 1;
-            _flatPos = nil;
-            _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+            private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
             if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                _thisPosAreaOfCheckpoint = _flatPos;
-                _thisRoadOnly = true;
-                _thisSide = TRGM_VAR_EnemySide;
-                _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                _thisAllowBarakade = true;
-                _thisIsDirectionAwayFromAO = true;
+                private _thisPosAreaOfCheckpoint = _flatPos;
+                private _thisRoadOnly = true;
+                private _thisSide = TRGM_VAR_EnemySide;
+                private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                private _thisAllowBarakade = true;
+                private _thisIsDirectionAwayFromAO = true;
                 [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
             };
         };
@@ -710,18 +675,17 @@ if (!_bFriendlyInsurgents) then {
         _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
         if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
         while {_iCount > 0} do {
-            _thisAreaRange = 50;
-            _checkPointGuidePos = _sidePos;
+            private _thisAreaRange = 50;
+            private _checkPointGuidePos = _sidePos;
             _iCount = _iCount - 1;
-            _flatPos = nil;
-            _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+            private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
             if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                _thisPosAreaOfCheckpoint = _flatPos;
-                _thisRoadOnly = false;
-                _thisSide = TRGM_VAR_EnemySide;
-                _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                _thisAllowBarakade = false;
-                _thisIsDirectionAwayFromAO = true;
+                private _thisPosAreaOfCheckpoint = _flatPos;
+                private _thisRoadOnly = false;
+                private _thisSide = TRGM_VAR_EnemySide;
+                private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                private _thisAllowBarakade = false;
+                private _thisIsDirectionAwayFromAO = true;
                 [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
             };
         };
@@ -729,47 +693,41 @@ if (!_bFriendlyInsurgents) then {
 }
 else {
     [_sidePos,200,true] spawn TRGM_SERVER_fnc_spawnCivs; //3rd param of true says these are rebels and function will set rebels instead of civs
-    _lapPos = _sidePos getPos [50, 180];
-    _markerFriendlyRebs = createMarker [format["mrkFriendlyRebs%1",_iTaskIndex], _lapPos];
+    private _lapPos = _sidePos getPos [50, 180];
+    private _markerFriendlyRebs = createMarker [format["mrkFriendlyRebs%1",_iTaskIndex], _lapPos];
     _markerFriendlyRebs setMarkerShape "ICON";
     _markerFriendlyRebs setMarkerType "hd_dot";
     _markerFriendlyRebs setMarkerText (localize "STR_TRGM2_trendFunctions_OccupiedByFriendRebel");
 };
 
 if (_selectRandomW) then {
-    _iAnimalCount = 0;
-    _flatPosInside = nil;
-    _flatPosInside = [_sidePos , 0, 100, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
+    private _iAnimalCount = 0;
+    private _flatPosInside = [_sidePos , 0, 100, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
     while {_iAnimalCount < 4} do {
         _iAnimalCount = _iAnimalCount + 1;
-        _myDog1 = nil;
-        _myDog1 = createAgent ["Fin_random_F", _flatPosInside, [], 50, "NONE"];
+        private _myDog1 = createAgent ["Fin_random_F", _flatPosInside, [], 50, "NONE"];
         sleep 0.1;
         _myDog1 playMove "Dog_Sit";
     };
 };
 
 if (_selectRandomW) then {
-    _iAnimalCount = 0;
-    _flatPosInside2 = nil;
-    _flatPosInside2 = [_sidePos , 0, 100, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
+    private _iAnimalCount = 0;
+    private _flatPosInside2 = [_sidePos , 0, 100, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
     while {_iAnimalCount < 8} do {
         _iAnimalCount = _iAnimalCount + 1;
-        _myGoat1 = nil;
-        _myGoat1 = createAgent ["Goat_random_F", _flatPosInside2, [], 5, "NONE"];
+        private _myGoat1 = createAgent ["Goat_random_F", _flatPosInside2, [], 5, "NONE"];
         sleep 0.1;
         _myGoat1 playMove "Goat_Walk";
     };
 };
 
 if (_selectRandomW) then {
-    _iAnimalCount = 0;
-    _flatPosOutSide2 = nil;
-    _flatPosInside2 = [_sidePos , 500, 1500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
+    private _iAnimalCount = 0;
+    private _flatPosInside2 = [_sidePos , 500, 1500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
     while {_iAnimalCount < 8} do {
         _iAnimalCount = _iAnimalCount + 1;
-        _myGoat2 = nil;
-        _myGoat2 = createAgent ["Goat_random_F", _flatPosInside2, [], 5, "NONE"];
+        private _myGoat2 = createAgent ["Goat_random_F", _flatPosInside2, [], 5, "NONE"];
         sleep 0.1;
         _myGoat2 playMove "Goat_Stop";
     };
@@ -779,24 +737,22 @@ if (_selectRandomW) then {
 
 //Spawn IED
 if (_selectRandomW) then {
-    _iCount = 0;
-    _low = 2;
-    _high = 9;
-    _LoopMax = selectRandom [_low,_low,_low,_high]; //zero based
-    _IEDCount = 0;
-    _bHightlightIEDTests = false;
+    private _iCount = 0;
+    private _low = 2;
+    private _high = 9;
+    private _LoopMax = selectRandom [_low,_low,_low,_high]; //zero based
+    private _IEDCount = 0;
+    private _bHightlightIEDTests = false;
     //will only ever be three IEDs but if 10 is loop then we will have random rubble to confuse player
     while {_iCount <= _LoopMax} do
     {
-        _flatPos = nil;
-        _flatPos = [_sidePos , 10, 80, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom TRGM_VAR_IEDClassNames] call TRGM_GLOBAL_fnc_findSafePos;
+        private _flatPos = [_sidePos , 10, 80, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom TRGM_VAR_IEDClassNames] call TRGM_GLOBAL_fnc_findSafePos;
         if (_IEDCount <= 2) then {
-            _objIED1 = selectRandom TRGM_VAR_IEDClassNames createVehicle _flatPos;
+            private _objIED1 = selectRandom TRGM_VAR_IEDClassNames createVehicle _flatPos;
             _IEDCount = _IEDCount + 1;
         };
         if (_bHightlightIEDTests) then {
-            _test = nil;
-            _test = createMarker [format["IEDMrk%1%2%3",_inf1X,_inf1Y,_iCount], _flatPos];
+            private _test = createMarker [format["IEDMrk%1%2%3",_inf1X,_inf1Y,_iCount], _flatPos];
             _test setMarkerShape "ICON";
             _test setMarkerType "hd_dot";
             _test setMarkerText "IED";
@@ -814,16 +770,11 @@ if (_selectRandomW || _bThisMissionCivsOnly) then {
 
 //Spawn AT Mine on road if not vehicles and hack data mission
 if (_sideType isEqualTo 1 && random 1 < .50) then {
-    _nearestRoad = [[_inf1X,_inf1Y], 100, []] call BIS_fnc_nearestRoad;
-    if (isNil "_nearestRoad") then {
-        //_bInfor1Found = false;
-    } else {
-        _roadConnectedTo = roadsConnectedTo _nearestRoad;
+    private _nearestRoad = [[_inf1X,_inf1Y], 100, []] call BIS_fnc_nearestRoad;
+    if !(isNil "_nearestRoad") then {
+        private _roadConnectedTo = roadsConnectedTo _nearestRoad;
         if (count _roadConnectedTo > 0) then {
-            _objAT = nil;
-            _objAT = selectRandom TRGM_VAR_ATMinesClassNames createVehicle getPosATL _nearestRoad;
-        } else {
-            _bInfor1Found = false;
+            private _objAT = selectRandom TRGM_VAR_ATMinesClassNames createVehicle getPosATL _nearestRoad;
         };
     };
 };

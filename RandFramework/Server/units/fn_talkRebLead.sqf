@@ -7,7 +7,7 @@ if (side _caller isEqualTo TRGM_VAR_FriendlySide) then {
 
     if (alive _thisCiv) then {
 
-        _azimuth = _thisCiv getDir _caller;
+        private _azimuth = _thisCiv getDir _caller;
         _thisCiv setDir _azimuth;
         _thisCiv switchMove "Acts_StandingSpeakingUnarmed";
         sleep 3;

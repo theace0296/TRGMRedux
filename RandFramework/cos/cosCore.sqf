@@ -12,7 +12,7 @@ if (!TRGM_VAR_MissionLoaded) exitWith {};
 
 //hint "test";
 
-_mainObjPos = TRGM_VAR_ObjectivePossitions select 0;
+_mainObjPos = TRGM_VAR_ObjectivePositions select 0;
 _mrkHQPos = getMarkerPos "mrkHQ";
 if (_pos distance _mainObjPos < 1500) exitWith {};
 if (_pos distance _mrkHQPos < 1500) exitWith {};

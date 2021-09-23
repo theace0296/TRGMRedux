@@ -30,8 +30,8 @@ if (isServer) then { // only do once -> on the serer
         params ["_thisCiv"];
         (_thisCiv getVariable "armament") params ["_gun","_magazine","_amount"];
 
-        _bFired = false;
-        _bActivated = false;
+        private _bFired = false;
+        private _bActivated = false;
 
         // continiously watch for players and decide to engage or not
         while {alive _thisCiv && !_bFired} do {
@@ -41,14 +41,14 @@ if (isServer) then { // only do once -> on the serer
                         //load armament
                         if (!_bActivated) then {
                             _bActivated = true;
-                            _grpName = createGroup TRGM_VAR_EnemySide;
+                            private _grpName = createGroup TRGM_VAR_EnemySide;
                             [_thisCiv] joinSilent _grpName;
 
                             _thisCiv addMagazines [_magazine,_amount];
                             _thisCiv addWeapon _gun;
                             _thisCiv allowFleeing 0;
                         };
-                        _cansee = [objNull, "VIEW"] checkVisibility [eyePos _thisCiv, eyePos _x];
+                        private _cansee = [objNull, "VIEW"] checkVisibility [eyePos _thisCiv, eyePos _x];
                         if (_cansee > 0.2) then {
                             _thisCiv doTarget _x;
                             _thisCiv commandFire _x; //LOCAL - ?

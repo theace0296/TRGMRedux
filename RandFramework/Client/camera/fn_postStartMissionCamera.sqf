@@ -4,7 +4,7 @@ params ["_isHiddenObj", "_bMoveToAO"];
 
 if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "NOTRUN"]) isEqualTo "COMPLETE")}) then {
     player setVariable ["TRGM_postStartMissionCamRunning", "RUNNING", true];
-    private _locationText = [TRGM_VAR_ObjectivePossitions select 0] call TRGM_GLOBAL_fnc_getLocationName;
+    private _locationText = [TRGM_VAR_ObjectivePositions select 0] call TRGM_GLOBAL_fnc_getLocationName;
     private _hour = floor daytime;
     private _minute = floor ((daytime - _hour) * 60);
 

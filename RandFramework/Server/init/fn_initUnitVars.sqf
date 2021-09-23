@@ -108,7 +108,7 @@ publicVariable "TRGM_VAR_AdvControls";
 
 TRGM_VAR_DefaultAdvancedSettings = [];
 {
-    _defaultValue = _x select 5;
+    private _defaultValue = _x select 5;
     TRGM_VAR_DefaultAdvancedSettings pushBack _defaultValue;
 } forEach TRGM_VAR_AdvControls;
 publicVariable "TRGM_VAR_DefaultAdvancedSettings";
@@ -203,7 +203,7 @@ if (isNil "TRGM_VAR_iWeather")         then { TRGM_VAR_iWeather =  1;           
 if (isNil "TRGM_VAR_UseEditorWeather") then { TRGM_VAR_UseEditorWeather =  false; publicVariable "TRGM_VAR_UseEditorWeather"; };
 
 TRGM_GETTER_fnc_aWeatherOption = {
-    _weatherOption = [TRGM_VAR_iWeather];
+    private _weatherOption = [TRGM_VAR_iWeather];
     switch (TRGM_VAR_iWeather) do {
         case 0:  { _weatherOption = [1,2,3];};
         case 99: { _weatherOption = [TRGM_VAR_iWeather]; TRGM_VAR_UseEditorWeather =  true; publicVariable "TRGM_VAR_UseEditorWeather"; };

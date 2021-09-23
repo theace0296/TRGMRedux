@@ -1,38 +1,38 @@
 //use IDAP with police car???
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_vehs = CivCars;
+private _vehs = CivCars;
 
 
 params ["_posOfAO",["_isFullMap",false]];
 //_posOfAO =  _this select 0;
 
 
-_nearestRoads = _posOfAO nearRoads 2000;
+private _nearestRoads = _posOfAO nearRoads 2000;
 if (!(isNil "IsTraining") || _isFullMap) then {
     _nearestRoads = _posOfAO nearRoads 30000;
 };
 
 if (count _nearestRoads > 0) then {
 
-    _eventLocationPos = getPos (selectRandom _nearestRoads);
+    private _eventLocationPos = getPos (selectRandom _nearestRoads);
 
-    _bIsTrap = random 1 < .40;
+    private _bIsTrap = random 1 < .40;
     //_bIsTrap = true;
 
 
-    _thisAreaRange = 50;
+    private _thisAreaRange = 50;
 
     _nearestRoads = _eventLocationPos nearRoads _thisAreaRange;
 
-    _nearestRoad = nil;
-    _roadConnectedTo = nil;
-    _connectedRoad = nil;
-    _direction = nil;
-    _PosFound = false;
-    _iAttemptLimit = 5;
+    private _nearestRoad = nil;
+    private _roadConnectedTo = nil;
+    private _connectedRoad = nil;
+    private _direction = nil;
+    private _PosFound = false;
+    private _iAttemptLimit = 5;
+    private _direction = nil;
 
-    _direction = nil;
     while {!_PosFound && _iAttemptLimit > 0 && count _nearestRoads > 0} do {
         _nearestRoad = selectRandom _nearestRoads;
         _roadConnectedTo = roadsConnectedTo _nearestRoad;
@@ -49,20 +49,20 @@ if (count _nearestRoads > 0) then {
     if (_PosFound) then {
 
 
-        _roadBlockPos =  getPos _nearestRoad;
-        _roadBlockSidePos = _nearestRoad getPos [3, ([_direction,90] call TRGM_GLOBAL_fnc_addToDirection)];
+        private _roadBlockPos =  getPos _nearestRoad;
+        private _roadBlockSidePos = _nearestRoad getPos [3, ([_direction,90] call TRGM_GLOBAL_fnc_addToDirection)];
 
-        _mainVeh = createVehicle [selectRandom _vehs,_roadBlockSidePos,[],0,"NONE"];
+        private _mainVeh = createVehicle [selectRandom _vehs,_roadBlockSidePos,[],0,"NONE"];
         //_mainVeh setVehicleLock "LOCKED";
-        _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call TRGM_GLOBAL_fnc_addToDirection);
+        private _mainVehDirection =  ([_direction,(selectRandom[0,-10,10])] call TRGM_GLOBAL_fnc_addToDirection);
         _mainVeh setDir _mainVehDirection;
         //_smoke = createvehicle ["test_EmptyObjectForSmoke",([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos),[],0,"CAN_COLLIDE"];
         //_smoke setpos ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
         clearItemCargoGlobal _mainVeh;
 
-        _expl1 = nil;
-        _expl2 = nil;
-        _expl3 = nil;
+        private _expl1 = nil;
+        private _expl2 = nil;
+        private _expl3 = nil;
 
         if (_bIsTrap) then {
 
@@ -93,38 +93,38 @@ if (count _nearestRoads > 0) then {
         };
 
         if (!(isNil "IsTraining")) then {
-            _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
+            private _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
             _markerEventMedi setMarkerShape "ICON";
             _markerEventMedi setMarkerType "hd_dot";
             _markerEventMedi setMarkerText "Stranded Civ";
         }
         else {
             if (false) then { //will never show this for broken down civ! (only here if need to test)
-                _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
+                private _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
                 _markerEventMedi setMarkerShape "ICON";
                 _markerEventMedi setMarkerType "hd_dot";
                 _markerEventMedi setMarkerText (localize "STR_TRGM2_distressSignal_civilian");
             };
         };
 
-        _vehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
-        _backOfVehArea = _vehPos getPos [10,([_mainVehDirection,selectRandom[170,180,190]] call TRGM_GLOBAL_fnc_addToDirection)];
+        private _vehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
+        private _backOfVehArea = _vehPos getPos [10,([_mainVehDirection,selectRandom[170,180,190]] call TRGM_GLOBAL_fnc_addToDirection)];
         //_direction is direction of road
         //_mainVehDirection is direction of first veh
         //use these to lay down guys, cones, rubbish, barriers, lights etc...
 
         //[str(_backOfVehArea)] call TRGM_GLOBAL_fnc_notify;
-        _group = createGroup civilian;
-        _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+        private _group = createGroup civilian;
+        private _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         [_downedCiv, "Acts_CivilShocked_1"] remoteExec ["switchMove", 0];
         //_downedCiv playMoveNow "Acts_CivilInjuredGeneral_1"; //"AinjPpneMstpSnonWrflDnon";
         _downedCiv disableAI "anim";
-        _downedCivDirection = (floor(random 360));
+        private _downedCivDirection = (floor(random 360));
         _downedCiv setDir (_downedCivDirection);
         _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
 
         [_downedCiv, ["Ask if needs assistance",{
-            _downedCiv = _this select 0;
+            private _downedCiv = _this select 0;
             if (alive _downedCiv) then {
                 ["Please help, my car has broken down, i need to get home to my family!"] call TRGM_GLOBAL_fnc_notify;
             }
@@ -144,14 +144,14 @@ if (count _nearestRoads > 0) then {
         };
 
 
-        _bWaiting = true;
-        _bWaveDone = false;
+        private _bWaiting = true;
+        private _bWaveDone = false;
         while {_bWaiting} do {
 
 
             if (!(alive _mainVeh)) then {
                 _bWaiting = false;
-                _runAwayTo = [0,0,0]; //_vehPos getPos [500,([_mainVeh, _downedCiv] call BIS_fnc_DirTo)];
+                private _runAwayTo = [0,0,0]; //_vehPos getPos [500,([_mainVeh, _downedCiv] call BIS_fnc_DirTo)];
                 _downedCiv enableAI "anim";
                 _downedCiv switchMove "";
                 _downedCiv setBehaviour "CARELESS";
@@ -160,7 +160,7 @@ if (count _nearestRoads > 0) then {
                 _downedCiv setUnitPos "UP";
             };
             if (!_bWaveDone) then {
-                _nearUnits = nearestObjects [([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), ["Man","Car","Helicopter"], 100];
+                private _nearUnits = nearestObjects [([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), ["Man","Car","Helicopter"], 100];
                 //(driver ((nearestObjects [([box1] call TRGM_GLOBAL_fnc_getRealPos), ["car"], 20]) select 0)) in switchableUnits
                   {
                       if ((driver _x) in switchableUnits || (driver _x) in playableUnits) then {
@@ -168,9 +168,9 @@ if (count _nearestRoads > 0) then {
 
                         //[] spawn {};
                         [[_downedCiv,_roadBlockPos,_group],{
-                            _downedCiv = _this select 0;
-                            _roadBlockPos = _this select 1;
-                            _group = _this select 2;
+                            private _downedCiv = _this select 0;
+                            private _roadBlockPos = _this select 1;
+                            private _group = _this select 2;
 
                             _downedCiv enableAI "anim";
                               _downedCiv switchMove "";
@@ -187,7 +187,7 @@ if (count _nearestRoads > 0) then {
                             [_downedCiv, "Acts_JetsShooterNavigate_loop"] remoteExec ["switchMove", 0];
                             _downedCiv disableAI "anim";
                             [_downedCiv] spawn {
-                                _downedCiv = _this select 0;
+                                private _downedCiv = _this select 0;
                                 waitUntil {sleep 2; !alive(_downedCiv)};
                                 [_downedCiv, ""] remoteExec ["switchMove", 0];
                             };
@@ -213,7 +213,7 @@ if (count _nearestRoads > 0) then {
                                 _downedCiv setBehaviour "CARELESS";
                                 _group setSpeedMode "FULL";
                                 _downedCiv setUnitPos "UP";
-                                _downedCiv doMove (TRGM_VAR_ObjectivePossitions select 0);
+                                _downedCiv doMove (TRGM_VAR_ObjectivePositions select 0);
                                 sleep 3;
                             };
                             playSound3D ["A3\Sounds_F\sfx\beep_target.wss",_downedCiv,false,getPosASL _downedCiv,0.5,1.5,0];
@@ -245,8 +245,8 @@ if (count _nearestRoads > 0) then {
                         [[_downedCiv],true] remoteExecCall ["orderGetIn", 0];
                         [0.2, "Helped a stranded civilian"] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
                         sleep 10;
-                        [_downedCiv,(TRGM_VAR_ObjectivePossitions select 0)] remoteExecCall ["doMove", 0];
-                        //_downedCiv doMove (TRGM_VAR_ObjectivePossitions select 0);
+                        [_downedCiv,(TRGM_VAR_ObjectivePositions select 0)] remoteExecCall ["doMove", 0];
+                        //_downedCiv doMove (TRGM_VAR_ObjectivePositions select 0);
                     };
                 };
             };

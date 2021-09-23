@@ -3,44 +3,31 @@ if (_fnc_scriptName != _fnc_scriptNameParent) then { //Reduce RPT Spam for this 
     format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 };
 
-_currentManPos = ([_objMan] call TRGM_GLOBAL_fnc_getRealPos);
+private _currentManPos = ([_objMan] call TRGM_GLOBAL_fnc_getRealPos);
+private _MoveType = selectRandom ["Man","OpenArea"];
+private _WalkToPos = ([_objMan] call TRGM_GLOBAL_fnc_getRealPos);
 
-//[_objManName] call TRGM_GLOBAL_fnc_notify;
-//sleep 2;
-_MoveType = selectRandom ["Man","OpenArea"];
-_WalkToPos = ([_objMan] call TRGM_GLOBAL_fnc_getRealPos);
-
-//sleep 3;
 if (_MoveType isEqualTo "OpenArea") then {
-    _flatPos = nil;
-    _flatPos = [_thisInitPos , 10, _walkRadius, 7, 0, 0.5, 0,[[_currentManPos,10]],[_thisInitPos,_thisInitPos]] call BIS_fnc_findSafePos;
+    private _flatPos = [_thisInitPos , 10, _walkRadius, 7, 0, 0.5, 0,[[_currentManPos,10]],[_thisInitPos,_thisInitPos]] call BIS_fnc_findSafePos;
     _WalkToPos = _flatPos;
 };
 if (_MoveType isEqualTo "Man") then {
-    _nearMen = nearestObjects [_thisInitPos, ["man"], _walkRadius];
+    private _nearMen = nearestObjects [_thisInitPos, ["man"], _walkRadius];
     if (count _nearMen > 1) then { //more than one, because we dont want to count our target guy!
         //HERE set array then remove our guy from the array
-        _tempMenArray = _nearMen;
-        _ItemsToRemove = [_objMan];
-        _tempArrayToUse = _tempMenArray - _ItemsToRemove;
-        //[format["ArrayToUse: %1",_tempArrayToUse]] call TRGM_GLOBAL_fnc_notify;
-        //sleep 3;
+        private _tempMenArray = _nearMen;
+        private _ItemsToRemove = [_objMan];
+        private _tempArrayToUse = _tempMenArray - _ItemsToRemove;
         _WalkToPos = getPos (selectRandom _tempArrayToUse);
-
     };
-
 };
 
-//[format["walkto8:%1 - _MoveType: %2 - currentManPos: %3",_WalkToPos,_MoveType,_currentManPos]] call TRGM_GLOBAL_fnc_notify;
-
-//_objMan switchMove "";
 _objMan doMove (_WalkToPos);
-
 sleep 2;
 
 waitUntil {sleep 1; speed _objMan isEqualTo 0};
-_nearMen = (nearestObjects [_thisInitPos, ["man"], 7]) select {side _x isEqualTo side _objMan};
-_animType = selectRandom [2,3,4];
+private _nearMen = (nearestObjects [_thisInitPos, ["man"], 7]) select {side _x isEqualTo side _objMan};
+private _animType = selectRandom [2,3,4];
 if (count _nearMen > 1) then {
     _animType = selectRandom [1,2,3,4];
 };
@@ -48,10 +35,10 @@ if (count _nearMen > 1) then {
 if (alive(_objMan) && {behaviour _objMan isEqualTo "SAFE"}) then {
     switch (_animType) do {
         case 1: { //SALUTE
-            _nearMan = _nearMen select 0;
-            _azimuth = _objMan getDir _nearMan;
+            private _nearMan = _nearMen select 0;
+            private _azimuth = _objMan getDir _nearMan;
             _objMan setDir _azimuth;
-            _azimuth2 = _nearMan getDir _objMan;
+            private _azimuth2 = _nearMan getDir _objMan;
             _nearMan setDir _azimuth;
             _objMan playActionNow "Salute";
             _nearMan playActionNow "Salute";

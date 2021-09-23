@@ -1,8 +1,8 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 while {true} do {
     if (side player != civilian) then {
-        if (count TRGM_VAR_ObjectivePossitions > 0 && TRGM_VAR_AllowUAVLocateHelp) then {
-            if ((Player distance (TRGM_VAR_ObjectivePossitions select 0)) < 25) then {
+        if (count TRGM_VAR_ObjectivePositions > 0 && TRGM_VAR_AllowUAVLocateHelp) then {
+            if ((Player distance (TRGM_VAR_ObjectivePositions select 0)) < 25) then {
                 if ((Player getVariable ["calUAVActionID", -1]) isEqualTo -1) then {
                     [(localize "STR_TRGM2_TRGMInitPlayerLocal_UAVAvailable")] call TRGM_GLOBAL_fnc_notify;
                     private _actionID = player addAction [localize "STR_TRGM2_TRGMInitPlayerLocal_CallUAV",{[0] spawn TRGM_GLOBAL_fnc_callUAVFindObjective}];

@@ -24,7 +24,7 @@ TRGM_LOCAL_fnc_animateWildLife = {
 
 {
     [_x] spawn TRGM_LOCAL_fnc_animateWildLife;
-} forEach TRGM_VAR_ObjectivePossitions;
+} forEach TRGM_VAR_ObjectivePositions;
 
 
 true;

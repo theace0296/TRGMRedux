@@ -5,7 +5,7 @@ _unit = unit. Refer to Unit as _unit.
 
 _unit =(_this select 0);
 
-_mainAOPos = TRGM_VAR_ObjectivePossitions select 0;
+_mainAOPos = TRGM_VAR_ObjectivePositions select 0;
 _distanceFromAO = "FAR"; //4000+=FAR; 1500-3999=MED, 500-1499=CLOSE; 0-499=VERYCLOSE
 _AODirection = [_unit, _mainAOPos] call BIS_fnc_DirTo;
 _AODistance = _unit distance _mainAOPos;

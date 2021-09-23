@@ -3,7 +3,7 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 if (!hasInterface) exitWith {};
 
-private _redZonePositions = TRGM_VAR_ObjectivePossitions-TRGM_VAR_ClearedPositions-TRGM_VAR_HiddenPossitions;
+private _redZonePositions = TRGM_VAR_ObjectivePositions-TRGM_VAR_ClearedPositions-TRGM_VAR_HiddenPossitions;
 private _radius = 900;
 private _minimumDistance = 300;
 private _markers = [];

@@ -61,7 +61,7 @@ if (!TRGM_VAR_UseEditorWeather && isServer) then {
             case 4: { //Realistic
                 // These are really just guestimates, but it basically is saying "it's clear at night, foggy in the morning, cloudy during the day, chance of rain in the evening, clears up by midnight.
                 // I'm not a Meteorologist though ¯\_(ツ)_/¯
-                _timeBasedOvercast = [0, 0, (1/16), (1/8), (1/4), (1/2), (3/4), 1, (3/4), (1/2), (1/4), (1/8), (1/16), (1/8), (1/4), (1/2), (3/4), 1, (1/2), (1/4), (1/8), (1/16), 0, 0] select _hour;
+                private _timeBasedOvercast = [0, 0, (1/16), (1/8), (1/4), (1/2), (3/4), 1, (3/4), (1/2), (1/4), (1/8), (1/16), (1/8), (1/4), (1/2), (3/4), 1, (1/2), (1/4), (1/8), (1/16), 0, 0] select _hour;
                 0 setOvercast (_timeBasedOvercast);
             };
             case 31: { //Monsoon

@@ -144,7 +144,7 @@ terminal1 setdir 180;
 terminal1 setVehicleVarName "terminal1";
 publicVariable "terminal1";
 
-_table = ["Land_CampingTable_white_F", _HQpos, [-1.1,3.1,0.6]] call _object_spawn;
+private _table = ["Land_CampingTable_white_F", _HQpos, [-1.1,3.1,0.6]] call _object_spawn;
 _table setdir 180;
 
 laptop1 = ["Land_Laptop_unfolded_F", _HQpos, [-1.6,2.8,1.6]] call _object_spawn;
@@ -181,7 +181,7 @@ medBuilding setVehicleVarName "medBuilding";
 publicVariable "medBuilding";
 sleep 5;
 
-_repairBuilding = ["Land_RepairDepot_01_tan_F", _HQpos, [20,20,0]] call _building_spawn;
+private _repairBuilding = ["Land_RepairDepot_01_tan_F", _HQpos, [20,20,0]] call _building_spawn;
 sleep 5;
 
 chopper1 = ["B_Heli_Transport_03_unarmed_F", _HQpos, [-50,-50,0]] call _helo_spawn;

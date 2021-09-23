@@ -1,11 +1,11 @@
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-_bAllow = true;
+private _bAllow = true;
 
 if (isMultiplayer) then {
 
-    _bSLAlive = false;
-    _bK1_1Alive = false;
+    private _bSLAlive = false;
+    private _bK1_1Alive = false;
     if (!isnil "sl") then { //sl is leader of K1 - k2_1 is leader of K2
         _bSLAlive = alive sl;
     };
@@ -33,7 +33,7 @@ if (isMultiplayer) then {
 
 if (_bAllow) then {
     //Fail current mission
-    _iCurrentTaskCount = 0;
+    private _iCurrentTaskCount = 0;
     while {_iCurrentTaskCount < count TRGM_VAR_ActiveTasks} do {
         if (!(TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted)) then {
             [TRGM_VAR_ActiveTasks select _iCurrentTaskCount, "canceled"] call FHQ_fnc_ttSetTaskState;
@@ -45,11 +45,7 @@ if (_bAllow) then {
 
     sleep 3;
 
-    //tp trtansport choppers to base
-    //"transportChopper" setMarkerPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
-    //airSupportHeliPad
-    //heliPad1
-    _escortPilot1 = driver chopper1;
+    private _escortPilot1 = driver chopper1;
     {
         deleteWaypoint _x
     } foreach waypoints group _escortPilot1;
@@ -60,7 +56,7 @@ if (_bAllow) then {
     "transportChopper" setMarkerPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
     chopper1 engineOn false;
     chopper2 engineOn false;
-    _escortPilot = driver chopper2;
+    private _escortPilot = driver chopper2;
     {
         deleteWaypoint _x
     } foreach waypoints group _escortPilot;

@@ -18,7 +18,7 @@ private _isHiddenObj = false;
 //    };
 //} forEach TRGM_VAR_ClearedPositions;
 
-private _mainAOPos = TRGM_VAR_ObjectivePossitions select 0;
+private _mainAOPos = TRGM_VAR_ObjectivePositions select 0;
 if (! isNil "_mainAOPos") then {
     if (_mainAOPos in TRGM_VAR_ClearedPositions  && (_mainAOPos distance2D _destinationPosition) < _radius) then {
         _airEscort = true;
@@ -33,7 +33,7 @@ if (! isNil "_mainAOPos") then {
 
 
 
-//TRGM_VAR_ObjectivePossitions
+//TRGM_VAR_ObjectivePositions
 
 if (!alive _vehicle) then {
     breakOut "FlyTo";
@@ -101,7 +101,7 @@ if (!_airEscort) then {
     private _iSaftyCount = 500;
     private _bHalfWayWaypoint = false;
     private _DirAtoB = [[_vehicle] call TRGM_GLOBAL_fnc_getRealPos, _destinationPosition] call BIS_fnc_DirTo;
-    private _AvoidZonePos = TRGM_VAR_ObjectivePossitions select 0;
+    private _AvoidZonePos = TRGM_VAR_ObjectivePositions select 0;
 
     if (! isNil "_AvoidZonePos" ) then {
         private _stepPos = [_vehicle] call TRGM_GLOBAL_fnc_getRealPos;

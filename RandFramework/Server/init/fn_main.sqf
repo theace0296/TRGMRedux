@@ -77,7 +77,7 @@ tracer4 setPos [99999,99999];
 
 waitUntil {time > 0};
 
-_trgRatingAdjust = createTrigger ["EmptyDetector", [0,0]];
+private _trgRatingAdjust = createTrigger ["EmptyDetector", [0,0]];
 _trgRatingAdjust setTriggerArea [0, 0, 0, false];
 _trgRatingAdjust setTriggerStatements ["((rating player) < 0)", "player addRating -(rating player)", ""];
 
@@ -203,11 +203,11 @@ if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != ty
 TRGM_VAR_transportHelosToGetActions = [chopper1];
 {
     if (isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship"}) then {
-        _faction = getText(configFile >> "CfgVehicles" >> typeOf _x >> "faction");
-        _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
-        _westFaction = (TRGM_VAR_AvailableFactions select _friendlyFactionIndex) select 0;
+        private _faction = getText(configFile >> "CfgVehicles" >> typeOf _x >> "faction");
+        private _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
+        private _westFaction = (TRGM_VAR_AvailableFactions select _friendlyFactionIndex) select 0;
         if (getNumber(configFile >> "CfgFactionClasses" >> _faction >> "side") isEqualTo 1 && {_faction != _westFaction}) then {
-            _newVehClass = [_x, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
+            private _newVehClass = [_x, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
             if (!isNil "_newVehClass") then {
                 private _pos = getPosATL _x;
                 private _dir = getDir _x;
@@ -263,8 +263,8 @@ TRGM_VAR_CustomObjectsSet = true; publicVariable "TRGM_VAR_CustomObjectsSet";
 [format["Mission Core: %1", "EnemyFactionDataProcessed"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
-_isAceRespawnWithGear = false;
-if (call TRGM_GLOBAL_fnc_isCbaLoaded) then {
+private _isAceRespawnWithGear = false;
+if (call TRGM_GLOBAL_fnc_isCbaLoaded && call TRGM_GLOBAL_fnc_isAceLoaded) then {
     // check for ACE respawn with gear setting
     _isAceRespawnWithGear = "ace_respawn_savePreDeathGear" call CBA_settings_fnc_get;
 };
@@ -386,7 +386,7 @@ if (isMultiplayer && {!(TRGM_VAR_iMissionIsCampaign)}) then {
 
 if (TRGM_VAR_iAllowNVG isEqualTo 0) then {
     {
-        _unit = _x;
+        private _unit = _x;
         _unit addPrimaryWeaponItem "acc_flashlight";
         _unit enableGunLights "forceOn";
         {_unit unassignItem _x; _unit removeItem _x;} forEach TRGM_VAR_aNVClassNames;
@@ -417,14 +417,14 @@ if (TRGM_VAR_iMissionIsCampaign) then {
 [format["Mission Core: %1", "RunFlashLightState"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
-_iEnemyFlashLightOption = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SELECT_ENEMY_FLASHLIGHTS_IDX;
+private _iEnemyFlashLightOption = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SELECT_ENEMY_FLASHLIGHTS_IDX;
 if (_iEnemyFlashLightOption isEqualTo 0) then {_iEnemyFlashLightOption = selectRandom [1,2]}; //1=yes, 2=no
 if (_iEnemyFlashLightOption isEqualTo 1) then {
     {
         if ((side _x) isEqualTo TRGM_VAR_EnemySide) then
         {
             if (isNil { _x getVariable "ambushUnit" }) then {
-                _unit = _x;
+                private _unit = _x;
                 _unit addPrimaryWeaponItem "acc_flashlight";
                 _unit enableGunLights "forceOn";
                 {_unit unassignItem _x; _unit removeItem _x;} forEach TRGM_VAR_aNVClassNames;

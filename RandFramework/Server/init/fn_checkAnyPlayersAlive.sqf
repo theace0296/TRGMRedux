@@ -1,12 +1,12 @@
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 sleep 3;
-_bEnded = false;
+private _bEnded = false;
 while {!_bEnded} do {
-    _bAnyAlive = false;
+    private _bAnyAlive = false;
     {
         if (isPlayer _x) then {
-            _iRespawnTicketsLeft = [_x,nil,true] call BIS_fnc_respawnTickets;
+            private _iRespawnTicketsLeft = [_x,nil,true] call BIS_fnc_respawnTickets;
             if (alive _x || _iRespawnTicketsLeft > 0) then {
                 _bAnyAlive = true;
             };

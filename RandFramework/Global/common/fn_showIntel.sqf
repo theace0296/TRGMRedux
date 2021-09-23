@@ -31,7 +31,7 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
 
     if (_IntelToShow isEqualTo 1) then { //Mortor team location
         [[], {
-            TRGM_VAR_TempIntelShowPos = nearestObjects [TRGM_VAR_ObjectivePossitions select 0,(call sMortar) + (call sMortarMilitia),3000];
+            TRGM_VAR_TempIntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select 0,(call sMortar) + (call sMortarMilitia),3000];
             publicVariable "TRGM_VAR_TempIntelShowPos";
         }] remoteExec ["call", 2];
         waitUntil {sleep 2; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
@@ -51,7 +51,7 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
     };
     if (_IntelToShow isEqualTo 2) then { //AAA team location
         [[], {
-            TRGM_VAR_TempIntelShowPos = nearestObjects [TRGM_VAR_ObjectivePossitions select 0,[(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh),3000];
+            TRGM_VAR_TempIntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select 0,[(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh),3000];
             publicVariable "TRGM_VAR_TempIntelShowPos";
         }] remoteExec ["call", 2];
         waitUntil {sleep 2; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
@@ -86,7 +86,7 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
     if (_IntelToShow isEqualTo 4) then { //All checkpoints
         private _bFoundcheckpoints = false;
         {
-            private _distanceToCheckPoint = (_x select 0) distance (TRGM_VAR_ObjectivePossitions select 0);
+            private _distanceToCheckPoint = (_x select 0) distance (TRGM_VAR_ObjectivePositions select 0);
             private _checkpointPos = _x select 0;
             if (_distanceToCheckPoint < 1000) then {
                 _bFoundcheckpoints = true;

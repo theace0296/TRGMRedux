@@ -11,8 +11,8 @@ if (isNil "_bCreateTask") then {
 
 if (side _caller isEqualTo TRGM_VAR_FriendlySide) then {
 
-    //TRGM_VAR_ClearedPositions pushBack (TRGM_VAR_ObjectivePossitions select _iSelected);
-    TRGM_VAR_ClearedPositions pushBack ([TRGM_VAR_ObjectivePossitions, _caller] call BIS_fnc_nearestPosition);
+    //TRGM_VAR_ClearedPositions pushBack (TRGM_VAR_ObjectivePositions select _iSelected);
+    TRGM_VAR_ClearedPositions pushBack ([TRGM_VAR_ObjectivePositions, _caller] call BIS_fnc_nearestPosition);
     publicVariable "TRGM_VAR_ClearedPositions";
 
     //removeAllActions _thisCiv;

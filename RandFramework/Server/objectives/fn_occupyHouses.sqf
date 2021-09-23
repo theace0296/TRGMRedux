@@ -2,12 +2,12 @@ params ["_sidePos", "_distFromCent", "_unitCounts", ["_InsurgentSide", EAST], ["
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 call TRGM_SERVER_fnc_initMissionVars;
 
-_unitCount = selectRandom _unitCounts;
+private _unitCount = selectRandom _unitCounts;
 
-_iCount = 0; //_unitCount
-_allBuildings = nil;
-_sAreaMarkerName = nil;
-_randBuilding = nil;
+private _iCount = 0; //_unitCount
+private _allBuildings = nil;
+private _sAreaMarkerName = nil;
+private _randBuilding = nil;
 
 if (!_bThisMissionCivsOnly) then {
     while {_iCount <= _unitCount} do
@@ -16,7 +16,7 @@ if (!_bThisMissionCivsOnly) then {
         //_allBuildings = nearestObjects [_sidePos, ["house"], _distFromCent];
         _randBuilding = selectRandom _allBuildings;
         if (!isNil "_randBuilding") then {
-            _randBuildingPos = getPos _randBuilding;
+            private _randBuildingPos = getPos _randBuilding;
             if ((_randBuilding distance getMarkerPos "mrkHQ") > TRGM_VAR_BaseAreaRange && !(_randBuildingPos in TRGM_VAR_OccupiedHousesPos)) then { //"mrkHQ", TRGM_VAR_BaseAreaRange
             //if ((_randBuilding distance getMarkerPos "mrkHQ") > TRGM_VAR_BaseAreaRange) then { //"mrkHQ", TRGM_VAR_BaseAreaRange
 
@@ -24,31 +24,29 @@ if (!_bThisMissionCivsOnly) then {
                 //[format["test:%1",(_randBuilding distance getMarkerPos "mrkHQ")]] call TRGM_GLOBAL_fnc_notify;
                 //sleep 1;
 
-                _thisGroup = nil;
-                _thisGroup = createGroup _InsurgentSide;
+                private _thisGroup = createGroup _InsurgentSide;
                 [_thisGroup, (call sRiflemanToUse), position _randBuilding, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 if (random 1 < .50) then {[_thisGroup, (call sRiflemanToUse), position _randBuilding, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
-                _teamLeaderUnit = [_thisGroup, (call sTeamleaderToUse),_randBuildingPos,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                private _teamLeaderUnit = [_thisGroup, (call sTeamleaderToUse),_randBuildingPos,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 [_randBuildingPos, units group _teamLeaderUnit, -1, true, false,true] spawn TRGM_SERVER_fnc_zenOccupyHouse;
 
-                _iCountNoOfCPs = selectRandom[0,0,0,0,1];  //number of checkpoints (so high chance of not being any, or one may be near an occupied building)
+                private _iCountNoOfCPs = selectRandom[0,0,0,0,1];  //number of checkpoints (so high chance of not being any, or one may be near an occupied building)
                 if ((_sidePos distance _randBuilding) > 400) then {_iCountNoOfCPs = selectRandom[0,0,1];};
                 //spawn inner random sentrys
                 //if (!_bIsMainObjective) then {_iCountNoOfCPs = selectRandom [0,1];};
                 if (_iCountNoOfCPs > 0) then {_dAngleAdustPerLoop = 360 / _iCountNoOfCPs;};
                 while {_iCountNoOfCPs > 0} do {
-                    _thisAreaRange = 50;
-                    _checkPointGuidePos = _sidePos;
+                    private _thisAreaRange = 50;
+                    private _checkPointGuidePos = _sidePos;
                     _iCountNoOfCPs = _iCountNoOfCPs - 1;
-                    _flatPos = nil;
-                    _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                    private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
                     if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        _thisPosAreaOfCheckpoint = _flatPos;
-                        _thisRoadOnly = false;
-                        _thisSide = TRGM_VAR_EnemySide;
-                        _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        _thisAllowBarakade = false;
-                        _thisIsDirectionAwayFromAO = true;
+                        private _thisPosAreaOfCheckpoint = _flatPos;
+                        private _thisRoadOnly = false;
+                        private _thisSide = TRGM_VAR_EnemySide;
+                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                        private _thisAllowBarakade = false;
+                        private _thisIsDirectionAwayFromAO = true;
                         [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50,false] spawn TRGM_SERVER_fnc_setCheckpoint;
                     }
                 };

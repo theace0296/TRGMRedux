@@ -10,7 +10,7 @@ if !(_missionStatus in ["succeeded", "failed", "canceled"]) then {
     _repAmountOnFail = 0;
 };
 
-_objParams = [];
+private _objParams = [];
 
 switch (typeName _missionObjective) do {
     case "SCALAR": {

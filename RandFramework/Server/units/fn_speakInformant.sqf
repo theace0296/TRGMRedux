@@ -12,22 +12,13 @@ if (alive _thisCiv) then {
 };
 
 if (side _caller isEqualTo TRGM_VAR_FriendlySide && !_bCreateTask) then {
-    _ballowSearch = true;
+    private _ballowSearch = true;
 
     ["You start to talk to the informant..."] call TRGM_GLOBAL_fnc_notify;
-    if (alive _thisCiv) then {
-        //increased chance of results
-        _searchChance = [true,false];
-    } else {
-        //normal search
-        _searchChance = [true,false,false,false,false];
-    };
-
     _thisCiv disableAI "move";
     sleep 3;
     _thisCiv enableAI "move";
     if (alive _thisCiv) then {
-        //normal search
         _ballowSearch = true;
     } else {
         _ballowSearch = false;

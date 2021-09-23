@@ -14,25 +14,25 @@ TRGM_Logic setVariable ["PointsUpdating", false, true];
 
 ["Mission Setup: 14.5", true] call TRGM_GLOBAL_fnc_log;
 
-_ThisTaskTypes = nil;
-_IsMainObjs = nil;
-_MarkerTypes = nil;
-_CreateTasks = nil;
-_HasHiddenObjective = false;
-_HasNonHiddenObjective = true;
-_SamePrevAOStats = nil;
-_bIsCampaign = false;
-_bIsCampaignFinalMission = false;
-_bSideMissionsCivOnly = nil;
+private _ThisTaskTypes = nil;
+private _IsMainObjs = nil;
+private _MarkerTypes = nil;
+private _CreateTasks = nil;
+private _HasHiddenObjective = false;
+private _HasNonHiddenObjective = true;
+private _SamePrevAOStats = nil;
+private _bIsCampaign = false;
+private _bIsCampaignFinalMission = false;
+private _bSideMissionsCivOnly = nil;
 
-_MainMissionTasksToUse = TRGM_VAR_MainMissionTasks;
-_SideMissionTasksToUse = TRGM_VAR_SideMissionTasks;
-_MissionsThatHaveIntel = TRGM_VAR_MissionsThatHaveIntel;
+private _MainMissionTasksToUse = TRGM_VAR_MainMissionTasks;
+private _SideMissionTasksToUse = TRGM_VAR_SideMissionTasks;
+private _MissionsThatHaveIntel = TRGM_VAR_MissionsThatHaveIntel;
 
 ["Mission Setup: 14", true] call TRGM_GLOBAL_fnc_log;
 
 if (TRGM_VAR_iMissionIsCampaign) then {
-    _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+    private _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
     if (_totalRep >= 10) then {
         if !(isNil "TRGM_VAR_MainObjectivesToExcludeFromCampaign") then {
             _MainMissionTasksToUse = TRGM_VAR_MainMissionTasks - TRGM_VAR_MainObjectivesToExcludeFromCampaign;
@@ -112,36 +112,16 @@ if (TRGM_VAR_iMissionIsCampaign) then {
     TRGM_VAR_MaxBadPoints = 1;
 };
 
-if (!(isNil "IsTraining")) then {
-    _ThisTaskTypes = [12,8,3];
-    _IsMainObjs = [false,false,false]; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-    _MarkerTypes = ["mil_objective","mil_objective","mil_objective"];
-    _CreateTasks = [true,true,true];
-    _SamePrevAOStats = [false,false,false];
-    _bSideMissionsCivOnly = [false,false,false];
-    TRGM_VAR_MaxBadPoints = 100;
-};
-
-if (false) then { // This used to be set with the debug mode flag, but that's not all that helpful anymore.
-    _ThisTaskTypes = [18,19];
-    _IsMainObjs = _ThisTaskTypes apply {true;}; //if false, then chacne of no enemu, or civs only etc.... if true, then more chacne of bad shit happening
-    _MarkerTypes = _ThisTaskTypes apply {"mil_objective";};
-    _CreateTasks = _ThisTaskTypes apply {true;};
-    _SamePrevAOStats = _ThisTaskTypes apply {false;};
-    _bSideMissionsCivOnly = _ThisTaskTypes apply {false;};
-    TRGM_VAR_MaxBadPoints = 100;
-};
-
 TRGM_VAR_MissionParamsSet =  true; publicVariable "TRGM_VAR_MissionParamsSet";
 
 ["Mission Setup: 13", true] call TRGM_GLOBAL_fnc_log;
 
 publicVariable "TRGM_VAR_MaxBadPoints";
 
-_usedLocations = [];
-_randInfor1X = nil;
-_randInfor1Y = nil;
-_buildings = nil;
+private _usedLocations = [];
+private _randInfor1X = nil;
+private _randInfor1Y = nil;
+private _buildings = nil;
 
 ["Mission Setup: Gatherthing map info", true] call TRGM_GLOBAL_fnc_log;
 
@@ -184,7 +164,7 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
 ["Mission Setup: 12.5", true] call TRGM_GLOBAL_fnc_log;
 
 while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
-    _iTaskIndex = TRGM_VAR_InfTaskCount;
+    private _iTaskIndex = TRGM_VAR_InfTaskCount;
     if (_bIsCampaign) then {
         _iTaskIndex = (TRGM_VAR_iCampaignDay - 1) + TRGM_VAR_InfTaskCount;
     }
@@ -192,15 +172,14 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
         _iTaskIndex = TRGM_VAR_InfTaskCount;
     };
 
-    _iThisTaskType = nil;
-    _iThisTaskType = _ThisTaskTypes select TRGM_VAR_InfTaskCount;
+    private _iThisTaskType = _ThisTaskTypes select TRGM_VAR_InfTaskCount;
 
-    _bIsMainObjective = _IsMainObjs select TRGM_VAR_InfTaskCount; if (isNil "_bIsMainObjective") then { _bIsMainObjective = false; }; //more chance of bad things, and set middle area stuff around (comms, base etc...)
-    _MarkerType = _MarkerTypes select TRGM_VAR_InfTaskCount; if (isNil "_MarkerType") then { _MarkerType = "hd_dot"; };//"Empty" or other
-    _bCreateTask = _CreateTasks select TRGM_VAR_InfTaskCount; if (isNil "_bCreateTask") then { _bCreateTask = true; };
-    _SamePrevAO = _SamePrevAOStats select TRGM_VAR_InfTaskCount; if (isNil "_SamePrevAO") then { _SamePrevAO = false; };
-    _allowFriendlyIns = true;
-    _bSideMissionsCivOnlyToUse = _bSideMissionsCivOnly select TRGM_VAR_InfTaskCount;
+    private _bIsMainObjective = _IsMainObjs select TRGM_VAR_InfTaskCount; if (isNil "_bIsMainObjective") then { _bIsMainObjective = false; }; //more chance of bad things, and set middle area stuff around (comms, base etc...)
+    private _MarkerType = _MarkerTypes select TRGM_VAR_InfTaskCount; if (isNil "_MarkerType") then { _MarkerType = "hd_dot"; };//"Empty" or other
+    private _bCreateTask = _CreateTasks select TRGM_VAR_InfTaskCount; if (isNil "_bCreateTask") then { _bCreateTask = true; };
+    private _SamePrevAO = _SamePrevAOStats select TRGM_VAR_InfTaskCount; if (isNil "_SamePrevAO") then { _SamePrevAO = false; };
+    private _allowFriendlyIns = true;
+    private _bSideMissionsCivOnlyToUse = _bSideMissionsCivOnly select TRGM_VAR_InfTaskCount;
 
     if (_MarkerTypes select 0 isEqualTo "empty") then {
         TRGM_VAR_MainIsHidden =  true; publicVariable "TRGM_VAR_MainIsHidden";
@@ -222,14 +201,14 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
     TRGM_VAR_SideCompleted pushBack false;
     publicVariable "TRGM_VAR_SideCompleted";
-    _bInfor1Found = false;
+    private _bInfor1Found = false;
 
-    _MissionTitle = "";
-    _RequiresNearbyRoad = false;
-    _roadSearchRange = 20;
+    private _MissionTitle = "";
+    private _RequiresNearbyRoad = false;
+    private _roadSearchRange = 20;
 
-    _bNewTaskSetup = false;
-    _args = [];
+    private _bNewTaskSetup = false;
+    private _args = [];
     ["Mission Setup: 11", true] call TRGM_GLOBAL_fnc_log;
 
     switch (_iThisTaskType) do {
@@ -395,7 +374,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
         default { };
     };
 
-    _bUserDefinedAO = false;
+    private _bUserDefinedAO = false;
     if (!(isNil "TRGM_VAR_iMissionParamLocations") && {_iTaskIndex < count TRGM_VAR_iMissionParamLocations}) then {
         private _manualLocation = (TRGM_VAR_iMissionParamLocations select _iTaskIndex);
         if (!((_manualLocation select 0) isEqualTo 0) && !((_manualLocation select 1) isEqualTo 0)) then {
@@ -413,12 +392,12 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     ["Mission Setup: Locations found", true] call TRGM_GLOBAL_fnc_log;
 
     ["Mission Setup: 10", true] call TRGM_GLOBAL_fnc_log;
-    _attempts = 0;
+    private _attempts = 0;
     while {!_bInfor1Found} do {
         _attempts = _attempts + 1;
         ["Mission Setup: 9", true] call TRGM_GLOBAL_fnc_log;
-        _markerInformant1 = nil;
-        _randLocation = nil;
+        private _markerInformant1 = nil;
+        private _randLocation = nil;
 
         if (!_SamePrevAO || {_bUserDefinedAO || {_attempts > 100}}) then {
             _randLocation = if (!(isNil "TRGM_VAR_allLocationPositions") && {count TRGM_VAR_allLocationPositions > 0 && {_attempts < 10}}) then {selectRandom TRGM_VAR_allLocationPositions} else {[0 + (floor random 25000), 0 + (floor random 25000)]};
@@ -433,23 +412,23 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             _buildings = nearestObjects [[_randInfor1X,_randInfor1Y], TRGM_VAR_BasicBuildings, 100*_attempts] select {!((_x buildingPos -1) isEqualTo [])};
         };
 
-        _isPosFarEnoughFromHq = (getMarkerPos "mrkHQ" distance [_randInfor1X, _randInfor1Y]) > TRGM_VAR_SideMissionMinDistFromBase;
-        _playerSelectedAo = call TRGM_GETTER_fnc_bManualAOPlacement;
+        private _isPosFarEnoughFromHq = (getMarkerPos "mrkHQ" distance [_randInfor1X, _randInfor1Y]) > TRGM_VAR_SideMissionMinDistFromBase;
+        private _playerSelectedAo = call TRGM_GETTER_fnc_bManualAOPlacement;
 
         if ((_isPosFarEnoughFromHq || _playerSelectedAo) && {(count _buildings) > 0}) then {
             ["Mission Setup: Task location found", true] call TRGM_GLOBAL_fnc_log;
             _bInfor1Found = true;
-            _infBuilding = selectRandom _buildings;
+            private _infBuilding = selectRandom _buildings;
             _infBuilding setDamage 0;
-            _allBuildingPos = _infBuilding buildingPos -1;
-            _inf1X = position _infBuilding select 0;
-            _inf1Y = position _infBuilding select 1;
+            private _allBuildingPos = _infBuilding buildingPos -1;
+            private _inf1X = position _infBuilding select 0;
+            private _inf1Y = position _infBuilding select 1;
             if !(isNil "_randLocation") then {
                 _usedLocations pushBack _randLocation;
             };
 
             if (count _allBuildingPos > 2) then {
-                _TasksToValidate = [_iThisTaskType];
+                private _TasksToValidate = [_iThisTaskType];
                 if (count _SamePrevAOStats > TRGM_VAR_InfTaskCount) then {
                     if (_SamePrevAOStats select (TRGM_VAR_InfTaskCount + 1)) then {
                         _TasksToValidate = _TasksToValidate + [_ThisTaskTypes select (TRGM_VAR_InfTaskCount + 1)];
@@ -461,10 +440,10 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                     };
                 };
 
-                _nearestRoads = nil;
+                private _nearestRoads = nil;
                 {
                     if (_x isEqualTo 99999 || _bNewTaskSetup) then {
-                        _bCustomRequiredPass = true;
+                        private _bCustomRequiredPass = true;
                         if (_bNewTaskSetup) then {
                             _bCustomRequiredPass = [_infBuilding,_inf1X,_inf1Y] call MISSION_fnc_CustomRequired;
                         };
@@ -483,19 +462,19 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
 
                 if (_bInfor1Found) then {
-                    TRGM_VAR_ObjectivePossitions pushBack [_inf1X,_inf1Y];
-                    publicVariable "TRGM_VAR_ObjectivePossitions";
+                    TRGM_VAR_ObjectivePositions pushBack [_inf1X,_inf1Y];
+                    publicVariable "TRGM_VAR_ObjectivePositions";
                     if (_MarkerType isEqualTo "empty") then {
                         TRGM_VAR_HiddenPossitions pushBack [_inf1X,_inf1Y];
                         publicVariable "TRGM_VAR_HiddenPossitions";
                     };
-                    _sTaskDescription = "";
+                    private _sTaskDescription = "";
                     if (TRGM_VAR_ISUNSUNG) then {
                         if (_iThisTaskType isEqualTo 6) then {
-                            _radio = selectRandom ["uns_radio2_transitor_NVA","uns_radio2_transitor_NVA"] createVehicle (selectRandom (_infBuilding buildingPos -1));
+                            private _radio = selectRandom ["uns_radio2_transitor_NVA","uns_radio2_transitor_NVA"] createVehicle (selectRandom (_infBuilding buildingPos -1));
                         }
                         else {
-                            _radio = selectRandom ["uns_radio2_nva_radio","uns_radio2_transitor_NVA","uns_radio2_transitor_NVA"] createVehicle (selectRandom (_infBuilding buildingPos -1));
+                            private _radio = selectRandom ["uns_radio2_nva_radio","uns_radio2_transitor_NVA","uns_radio2_transitor_NVA"] createVehicle (selectRandom (_infBuilding buildingPos -1));
                         };
 
                     };
@@ -515,7 +494,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                     TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["\n_iTaskIndex: %1",_iTaskIndex];
                     TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["\n_MissionTitle: %1",_MissionTitle];
 
-                    _mrkPrefix = "";
+                    private _mrkPrefix = "";
                     if (_bIsMainObjective) then {
                         _markerInformant1 = createMarker [format["mrkMainObjective%1",_iTaskIndex], [_inf1X,_inf1Y]];
                         _mrkPrefix = "mrkMainObjective";
@@ -527,7 +506,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
                     _markerInformant1 setMarkerShape "ICON";
 
-                    _hideAoMarker = _MarkerType isEqualTo "empty";
+                    private _hideAoMarker = _MarkerType isEqualTo "empty";
                     if (!isNil "TRGM_VAR_HideAoMarker") then {
                         _hideAoMarker = TRGM_VAR_HideAoMarker;
                     };
@@ -538,10 +517,10 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                         _markerInformant1 setMarkerType _MarkerType;
                     };
 
-                    _bIsSameMrkPos = false;
+                    private _bIsSameMrkPos = false;
                     if (_iTaskIndex > 0) then {
-                        _sPrevMrkName = format["%1%2",_mrkPrefix,_iTaskIndex-1];
-                        _sCurrMrkName = format["%1%2",_mrkPrefix,_iTaskIndex];
+                        private _sPrevMrkName = format["%1%2",_mrkPrefix,_iTaskIndex-1];
+                        private _sCurrMrkName = format["%1%2",_mrkPrefix,_iTaskIndex];
                         if (str(getMarkerPos _sCurrMrkName) isEqualTo str(getMarkerPos _sPrevMrkName)) then {
                             _bIsSameMrkPos = true;
                             _sPrevMrkName setMarkerText format["%1 / %2",MarkerText _sPrevMrkName,_MissionTitle];
@@ -622,11 +601,11 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
 ["Mission Setup: 7", true] call TRGM_GLOBAL_fnc_log;
 
-_trgComplete = createTrigger ["EmptyDetector", [0,0]];
+private _trgComplete = createTrigger ["EmptyDetector", [0,0]];
 _trgComplete setVariable ["DelMeOnNewCampaignDay",true];
 _trgComplete setTriggerArea [0, 0, 0, false];
 if (TRGM_VAR_iMissionIsCampaign) then {
-    _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+    private _totalRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
 
     if (_totalRep >= 10 && TRGM_VAR_FinalMissionStarted) then {
         _trgComplete setTriggerStatements ["TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted;", "[TRGM_VAR_FriendlySide, [""DeBrief"", localize ""STR_TRGM2_mainInit_Debrief"", ""Debrief"", """"]] call FHQ_fnc_ttAddTasks;  [""CAMPAIGN_END""] remoteExec [""TRGM_SERVER_fnc_setMissionBoardOptions"",0,true];}; deletevehicle thisTrigger", ""];

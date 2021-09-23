@@ -3,8 +3,8 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 (_badCiv getVariable "armament") params ["_gun","_magazine","_amount"];
 
-_bFired = false;
-_bActivated = false;
+private _bFired = false;
+private _bActivated = false;
 
 // continiously watch for players and decide to engage or not
 while {alive _badCiv && !_bFired} do {
@@ -15,14 +15,14 @@ while {alive _badCiv && !_bFired} do {
 
                 if (!_bActivated) then {
                     _bActivated = true;
-                    _grpName = createGroup TRGM_VAR_EnemySide;
+                    private _grpName = createGroup TRGM_VAR_EnemySide;
                     [_badCiv] joinSilent _grpName;
 
                     [_badCiv] call TRGM_SERVER_fnc_badCivApplyAssingnedArmament;
 
                     _badCiv allowFleeing 0;
                 };
-                _cansee = [objNull, "VIEW"] checkVisibility [eyePos _badCiv, eyePos _x];
+                private _cansee = [objNull, "VIEW"] checkVisibility [eyePos _badCiv, eyePos _x];
                 if (_cansee > 0.2) then {
                     _badCiv doTarget _x;
                     _badCiv commandFire _x; //LOCAL - ?

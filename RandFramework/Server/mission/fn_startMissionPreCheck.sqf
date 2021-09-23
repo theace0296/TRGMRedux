@@ -1,12 +1,14 @@
-_isFinal = _this select 0;
+params ["_isFinal"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_bAllow = true;
+if (isNil "_isFinal") exitWith {};
+
+private _bAllow = true;
 
 if (isMultiplayer) then {
 
-    _bSLAlive = false;
-    _bK1_1Alive = false;
+    private _bSLAlive = false;
+    private _bK1_1Alive = false;
     if (!isnil "sl") then { //sl is leader of K1 - k2_1 is leader of K2
         _bSLAlive = alive sl;
     };
@@ -43,7 +45,7 @@ if (_bAllow) then {
     "transportChopper" setMarkerPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
     chopper1 engineOn false;
     chopper2 engineOn false;
-    _escortPilot = driver chopper2;
+    private _escortPilot = driver chopper2;
     {
         deleteWaypoint _x
     } foreach waypoints group _escortPilot;

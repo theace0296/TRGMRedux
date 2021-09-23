@@ -260,7 +260,7 @@ if (isNil "TRGM_VAR_MaxBadPoints")                            then {TRGM_VAR_Max
 if (isNil "TRGM_VAR_MissionLoaded")                           then {TRGM_VAR_MissionLoaded = false;                                   publicVariable "TRGM_VAR_MissionLoaded";};
 if (isNil "TRGM_VAR_MissionParamsSet")                        then {TRGM_VAR_MissionParamsSet = false;                                publicVariable "TRGM_VAR_MissionParamsSet";};
 if (isNil "TRGM_VAR_NewMissionMusic")                            then {TRGM_VAR_NewMissionMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic; publicVariable "TRGM_VAR_NewMissionMusic";};
-if (isNil "TRGM_VAR_ObjectivePossitions")                     then {TRGM_VAR_ObjectivePossitions = [];                                publicVariable "TRGM_VAR_ObjectivePossitions";};
+if (isNil "TRGM_VAR_ObjectivePositions")                     then {TRGM_VAR_ObjectivePositions = [];                                publicVariable "TRGM_VAR_ObjectivePositions";};
 if (isNil "TRGM_VAR_OccupiedHousesPos")                        then {TRGM_VAR_OccupiedHousesPos =   [];                               publicVariable "TRGM_VAR_OccupiedHousesPos"; };
 if (isNil "TRGM_VAR_ParaDropped")                             then {TRGM_VAR_ParaDropped = false;                                     publicVariable "TRGM_VAR_ParaDropped";};
 if (isNil "TRGM_VAR_PatrolType")                               then {TRGM_VAR_PatrolType =   0;                                       publicVariable "TRGM_VAR_PatrolType";};

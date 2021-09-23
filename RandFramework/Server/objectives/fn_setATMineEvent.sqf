@@ -1,7 +1,7 @@
 params ["_posOfAO", ["_isFullMap", false]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_currentATFieldPos = [_posOfAO, 1000, 1700, 100, 0, 0.4, 0, TRGM_VAR_AreasBlacklist, [[0, 0, 0], [0, 0, 0]]] call TRGM_GLOBAL_fnc_findSafePos;
+private _currentATFieldPos = [_posOfAO, 1000, 1700, 100, 0, 0.4, 0, TRGM_VAR_AreasBlacklist, [[0, 0, 0], [0, 0, 0]]] call TRGM_GLOBAL_fnc_findSafePos;
 
 if (!(isnil "Istraining") || _isFullMap) then {
     _currentATFieldPos = [_posOfAO, 30000, 1700, 100, 0, 0.4, 0, TRGM_VAR_AreasBlacklist, [[0, 0, 0], [0, 0, 0]]] call TRGM_GLOBAL_fnc_findSafePos;
@@ -10,16 +10,16 @@ if (!(isnil "Istraining") || _isFullMap) then {
 if (_currentATFieldPos select 0 != 0) then {
     TRGM_VAR_ATFieldPos pushBack _currentATFieldPos;
 
-    _minesPlaced = false;
-    _icountmines = 0;
+    private _minesPlaced = false;
+    private _icountmines = 0;
     while {!_minesPlaced} do {
-        _xPos = (_currentATFieldPos select 0)-100;
-        _yPos = (_currentATFieldPos select 1)-100;
-        _randomPos = [_xPos+(random 200), _yPos+(random 200), 0];
+        private _xPos = (_currentATFieldPos select 0)-100;
+        private _yPos = (_currentATFieldPos select 1)-100;
+        private _randomPos = [_xPos+(random 200), _yPos+(random 200), 0];
         // APERSmine ATmine
-        _objmine = createmine [selectRandom["ATmine"], _randomPos, [], 0];
+        private _objmine = createmine [selectRandom["ATmine"], _randomPos, [], 0];
         if ("TEST" isEqualto "false") then {
-            _markerstrcache = createMarker [format ["CacheLoc%1", _icountmines], _randomPos];
+            private _markerstrcache = createMarker [format ["CacheLoc%1", _icountmines], _randomPos];
             _markerstrcache setMarkerShape "ICON";
             _markerstrcache setMarkertype "hd_dot";
             _markerstrcache setMarkertext "";
@@ -36,7 +36,7 @@ if (_currentATFieldPos select 0 != 0) then {
 
     if (random 1 < .20) then {
         // if (true) then {
-            _mainVeh = createvehicle [selectRandom (call FriendlyScoutvehicles), _currentATFieldPos, [], 0, "NONE"];
+            private _mainVeh = createvehicle [selectRandom (call FriendlyScoutvehicles), _currentATFieldPos, [], 0, "NONE"];
             _mainVeh setDir (floor random 360);
             clearitemCargoGlobal _mainVeh;
             if (random 1 < .50) then {
@@ -55,12 +55,12 @@ if (_currentATFieldPos select 0 != 0) then {
                 _mainVeh setHit ["wheel_1_1_steering", 1];
             };
 
-            _pos1 = _mainVeh getPos [5, (floor random 360)];
-            _pos2 = _mainVeh getPos [5, (floor random 360)];
-            _group = creategroup TRGM_VAR_Friendlyside;
-            _sUnittype = selectRandom (call FriendlyCheckpointunits);
+            private _pos1 = _mainVeh getPos [5, (floor random 360)];
+            private _pos2 = _mainVeh getPos [5, (floor random 360)];
+            private _group = creategroup TRGM_VAR_Friendlyside;
+            private _sUnittype = selectRandom (call FriendlyCheckpointunits);
 
-            _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
+            private _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             if (isnil "_guardUnit1" || {
                 isNull _guardUnit1
             }) then {
@@ -76,7 +76,7 @@ if (_currentATFieldPos select 0 != 0) then {
             _guardUnit1 setDir (floor random 360);
             [_guardUnit1, "WATCH", "ASIS"] call BIS_fnc_ambientAnimCombat;
 
-            _guardUnit2 = [_group, _sUnittype, _pos2, [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
+            private _guardUnit2 = [_group, _sUnittype, _pos2, [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             if (isnil "_guardUnit2" || {
                 isNull _guardUnit2
             }) then {
@@ -93,7 +93,7 @@ if (_currentATFieldPos select 0 != 0) then {
             [_guardUnit2, "WATCH", "ASIS"] call BIS_fnc_ambientAnimCombat;
 
             [_guardUnit1, ["Ask if needs assistance", {
-                _guardUnit1 = _this select 0;
+                private _guardUnit1 = _this select 0;
                 if (alive _guardUnit1) then {
                     ["We are stranded in the middle of an AT mine area. please help move this car ovrt 100 meters in any direction from here!"] call TRGM_GLOBAL_fnc_notify;
                 } else {
@@ -102,17 +102,17 @@ if (_currentATFieldPos select 0 != 0) then {
             }, [_guardUnit1]]] remoteExec ["addAction", 0, true];
 
             [_mainVeh, _guardUnit1, _group] spawn {
-                _mainVeh = _this select 0;
-                _guardUnit1 = _this select 1;
-                _group = _this select 2;
-                _bWaiting = true;
-                _bWavedone = false;
+                private _mainVeh = _this select 0;
+                private _guardUnit1 = _this select 1;
+                private _group = _this select 2;
+                private _bWaiting = true;
+                private _bWavedone = false;
                 while {_bWaiting} do {
                     if (!(alive _mainVeh)) then {
                         _bWaiting = false;
                     } else {
                         if (!_bWavedone) then {
-                            _nearunits = nearestobjects [(getPos _guardUnit1), ["Man", "Car", "Helicopter"], 100];
+                            private _nearunits = nearestobjects [(getPos _guardUnit1), ["Man", "Car", "Helicopter"], 100];
                             // (driver ((nearestobjects [(getPos box1), ["car"], 20]) select 0)) in switchableunits
                             {
                                 if ((driver _x) in switchableunits || (driver _x) in playableunits) then {
@@ -120,8 +120,8 @@ if (_currentATFieldPos select 0 != 0) then {
 
                                     // [] spawn {};
                                     [[_guardUnit1, _group], {
-                                        _guardUnit1 = _this select 0;
-                                        _group = _this select 1;
+                                        private _guardUnit1 = _this select 0;
+                                        private _group = _this select 1;
                                         _guardUnit1 enableAI "anim";
                                         _guardUnit1 switchMove "";
                                         _guardUnit1 setBehaviour "CARELESS";
@@ -130,8 +130,8 @@ if (_currentATFieldPos select 0 != 0) then {
                                     }] remoteExec ["spawn", 0];
                                     sleep 0.5;
                                     if (alive _guardUnit1) then {
-                                        _dirtoplayer = ([_guardUnit1, _x] call BIS_fnc_Dirto);
-                                        _movetoPos = _guardUnit1 getPos [6, _dirtoplayer];
+                                        private _dirtoplayer = ([_guardUnit1, _x] call BIS_fnc_Dirto);
+                                        private _movetoPos = _guardUnit1 getPos [6, _dirtoplayer];
                                         _guardUnit1 domove _movetoPos;
                                         sleep 3;
                                         _guardUnit1 setDir _dirtoplayer;
@@ -140,7 +140,7 @@ if (_currentATFieldPos select 0 != 0) then {
                                         [_guardUnit1, "Acts_JetsShooterNavigate_loop"] remoteExec ["switchMove", 0];
                                         _guardUnit1 disableAI "anim";
                                         [_guardUnit1] spawn {
-                                            _guardUnit1 = _this select 0;
+                                            private _guardUnit1 = _this select 0;
                                             waitUntil {
                                                 sleep 2;
                                                 !alive(_guardUnit1)

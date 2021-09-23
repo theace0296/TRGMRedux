@@ -1,10 +1,10 @@
-
-_option = _this select 0;
+params ["_option"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (isNil "_option") exitWith {};
 
 //all players will have this run, need to make sure only show for commander
-_dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
+private _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
 
 {
     // Current missionboard is saved in variable _x

@@ -2,15 +2,14 @@
 
 params["_thisCiv"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-_bFired = false;
+private _bFired = false;
 
 while {alive _thisCiv && !_bFired} do {
-    _nearestunits = nearestObjects [([_thisCiv] call TRGM_GLOBAL_fnc_getRealPos),["Man"],10];
-
+    private _nearestunits = nearestObjects [([_thisCiv] call TRGM_GLOBAL_fnc_getRealPos),["Man"],10];
     {
         if ((_x in playableunits)) then {
             if (random 1 < .33) then {
-                _grpName = createGroup TRGM_VAR_EnemySide;
+                private _grpName = createGroup TRGM_VAR_EnemySide;
                 [_thisCiv] joinSilent _grpName;
 
                 _thisCiv dotarget _x;

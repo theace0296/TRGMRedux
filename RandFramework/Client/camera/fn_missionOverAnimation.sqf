@@ -22,7 +22,7 @@ while {!_bEnd} do {
             if (alive(_currentPlayer) && _currentPlayer distance _x < 2000) then {
                 _bAnyPlayersInAOAndAlive = true;
             };
-        } forEach TRGM_VAR_ObjectivePossitions;
+        } forEach TRGM_VAR_ObjectivePositions;
     } forEach _justPlayers;
     if (_bMissionEnded && !_bAnyPlayersInAOAndAlive) then {_bMissionEndedAndPlayersOutOfAO = true};
     if (_bMissionEndedAndPlayersOutOfAO) then {

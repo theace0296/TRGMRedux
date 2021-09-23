@@ -1,10 +1,10 @@
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_bAllow = true;
+private _bAllow = true;
 if (isMultiplayer) then {
-    _bSLAlive = false;
-    _bK1_1Alive = false;
+    private _bSLAlive = false;
+    private _bK1_1Alive = false;
     if (!isnil "sl") then {
         _bSLAlive = alive sl;
     };
@@ -29,8 +29,8 @@ if (isMultiplayer) then {
 
 
 if (_bAllow) then {
-    _mrkHQPos = getMarkerPos "mrkHQ";
-    _AOCampPos = [endMissionBoard2] call TRGM_GLOBAL_fnc_getRealPos;
+    private _mrkHQPos = getMarkerPos "mrkHQ";
+    private _AOCampPos = [endMissionBoard2] call TRGM_GLOBAL_fnc_getRealPos;
     bAllAtBase2 = ({(alive _x)&&((_x distance _mrkHQPos < 500)||(_x distance _AOCampPos < 500))} count (call BIS_fnc_listPlayers)) isEqualTo ({ (alive _x) } count (call BIS_fnc_listPlayers));
 
     if (TRGM_VAR_SaveType != 0) then {

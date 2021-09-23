@@ -1,7 +1,7 @@
 params ["_killed","_killer"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_aceSource = _killed getVariable ["ace_medical_lastDamageSource", objNull];
+private _aceSource = _killed getVariable ["ace_medical_lastDamageSource", objNull];
 if (!(_aceSource isEqualTo objNull)) then {
     _killer = _aceSource;
 };

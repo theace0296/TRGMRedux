@@ -45,12 +45,12 @@ _possibleArmaments = [
 ];
 
 
-_wheights = [];
+private _wheights = [];
 {
     _wheights pushBack (_x select 0)
 } forEach _possibleArmaments;
 
-_armament = (_possibleArmaments selectRandomWeighted _wheights) select 1;
+private _armament = (_possibleArmaments selectRandomWeighted _wheights) select 1;
 _thisCiv setVariable ["armament",_armament , true];
 // to retrieve the armament use: (_civ getVariable "armament") params ["_gun","_magazine","_amount"];
 

@@ -26,23 +26,23 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 if (isNil "_condition" || isNil "_centerPos") exitWith {};
 
-_groupsAlerted = [];
-
-if (_condition isEqualType {}) then {
-    _condition = call _condition;
+private _groupsAlerted = [];
+private _conditionBool = _condition;
+if (_conditionBool isEqualType {}) then {
+    _conditionBool = call _condition;
 };
 
-if (_condition) then {
+if (_conditionBool) then {
     {
-        _group = _x;
+        private _group = _x;
         while {(count (waypoints _group)) > 0} do {
             deleteWaypoint ((waypoints _group) select 0);
         };
         if (!(_group in _groupsAlerted) && {(side _group isEqualTo TRGM_VAR_EnemySide || side _group isEqualTo TRGM_VAR_InsSide)}) then {
-            _groupLeader = leader _group;
+            private _groupLeader = leader _group;
             if (!((vehicle _groupLeader) isKindOf "Air") && {([_groupLeader] call TRGM_GLOBAL_fnc_getRealPos) distance _centerPos < _radius}) then {
                 {
-                    _unit = _x;
+                    private _unit = _x;
                     _unit enableAI "ALL";
                     _unit setCombatMode "RED";
                     _unit setBehaviour "AWARE";

@@ -5,7 +5,7 @@ _unit = unit. Refer to Unit as _unit.
 
 _unit =(_this select 0);
 
-_mainAOPos = TRGM_VAR_ObjectivePossitions select 0;
+_mainAOPos = TRGM_VAR_ObjectivePositions select 0;
 _distanceFromAO = "FAR"; //4000+=FAR; 1500-3999=MED, 500-1499=CLOSE; 0-499=VERYCLOSE
 _AODirection = [_unit, _mainAOPos] call BIS_fnc_DirTo;
 _AODistance = _unit distance _mainAOPos;
@@ -60,7 +60,7 @@ else {
         _distanceFromAO = (_this select 3) select 0;
         _AODirection = (_this select 3) select 1;
 
-        _locationText = [TRGM_VAR_ObjectivePossitions select 0] call TRGM_GLOBAL_fnc_getLocationName;
+        _locationText = [TRGM_VAR_ObjectivePositions select 0] call TRGM_GLOBAL_fnc_getLocationName;
         _locationDirection = format [localize "STR_TRGM2_location_fngetLocationName_DirOfName",[_AODirection,true] call TRGM_GLOBAL_fnc_directionToText," Here"];
 
         _potentialIntel = format["%1: I dont have anything of interest to tell you", name _thisUnit];

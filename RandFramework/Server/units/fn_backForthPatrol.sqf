@@ -1,37 +1,23 @@
 params ["_sidePos","_distFromCent", "_unitCounts","_IncludTeamLeader",["_InsurgentSide", EAST]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-_unitCount = selectRandom _unitCounts;
-_group = Nil;
-_wayX = Nil;
-_wayY = Nil;
+private _unitCount = selectRandom _unitCounts;
+private _group = createGroup _InsurgentSide;
+private _wayX = (_sidePos select 0);
+private _wayY = (_sidePos select 1);
 
-_wp1Pos = Nil;
-_wp1bPos = Nil;
-_wp2Pos = Nil;
-_wp2bPos = Nil;
-_wp3Pos = Nil;
-_wp3bPos = Nil;
-_wp4Pos = Nil;
-_wp4bPos = Nil;
-_wp5Pos = Nil;
-
-_group = createGroup _InsurgentSide;
-_wayX = (_sidePos select 0);
-_wayY = (_sidePos select 1);
-
-_wp1Pos = [ _wayX + _distFromCent, _wayY, 0];
-_wp1bPos = [ _wayX, _wayY, 0];
-_wp2Pos = [ _wayX, _wayY - _distFromCent, 0];
-_wp2bPos = [ _wayX, _wayY, 0];
-_wp3Pos = [ _wayX - _distFromCent, _wayY, 0];
-_wp3bPos = [ _wayX, _wayY, 0];
-_wp4Pos = [ _wayX - _distFromCent, _wayY + _distFromCent, 0];
-_wp4bPos = [ _wayX, _wayY, 0];
-_wp5Pos = [ _wayX + _distFromCent, _wayY + _distFromCent, 0];
+private _wp1Pos = [ _wayX + _distFromCent, _wayY, 0];
+private _wp1bPos = [ _wayX, _wayY, 0];
+private _wp2Pos = [ _wayX, _wayY - _distFromCent, 0];
+private _wp2bPos = [ _wayX, _wayY, 0];
+private _wp3Pos = [ _wayX - _distFromCent, _wayY, 0];
+private _wp3bPos = [ _wayX, _wayY, 0];
+private _wp4Pos = [ _wayX - _distFromCent, _wayY + _distFromCent, 0];
+private _wp4bPos = [ _wayX, _wayY, 0];
+private _wp5Pos = [ _wayX + _distFromCent, _wayY + _distFromCent, 0];
 
 //Adjust waypoints so they are not in water
-_iToReduce = 10;
+private _iToReduce = 10;
 while {surfaceIsWater _wp1Pos} do {
     _wp1Pos = [ _wayX + (_distFromCent - _iToReduce), _wayY + (_distFromCent - _iToReduce), 0];
     _wp5Pos = [ _wayX + (_distFromCent - _iToReduce), _wayY + (_distFromCent - _iToReduce), 0];
@@ -83,9 +69,9 @@ while {_iCount <= _unitCount} do
 };
 
 //add the waypoints (will start at a random one so it doesnt always start at the same pos (mainly for if we have more than one patrol), and cycle through them all)
-_iWaypointCount = selectRandom[1,2,3,4,5,6,7,8,9];
-_bWaypointsAdded = false;
-_iWaypointLoopCount = 1;
+private _iWaypointCount = selectRandom[1,2,3,4,5,6,7,8,9];
+private _bWaypointsAdded = false;
+private _iWaypointLoopCount = 1;
 while {!_bWaypointsAdded} do {
     if (_iWaypointCount isEqualTo 1) then {
         _wp1 = _group addWaypoint [_wp1Pos, 0];
