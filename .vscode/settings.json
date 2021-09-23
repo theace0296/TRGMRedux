@@ -1,6 +1,6 @@
 {
     "sqflint.descriptionFiles": [
-        "functions.hpp",
+        "cfgFunctions.hpp",
         "dialogs.hpp",
         "defines.hpp",
         "cfgDebriefing.hpp",

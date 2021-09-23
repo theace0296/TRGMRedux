@@ -37,8 +37,8 @@ class Header
 #include "RandFramework\GUI\dialogs.hpp"
 
 class CfgFunctions {
-    #include "fhqtt\functions.hpp"
-    #include "RandFramework\functions.hpp"
+    #include "fhqtt\cfgFunctions.hpp"
+    #include "RandFramework\cfgFunctions.hpp"
     class CUSTOM_MISSION {
         class mission {
             class SetDefaultMissionSetupVars {
