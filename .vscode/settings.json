@@ -21,6 +21,7 @@
     "sqflint.ignoredVariables": [
         "_fnc_scriptName",
         "_fnc_scriptNameParent",
+        "createProfileScope",
     ],
     "sqflint.checkPaths": true,
     "sqflint.contextSeparation": true,
