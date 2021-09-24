@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_populateLoadingWait";
 
 if (isNil "TRGM_VAR_PopulateLoadingWait_percentage") then { TRGM_VAR_PopulateLoadingWait_percentage = 0; publicVariable "TRGM_VAR_PopulateLoadingWait_percentage"; };
 

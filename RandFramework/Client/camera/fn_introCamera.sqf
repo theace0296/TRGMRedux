@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_CLIENT_fnc_introCamera";
 ////INSTANT FADE TO BLACK SCREEN
 cutText ["","BLACK FADED",1];
 

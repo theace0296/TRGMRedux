@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_initGlobalVars";
 /////// Debug Mode ///////
 TRGM_VAR_bDebugMode = [false, true] select ((["DebugMode", 0] call BIS_fnc_getParamValue) isEqualTo 1);
 publicVariable "TRGM_VAR_bDebugMode";

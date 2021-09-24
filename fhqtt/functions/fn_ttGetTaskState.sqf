@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttGetTaskState";
 /* FHQ_fnc_ttGetTaskState
  *
  * Get the state of a given task. This function can be called on the client as well as

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttAddBriefing";
 
 /* FHQ_fnc_ttAddBriefing: Add a full briefing
  *

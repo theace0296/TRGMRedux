@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_handleNotification";
 // Adds a new notification to notification list
 
 params [["_text", ""], ["_duration", 5], ["_priority", 5], ["_notificationIndex", -1], ["_condition", {true}]];

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_timeSliderOnChange";
 /*
  * Author: TheAce0296
  * Sets the value of the time setting slider/edit boxes.

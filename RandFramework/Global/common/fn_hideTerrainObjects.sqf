@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_hideTerrainObjects";
 #define MAP_TYPES_BUILDING      ["BUILDING","HOUSE","CHURCH","CHAPEL","FUELSTATION","HOSPITAL","RUIN","BUNKER"]
 #define MAP_TYPES_VEGETATION    ["TREE","SMALL TREE","BUSH"]
 #define MAP_TYPES_WALL          ["WALL","FENCE"]

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_setParamsAndBegin";
 /*
  * Author: Trendy (Modified by TheAce0296)
  * Applies selected mission settings and sets

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttAreTasksSuccessful";
 /* FHQ_fnc_ttAreTasksSuccessful
  *
  * Check success for all tasks given.  This function can be called on the client as well as

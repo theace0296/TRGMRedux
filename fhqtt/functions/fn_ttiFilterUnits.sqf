@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttifilterUnits";
 /* Internal function */
 
 private ["_unitsArray", "_outputArray"];

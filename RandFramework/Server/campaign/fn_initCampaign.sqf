@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_initCampaign";
 //call script to start campaign if campaign picked
 //show noticboard to player
 //    - Current Reputation Points and report

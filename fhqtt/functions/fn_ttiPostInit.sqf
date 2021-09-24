@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiPostInit";
 /* PostInit function
  * This function walks through all playable/switchable units and assigns tasks and briefings to them
  */

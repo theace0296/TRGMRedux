@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_openDialogAdvancedMissionSettings";
 /*
  * Author: Trendy (Modified by TheAce0296)
  * Opens the advanced mission settings dialog,

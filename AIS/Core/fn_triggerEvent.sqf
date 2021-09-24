@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Core_fnc_triggerEvent";
 /*
     Arma Mission Enhancement - Core\Events\fn_triggerEvent.sqf
     

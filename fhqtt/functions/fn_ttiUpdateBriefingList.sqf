@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiUpdateBriefingList";
 private ["_i", "_idx", "_current", "_record", "_filter", "_units", "_x", "_briefing", "_list", "_existing", "_notify"];
 
 _briefing = _this;

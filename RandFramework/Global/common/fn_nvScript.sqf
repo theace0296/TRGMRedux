@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_nvScript";
 // Night Vision Script Made by BroDouYouEvenBro/Turboswaggg/Tripod27 (I use too many different names) with the help of Killzone Kid (his blog is awesome) and PabstMirror from the ArmaDev subreddit
 
 // Just put this file in the libraries > documents > arma 3/ arma 3 - other profiles > profile you saved the mission on > missions/MPMissions (put it in the folder of every version of your mission you find to be safe)

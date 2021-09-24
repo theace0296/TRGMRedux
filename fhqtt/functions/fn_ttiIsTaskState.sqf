@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiIsTaskState";
 /* Internal Function */
 private _state = toLower _this;
 private _res = false;

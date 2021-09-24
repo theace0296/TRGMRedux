@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "CUSTOM_MISSION_fnc_SetEnemyFaction";
 
 TRGM_VAR_useCustomEnemyFactionVehicles = (["CustomEnemyFactionVehicles", 0] call BIS_fnc_getParamValue) isEqualTo 1;
 publicVariable "TRGM_VAR_useCustomEnemyFactionVehicles";

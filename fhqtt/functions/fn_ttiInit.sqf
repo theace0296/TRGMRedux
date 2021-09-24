@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiInit";
 /* Internal function, called automatically */
 FHQ_TT_subtaskPrefix = " > ";
 FHQ_TTI_supressTaskHints = true;

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_zenOccupyHouse";
 // infantry Occupy House
 // by Zenophon
 // Released under Creative Commons Attribution-NonCommercial 4.0 international (CC BY-NC 4.0)

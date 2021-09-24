@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_flyToLz";
 /*     Script starting here  */
 scopeName "FlyTo";
 

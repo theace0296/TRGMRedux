@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiAddBriefingEntry";
 
 /* Internal: Add a briefing record on the server
  * parameters:

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "MISSIONS_fnc_searchAndDestroyMission";
 //These are only ever called by the server!
 
 //MISSION 15: Search and Destroy

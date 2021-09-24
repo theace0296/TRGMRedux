@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_createConvoy";
 params [
     "_side",
     "_vehicles",

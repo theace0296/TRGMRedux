@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Core_fnc_preInit";
 diag_log format ["############## %1 ############## - AIS init started", missionName];
 
 if (isServer) then {

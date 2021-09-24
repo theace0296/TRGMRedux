@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_openDialogRequests";
 /*
 * Author: TheAce0296
 * Creates the request units/vehicles dialog.

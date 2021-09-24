@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_System_fnc_getOutMan";
 /*
  * Author: Psycho
 

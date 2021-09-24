@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_downloadData";
 /*
 [OBJECT, ["DOWNLOAD DATA", { _this spawn TRGM_GUI_fnc_downloadData; }, ["Downloading data from terminal...", "FUNCTION", true, ["This is an array of arguments for the callback!"]], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
 */

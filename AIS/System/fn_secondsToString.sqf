@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_System_fnc_secondsToString";
 /*
  * Author: Joris-Jan van 't Land (based on work in fn_timeToString)
  * Changed: Psycho (snip out only the needed lines...)

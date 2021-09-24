@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "MISSIONS_fnc_bombDisposalMission";
 //These are only ever called by the server!
 
 //MISSION 14: Bomb Defusal

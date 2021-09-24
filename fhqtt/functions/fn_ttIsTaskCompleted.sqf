@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttIsTaskCompleted";
 /* FHQ_fnc_ttIsTaskCompleted
  * 
  * Check whether a task is canceled, successful or failed. Like all query functions, this can be called

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_quitMission";
 
 //'if mission is successs... then do nothing with it
 //'otherwise fail the mission'

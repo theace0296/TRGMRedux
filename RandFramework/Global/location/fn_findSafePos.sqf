@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_findSafePos";
 /******************************************************
 The purpose of having a wrapper around BIS_fnc_findSafePos
 is to increase the likelihood of a successful safe position.

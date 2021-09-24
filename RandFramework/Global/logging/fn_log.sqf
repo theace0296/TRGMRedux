@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_log";
 params [["_message", ""], ["_systemChat", false]];
 
 if (isNil "TRGM_VAR_bDebugMode") then {TRGM_VAR_bDebugMode = false; publicVariable "TRGM_VAR_bDebugMode";};

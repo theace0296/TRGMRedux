@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_createVehicleCrew";
 params [["_sideOrGroup", WEST, [WEST, grpNull]], ["_vehicle", objNull, [objNull]], ["_disableDynamicShowHide", false, [false]]];
 
 if (isNull _vehicle) exitWith {[]};

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_serverSave";
 //Note: this will always save on the server, if local or single player, will save on client, otherwise, if dedicated, will save on dedicated server, reason, if player who has saved the mission
 // disconnects, we will not be able to save it to the client, so we store that players ID and store it on the server (I think i have disabled this for single player... as they can save/load anyway)
 // future update may allow this to be saved on single player, incase they want to run campaign on mixed maps

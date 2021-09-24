@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiTaskExists";
 private ["_unitTaskList", "_name", "_res", "_current", "_i", "_checkName"];
 _unitTaskList = [_this, 0] call BIS_fnc_param;
 _name = [_this, 1] call BIS_fnc_param;

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_getUnitArraysFromUnitData";
 /*
 Output for Russia (MSV) in format: [[_riflemen], [_leaders], [_atsoldiers], [_aasoldiers], [_engineers], [_grenadiers], [_medics], [_autoriflemen], [_snipers], [_explosiveSpecs]];
 ["rhs_msv_rifleman","rhs_msv_emr_rifleman","rhs_msv_emr_sergeant","rhs_msv_emr_junior_sergeant"],

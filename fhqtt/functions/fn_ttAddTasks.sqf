@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttAddTasks";
 
 /* FHQ_fnc_ttAddTasks: Add tasks to the mission
  *

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttSetTaskStateAndNext";
  /* FHQ_fnc_ttSetTaskStateAndNext
   * 
   * Set the state of a given task to the given state, and select another task from a list of

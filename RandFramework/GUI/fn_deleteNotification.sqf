@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_deleteNotification";
 // Removes a notification from the list of notifications
 
 if (isNull (uiNamespace getVariable ["TRGM_VAR_notifications_disp", displayNull])) exitWith {};

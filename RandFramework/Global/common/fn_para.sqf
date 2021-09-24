@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_para";
 params [["_units", []]];
 
 if (!(_units isEqualType []) && {!(_units isEqualTypeAll objNull)}) exitWith {};

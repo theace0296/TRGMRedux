@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttIsTaskSuccessful";
 /* FHQ_fnc_ttIsTaskSuccessful
  * 
  * Check whether a task is ended successfully. This function can be called on the client as well as

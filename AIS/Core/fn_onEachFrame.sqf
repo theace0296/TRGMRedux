@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Core_fnc_onEachFrame";
 /*
     Arma Mission Enhancement - Core\Events\fn_onEachFrame.sqf
 

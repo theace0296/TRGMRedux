@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_findOverwatchOverride";
 /*
     File: fn_findOverwatch.sqf
     Author: Dean "Rocket" Hall

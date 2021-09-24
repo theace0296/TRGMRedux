@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_codeCompare";
 /*
  * Author: Trendy
  * Takes an input code for the mission bomb and compares

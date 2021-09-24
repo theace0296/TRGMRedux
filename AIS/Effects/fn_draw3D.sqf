@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Effects_fnc_draw3D";
 //if (!isNull (findDisplay 12)) exitWith {};        // Map
 if (isNull (findDisplay 46)) exitWith {};
 if (!isNull (findDisplay 49)) exitWith {};        // Esc Menu

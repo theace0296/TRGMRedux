@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_createNotification";
 // Internal function for creating Notifications
 
 params [["_insertIndex", 0], ["_text", ""], ["_duration", 5], ["_priority", 5], ["_notificationIndex", -1], ["_condition", {true}]];

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Core_fnc_bindEventHandler";
 /*
     Arma Mission Enhancement - Core\Events\fn_bindEventHandler.sqf
 

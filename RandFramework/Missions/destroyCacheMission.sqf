@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "MISSIONS_fnc_destroyCacheMission";
 //These are only ever called by the server!
 
 //MISSION 16: Destroy Cache

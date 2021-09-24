@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiUnitBriefing";
 /* Eden compatible mission briefing 
  * This function is called like 
  * [_unit, _value] call FHQ_fnc_ttiUnitBriefing;

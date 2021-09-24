@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_setVehicleUpright";
 params ["_veh"];
 
 if (isNil "_veh") exitWith {};

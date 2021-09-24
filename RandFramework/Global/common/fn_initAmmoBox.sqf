@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_initAmmoBox";
 /*
  * Author: TheAce0296
  * Adds initial items to inventory, if array of units are

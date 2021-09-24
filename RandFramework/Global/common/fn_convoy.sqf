@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_convoy";
 /* Tova's Simple Comvoy Script */
 
 params [

@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_alertNearbyUnits";
 /*
  * Author: TheAce0296
  * Alerts nearby enemy units to converge onto a positon.

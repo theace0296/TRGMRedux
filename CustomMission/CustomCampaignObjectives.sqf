@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "CUSTOM_MISSION_fnc_CustomCampaignObjectives";
 
 TRGM_VAR_useCustomCampaignObjectives = (["CustomCampaignObjectives", 0] call BIS_fnc_getParamValue) isEqualTo 1;
 publicVariable "TRGM_VAR_useCustomCampaignObjectives";

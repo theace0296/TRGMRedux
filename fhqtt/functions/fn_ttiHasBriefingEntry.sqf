@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiHasBriefingEntry";
 private ["_x", "_res", "_test", "_inArray"];
 _res = false;
 

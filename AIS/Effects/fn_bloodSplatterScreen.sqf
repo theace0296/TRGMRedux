@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Effects_fnc_BloodSplatterScreen";
 /*
  * Author: Vladimir Hynek (BI)
    Changed: Psycho

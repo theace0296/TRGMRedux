@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttTaskHint";
 if (!FHQ_TTI_is_arma3) then
 {
     /* Arma 2 */

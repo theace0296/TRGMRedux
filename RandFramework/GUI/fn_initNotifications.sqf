@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_initNotifications";
 if (isDedicated || !hasInterface) exitWith {};
 disableSerialization;
 

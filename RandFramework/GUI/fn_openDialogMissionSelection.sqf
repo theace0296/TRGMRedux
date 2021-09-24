@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_openDialogMissionSelection";
 /*
  * Author: Trendy (Modified by TheAce0296)
  * Opens the main mission set up dialog.

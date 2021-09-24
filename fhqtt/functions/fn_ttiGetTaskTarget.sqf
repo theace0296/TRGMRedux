@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiGetTaskTarget";
 #define FHQ_TTIF_TASKNAME    0
 #define FHQ_TTIF_TASKDESC    1
 #define FHQ_TTIF_TASKTITLE    2

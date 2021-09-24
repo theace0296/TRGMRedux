@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttiIsFilter";
 /* Internal function */
 private "_x";
 private _filter = _this;

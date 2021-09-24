@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_wireCompare";
 /*
  * Author: Trendy
  * Takes an input wire color for the mission bomb and compares

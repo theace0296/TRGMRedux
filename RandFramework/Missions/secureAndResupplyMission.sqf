@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "MISSIONS_fnc_secureAndResupplyMission";
 //These are only ever called by the server!
 
 //MISSION 17: Secure and resupply area

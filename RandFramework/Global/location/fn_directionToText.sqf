@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_directionToText";
 params [
     ["_direction",-1,[0]],  // direction 0 to 360
     ["_words",false,[false]] // use word style instead of acronyms

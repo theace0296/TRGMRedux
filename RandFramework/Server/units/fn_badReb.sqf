@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_badReb";
 //if some condition is true, we give this guy a gun and change side
 
 params["_thisCiv"];

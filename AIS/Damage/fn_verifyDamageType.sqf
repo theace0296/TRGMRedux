@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Damage_fnc_verifyDamageType";
 params ["_unit", "_hitSelection", "_new_damage", "_source", "_projectile", "_hitPartIndex"];
 private _damageType = "";
 

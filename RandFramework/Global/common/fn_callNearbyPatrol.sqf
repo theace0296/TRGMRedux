@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_callNearbyPatrol";
 params [
     ["_FirstPos", []],
     ["_iTaskIndex", 0],

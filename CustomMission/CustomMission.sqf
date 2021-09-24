@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "CUSTOM_MISSION_fnc_CustomMission";
 //These are only ever called by the server!
 
 //useful variables

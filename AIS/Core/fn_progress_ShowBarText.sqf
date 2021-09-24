@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Core_fnc_progress_ShowBarText";
 // by psycho
 private _title = _this select 0;
 _value = _this select 1;

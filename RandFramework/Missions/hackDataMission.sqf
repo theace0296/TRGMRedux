@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "MISSIONS_fnc_hackDataMission";
 //These are only ever called by the server!
 
 //useful variables

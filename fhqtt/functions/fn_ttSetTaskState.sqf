@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "FHQ_fnc_ttSetTaskState";
 /* FHQ_fnc_ttSetTaskState
  *
  * Set the state of the specified task to the specified state, and alert the player

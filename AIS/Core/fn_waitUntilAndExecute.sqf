@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Core_fnc_waitUntilAndExecute";
 /* ----------------------------------------------------------------------------
 Function: AIS_Core_fnc_waitUntilAndExecute
 

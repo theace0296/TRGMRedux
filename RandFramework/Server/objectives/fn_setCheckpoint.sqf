@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_setCheckpoint";
 params [
     "_thisAOPos",
     "_thisPosAreaOfCheckpoint",

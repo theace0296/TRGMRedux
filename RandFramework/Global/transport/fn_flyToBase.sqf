@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_flyToBase";
 params [
     "_vehicle",
     ["_thisMission", nil,[],2]

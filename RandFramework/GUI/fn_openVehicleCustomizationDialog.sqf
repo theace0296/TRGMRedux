@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GUI_fnc_openVehicleCustomizationDialog";
 /*
  * Author: TheAce0296
  * Revised version the BIS_fnc_garage to work as a

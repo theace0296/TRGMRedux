@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_GLOBAL_fnc_paraDrop";
 params [["_unit", objNull, [objNull]]];
 
 if (isNull _unit) exitWith {};

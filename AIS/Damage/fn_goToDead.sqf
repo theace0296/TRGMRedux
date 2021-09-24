@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "AIS_Damage_fnc_goToDead";
 /*
  * Author: Psycho
 

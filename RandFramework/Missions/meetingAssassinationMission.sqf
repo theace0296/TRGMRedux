@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "MISSIONS_fnc_meetingAssassinationMission";
 //These are only ever called by the server!
 
 MISSION_fnc_CustomRequired = { //used to set any required details for the AO (example, a wide open space or factory nearby)... if this is not found in AO, the engine will scrap the area and loop around again with a different location

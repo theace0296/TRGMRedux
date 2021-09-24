@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars";
 if (TRGM_VAR_OverrideMissionSetup) then {
     TRGM_VAR_ForceMissionSetup = false; // a value of 'true' means the main player will not see an mission setup dialog, and will force the settings you have selected below.
     TRGM_VAR_UseCustomMission = false; // a value of 'true' enables the use of the Custom Mission (value 99999) below.

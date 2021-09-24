@@ -1,3 +1,4 @@
+// private _fnc_scriptName = "TRGM_SERVER_fnc_finalSetupCleaner";
 //loop through TRGM_VAR_friendlySentryCheckpointPos
 //check if any of TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas are near
 //if so, delete any friendly units
