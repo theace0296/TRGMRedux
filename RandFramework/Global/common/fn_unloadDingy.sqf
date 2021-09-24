@@ -1,5 +1,7 @@
 params ["_target", "", "_id", ""];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+if (isClass(configFile >> "CfgPatches" >> "dedmen_arma_script_profiler")) then {private _scope = createProfileScope _fnc_scriptName;};
+
 
 private _dingy = selectRandom TRGM_VAR_FriendlyFastResponseDingy createVehicle [0,0,0];
 private _flatPos = [[_target] call TRGM_GLOBAL_fnc_getRealPos, 5, 10, 5, 2, 0.5, 0,[],[[0,0,0],[0,0,0]], _dingy] call TRGM_GLOBAL_fnc_findSafePos;

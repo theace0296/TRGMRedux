@@ -1,5 +1,7 @@
 params[["_side", WEST]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+if (isClass(configFile >> "CfgPatches" >> "dedmen_arma_script_profiler")) then {private _scope = createProfileScope _fnc_scriptName;};
+
 
 // _factionData = [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
 // Return format: [[faction1_className, faction1_displayName], [faction2_className, faction2_displayName], ... , [factionN_className, factionN_displayName]]

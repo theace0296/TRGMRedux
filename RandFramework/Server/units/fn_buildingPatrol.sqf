@@ -1,5 +1,7 @@
 params ["_sidePos","_distFromCent", "_unitCounts","_IncludTeamLeader",["_InsurgentSide", EAST],["_buildingCount", 8]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+if (isClass(configFile >> "CfgPatches" >> "dedmen_arma_script_profiler")) then {private _scope = createProfileScope _fnc_scriptName;};
+
 
 private _unitCount = selectRandom _unitCounts;
 private _group = createGroup _InsurgentSide;
