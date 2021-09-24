@@ -12,7 +12,7 @@ TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["KILLED: %1", name play
 TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["KILLED Distance: %1", player distance getMarkerPos "MrkHQ"];
 
 if (player distance getMarkerPos "MrkHQ" > TRGM_VAR_SaveZoneRadius) then {
-    waitUntil {!(TRGM_Logic getVariable "DeathRunning")};
+    waitUntil {sleep 5; !(TRGM_Logic getVariable "DeathRunning")};
     TRGM_Logic setVariable ["DeathRunning", true, true];
 
     private _aceSource = player getVariable ["ace_medical_lastDamageSource", objNull];

@@ -133,7 +133,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     [_allTargets, _firstTarget] spawn {
         _allTargets = _this select 0;
         _firstTarget = _this select 1;
-        waitUntil { ({!alive(_x)} count _allTargets) isEqualTo (count _allTargets); };
+        waitUntil { sleep 5; ({!alive(_x)} count _allTargets) isEqualTo (count _allTargets); };
         [_firstTarget] spawn TRGM_SERVER_fnc_updateTask;
     };
 

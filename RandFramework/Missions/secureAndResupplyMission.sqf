@@ -154,7 +154,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             };
         };
         _timeout = 300 + time;
-        waitUntil {_timeout - time >= 0 || TRGM_VAR_OverrideSupplyChopperDelay}; //wait 5 mins before supply drop in area
+        waitUntil {sleep 5; _timeout - time >= 0 || TRGM_VAR_OverrideSupplyChopperDelay}; //wait 5 mins before supply drop in area
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;
 
         private _spawnPos = _flag getRelPos[3000, random 360];
@@ -164,7 +164,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         private _resupplyUnit = ((allPlayers - (entities "HeadlessClient_F")) select {(_x distance _flag) < 150});
         [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
         waitUntil {
-            sleep 2;
+            sleep 5;
             missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue;
         };
 
@@ -192,14 +192,14 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             };
         };
         _timeout = 300 + time;
-        waitUntil {_timeout - time >= 0 || TRGM_VAR_OverrideSupplyChopperDelay}; //wait 5 mins before supply drop in area
+        waitUntil {sleep 5; _timeout - time >= 0 || TRGM_VAR_OverrideSupplyChopperDelay}; //wait 5 mins before supply drop in area
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;
 
 
         _finishedValue = 2;
         [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
         waitUntil {
-            sleep 2;
+            sleep 5;
             missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue;
         };
 

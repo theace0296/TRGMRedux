@@ -13,7 +13,7 @@ if (isServer) then {
     TRGM_VAR_serverFinishedInitGlobal = false; publicVariable "TRGM_VAR_serverFinishedInitGlobal";
     TRGM_VAR_clientsFinishedInitGlobal = []; publicVariable "TRGM_VAR_clientsFinishedInitGlobal";
 } else {
-    waitUntil {TRGM_VAR_serverFinishedInitGlobal;};
+    waitUntil {sleep 5; TRGM_VAR_serverFinishedInitGlobal;};
     if (clientOwner in TRGM_VAR_clientsFinishedInitGlobal) exitWith {};
 };
 
@@ -107,7 +107,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
             };
         } forEach TRGM_VAR_AvailableFactions;
 
-        waitUntil { { scriptDone _x; } count _factionDataHandles isEqualTo count _factionDataHandles; };
+        waitUntil { sleep 5; { scriptDone _x; } count _factionDataHandles isEqualTo count _factionDataHandles; };
 
         TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
         TRGM_VAR_AllFactions = (_WestFactionData + _EastFactionData + _GuerFactionData) apply { _x select 0 };

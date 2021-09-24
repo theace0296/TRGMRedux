@@ -397,6 +397,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
+                sleep 1;
             };
         };
 
@@ -419,6 +420,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
+                sleep 1;
             };
 
             _iCount = 1;
@@ -438,6 +440,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = false;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
+                sleep 1;
             };
         }
         else {
@@ -459,6 +462,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
+                sleep 1;
             };
 
             //spawn inner checkpoints
@@ -480,6 +484,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
+                sleep 1;
             };
 
             //spawn outer but close surrunding checkpoints
@@ -501,6 +506,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),300] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
+                sleep 1;
             };
 
             //spawn outer far checkpoints
@@ -522,6 +528,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
+                sleep 1;
             };
 
             //spawn outer far sentrys
@@ -543,6 +550,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                 }
+                sleep 1;
             };
 
 
@@ -565,6 +573,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisIsDirectionAwayFromAO = false;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
+                sleep 1;
             };
         };
 
@@ -672,6 +681,7 @@ if (!_bFriendlyInsurgents) then {
                 private _thisIsDirectionAwayFromAO = true;
                 [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
             };
+            sleep 1;
         };
         //spawn inner sentry
         _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
@@ -690,6 +700,7 @@ if (!_bFriendlyInsurgents) then {
                 private _thisIsDirectionAwayFromAO = true;
                 [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
             };
+            sleep 1;
         };
     };
 }
@@ -710,6 +721,7 @@ if (_selectRandomW) then {
         private _myDog1 = createAgent ["Fin_random_F", _flatPosInside, [], 50, "NONE"];
         sleep 0.1;
         _myDog1 playMove "Dog_Sit";
+        sleep 1;
     };
 };
 
@@ -721,6 +733,7 @@ if (_selectRandomW) then {
         private _myGoat1 = createAgent ["Goat_random_F", _flatPosInside2, [], 5, "NONE"];
         sleep 0.1;
         _myGoat1 playMove "Goat_Walk";
+        sleep 1;
     };
 };
 
@@ -732,6 +745,7 @@ if (_selectRandomW) then {
         private _myGoat2 = createAgent ["Goat_random_F", _flatPosInside2, [], 5, "NONE"];
         sleep 0.1;
         _myGoat2 playMove "Goat_Stop";
+        sleep 1;
     };
 };
 
@@ -760,6 +774,7 @@ if (_selectRandomW) then {
             _test setMarkerText "IED";
         };
         _iCount = _iCount + 1;
+        sleep 1;
     };
 };
 

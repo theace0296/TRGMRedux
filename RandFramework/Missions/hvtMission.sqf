@@ -172,7 +172,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             while {alive(_objMan) && {behaviour _objMan isEqualTo "SAFE"}} do {
                 [_objManName,_thisInitPos,_objMan,75] spawn TRGM_SERVER_fnc_hvtWalkAround;
                 sleep 2;
-                waitUntil {sleep 1; speed _objMan < 0.5};
+                waitUntil {sleep 5; speed _objMan < 0.5};
                 sleep 10;
             };
         };
@@ -187,7 +187,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         if (!_bIsMainObjective && _hvtType isEqualTo "KILL") then {
             [_objInformant] spawn {
                 _objInformant = _this select 0;
-                waitUntil { !alive(_objInformant) };
+                waitUntil { sleep 5; !alive(_objInformant) };
                 _objInformant spawn TRGM_SERVER_fnc_updateTask;
             };
         };

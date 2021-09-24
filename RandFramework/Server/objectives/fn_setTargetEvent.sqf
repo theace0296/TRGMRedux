@@ -20,6 +20,7 @@ if (!_isCache && count _nearestRoads > 0) then {
         private _farEnoughFromWarzone = true;
         if (!isNil "TRGM_VAR_WarzonePos") then {_farEnoughFromWarzone = (_eventLocationPos distance TRGM_VAR_WarzonePos > 500)};
         if (_isMainTask || (_farEnoughFromWarzone && _farEnoughFromAo)) then {_eventPosFound = true;};
+        sleep 1;
     };
     if (!_eventPosFound) then {
         _eventLocationPos = getPos (selectRandom _nearestRoads);
@@ -45,6 +46,7 @@ if (!_isCache && count _nearestRoads > 0) then {
                 _PosFound = true;
             } else {
                 _iAttemptLimit = _iAttemptLimit - 1;
+                sleep 1;
             };
         };
 
@@ -132,6 +134,7 @@ if (_isCache) then {
         private _farEnoughFromWarzone = true;
         if (!isNil "TRGM_VAR_WarzonePos") then {_farEnoughFromWarzone = (_eventLocationPos distance TRGM_VAR_WarzonePos > 500)};
         if (_isMainTask || (_farEnoughFromWarzone && _farEnoughFromAo)) then {_eventPosFound = true;};
+        sleep 1;
     };
     if (!_eventPosFound) then {
         _infBuilding = selectRandom _buildings;
@@ -207,6 +210,7 @@ if (_isCache) then {
                 _spawnedUnit2 setFormDir _direction2;
             };
             _i = _i + 1;
+            sleep 1;
         };
 
         private _spawnedUnit3 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
@@ -234,6 +238,7 @@ if (!_objectiveCreated) then {
             private _farEnoughFromWarzone = true;
             if (!isNil "TRGM_VAR_WarzonePos") then {_farEnoughFromWarzone = (_flatPosPolice1 distance TRGM_VAR_WarzonePos > 500)};
             if (_isMainTask || _farEnoughFromWarzone) then {_eventPosFound = true;};
+            sleep 1;
         };
         if (!_eventPosFound) then {
             _flatPosPolice1 = [_posOfAO , 500, 1500, 10, 0, 0.5, 0,[],[_posOfAO,_posOfAO]] call TRGM_GLOBAL_fnc_findSafePos;

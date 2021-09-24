@@ -12,7 +12,7 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 if (isClass(configFile >> "CfgPatches" >> "dedmen_arma_script_profiler")) then {private _scope = createProfileScope _fnc_scriptName;};
 
 if (isDedicated) exitWith {};
-if (player != player) then {waitUntil {sleep 2; player isEqualTo player};};
+if (player != player) then {waitUntil {sleep 5; player isEqualTo player};};
 
 // Figures out how zoomed in you are (KillzoneKid is Awesome)
 KK_fnc_getZoom = {
@@ -31,7 +31,7 @@ KK_fnc_getZoom = {
 
     while {true} do {
     waitUntil {
-    sleep 2;
+    sleep 5;
     // Adds Effects When NV Enabled
     ((vehicle player) isEqualTo player) && ((currentVisionMode player) isEqualTo 1)};
 
@@ -65,7 +65,7 @@ KK_fnc_getZoom = {
     2501 ppEffectForceInNVG true;
 
     waitUntil {
-    sleep 2;
+    sleep 5;
     // Scaling effects during Zooming
 
     _zoomintensity = (call kk_fnc_getZoom * 10) /30;
@@ -86,4 +86,6 @@ KK_fnc_getZoom = {
     ppEffectDestroy ppRim;
     ppEffectDestroy ppColor;
     ppEffectDestroy ppFilm;
+
+    sleep 5;
     };

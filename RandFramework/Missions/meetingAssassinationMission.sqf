@@ -123,7 +123,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     [_hvtLzPos, [_guardUnit1] call TRGM_GLOBAL_fnc_getRealPos,_guardUnit1,_mainHVT,_guardUnit3,_hvtGroup,_hvtGuardGroup,_iTaskIndex] spawn { //spawn script so we can have timer that will action our mission movements without pausing the main initialisation process
         params ["_hvtLzPos", "_meetingPos", "_guardUnit1", "_mainHVT", "_guardUnit3", "_hvtGroup", "_hvtGuardGroup", "_iTaskIndex"];
 
-        waitUntil {sleep 2; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_PlayersHaveLeftStartingArea};
+        waitUntil {sleep 5; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_PlayersHaveLeftStartingArea};
 
         waitUntil { sleep 10; _playersInAO = false; { if (_meetingPos distance _x < 2000) exitWith { _playersInAO = true; }; } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits}); _playersInAO; };
 
@@ -177,6 +177,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         while {_unitsAreInChopper} do {
             if (vehicle _mainHVT != _mainHVT && vehicle _guardUnit3 != _guardUnit3) then {
                 _unitsAreInChopper = true;
+                sleep 10;
             }
             else {
                 _mainHVT assignAsDriver _hvtChopper;
@@ -200,7 +201,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _mrkMeetingHVTMarker = _this select 1;
             while {alive _hvtChopper} do {
                 _mrkMeetingHVTMarker setMarkerPos ([_hvtChopper] call TRGM_GLOBAL_fnc_getRealPos);
-                sleep 1;
+                sleep 5;
             };
         };
 
@@ -232,7 +233,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                _meetingPos = _this select 1;
                _moveToPos = (_meetingPos) getPos [3,selectRandom[1, 95, 180, 270]];
                _hvtGuardGroup = group _guardUnit3;
-               waitUntil {sleep 2; !alive(_guardUnit3) || isTouchingGround (vehicle _guardUnit3)};
+               waitUntil {sleep 5; !alive(_guardUnit3) || isTouchingGround (vehicle _guardUnit3)};
                _guardUnit3 enableAI "MOVE"; //for some reason, sometimes this guy will just stay in the water???
              _guardUnit3 enableAI "FSM";
                unassignVehicle _guardUnit3;
@@ -241,7 +242,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                [_hvtGuardGroup, 1] setWaypointSpeed "LIMITED";
            };
 
-        waitUntil {sleep 1; (currentWaypoint group _mainHVT) >= 6 };
+        waitUntil {sleep 5; (currentWaypoint group _mainHVT) >= 6 };
         //sleep 5;
           _hvtGroup setSpeedMode "LIMITED";
           _hvtGroup setBehaviour "CARELESS";
@@ -285,8 +286,8 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         };
         //["waypoint wait ended"] call TRGM_GLOBAL_fnc_notify;
 
-       //waitUntil {sleep 1; (currentWaypoint group _mainHVT) isEqualTo 9 };
-       //waitUntil {sleep 1; speed _objMan isEqualTo 0};
+       //waitUntil {sleep 5; (currentWaypoint group _mainHVT) isEqualTo 9 };
+       //waitUntil {sleep 5; speed _objMan isEqualTo 0};
 
         _hvtGroup setBehaviour "SAFE";
         _hvtGuardGroup setBehaviour "SAFE";
@@ -367,7 +368,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [_hvtGroup, 1] setWaypointType "GETIN";
         _wpHvtLeaveMeet2 = _hvtGroup addWaypoint [[0,0,100], 0];
         _hvtGroup setBehaviour "CARELESS";
-        waitUntil {sleep 2; !isTouchingGround _hvtChopper};
+        waitUntil {sleep 5; !isTouchingGround _hvtChopper};
 
         sleep 120;
         if (alive(_mainHVT)) then {

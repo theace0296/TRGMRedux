@@ -3,7 +3,7 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 if (isClass(configFile >> "CfgPatches" >> "dedmen_arma_script_profiler")) then {private _scope = createProfileScope _fnc_scriptName;};
 
 
-waituntil {sleep 2; TRGM_VAR_CoreCompleted};
+waituntil {sleep 5; TRGM_VAR_CoreCompleted};
 
 sleep 2;
 

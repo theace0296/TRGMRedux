@@ -61,6 +61,7 @@ private _thisAreaRange = 50;
 private _iteration = 1;
 
 while {_iteration <= 2} do {
+    sleep 1;
     private _nearestRoads = _eventLocationPos nearRoads _thisAreaRange;
     private _nearestRoad = nil;
     private _roadConnectedTo = nil;
@@ -78,6 +79,7 @@ while {_iteration <= 2} do {
             _PosFound = true;
         } else {
             _iAttemptLimit = _iAttemptLimit - 1;
+            sleep 1;
         };
     };
 
@@ -330,6 +332,7 @@ while {_iteration <= 2} do {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
+                sleep 1;
             };
 
             //spawn inner sentry
@@ -349,6 +352,7 @@ while {_iteration <= 2} do {
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
+                sleep 1;
             };
         };
     };

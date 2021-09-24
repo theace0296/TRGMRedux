@@ -20,7 +20,7 @@ IF (!isnil ("COScomplete")) then {Hint "Check your call. COS was called twice!";
 
 [] call TRGM_GLOBAL_fnc_initGlobalVars;
 
-waitUntil {sleep 2; (TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_MissionParamsSet);};
+waitUntil {sleep 5; (TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_MissionParamsSet);};
 
 if (TRGM_VAR_IsFullMap) Then {
 

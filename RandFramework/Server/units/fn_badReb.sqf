@@ -21,7 +21,7 @@ while {alive _thisCiv && !_bFired} do {
         };
 
     } forEach _nearestunits;
-    sleep 2;
+    sleep 5;
 };
 
 

@@ -27,7 +27,7 @@ if (_MoveType isEqualTo "Man") then {
 _objMan doMove (_WalkToPos);
 sleep 2;
 
-waitUntil {sleep 1; speed _objMan isEqualTo 0};
+waitUntil {sleep 5; speed _objMan isEqualTo 0};
 private _nearMen = (nearestObjects [_thisInitPos, ["man"], 7]) select {side _x isEqualTo side _objMan};
 private _animType = selectRandom [2,3,4];
 if (count _nearMen > 1) then {

@@ -322,7 +322,7 @@ if (_SpottedUnitCount > 0) then {
                                 _iFiredCount = _iRoundsToFire + 1;
                                 private _TargetPos = [(_SpottedUnitPos select 0)+(75 * sin floor(random 360)),(_SpottedUnitPos select 1)+(75 * cos floor(random 360))];
                                 [_nearestMortar, [_TargetPos, _Ammo, 1]] remoteExec ["commandArtilleryFire", -2, false];
-                                sleep 3;
+                                sleep 5;
                             };
                             TRGM_VAR_bMortarFiring = false;
                             publicVariable "TRGM_VAR_bMortarFiring";

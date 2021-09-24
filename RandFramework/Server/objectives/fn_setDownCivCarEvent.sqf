@@ -46,6 +46,7 @@ if (count _nearestRoads > 0) then {
         else {
             _iAttemptLimit = _iAttemptLimit - 1;
         };
+        sleep 1;
     };
 //[format["A: %1 - %2",_iteration,_eventLocationPos]] call TRGM_GLOBAL_fnc_notify;
     if (_PosFound) then {
@@ -149,8 +150,7 @@ if (count _nearestRoads > 0) then {
         private _bWaiting = true;
         private _bWaveDone = false;
         while {_bWaiting} do {
-
-
+            sleep 1;
             if (!(alive _mainVeh)) then {
                 _bWaiting = false;
                 private _runAwayTo = [0,0,0]; //_vehPos getPos [500,([_mainVeh, _downedCiv] call BIS_fnc_DirTo)];
@@ -190,7 +190,7 @@ if (count _nearestRoads > 0) then {
                             _downedCiv disableAI "anim";
                             [_downedCiv] spawn {
                                 private _downedCiv = _this select 0;
-                                waitUntil {sleep 2; !alive(_downedCiv)};
+                                waitUntil {sleep 1; !alive(_downedCiv)};
                                 [_downedCiv, ""] remoteExec ["switchMove", 0];
                             };
                             sleep 15;

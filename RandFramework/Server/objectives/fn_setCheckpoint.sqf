@@ -45,6 +45,7 @@ private _iAttemptLimit = 5;
 
 if (_thisRoadonly) then {
     while {!_PosFound && _iAttemptLimit > 0 && count _nearestroads > 0} do {
+        sleep 1;
         _nearestroad = selectRandom _nearestroads;
         _roadConnectedto = roadsConnectedto _nearestroad;
         if (count _roadConnectedto isEqualto 2) then {
@@ -88,7 +89,7 @@ if (_thisRoadonly) then {
             };
 
             // [format["AOAwayDir:%1 - dir1:%2 - dir2:%3 \nDif1:%4 - dif2:%5", _generaldirection, _direction1, _direction2, _dif1, _dif2]] call TRGM_GLOBAL_fnc_notify;
-            // sleep 5;
+            // sleep 1;
 
             if (_dif1 < _dif2) then {
                 _direction = _direction1
@@ -314,6 +315,7 @@ if (_PosFound) then {
         while {(isNil "_guardUnit1" || {isNull _guardUnit1}) && {_iterations < 10}} do {
             _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
+            sleep 1;
         };
     };
     if (!(isNil "_guardUnit1") && {!(isNull _guardUnit1)}) then {
@@ -335,6 +337,7 @@ if (_PosFound) then {
             while {(isNil "_guardUnit2" || {isNull _guardUnit2}) && {_iterations < 10}} do {
                 _guardUnit2 = [_group, _sUnittype,_pos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 _iterations = _iterations + 1;
+                sleep 1;
             };
         };
         if (!(isNil "_guardUnit2") && {!(isNull _guardUnit2)}) then {
@@ -364,6 +367,7 @@ if (_PosFound) then {
             while {(isNil "_guardUnit3" || {isNull _guardUnit3}) && {_iterations < 10}} do {
                 _guardUnit3 = [_group2, _sUnittype, _pos3, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 _iterations = _iterations + 1;
+                sleep 1;
             };
         };
         if (!(isNil "_guardUnit3") && {!(isNull _guardUnit3)}) then {
@@ -381,6 +385,7 @@ if (_PosFound) then {
             while {(isNil "_guardUnit4" || {isNull _guardUnit4}) && {_iterations < 10}} do {
                 _guardUnit4 = [_group3, _sUnittype, _pos4, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 _iterations = _iterations + 1;
+                sleep 1;
             };
         };
         if (!(isNil "_guardUnit4") && {!(isNull _guardUnit4)}) then {
@@ -424,6 +429,7 @@ if (_PosFound) then {
         while {(isNil "_guardUnit5" || {isNull _guardUnit5}) && {_iterations < 10}} do {
             _guardUnit5 = [_group4, _sUnittype, _pos5, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
+            sleep 1;
         };
     };
     if (!(isNil "_guardUnit5") && {!(isNull _guardUnit5)}) then {

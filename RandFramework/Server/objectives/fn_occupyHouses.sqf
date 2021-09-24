@@ -14,6 +14,7 @@ private _randBuilding = nil;
 if (!_bThisMissionCivsOnly) then {
     while {_iCount <= _unitCount} do
     {
+        sleep 1;
         _allBuildings = nearestObjects [_sidePos, ["House"] + TRGM_VAR_BasicBuildings, _distFromCent];
         //_allBuildings = nearestObjects [_sidePos, ["house"], _distFromCent];
         _randBuilding = selectRandom _allBuildings;
@@ -51,6 +52,7 @@ if (!_bThisMissionCivsOnly) then {
                         private _thisIsDirectionAwayFromAO = true;
                         [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50,false] spawn TRGM_SERVER_fnc_setCheckpoint;
                     }
+                    sleep 1;
                 };
             };
         };

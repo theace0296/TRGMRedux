@@ -26,6 +26,7 @@ if (!isNil "TRGM_VAR_WarzonePos") then {
         _eventLocationPos = getPos (selectRandom _nearestRoads);
         if (_eventLocationPos distance TRGM_VAR_WarzonePos > 500) then {_eventPosFound = true;};
         _iAttemptLimit = _iAttemptLimit - 1;
+        sleep 1;
     };
 } else {
     _eventLocationPos = getPos (selectRandom _nearestRoads);
@@ -58,6 +59,7 @@ if (_eventLocationPos select 0 > 0) then {
             _PosFound = true;
         } else {
             _iAttemptLimit = _iAttemptLimit - 1;
+            sleep 1;
         };
     };
     if (_PosFound) then {
@@ -216,7 +218,6 @@ if (_eventLocationPos select 0 > 0) then {
                 private _iCountMines = 20;
                 _mainVehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
                 while {_iCountMines > 0} do {
-
                     private _xPos = (_mainVehPos select 0)-40;
                     private _yPos = (_mainVehPos select 1)-40;
                     private _randomPos = [_xPos+(random 80),_yPos+(random 80),0];
@@ -225,6 +226,7 @@ if (_eventLocationPos select 0 > 0) then {
                         private _objMine = createMine [selectRandom["APERSMine"], _randomPos, [], 0];
                     };
                     _iCountMines = _iCountMines - 1;
+                    sleep 1;
                 };
             };
         };
@@ -260,7 +262,7 @@ if (_eventLocationPos select 0 > 0) then {
             };
 
             if (_bWaiting) then {
-                sleep 5;
+                sleep 1;
             };
         };
 

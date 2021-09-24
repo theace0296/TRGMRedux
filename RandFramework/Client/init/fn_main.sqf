@@ -23,7 +23,7 @@ Donations : www.trgm2.com</font>
 <br />
 If you really want to, you can make a donation via my site www.trgm2.com (paypal link at top right of site).  I would also love to dedicate more time to the TRGM2 engine, making updates, fixes and new features, so would love to take some time off work to spend full days on my engine : )"]];
 
-waitUntil {time > 0};
+waitUntil {sleep 5; time > 0};
 
 [] spawn {
     private _unit = player;
@@ -33,6 +33,7 @@ waitUntil {time > 0};
         //hintSilent " Player has changed";
         [_unit] call TRGM_CLIENT_fnc_transferProviders;
         _unit = player;
+        sleep 5;
     };
 };
 
@@ -51,7 +52,7 @@ call TRGM_CLIENT_fnc_missionSetupCamera;
 
 [] spawn TRGM_CLIENT_fnc_missionSelectLoop;
 
-waitUntil { TRGM_VAR_bOptionsSet };
+waitUntil { sleep 5; TRGM_VAR_bOptionsSet };
 
 private _txt5Layer = "txt5" call BIS_fnc_rscLayer;
 private _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>TRGM Redux</t>";
@@ -97,7 +98,7 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
     TRGM_VAR_bAndSoItBegins = true; publicVariable "TRGM_VAR_bAndSoItBegins";
 };
 
-waitUntil { TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet };
+waitUntil { sleep 5; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet };
 
 [player] spawn TRGM_GLOBAL_fnc_setLoadout;
 
@@ -190,7 +191,7 @@ player addEventHandler ["Respawn", { [] spawn TRGM_CLIENT_fnc_missionOverAnimati
 
 player doFollow player;
 
-waitUntil { TRGM_VAR_CoreCompleted; };
+waitUntil { sleep 5; TRGM_VAR_CoreCompleted; };
 
 [] spawn TRGM_GLOBAL_fnc_checkBadPoints;
 player addEventHandler ["Respawn", { [] spawn TRGM_GLOBAL_fnc_checkBadPoints; }];

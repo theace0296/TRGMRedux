@@ -16,7 +16,7 @@ if !(_vehicle isKindOf "Helicopter") exitWith {};
     { _x disableAI "MOVE"; _x allowDamage false; } forEach crew _target;
     [_target] spawn {
         params ["_vehicle"];
-        waitUntil { !([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+        waitUntil { sleep 5; !([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
         { _x enableAI "MOVE"; } forEach crew _vehicle;
         [_vehicle] call TRGM_GLOBAL_fnc_setVehicleUpright;
         {_x setDamage 0;} forEach (crew _vehicle + [_vehicle]);

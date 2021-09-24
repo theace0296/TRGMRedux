@@ -161,6 +161,7 @@ TRGM_VAR_WarEventActive = true;
                     {_veh deleteVehicleCrew _x} forEach crew _veh;
                     deleteVehicle _veh;
                 };
+                sleep 1;
             };
         };
 
@@ -174,6 +175,7 @@ TRGM_VAR_WarEventActive = true;
                         {_veh deleteVehicleCrew _x} forEach crew _veh;
                         deleteVehicle _veh;
                     };
+                    sleep 1;
                 };
             };
         };

@@ -57,6 +57,7 @@ while {_scan} do {
     if (_attempts > 300) then {_scan = false};
     if (count _selectedPositions >= 5) then {_scan = false};
     _attempts = _attempts + 1;
+    sleep 5;
 };
 
 

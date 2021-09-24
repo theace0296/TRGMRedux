@@ -77,7 +77,7 @@ tracer4 setPos [99999,99999];
 
 [true] call TRGM_SERVER_fnc_setTimeAndWeather;
 
-waitUntil {time > 0};
+waitUntil {sleep 5; time > 0};
 
 private _trgRatingAdjust = createTrigger ["EmptyDetector", [0,0]];
 _trgRatingAdjust setTriggerArea [0, 0, 0, false];
@@ -95,7 +95,7 @@ if (!isNil "vs8")  then { deleteVehicle vs8; };
 if (!isNil "vs9")  then { deleteVehicle vs9; };
 if (!isNil "vs10") then { deleteVehicle vs10; };
 
-waitUntil { TRGM_VAR_bAndSoItBegins };
+waitUntil { sleep 5; TRGM_VAR_bAndSoItBegins };
 
 TRGM_VAR_PopulateLoadingWait_percentage = 0; publicVariable "TRGM_VAR_PopulateLoadingWait_percentage";
 
@@ -168,7 +168,7 @@ if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName !
     {chopper1 lockTurret [_x, true]} forEach _totalTurrets;
     { _x disableAI "MOVE"; } forEach crew chopper1;
     [] spawn {
-        waitUntil { !([chopper1] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+        waitUntil { sleep 5; !([chopper1] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
         { _x enableAI "MOVE"; } forEach crew chopper1;
     };
     chopper1 setPos ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos);
@@ -196,7 +196,7 @@ if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != ty
     {chopper2 lockTurret [_x, true]} forEach _totalTurrets;
     { _x disableAI "MOVE"; } forEach crew chopper2;
     [] spawn {
-        waitUntil { !([chopper2] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+        waitUntil { sleep 5; !([chopper2] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
         { _x enableAI "MOVE"; } forEach crew chopper2;
     };
     chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
@@ -295,7 +295,7 @@ box1 allowDamage false;
 [format["Mission Core: %1", "PreCustomObjectSet"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
-waitUntil { TRGM_VAR_CustomObjectsSet };
+waitUntil { sleep 5; TRGM_VAR_CustomObjectsSet };
 
 [endMissionBoard] remoteExec ["removeAllActions"];
 [endMissionBoard2] remoteExec ["removeAllActions"];
@@ -369,7 +369,7 @@ if (TRGM_VAR_iMissionIsCampaign) then {
 [format["Mission Core: %1", "InitCampaign/StartMission ran"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
-waitUntil { TRGM_VAR_MissionLoaded; };
+waitUntil { sleep 5; TRGM_VAR_MissionLoaded; };
 
 [format["Mission Core: %1", "TRGM_VAR_MissionLoaded true"], true] call TRGM_GLOBAL_fnc_log;
 
@@ -435,7 +435,7 @@ if (_iEnemyFlashLightOption isEqualTo 1) then {
     } forEach allUnits;
 };
 
-waitUntil { TRGM_VAR_AllInitScriptsFinished; };
+waitUntil { sleep 5; TRGM_VAR_AllInitScriptsFinished; };
 [format["Mission Core: %1", "Main Init Complete"], true] call TRGM_GLOBAL_fnc_log;
 [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 if !(TRGM_VAR_iMissionIsCampaign) then {

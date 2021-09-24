@@ -63,7 +63,7 @@ if (!isTouchingGround chopper2) then {
 };
 
 //[str(_thisMission)] call TRGM_GLOBAL_fnc_notify;
-waitUntil {sleep 2; ((_vehicle distance2D _baseLZPos) < 300) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)};
+waitUntil {sleep 5; ((_vehicle distance2D _baseLZPos) < 300) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)};
 if ( !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
     deleteVehicle _heliPad;
     breakOut "FlyToBase";
@@ -82,7 +82,7 @@ if ([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying) then  {
 
 setWind [0,0,true]; // prevent stuck helicopter during duststorm
 
-waitUntil {sleep 2; (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) || {!canMove _vehicle} || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)};
+waitUntil {sleep 5; (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) || {!canMove _vehicle} || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)};
 if ( !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
     breakOut "FlyToBase";
 };

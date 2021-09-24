@@ -53,7 +53,7 @@ if (count _nearestHidingPlaces > 5) then {
             };
         } forEach _nearUnits;
         if (_bWaiting) then {
-            sleep 2;
+            sleep 5;
         } else {
             sleep (30 + (random 120));
         };
@@ -90,6 +90,7 @@ if (count _nearestHidingPlaces > 5) then {
             sleep 0.1;
             deleteVehicle _objMilUnit;
         };
+        sleep 5;
     };
 
 };
