@@ -1,7 +1,7 @@
 
 params ["_targetPos"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-if (isClass(configFile >> "CfgPatches" >> "dedmen_arma_script_profiler")) then {private _scope = createProfileScope _fnc_scriptName;};
+
 
 _targetPos = [_targetPos select 0, _targetPos select 1, 0]; //round (_targetPos select 2)];
 

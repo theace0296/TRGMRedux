@@ -2,7 +2,7 @@
 //check if any of TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas are near
 //if so, delete any friendly units
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-if (isClass(configFile >> "CfgPatches" >> "dedmen_arma_script_profiler")) then {private _scope = createProfileScope _fnc_scriptName;};
+
 
 {
     private _currentFriendCpPos = _x;

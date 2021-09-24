@@ -9,7 +9,7 @@
 // If you make any improvments to this script try to tell me! I know there are things you can improve since I just started scripting 4 days before I finished this and if you manage to make a better version I wanna use it
 
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-if (isClass(configFile >> "CfgPatches" >> "dedmen_arma_script_profiler")) then {private _scope = createProfileScope _fnc_scriptName;};
+
 
 if (isDedicated) exitWith {};
 if (player != player) then {waitUntil {sleep 5; player isEqualTo player};};
