@@ -396,7 +396,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisAllowBarakade = _selectRandomW;
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
-                }
+                };
                 sleep 1;
             };
         };
@@ -461,7 +461,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisAllowBarakade = false;
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
-                }
+                };
                 sleep 1;
             };
 
@@ -483,7 +483,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisAllowBarakade = true;
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
-                }
+                };
                 sleep 1;
             };
 
@@ -505,7 +505,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisAllowBarakade = true;
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),300] spawn TRGM_SERVER_fnc_setCheckpoint;
-                }
+                };
                 sleep 1;
             };
 
@@ -527,7 +527,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisAllowBarakade = true;
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
-                }
+                };
                 sleep 1;
             };
 
@@ -549,7 +549,7 @@ if (!_bFriendlyInsurgents) then {
                     private _thisAllowBarakade = false;
                     private _thisIsDirectionAwayFromAO = true;
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
-                }
+                };
                 sleep 1;
             };
 

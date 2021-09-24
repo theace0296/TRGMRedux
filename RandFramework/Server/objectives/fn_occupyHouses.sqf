@@ -51,7 +51,7 @@ if (!_bThisMissionCivsOnly) then {
                         private _thisAllowBarakade = false;
                         private _thisIsDirectionAwayFromAO = true;
                         [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50,false] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    }
+                    };
                     sleep 1;
                 };
             };
