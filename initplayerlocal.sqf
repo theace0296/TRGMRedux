@@ -3,7 +3,8 @@
 if (isNil "TRGM_VAR_serverFinishedInitGlobal")  then {TRGM_VAR_serverFinishedInitGlobal = false; publicVariable "TRGM_VAR_serverFinishedInitGlobal";};
 waitUntil {sleep 5; TRGM_VAR_serverFinishedInitGlobal;};
 
-call TRGM_GLOBAL_fnc_initGlobalVars;
+private _initVarsHandle = [] spawn TRGM_GLOBAL_fnc_initGlobalVars;
+waitUntil { sleep 5; scriptDone _initVarsHandle; };
 
 CODEINPUT = [];
 

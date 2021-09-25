@@ -18,7 +18,9 @@ if (isnil "SERVER") then {Hint "You must ADD a object named SERVER";Player Sidec
 if (isServer) then {
 IF (!isnil ("COScomplete")) then {Hint "Check your call. COS was called twice!";}else{
 
-[] call TRGM_GLOBAL_fnc_initGlobalVars;
+if (isNil "TRGM_VAR_bAndSoItBegins") then { TRGM_VAR_bAndSoItBegins = false; publicVariable "TRGM_VAR_bAndSoItBegins";};
+if (isNil "TRGM_VAR_CustomObjectsSet") then { TRGM_VAR_CustomObjectsSet = false; publicVariable "TRGM_VAR_CustomObjectsSet";};
+if (isNil "TRGM_VAR_MissionParamsSet") then { TRGM_VAR_MissionParamsSet = false; publicVariable "TRGM_VAR_MissionParamsSet";};
 
 waitUntil {sleep 5; (TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_MissionParamsSet);};
 
