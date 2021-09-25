@@ -166,6 +166,8 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
 
 ["Mission Setup: 12.5", true] call TRGM_GLOBAL_fnc_log;
 
+private _populateAOHandles = [];
+
 while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     private _iTaskIndex = TRGM_VAR_InfTaskCount;
     if (_bIsCampaign) then {
@@ -551,12 +553,12 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                         publicVariable "TRGM_VAR_ClearedPositions";
                         _markerInformant1 setMarkerText (localize "STR_TRGM2_startInfMission_markerInformant");
                         if (!_SamePrevAO) then {
-                            [[_inf1X,_inf1Y],_iThisTaskType,_infBuilding,_bIsMainObjective, _iTaskIndex, _allowFriendlyIns, true] spawn TRGM_SERVER_fnc_populateSideMission;
+                            _populateAOHandles pushBack ([[_inf1X,_inf1Y],_iThisTaskType,_infBuilding,_bIsMainObjective, _iTaskIndex, _allowFriendlyIns, true] spawn TRGM_SERVER_fnc_populateSideMission);
                         };
                     }
                     else {
                         if (!_SamePrevAO) then {
-                            [[_inf1X,_inf1Y],_iThisTaskType,_infBuilding,_bIsMainObjective, _iTaskIndex, _allowFriendlyIns] spawn TRGM_SERVER_fnc_populateSideMission;
+                            _populateAOHandles pushBack ([[_inf1X,_inf1Y],_iThisTaskType,_infBuilding,_bIsMainObjective, _iTaskIndex, _allowFriendlyIns] spawn TRGM_SERVER_fnc_populateSideMission);
                         };
                     };
 

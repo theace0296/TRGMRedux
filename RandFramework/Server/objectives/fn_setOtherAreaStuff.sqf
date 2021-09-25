@@ -99,64 +99,63 @@ if (count _TowersNear > 0) then {
 
 ["Mission Events: CommsEND", true] call TRGM_GLOBAL_fnc_log;
 
-private _eventsHandles = [];
 
 ["Loading Events : 15", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos,1900,false,false,nil, false] spawn TRGM_SERVER_fnc_setTargetEvent);
+    [_mainObjPos,1900,false,false,nil, false] spawn TRGM_SERVER_fnc_setTargetEvent;
     sleep 1;
 };
 
 ["Loading Events : 14", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos,1900,false,false,nil, true] spawn TRGM_SERVER_fnc_setTargetEvent);
+    [_mainObjPos,1900,false,false,nil, true] spawn TRGM_SERVER_fnc_setTargetEvent;
     sleep 1;
 };
 
 ["Loading Events : 13", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent;
     sleep 1;
 };
 
 ["Loading Events : 12", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
     sleep 1;
 };
 
 ["Loading Events : 11", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent;
     sleep 1;
 };
 ["Loading Events : 10", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance || !isNil("TRGM_VAR_ForceWarZoneLoc")) then {
     if (!isNil("TRGM_VAR_ForceWarZoneLoc")) then {
-        _eventsHandles pushBack ([TRGM_VAR_ForceWarZoneLoc,4] spawn TRGM_SERVER_fnc_setFireFightEvent);
+        [TRGM_VAR_ForceWarZoneLoc,4] spawn TRGM_SERVER_fnc_setFireFightEvent;
     } else {
-        _eventsHandles pushBack ([_mainObjPos,4] spawn TRGM_SERVER_fnc_setFireFightEvent);
+        [_mainObjPos,4] spawn TRGM_SERVER_fnc_setFireFightEvent;
     };
     sleep 1;
 };
 ["Loading Events : 9", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setMedicalEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setMedicalEvent;
     sleep 1;
 };
 ["Loading Events : 8", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setDownedChopperEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
     sleep 1;
 };
 ["Loading Events : 7", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setDownConvoyEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setDownConvoyEvent;
     sleep 1;
 };
 ["Loading Events : 6", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
     sleep 1;
 };
 
@@ -165,36 +164,34 @@ if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
 //these are more likely to show (instead of using TRGM_VAR_ChanceOfOccurance), as a lot of times, these are not a trap, just an empty vehicle or a pile of rubbish
 ["Loading Events : 5", true] call TRGM_GLOBAL_fnc_log;
 if (random 1 < .66) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     sleep 1;
 };
 ["Loading Events : 4", true] call TRGM_GLOBAL_fnc_log;
 if (random 1 < .66) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     sleep 1;
 };
 ["Loading Events : 3", true] call TRGM_GLOBAL_fnc_log;
 if (random 1 < .66) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     sleep 1;
 };
 ["Loading Events : 2", true] call TRGM_GLOBAL_fnc_log;
 if (random 1 < .66) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     sleep 1;
 };
 ["Loading Events : 1", true] call TRGM_GLOBAL_fnc_log;
 if (random 1 < .66) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     sleep 1;
 };
 ["Loading Events : 0", true] call TRGM_GLOBAL_fnc_log;
 if (random 1 < .66) then {
-    _eventsHandles pushBack ([_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent);
+    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     sleep 1;
 };
-
-waitUntil { sleep 5; ({scriptDone _x;} count _eventsHandles) isEqualTo (count _eventsHandles); };
 
 ["Loading Events : END", true] call TRGM_GLOBAL_fnc_log;
 
@@ -213,26 +210,23 @@ if (_mapSize < 10000) then {
 
 if (TRGM_VAR_IsFullMap) then {
     ["Loading Full Map Events : BEGIN", true] call TRGM_GLOBAL_fnc_log;
-    private _fullMapEventsHandles = [];
 
-    _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent);
-    _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent);
-    _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent);
-    _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
-    _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
+    [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
+    [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
+    [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
+    [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
+    [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
 
     if (_mapSizeTxt isEqualTo "MEDIUM" || _mapSizeTxt isEqualTo "LARGE") then {
-        _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
-        _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
-        _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent);
+        [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
+        [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
+        [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
     };
     if (_mapSizeTxt isEqualTo "LARGE") then {
-        _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent);
-        _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent);
-        _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
+        [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
+        [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
+        [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
     };
-
-    waitUntil { sleep 5; ({scriptDone _x;} count _fullMapEventsHandles) isEqualTo (count _fullMapEventsHandles); };
 
     ["Loading Full Map Events : END", true] call TRGM_GLOBAL_fnc_log;
 
