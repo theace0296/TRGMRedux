@@ -28,7 +28,6 @@ private _thisAreaRange = 50;
 private _iteration = 1;
 
 while {_iteration <= 3} do {
-    sleep 1;
     if (_iteration isEqualTo 2) then {
         _thisAreaRange = 50;
     };
@@ -53,7 +52,6 @@ while {_iteration <= 3} do {
         }
         else {
             _iAttemptLimit = _iAttemptLimit - 1;
-            sleep 1;
         };
     };
     if (_PosFound) then {

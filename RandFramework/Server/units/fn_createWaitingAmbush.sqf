@@ -33,7 +33,6 @@ if (count _nearestHidingPlaces > 5) then {
         _objMilUnit setUnitPos selectRandom ["MIDDLE","DOWN","DOWN","DOWN"];
         _objMilUnit setDir ([_objMilUnit, _triggerArea] call BIS_fnc_DirTo);
         _objMilUnit setVariable ["ambushUnit", true];
-        sleep 5;
     };
 
     private _bWaiting = true;
@@ -58,7 +57,7 @@ if (count _nearestHidingPlaces > 5) then {
             };
         } forEach _nearUnits;
         if (_bWaiting) then {
-            sleep 5;
+            sleep 2;
         } else {
             sleep (30 + (random 120));
         };

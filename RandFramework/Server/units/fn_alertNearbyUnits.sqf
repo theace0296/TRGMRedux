@@ -58,7 +58,6 @@ if (_conditionBool) then {
             };
         };
         _groupsAlerted pushBack _group;
-        sleep 1;
     } forEach allGroups;
     sleep 60;
     if (_cycleMode) then {

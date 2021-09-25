@@ -58,7 +58,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
     [_target1] spawn {
         _target1 = _this select 0;
-        waitUntil { sleep 5; !alive _target1; };
+        waitUntil { !alive _target1; };
         [_target1] spawn TRGM_SERVER_fnc_updateTask;
     };
 };

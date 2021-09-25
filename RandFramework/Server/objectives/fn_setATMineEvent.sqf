@@ -36,7 +36,6 @@ if (_currentATFieldPos select 0 != 0) then {
         if (_icountmines >= 50) then {
             _minesPlaced = true
         };
-        sleep 1;
     };
 
     if (random 1 < .20) then {
@@ -79,7 +78,6 @@ if (_currentATFieldPos select 0 != 0) then {
                     }
                 } do {
                     _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                    sleep 1;
                 };
             };
             dostop [_guardUnit1];
@@ -96,7 +94,6 @@ if (_currentATFieldPos select 0 != 0) then {
                     }
                 } do {
                     _guardUnit2 = [_group, _sUnittype, _pos2, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                    sleep 1;
                 };
             };
             dostop [_guardUnit2];
@@ -119,7 +116,6 @@ if (_currentATFieldPos select 0 != 0) then {
                 private _bWaiting = true;
                 private _bWavedone = false;
                 while {_bWaiting} do {
-                    sleep 1;
                     if (!(alive _mainVeh)) then {
                         _bWaiting = false;
                     } else {
@@ -154,7 +150,7 @@ if (_currentATFieldPos select 0 != 0) then {
                                         [_guardUnit1] spawn {
                                             private _guardUnit1 = _this select 0;
                                             waitUntil {
-                                                sleep 1;
+                                                sleep 2;
                                                 !alive(_guardUnit1)
                                             };
                                             [_guardUnit1, ""] remoteExec ["switchMove", 0];

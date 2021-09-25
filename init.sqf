@@ -4,7 +4,7 @@ private _initVarsHandle = [] spawn TRGM_GLOBAL_fnc_initGlobalVars;
 waitUntil { sleep 5; scriptDone _initVarsHandle; };
 
 if (isNil "TRGM_VAR_serverFinishedInitGlobal")  then {TRGM_VAR_serverFinishedInitGlobal = false; publicVariable "TRGM_VAR_serverFinishedInitGlobal";};
-waitUntil {sleep 5; TRGM_VAR_serverFinishedInitGlobal;};
+waitUntil {TRGM_VAR_serverFinishedInitGlobal;};
 
 if (isServer) then {
    [] spawn {
@@ -35,12 +35,12 @@ call FHQ_fnc_ttiPostInit;
       [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_ScriptsUsed"), localize "STR_TRGM2_TRGMSetUnitGlobalVars_ScriptsUsed"]
 ] call FHQ_fnc_ttAddBriefing;
 
-waitUntil { sleep 5; TRGM_VAR_playerIsChoosingHQpos || TRGM_VAR_NeededObjectsAvailable; };
+waitUntil { TRGM_VAR_playerIsChoosingHQpos || TRGM_VAR_NeededObjectsAvailable; };
 
 if (isServer && !TRGM_VAR_NeededObjectsAvailable) then {
-   waitUntil { sleep 5; TRGM_VAR_HQPosFound };
+   waitUntil { TRGM_VAR_HQPosFound };
    private _handle = [TRGM_VAR_foundHQPos] spawn TRGM_SERVER_fnc_createNeededObjects;
-   waitUntil {sleep 5; scriptDone _handle};
+   waitUntil {scriptDone _handle};
 
    { [[_x], {(_this select 0) allowDamage false}] remoteExec ["call", _x]; } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
 
@@ -87,7 +87,7 @@ if (isServer) then {
    //    player setVariable ["TRGM_VAR_SpawningCrew", true];
    //    hint format [localize "STR_TRGM2_spawnCrewInVehicle_lookAtAHelicopter", localize "STR_TRGM2_spawnCrewInVehicle"];
    //    [] spawn {
-   //       waitUntil {sleep 5; !(player getVariable ["TRGM_VAR_SpawningCrew", false]) || (player distance laptop1) > 100};
+   //       waitUntil {!(player getVariable ["TRGM_VAR_SpawningCrew", false]) || (player distance laptop1) > 100};
    //       player setVariable ["TRGM_VAR_SpawningCrew", false];
    //    };
    // }, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];

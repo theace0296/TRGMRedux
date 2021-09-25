@@ -167,7 +167,6 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
 ["Mission Setup: 12.5", true] call TRGM_GLOBAL_fnc_log;
 
 while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
-    sleep 5;
     private _iTaskIndex = TRGM_VAR_InfTaskCount;
     if (_bIsCampaign) then {
         _iTaskIndex = (TRGM_VAR_iCampaignDay - 1) + TRGM_VAR_InfTaskCount;
@@ -398,7 +397,6 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     ["Mission Setup: 10", true] call TRGM_GLOBAL_fnc_log;
     private _attempts = 0;
     while {!_bInfor1Found} do {
-        sleep 5;
         _attempts = _attempts + 1;
         ["Mission Setup: 9", true] call TRGM_GLOBAL_fnc_log;
         private _markerInformant1 = nil;

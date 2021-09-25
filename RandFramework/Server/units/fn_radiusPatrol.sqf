@@ -25,49 +25,41 @@ while {surfaceIsWater _wp1Pos} do {
     _wp1Pos = [ _wayX + (_distFromCent - _iToReduce), _wayY + (_distFromCent - _iToReduce), 0];
     _wp5Pos = [ _wayX + (_distFromCent - _iToReduce), _wayY + (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
-    sleep 1;
 };
 _iToReduce = 10;
 while {surfaceIsWater _wp2Pos} do {
     _wp2Pos = [ _wayX + (_distFromCent - _iToReduce), _wayY - (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
-    sleep 1;
 };
 _iToReduce = 10;
 while {surfaceIsWater _wp3Pos} do {
     _wp3Pos = [ _wayX - (_distFromCent - _iToReduce), _wayY - (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
-    sleep 1;
 };
 _iToReduce = 10;
 while {surfaceIsWater _wp4Pos} do {
     _wp4Pos = [ _wayX - (_distFromCent - _iToReduce), _wayY + (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
-    sleep 1;
 };
 _iToReduce = 10;
 while {surfaceIsWater _wp1bPos} do {
     _wp1bPos = [ _wayX + (_distFromCent - _iToReduce), _wayY, 0];
     _iToReduce = _iToReduce + 10;
-    sleep 1;
 };
 _iToReduce = 10;
 while {surfaceIsWater _wp2bPos} do {
     _wp2bPos = [ _wayX, _wayY - (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
-    sleep 1;
 };
 _iToReduce = 10;
 while {surfaceIsWater _wp3bPos} do {
     _wp3bPos = [ _wayX - (_distFromCent - _iToReduce), _wayY, 0];
     _iToReduce = _iToReduce + 10;
-    sleep 1;
 };
 _iToReduce = 10;
 while {surfaceIsWater _wp4bPos} do {
     _wp4bPos = [ _wayX, _wayY + (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
-    sleep 1;
 };
 
 //Spawn in units
@@ -77,7 +69,6 @@ while {_iCount <= _unitCount} do
 {
     [_wayX,_wayY,_group,_iCount,_IncludTeamLeader] call TRGM_SERVER_fnc_spawnPatrolUnit;
     _iCount = _iCount + 1;
-    sleep 1;
 };
 
 //add the waypoints (will start at a random one so it doesnt always start at the same pos (mainly for if we have more than one patrol), and cycle through them all)
@@ -85,7 +76,6 @@ private _iWaypointCount = selectRandom[1,2,3,4,5,6,7,8,9];
 private _bWaypointsAdded = false;
 private _iWaypointLoopCount = 1;
 while {!_bWaypointsAdded} do {
-    sleep 1;
     if (_iWaypointCount isEqualTo 1) then {
         _wp1 = _group addWaypoint [_wp1Pos, 0];
     };

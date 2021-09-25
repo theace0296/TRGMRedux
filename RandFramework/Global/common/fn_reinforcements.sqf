@@ -201,7 +201,7 @@ if (_debugMode) then {
         while {{alive _x} count units (_this select 1) > 0 || canMove (_this select 0)} do {
             (_this select 2) setMarkerPos getPosATL (_this select 0);
             (_this select 3) setMarkerPos getPosATL leader (_this select 1);
-            sleep 5;
+            sleep 1;
         };
     };
 };

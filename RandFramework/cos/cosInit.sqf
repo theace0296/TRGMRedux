@@ -22,7 +22,7 @@ if (isNil "TRGM_VAR_bAndSoItBegins") then { TRGM_VAR_bAndSoItBegins = false; pub
 if (isNil "TRGM_VAR_CustomObjectsSet") then { TRGM_VAR_CustomObjectsSet = false; publicVariable "TRGM_VAR_CustomObjectsSet";};
 if (isNil "TRGM_VAR_MissionParamsSet") then { TRGM_VAR_MissionParamsSet = false; publicVariable "TRGM_VAR_MissionParamsSet";};
 
-waitUntil {sleep 5; (TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_MissionParamsSet);};
+waitUntil {sleep 2; (TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_MissionParamsSet);};
 
 if (TRGM_VAR_IsFullMap) Then {
 

@@ -199,7 +199,7 @@ if (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) then {
 };
 
 if (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) then {
-    waitUntil {sleep 5; (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)};
+    waitUntil {sleep 2; (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)};
     if (!(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
         [_thisMission] call _cleanupMission;
         breakOut "FlyTo";
@@ -213,14 +213,14 @@ if (!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) then {
 
 /* Landing done **/
 
-waitUntil { sleep 5; ((_vehicle getVariable ["landingInProgress",false]) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)); };
+waitUntil { sleep 2; ((_vehicle getVariable ["landingInProgress",false]) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)); };
 if (!(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
     _vehicle land "NONE";
     [_thisMission] call _cleanupMission;
     breakOut "FlyTo";
 };
 
-waitUntil { sleep 5; ((!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) || (([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying) && _isHeloCast) || {!canMove _vehicle} || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)); };
+waitUntil { sleep 2; ((!([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying)) || (([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying) && _isHeloCast) || {!canMove _vehicle} || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)); };
 if (!(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
     _vehicle land "NONE";
     [_thisMission] call _cleanupMission;
@@ -247,7 +247,7 @@ sleep 5;
 /* wait for empty helicopter */
 
 if (!_isPickup) then {
-    waitUntil { sleep 5; ([_vehicle] call TRGM_GLOBAL_fnc_isOnlyBoardCrewOnboard) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive) }; // helicopter empty except pilot + crew
+    waitUntil { sleep 2; ([_vehicle] call TRGM_GLOBAL_fnc_isOnlyBoardCrewOnboard) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive) }; // helicopter empty except pilot + crew
 
     if (!(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
         _vehicle land "NONE";
@@ -258,7 +258,7 @@ if (!_isPickup) then {
     [_vehicle,_thisMission] spawn TRGM_GLOBAL_fnc_flyToBase;
 }
 else {
-    waitUntil { sleep 5; !([_vehicle] call TRGM_GLOBAL_fnc_isOnlyBoardCrewOnboard) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive) }; // helicopter has passengers (not just pilot + crew)
+    waitUntil { sleep 2; !([_vehicle] call TRGM_GLOBAL_fnc_isOnlyBoardCrewOnboard) || !(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive) }; // helicopter has passengers (not just pilot + crew)
     if (!(_thisMission call TRGM_GLOBAL_fnc_checkMissionIdActive)) then {
         _vehicle land "NONE";
         [_thisMission] call _cleanupMission;

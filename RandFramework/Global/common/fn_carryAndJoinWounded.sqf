@@ -36,7 +36,7 @@ if (alive _civ) then {
         private _playerP = _this select 1;
         private _doLoop = true;
         while {_doLoop} do {
-            sleep 5;
+            sleep 0.1;
             if (!(alive _playerP)) then {
                 _doLoop = false;
                 [_playerP, ""] remoteExec ["switchMove", 0, false];

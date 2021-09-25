@@ -168,7 +168,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
     [_objBomb1] spawn {
         _objBomb1 = _this select 0;
-        waitUntil { sleep 5; _objBomb1 getVariable ["isDefused",false] || !alive _objBomb1; };
+        waitUntil { _objBomb1 getVariable ["isDefused",false] || !alive _objBomb1; };
         if (!alive _objBomb1) then {
             [_objBomb1, "failed"] spawn TRGM_SERVER_fnc_updateTask;
         } else {

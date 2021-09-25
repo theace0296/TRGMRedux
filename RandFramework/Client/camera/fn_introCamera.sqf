@@ -19,7 +19,7 @@ sleep 1;
 ////DESTROY CAMERA
 _cam cameraEffect ["Terminate", "BACK"];
 _cam camCommit 0;
-waitUntil { sleep 5; camCommitted _cam };
+waitUntil { camCommitted _cam };
 camDestroy _cam;
 
 ////FADE IN FROM BLACK SCREEN

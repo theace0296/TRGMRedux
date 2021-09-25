@@ -6,7 +6,7 @@ _pos = (_this select 1);
 //Hint format["TESTTEST2: %1", _pos];
 //sleep 3;
 
-waitUntil {sleep 5; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet};
+waitUntil {sleep 2; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet};
 
 if (!TRGM_VAR_MissionLoaded) exitWith {};
 
@@ -56,7 +56,7 @@ _glbGrps=server getvariable "cosGrpCount";
 _townGrp=createGroup DefaultSide;
 _localGrps=1;
 
-waituntil {sleep 5; !populating_COS};
+waituntil {!populating_COS};
 populating_COS=true;
 _glbGrps=server getvariable "cosGrpCount";
 
@@ -244,16 +244,16 @@ if (showTownLabel and (server getvariable _trigID))
         };
 
 
-// Check every 5 seconds until trigger is deactivated
+// Check every second until trigger is deactivated
  while {_isActive} do
         {
     _isActive=server getvariable _trigID;
         if (!_isActive) exitwith {};
-        sleep 5;
+        sleep 1;
         };
 
 // If another town is populating wait until it has finished before deleting population
-waituntil {sleep 5; !populating_COS};
+waituntil {!populating_COS};
 
 // Delete all pedestrians
  _counter=0;

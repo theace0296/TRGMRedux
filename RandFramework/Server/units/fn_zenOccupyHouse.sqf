@@ -167,7 +167,6 @@ if (count _posArray isEqualTo 0) then {
 };
 
 while {(count _posArray) > 0} do {
-    sleep 1;
     scopeName "while";
     if (_unitindex >= count _units) exitwith {};
 

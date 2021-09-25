@@ -4,7 +4,7 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 
 
-waituntil {sleep 5; TRGM_VAR_CoreCompleted};
+waituntil {sleep 2; TRGM_VAR_CoreCompleted};
 
 sleep 2;
 

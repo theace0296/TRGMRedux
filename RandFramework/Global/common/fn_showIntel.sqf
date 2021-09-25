@@ -37,7 +37,7 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
             TRGM_VAR_TempIntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select 0,(call sMortar) + (call sMortarMilitia),3000];
             publicVariable "TRGM_VAR_TempIntelShowPos";
         }] remoteExec ["call", 2];
-        waitUntil {sleep 5; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
+        waitUntil {sleep 2; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
         private _iCount = count TRGM_VAR_TempIntelShowPos;
         if (_iCount > 0) then {
             {
@@ -57,7 +57,7 @@ if (side player isEqualTo TRGM_VAR_FriendlySide) then {
             TRGM_VAR_TempIntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select 0,[(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh),3000];
             publicVariable "TRGM_VAR_TempIntelShowPos";
         }] remoteExec ["call", 2];
-        waitUntil {sleep 5; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
+        waitUntil {sleep 2; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
         private _iCount = count TRGM_VAR_TempIntelShowPos;
         private _iStep = 0;
         if (_iCount > 0) then {

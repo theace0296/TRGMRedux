@@ -17,7 +17,6 @@ while {_iCount <= _unitCount} do
 {
     [_wayX,_wayY,_group,_iCount,_IncludTeamLeader] call TRGM_SERVER_fnc_spawnPatrolUnit;
     _iCount = _iCount + 1;
-    sleep 5;
 };
 
 //set waypoints to other buildings
@@ -40,7 +39,6 @@ while {_iCountWaypoints <= _buildingCount} do
     [_group, _iCountWaypoints] setWaypointBehaviour "SAFE";
     if (_iCountWaypoints isEqualTo _buildingCount) then{[_group, 8] setWaypointType "CYCLE";};
     _iCountWaypoints = _iCountWaypoints + 1;
-    sleep 5;
 };
 _group setBehaviour "SAFE";
 

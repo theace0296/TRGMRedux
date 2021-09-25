@@ -53,7 +53,7 @@ private _v1wp3 = _heloGroup addWaypoint [[(_exitPos select 0), (_exitPos select 
 [_heloGroup, 2] setWaypointSpeed "FULL";
 
 waitUntil {
-    sleep 5;
+    sleep 2;
     _airDropHelo getVariable ["TRGM_VAR_DroppedCrate", false];
 };
 sleep 1;
@@ -63,7 +63,7 @@ _supplyObjectDummy allowDamage false;
 _supplyObjectDummy setPos[(_destPos select 0), (_destPos select 1), 200];
 
 waitUntil {
-    sleep 5;
+    sleep 2;
     ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 < 75
 };
 
@@ -72,7 +72,7 @@ _supplyObjectDummy attachTo [_para, [0, 0, -1]];
 _para setPos [(_destPos select 0), (_destPos select 1), 100];
 
 waitUntil {
-    sleep 5;
+    sleep 2;
     ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 >= 0 && ([_supplyObjectDummy] call TRGM_GLOBAL_fnc_getRealPos) select 2 <= 3
 };
 

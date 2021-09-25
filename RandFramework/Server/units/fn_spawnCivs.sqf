@@ -16,7 +16,6 @@ private _bAllCivsBad = random 1 < .25;
 private _bRebelLeaderPicked = false;
 while {_iCount <= _unitCount} do
 {
-    sleep 5;
     //spanwn civ in random building pos
     _randBuilding = selectRandom _allBuildings;
     private _sInitString = "";
@@ -83,7 +82,6 @@ while {_iCount <= _unitCount} do
     private _iCountWaypoints = 0;
     while {_iCountWaypoints <= 4} do
     {
-        sleep 5;
         private _randBuilding2 = selectRandom _allBuildings; //pick one building from our buildings array
         private _allBuildingPos2 = _randBuilding2 buildingPos -1;
 

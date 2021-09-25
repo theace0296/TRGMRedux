@@ -15,7 +15,6 @@ private _randBuilding = nil;
 if (!_bThisMissionCivsOnly) then {
     while {_iCount <= _unitCount} do
     {
-        sleep 1;
         _allBuildings = nearestObjects [_sidePos, ["House"] + TRGM_VAR_BasicBuildings, _distFromCent];
         //_allBuildings = nearestObjects [_sidePos, ["house"], _distFromCent];
         _randBuilding = selectRandom _allBuildings;

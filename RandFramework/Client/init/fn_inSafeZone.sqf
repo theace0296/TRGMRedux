@@ -6,5 +6,5 @@ while {true} do {
     if !(((getMarkerPos "mrkHQ") distance player) < TRGM_VAR_PunishmentRadius) then {
         TRGM_VAR_PlayersHaveLeftStartingArea =  true; publicVariable "TRGM_VAR_PlayersHaveLeftStartingArea";
     };
-    sleep 5;
+    sleep 1;
 };

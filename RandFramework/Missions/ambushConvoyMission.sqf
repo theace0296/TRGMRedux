@@ -89,7 +89,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             } forEach (_this select 1);
         }];
 
-        waitUntil { sleep 5; count convoyPath > 0; };
+        waitUntil { sleep 2; count convoyPath > 0; };
 
         {
             if (_forEachIndex mod 25 isEqualTo 0) then {
@@ -160,7 +160,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _x allowDamage false;
         } forEach _convoyVehicles;
 
-        waitUntil {sleep 5; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_PlayersHaveLeftStartingArea};
+        waitUntil {sleep 2; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_PlayersHaveLeftStartingArea};
 
         _iWait = (420 * (_iTaskIndex + 1)) + floor(random 300);
         sleep floor(random 120);
@@ -218,7 +218,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         if (_hasInformant && !isNil "_guardUnit3") then {
             [_guardUnit3] spawn {
                 _guardUnit3 = _this select 0;
-                waitUntil { sleep 5; vehicle _guardUnit3 isEqualTo _guardUnit3; };
+                waitUntil { sleep 2; vehicle _guardUnit3 isEqualTo _guardUnit3; };
                 _guardUnit3 switchMove "Acts_JetsCrewaidLCrouch_in";
                 _guardUnit3 disableAI "anim";
                 sleep 2.2;
