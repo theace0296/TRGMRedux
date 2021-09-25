@@ -2,6 +2,11 @@
 params ["_posOfAO", ["_isFullMap", false]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (_isFullMap) then {
+    ["Loading Full Map Events : AT Mine Event", true] call TRGM_GLOBAL_fnc_log;
+} else {
+    ["Loading Events : AT Mine Event", true] call TRGM_GLOBAL_fnc_log;
+};
 
 
 private _currentATFieldPos = [_posOfAO, 1000, 1700, 100, 0, 0.4, 0, TRGM_VAR_AreasBlacklist, [[0, 0, 0], [0, 0, 0]]] call TRGM_GLOBAL_fnc_findSafePos;

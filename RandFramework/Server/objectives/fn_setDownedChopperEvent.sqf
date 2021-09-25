@@ -1,7 +1,12 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setDownedChopperEvent";
-
+params ["_mainObjPos",["_isFullMap",false]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (_isFullMap) then {
+    ["Loading Full Map Events : Down Chopper Event", true] call TRGM_GLOBAL_fnc_log;
+} else {
+    ["Loading Events : Down Chopper Event", true] call TRGM_GLOBAL_fnc_log;
+};
 
 call TRGM_SERVER_fnc_initMissionVars;
 
@@ -10,8 +15,6 @@ private _completedMessage = ["The stranded reporter has returned to base in one 
 private _PointsAdjustMessage = ["Reporter rescued", "Paramedic rescued", "Friendly unit rescued"] select _iVictimType;
 private _sVictim = selectRandom ([Reporters, Paramedics, FriendlyVictims] select _iVictimType);
 private _sVictimVeh = selectRandom ([ReporterChoppers, AirAmbulances, FriendlyVictimVehs] select _iVictimType);
-
-params ["_mainObjPos",["_isFullMap",false]];
 
 private _bloodPools = ["BloodPool_01_Large_New_F","BloodSplatter_01_Large_New_F"];
 private _flatPos = [_mainObjPos , 200, 2000, 1, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],_sVictimVeh] call TRGM_GLOBAL_fnc_findSafePos;

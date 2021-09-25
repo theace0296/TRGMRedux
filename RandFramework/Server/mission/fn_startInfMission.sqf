@@ -638,7 +638,8 @@ else {
 ["Mission Setup: 6", true] call TRGM_GLOBAL_fnc_log;
 
 //now we have all our location positinos, we can set other area stuff
-[] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
+private _setAreaEventsHandle = [] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
+waitUntil { sleep 5; scriptDone _setAreaEventsHandle; };
 
 ["Mission Setup: 2", true] call TRGM_GLOBAL_fnc_log;
 

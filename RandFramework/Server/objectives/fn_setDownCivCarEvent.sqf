@@ -1,16 +1,14 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setDownCivCarEvent";
-//use IDAP with police car???
+params ["_posOfAO",["_isFullMap",false]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-
+if (_isFullMap) then {
+    ["Loading Full Map Events : Down Car Event", true] call TRGM_GLOBAL_fnc_log;
+} else {
+    ["Loading Events : Down Car Event", true] call TRGM_GLOBAL_fnc_log;
+};
 
 private _vehs = CivCars;
-
-
-params ["_posOfAO",["_isFullMap",false]];
-//_posOfAO =  _this select 0;
-
-
 private _nearestRoads = _posOfAO nearRoads 2000;
 if (!(isNil "IsTraining") || _isFullMap) then {
     _nearestRoads = _posOfAO nearRoads 30000;
