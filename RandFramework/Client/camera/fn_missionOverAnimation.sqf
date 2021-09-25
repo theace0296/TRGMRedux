@@ -63,5 +63,4 @@ while {!_bEnd} do {
             playMusic "";
         };
     };
-    sleep 5;
 };

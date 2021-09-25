@@ -51,7 +51,6 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
                     };
                 };
             };
-            sleep 5;
             if (TRGM_VAR_HQPosFound) exitwith {true;};
             if !(visibleMap) then {openMap [true, false]; hintC (localize "STR_TRGM2_InitClickSomewhere");};
         };

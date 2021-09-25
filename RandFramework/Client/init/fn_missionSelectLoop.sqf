@@ -36,6 +36,5 @@ while {!TRGM_VAR_bAndSoItBegins} do {
             };
         };
     };
-    sleep 5;
 };
 
