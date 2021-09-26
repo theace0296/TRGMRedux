@@ -136,7 +136,7 @@ if !(_type isEqualTo _tempUnitType) then {
 };
 
 if (_unit isEqualTo leader _group && !_disableDynamicShowHide) then {
-    // [_unit] spawn TRGM_GLOBAL_fnc_dynamicShowHide;
+    [_unit] spawn TRGM_GLOBAL_fnc_dynamicShowHide;
 };
 
 _unit;

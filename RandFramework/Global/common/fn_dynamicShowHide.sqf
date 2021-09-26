@@ -1,8 +1,6 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_dynamicShowHide";
 params ["_object"];
 
-
-
 if (isNil "_object") exitWith {};
 
 private _onFootDistance = ["DynamicSimulationDistance", 2500] call BIS_fnc_getParamValue;
