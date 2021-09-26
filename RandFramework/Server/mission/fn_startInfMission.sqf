@@ -3,7 +3,7 @@ format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Clien
 
 if (!isServer) exitWith {};
 
-[35, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[35, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
 
 ["Mission Setup: 16", true] call TRGM_GLOBAL_fnc_log;
 
@@ -167,7 +167,7 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
 
 ["Mission Setup: 12.5", true] call TRGM_GLOBAL_fnc_log;
 
-[45, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[45, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
 
 private _populateAOHandles = [];
 
@@ -597,7 +597,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     TRGM_VAR_InfTaskCount = TRGM_VAR_InfTaskCount + 1;
 };
 
-[50, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[50, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
 
 ["Mission Setup: 7", true] call TRGM_GLOBAL_fnc_log;
 
@@ -632,15 +632,15 @@ else {
 
 ["Mission Setup: 6", true] call TRGM_GLOBAL_fnc_log;
 
-[55, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[55, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
 
 // waitUntil { sleep 5; ({scriptDone _x;} count _populateAOHandles) isEqualTo (count _populateAOHandles); };
 
-[75, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[75, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
 
 //now we have all our location positinos, we can set other area stuff
 {
-    [80 + (_forEachIndex * 2), TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+    [80 + (_forEachIndex * 2), TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
     if !(_x in TRGM_VAR_HiddenPossitions) then {
         private _setAreaEventsHandle = [_x] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
         waitUntil { sleep 5; scriptDone _setAreaEventsHandle; };
@@ -692,10 +692,10 @@ if (TRGM_VAR_IsFullMap) then {
     };
 
     ["Loading Full Map Events : END", true] call TRGM_GLOBAL_fnc_log;
-    [95, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+    [95, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
 };
 
-[98, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[98, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
 
 ["Mission Setup: 2", true] call TRGM_GLOBAL_fnc_log;
 
