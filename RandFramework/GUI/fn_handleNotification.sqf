@@ -1,8 +1,8 @@
 // private _fnc_scriptName = "TRGM_GUI_fnc_handleNotification";
 // Adds a new notification to notification list
 
-params [["_text", ""], ["_duration", 5], ["_priority", 5], ["_notificationIndex", -1], ["_condition", {true}]];
-if (_text isEqualTo "") exitWith {};
+params ["_text", ["_duration", 5], ["_priority", 5], ["_notificationIndex", -1], ["_condition", {true}]];
+if (isNil "_text" || {_text isEqualTo ""}) exitWith {};
 if (isDedicated || !hasInterface) exitWith {};
 
 disableSerialization;

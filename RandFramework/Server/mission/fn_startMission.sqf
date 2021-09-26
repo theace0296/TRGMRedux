@@ -10,55 +10,19 @@ private _mrkHQPos = getMarkerPos "mrkHQ";
 private _AOCampPos = ([endMissionBoard2] call TRGM_GLOBAL_fnc_getRealPos);
 private _bAllAtBase2 = ({(alive _x)&&((_x distance _mrkHQPos < 500)||(_x distance _AOCampPos < 500))} count (call BIS_fnc_listPlayers)) isEqualTo ({ (alive _x) } count (call BIS_fnc_listPlayers));
 
-
-
-
 //Need to move the below to function that fires for player who called addAction, then inside that function can call StartMission for all
 //Also... in this extra file, we can set a publicVariable for "IntroPlayed=false", then after played set IntroPlayed=true... so will only play when mission starts or next mission picked
 private _bAllowStart = true;
-//if (_isCampaign && isMultiplayer) then {
-//    _bSLAlive = false;
-//    _bK1_1Alive = false;
-//    if (!isnil "sl") then {
-//        _bSLAlive = alive sl;
-//    };
-//    if (!isnil "k2_1") then {
-//        _bK1_1Alive = alive k2_1;
-//    };
-//
-//    if (_bSLAlive && str(player) != "sl") then {
-//        ["The Kilo-1 teamleader needs to select this"] call TRGM_GLOBAL_fnc_notify;
-//        _bAllowStart = false;
-//    };
-//
-//    if (!_bSLAlive && _bK1_1Alive && str(player) != "k2_1") then {
-//        ["The Kilo-2 teamleader needs to select this"] call TRGM_GLOBAL_fnc_notify;
-//        _bAllowStart = false;
-//    };
-//    if (!_bSLAlive && !_bK1_1Alive && (leader (group player))!=player) then {
-//            ["The assigned Kilo-1 teamleader needs to select this"] call TRGM_GLOBAL_fnc_notify;
-//            _bAllowStart = false;
-//    };
-//};
-
 
 if (_bAllowStart) then {
-
     if ((_bAllAtBase2 && TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted) || !_isCampaign) then {
-        // player allowdamage false;
-        // titleText [localize "STR_TRGM2_mainInit_Loading", "BLACK FADED", 5];
-        //sleep 3;
-
         if (_isCampaign) then {
             ["NEW_MISSION"] remoteExec ["TRGM_SERVER_fnc_setMissionBoardOptions",0,true];
             if (hasInterface && (player getVariable ["calUAVActionID", -1]) != -1) then {
                 player removeAction (player getVariable ["calUAVActionID", -1]);
                 player setVariable ["calUAVActionID", nil];
-                //["UAV no longer available"] call TRGM_GLOBAL_fnc_notify;
             };
         };
-
-        //"Marker1" setMarkerPos getMarkerPos "mrkHQ";
 
         if (isServer && _isCampaign) then {
 
@@ -80,8 +44,6 @@ if (_bAllowStart) then {
                 TRGM_VAR_AOCampPos =  nil; publicVariable "TRGM_VAR_AOCampPos";
             };
 
-
-
             al_aaa = false;
             publicVariable "al_aaa";
             al_search_light = false;
@@ -93,7 +55,6 @@ if (_bAllowStart) then {
             tracer4 setPos [99999,99999];
 
             TRGM_VAR_ATFieldPos =  []; publicVariable "TRGM_VAR_ATFieldPos";
-
             {
                 private _y = _x;
                 {
@@ -129,7 +90,6 @@ if (_bAllowStart) then {
                 deleteGroup _x
             } forEach allGroups select {count units _x isEqualTo 0};
 
-
             TRGM_VAR_InfTaskCount =  0; publicVariable "TRGM_VAR_InfTaskCount";
             TRGM_VAR_ActiveTasks =  []; publicVariable "TRGM_VAR_ActiveTasks";
             TRGM_VAR_ObjectivePositions =  []; publicVariable "TRGM_VAR_ObjectivePositions";
@@ -147,23 +107,15 @@ if (_bAllowStart) then {
             TRGM_VAR_ClearedPositions =  []; publicVariable "TRGM_VAR_ClearedPositions";
             TRGM_VAR_AllowUAVLocateHelp =  false; publicVariable "TRGM_VAR_AllowUAVLocateHelp";
             TRGM_VAR_NewMissionMusic =  nil; publicVariable "TRGM_VAR_NewMissionMusic";
-
-            //not saving when new day starts, we will save when points change (just incase day starts, but players exit anyway and nothing done on that day)
-            //if (TRGM_VAR_SaveType != 0) then {
-            //        [TRGM_VAR_SaveType,false] spawn TRGM_SERVER_fnc_serverSave;
-            //};
-
         };
-
 
         if (isServer) then {
             TRGM_VAR_MissionLoaded =  false; publicVariable "TRGM_VAR_MissionLoaded";
             [false] call TRGM_SERVER_fnc_setTimeAndWeather;
-            call TRGM_SERVER_fnc_startInfMission;
+            private _startInfMissionHandle = [] spawn TRGM_SERVER_fnc_startInfMission;
+            waitUntil { sleep 5; scriptDone _startInfMissionHandle; };
         };
-
-    }
-    else {
+    } else {
         [(localize "STR_TRGM2_StartMission_Hint")] remoteExec ["TRGM_GLOBAL_fnc_notify", 0];
     };
 

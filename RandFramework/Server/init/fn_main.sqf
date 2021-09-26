@@ -101,36 +101,31 @@ waitUntil { TRGM_VAR_bAndSoItBegins };
 TRGM_VAR_PopulateLoadingWait_percentage = 0; publicVariable "TRGM_VAR_PopulateLoadingWait_percentage";
 
 [format["Mission Core: %1", "Init"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[5] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_MANAGE_IDX isEqualTo 1) then {
     ["Initialize"] call BIS_fnc_dynamicGroups;//Exec on Server
 };
 
 format["Mission Core: %1", "GroupManagementSet"] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 call TRGM_SERVER_fnc_initUnitVars;
 
 [format["Mission Core: %1", "GlobalVarsSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 call TRGM_GLOBAL_fnc_buildEnemyFaction;
 [format["Mission Core: %1", "EnemyGlobalVarsSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 call TRGM_GLOBAL_fnc_buildFriendlyFaction;
 [format["Mission Core: %1", "FriendlyGlobalVarsSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 call CUSTOM_MISSION_fnc_SetEnemyFaction; //if TRGM_VAR_useCustomEnemyFaction set to true within this sqf, will overright the above enemy faction data
 call CUSTOM_MISSION_fnc_SetMilitiaFaction; //if TRGM_VAR_useCustomMilitiaFaction set to true within this sqf, will overright the above enemy faction data
 [format["Mission Core: %1", "EnemyFactionSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 call CUSTOM_MISSION_fnc_SetFriendlyFaction; //if TRGM_VAR_useCustomFriendlyFaction set to true within this sqf, will overright the above enemy faction data
 [format["Mission Core: %1", "FriendlyLoadoutSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[10] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 // Fix any changed types
 if (typeName sCivilian != "ARRAY") then {sCivilian = [sCivilian]};
@@ -256,15 +251,13 @@ if (call TRGM_GETTER_fnc_bTransportEnabled) then {
     [TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;
 };
 [format["Mission Core: %1", "TransportScriptRun"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[15] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 TRGM_VAR_CustomObjectsSet = true; publicVariable "TRGM_VAR_CustomObjectsSet";
 
 [format["Mission Core: %1", "FriendlyObjectsSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 [format["Mission Core: %1", "EnemyFactionDataProcessed"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 private _isAceRespawnWithGear = false;
 if (call TRGM_GLOBAL_fnc_isCbaLoaded && call TRGM_GLOBAL_fnc_isAceLoaded) then {
@@ -273,30 +266,25 @@ if (call TRGM_GLOBAL_fnc_isCbaLoaded && call TRGM_GLOBAL_fnc_isAceLoaded) then {
 };
 
 [format["Mission Core: %1", "savePreDeathGear"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 {
     if (!isPlayer _x) then {
         [_x] call TRGM_GLOBAL_fnc_setLoadout;
-        if (!isNil("_isAceRespawnWithGear")) then {
-            if (!_isAceRespawnWithGear) then {
-                _x addEventHandler ["Respawn", { [_this select 0] call TRGM_GLOBAL_fnc_setLoadout; }];
-            };
+        if (!isNil("_isAceRespawnWithGear") && {!_isAceRespawnWithGear}) then {
+            _x addEventHandler ["Respawn", { [_this select 0] call TRGM_GLOBAL_fnc_setLoadout; }];
         };
     };
 } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
 [format["Mission Core: %1", "setLoadout ran"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 box1 allowDamage false;
 [box1, (if (isMultiplayer) then {playableUnits} else {switchableUnits})] call TRGM_GLOBAL_fnc_initAmmoBox;
 
 [format["Mission Core: %1", "boxCargo set"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
-
 [format["Mission Core: %1", "PreCustomObjectSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 waitUntil { TRGM_VAR_CustomObjectsSet };
+
+[20] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 [endMissionBoard] remoteExec ["removeAllActions"];
 [endMissionBoard2] remoteExec ["removeAllActions"];
@@ -320,7 +308,6 @@ if (TRGM_VAR_iMissionIsCampaign && isMultiplayer && isServer) then {
 [endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_EndMission",{_this spawn TRGM_SERVER_fnc_attemptEndMission;}]] remoteExec ["addAction", 0];
 
 [format["Mission Core: %1", "PostCustomObjectSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 if (TRGM_VAR_iUseRevive > 0 && {isNil "AIS_MOD_ENABLED"}) then {
     call AIS_Core_fnc_preInit;
@@ -329,7 +316,6 @@ if (TRGM_VAR_iUseRevive > 0 && {isNil "AIS_MOD_ENABLED"}) then {
 };
 
 [format["Mission Core: %1", "AIS Script Run"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 
 // Place in unit init to have them deleted in MP: this setVariable ["MP_ONLY", true, true];
@@ -346,7 +332,7 @@ if (!isMultiplayer) then {
 [format["Mission Core: %1", "DoFollowRun"], true] call TRGM_GLOBAL_fnc_log;
 
 [format["Mission Core: %1", "CoreFinished"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[25] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 TRGM_VAR_CoreCompleted = true; publicVariable "TRGM_VAR_CoreCompleted";
 TRGM_VAR_BadPoints = 0; publicVariable "TRGM_VAR_BadPoints";
@@ -354,21 +340,16 @@ TRGM_VAR_BadPointsReason = ""; publicVariable "TRGM_VAR_BadPointsReason";
 TRGM_VAR_MaxBadPoints = 1; publicVariable "TRGM_VAR_MaxBadPoints";
 [format["Mission Core: %1", "BadPointsSet"], true] call TRGM_GLOBAL_fnc_log;
 
+[30] call TRGM_GLOBAL_fnc_populateLoadingWait;
+
 if (TRGM_VAR_iMissionIsCampaign) then {
     if (isServer) then {
         [] spawn TRGM_SERVER_fnc_initCampaign;
     };
-    // Campaign doesn't load tasks right away, fake mission loaded as to not confuse players.
-    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
-    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
-    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
-    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
-    [] call TRGM_GLOBAL_fnc_populateLoadingWait;
 } else {
     [] spawn TRGM_SERVER_fnc_startMission;
 };
 [format["Mission Core: %1", "InitCampaign/StartMission ran"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 waitUntil { TRGM_VAR_MissionLoaded; };
 
@@ -378,14 +359,12 @@ waitUntil { TRGM_VAR_MissionLoaded; };
     _x setVariable ["DontDelete",true];
 } forEach nearestObjects [getMarkerPos "mrkHQ", ["all"], 2000];
 [format["Mission Core: %1", "DontDeleteSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 if (isMultiplayer && {!(TRGM_VAR_iMissionIsCampaign)}) then {
     [] spawn TRGM_SERVER_fnc_checkAnyPlayersAlive;
 };
 
 [format["Mission Core: %1", "NonAliveEndCheckRunning"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 if (TRGM_VAR_iAllowNVG isEqualTo 0) then {
     {
@@ -396,29 +375,19 @@ if (TRGM_VAR_iAllowNVG isEqualTo 0) then {
     } forEach allUnits;
 };
 [format["Mission Core: %1", "NVGStateSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 [] spawn TRGM_SERVER_fnc_playBaseRadioEffect;
 [format["Mission Core: %1", "PlayBaseRadioEffect"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 [] spawn TRGM_SERVER_fnc_weatherAffectsAI;
-
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
-
 [] spawn TRGM_SERVER_fnc_sandStormEffect;
 
-// [] spawn TRGM_GLOBAL_fnc_animateAnimals; // This is nice and all, but it adds an uneeded cost to performance and spams RPT
-
-[format["Mission Core: %1", "AnimalStateSet"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 if (TRGM_VAR_iMissionIsCampaign) then {
     [] remoteExec ["TRGM_SERVER_fnc_postStartMission"];
 };
 
 [format["Mission Core: %1", "RunFlashLightState"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 private _iEnemyFlashLightOption = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SELECT_ENEMY_FLASHLIGHTS_IDX;
 if (_iEnemyFlashLightOption isEqualTo 0) then {_iEnemyFlashLightOption = selectRandom [1,2]}; //1=yes, 2=no
@@ -438,7 +407,7 @@ if (_iEnemyFlashLightOption isEqualTo 1) then {
 
 waitUntil { TRGM_VAR_AllInitScriptsFinished; };
 [format["Mission Core: %1", "Main Init Complete"], true] call TRGM_GLOBAL_fnc_log;
-[] call TRGM_GLOBAL_fnc_populateLoadingWait;
+[100] call TRGM_GLOBAL_fnc_populateLoadingWait;
 if !(TRGM_VAR_iMissionIsCampaign) then {
     [(localize "STR_TRGM2_startInfMission_SoItBegin")] call TRGM_GLOBAL_fnc_notifyGlobal;
 };

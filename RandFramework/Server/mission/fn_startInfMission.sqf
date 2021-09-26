@@ -1,8 +1,9 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_startInfMission";
-
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (!isServer) exitWith {};
 
+[35, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 ["Mission Setup: 16", true] call TRGM_GLOBAL_fnc_log;
 
@@ -166,6 +167,8 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
 
 ["Mission Setup: 12.5", true] call TRGM_GLOBAL_fnc_log;
 
+[45, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+
 private _populateAOHandles = [];
 
 while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
@@ -182,14 +185,14 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     private _bIsMainObjective = _IsMainObjs select TRGM_VAR_InfTaskCount; if (isNil "_bIsMainObjective") then { _bIsMainObjective = false; }; //more chance of bad things, and set middle area stuff around (comms, base etc...)
     private _MarkerType = _MarkerTypes select TRGM_VAR_InfTaskCount; if (isNil "_MarkerType") then { _MarkerType = "hd_dot"; };//"Empty" or other
     private _bCreateTask = _CreateTasks select TRGM_VAR_InfTaskCount; if (isNil "_bCreateTask") then { _bCreateTask = true; };
+    private _bIsHidden = _MarkerType isEqualTo "empty"; if (isNil "_bIsHidden") then { _bIsHidden = false; };
     private _SamePrevAO = _SamePrevAOStats select TRGM_VAR_InfTaskCount; if (isNil "_SamePrevAO") then { _SamePrevAO = false; };
     private _allowFriendlyIns = true;
     private _bSideMissionsCivOnlyToUse = _bSideMissionsCivOnly select TRGM_VAR_InfTaskCount;
 
-    if (_MarkerTypes select 0 isEqualTo "empty") then {
+    if ((_MarkerTypes select 0) isEqualTo "empty") then {
         TRGM_VAR_MainIsHidden =  true; publicVariable "TRGM_VAR_MainIsHidden";
-    }
-    else {
+    } else {
         TRGM_VAR_MainIsHidden =  false; publicVariable "TRGM_VAR_MainIsHidden";
     };
 
@@ -469,7 +472,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                 if (_bInfor1Found) then {
                     TRGM_VAR_ObjectivePositions pushBack [_inf1X,_inf1Y];
                     publicVariable "TRGM_VAR_ObjectivePositions";
-                    if (_MarkerType isEqualTo "empty") then {
+                    if (_bIsHidden) then {
                         TRGM_VAR_HiddenPossitions pushBack [_inf1X,_inf1Y];
                         publicVariable "TRGM_VAR_HiddenPossitions";
                     };
@@ -511,7 +514,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
                     _markerInformant1 setMarkerShape "ICON";
 
-                    private _hideAoMarker = _MarkerType isEqualTo "empty";
+                    private _hideAoMarker = _bIsHidden;
                     if (!isNil "TRGM_VAR_HideAoMarker") then {
                         _hideAoMarker = TRGM_VAR_HideAoMarker;
                     };
@@ -535,12 +538,10 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                     if (!_bIsSameMrkPos) then {
                         if (_bIsMainObjective) then {
                             _markerInformant1 setMarkerText format["(%2) %1 ",_MissionTitle,localize "STR_TRGM2_startInfMission_MainMission"];
-                        }
-                        else {
+                        } else {
                             if (_bCreateTask) then {
                                 _markerInformant1 setMarkerText format["%1 ",_MissionTitle];
-                            }
-                            else {
+                            } else {
                                 _markerInformant1 setMarkerText format["(%2) %1 ",_MissionTitle,localize "STR_TRGM2_startInfMission_OptionalMission"];
                             };
                         };
@@ -548,15 +549,14 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
                     if (_iTaskIndex isEqualTo 0 && TRGM_VAR_iMissionIsCampaign) then {_allowFriendlyIns = false};
 
-                    if (_bSideMissionsCivOnlyToUse && !_bCreateTask) then {
+                    if (_bSideMissionsCivOnlyToUse && !_bIsHidden) then {
                         TRGM_VAR_ClearedPositions pushBack [_inf1X,_inf1Y];
                         publicVariable "TRGM_VAR_ClearedPositions";
                         _markerInformant1 setMarkerText (localize "STR_TRGM2_startInfMission_markerInformant");
                         if (!_SamePrevAO) then {
                             _populateAOHandles pushBack ([[_inf1X,_inf1Y],_iThisTaskType,_infBuilding,_bIsMainObjective, _iTaskIndex, _allowFriendlyIns, true] spawn TRGM_SERVER_fnc_populateSideMission);
                         };
-                    }
-                    else {
+                    } else {
                         if (!_SamePrevAO) then {
                             _populateAOHandles pushBack ([[_inf1X,_inf1Y],_iThisTaskType,_infBuilding,_bIsMainObjective, _iTaskIndex, _allowFriendlyIns] spawn TRGM_SERVER_fnc_populateSideMission);
                         };
@@ -564,27 +564,21 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
                     //[_sTaskDescription] call TRGM_GLOBAL_fnc_notify;
 
-                    if (_bCreateTask) then {
-                        if (_bIsCampaign) then {
-                            [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], _sTaskDescription, format[localize "STR_TRGM2_startInfMission_MissionDayTitle",_iTaskIndex+1,_MissionTitle],""]] call FHQ_fnc_ttAddTasks;
-                            TRGM_VAR_ActiveTasks pushBack format["InfSide%1",_iTaskIndex];
-                            publicVariable "TRGM_VAR_ActiveTasks";
-                        }
-                        else {
-                            if (!_HasNonHiddenObjective && _HasHiddenObjective) then {
-                                [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], "Objective unknown, recon the area!", format["%1 : %2",_iTaskIndex+1,"Objective Unknown"],""]] call FHQ_fnc_ttAddTasks;
-                            }
-                            else {
-                                [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], _sTaskDescription, format["%1 : %2",_iTaskIndex+1,_MissionTitle],""]] call FHQ_fnc_ttAddTasks;
-                            };
-
-                            TRGM_VAR_ActiveTasks pushBack format["InfSide%1",_iTaskIndex];
-                            publicVariable "TRGM_VAR_ActiveTasks";
+                    if (_bIsCampaign) then {
+                        [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], _sTaskDescription, format[localize "STR_TRGM2_startInfMission_MissionDayTitle",_iTaskIndex+1,_MissionTitle],""]] call FHQ_fnc_ttAddTasks;
+                        TRGM_VAR_ActiveTasks pushBack format["InfSide%1",_iTaskIndex];
+                        publicVariable "TRGM_VAR_ActiveTasks";
+                    } else {
+                        if (_bIsHidden) then {
+                            [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], "Objective unknown, recon the area!", format["%1 : %2",_iTaskIndex+1,"Objective Unknown"],""]] call FHQ_fnc_ttAddTasks;
+                        } else {
+                            [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], _sTaskDescription, format["%1 : %2",_iTaskIndex+1,_MissionTitle],""]] call FHQ_fnc_ttAddTasks;
                         };
+                        TRGM_VAR_ActiveTasks pushBack format["InfSide%1",_iTaskIndex];
+                        publicVariable "TRGM_VAR_ActiveTasks";
                     };
                 };
-            }
-            else {
+            } else {
                 _bInfor1Found = false;
             };
         };
@@ -603,6 +597,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     TRGM_VAR_InfTaskCount = TRGM_VAR_InfTaskCount + 1;
 };
 
+[50, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 ["Mission Setup: 7", true] call TRGM_GLOBAL_fnc_log;
 
@@ -637,9 +632,70 @@ else {
 
 ["Mission Setup: 6", true] call TRGM_GLOBAL_fnc_log;
 
+[55, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+
+// waitUntil { sleep 5; ({scriptDone _x;} count _populateAOHandles) isEqualTo (count _populateAOHandles); };
+
+[75, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+
 //now we have all our location positinos, we can set other area stuff
-private _setAreaEventsHandle = [] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
-waitUntil { sleep 5; scriptDone _setAreaEventsHandle; };
+{
+    [80 + (_forEachIndex * 2), TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+    if !(_x in TRGM_VAR_HiddenPossitions) then {
+        private _setAreaEventsHandle = [_x] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
+        waitUntil { sleep 5; scriptDone _setAreaEventsHandle; };
+    };
+} forEach TRGM_VAR_ObjectivePositions;
+
+if (TRGM_VAR_IsFullMap) then {
+    ["Loading Full Map Events : BEGIN", true] call TRGM_GLOBAL_fnc_log;
+    //worldName call BIS_fnc_mapSize << equals the width in meters
+    //altis is 30720
+    //kujari is 16384 wide
+    //STratis is 8192
+    private _mapSizeTxt = "LARGE";
+    private _mapSize = worldName call BIS_fnc_mapSize;
+    if (_mapSize < 13000) then {
+        _mapSizeTxt = "MEDIUM"
+    };
+    if (_mapSize < 10000) then {
+        _mapSizeTxt = "SMALL"
+    };
+    private _mainObjPos = TRGM_VAR_ObjectivePositions select 0;
+
+    private _setDownCivCarEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
+    waitUntil { sleep 5; scriptDone _setDownCivCarEventHandle; };
+    private _setDownedChopperEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
+    waitUntil { sleep 5; scriptDone _setDownedChopperEventHandle; };
+    // private _setATMineEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
+    // waitUntil { sleep 5; scriptDone _setATMineEventHandle; };
+    private _setIEDEventHandle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
+    waitUntil { sleep 5; scriptDone _setIEDEventHandle; };
+    private _setIEDEvent2Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
+    waitUntil { sleep 5; scriptDone _setIEDEvent2Handle; };
+
+    if (_mapSizeTxt isEqualTo "MEDIUM" || _mapSizeTxt isEqualTo "LARGE") then {
+        private _setIEDEvent3Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
+        waitUntil { sleep 5; scriptDone _setIEDEvent3Handle; };
+        private _setIEDEvent4Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
+        waitUntil { sleep 5; scriptDone _setIEDEvent4Handle; };
+        // private _setATMineEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
+        // waitUntil { sleep 5; scriptDone _setATMineEvent2Handle; };
+    };
+    if (_mapSizeTxt isEqualTo "LARGE") then {
+        private _setDownCivCarEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
+        waitUntil { sleep 5; scriptDone _setDownCivCarEvent2Handle; };
+        private _setDownedChopperEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
+        waitUntil { sleep 5; scriptDone _setDownedChopperEvent2Handle; };
+        private _setIEDEvent5Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
+        waitUntil { sleep 5; scriptDone _setIEDEvent5Handle; };
+    };
+
+    ["Loading Full Map Events : END", true] call TRGM_GLOBAL_fnc_log;
+    [95, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
+};
+
+[98, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 ["Mission Setup: 2", true] call TRGM_GLOBAL_fnc_log;
 

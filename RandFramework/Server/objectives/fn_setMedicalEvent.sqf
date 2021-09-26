@@ -2,9 +2,7 @@
 params ["_posOfAO"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-
-
-if (isNil "_posOfAO") exitWith {};
+if (!isServer || isNil "_posOfAO") exitWith {};
 
 call TRGM_SERVER_fnc_initMissionVars;
 private _requiredItemIndex = selectRandom [0,1,2];

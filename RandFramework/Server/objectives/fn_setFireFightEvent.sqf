@@ -2,9 +2,8 @@
 params ["_posOfAO", "_eventType"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-
 //1=fullWar  2=AOOnly  3=WarzoneOnly 4=warzoneOnlyFullWar
-if (isNil "_posOfAO" || isNil "_eventType" || !(_eventType in [1, 2, 3, 4])) exitWith {};
+if (!isServer || isNil "_posOfAO" || isNil "_eventType" || !(_eventType in [1, 2, 3, 4])) exitWith {};
 
 call TRGM_SERVER_fnc_initMissionVars;
 

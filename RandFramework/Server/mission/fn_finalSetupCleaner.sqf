@@ -3,8 +3,6 @@
 //check if any of TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas are near
 //if so, delete any friendly units
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-
-
 {
     private _currentFriendCpPos = _x;
     private _enemyNear = false;

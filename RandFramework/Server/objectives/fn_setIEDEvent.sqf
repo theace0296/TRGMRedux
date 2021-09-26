@@ -2,6 +2,8 @@
 params ["_posOfAO",["_roadRange",2000],["_showMarker",false],["_forceTrap",false],["_objIED",nil],["_IEDType",nil],["_isFullMap",false]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (!isServer || isNil "_posOfAO") exitWith {};
+
 if (_isFullMap) then {
     ["Loading Full Map Events : IED Event", true] call TRGM_GLOBAL_fnc_log;
 } else {
@@ -240,34 +242,37 @@ if (_eventLocationPos select 0 > 0) then {
         if (random 1 < .50) then {_mainVeh setHit ["wheel_2_2_steering",1];};
         _mainVeh setDamage selectRandom[0,0.7];
 
-        private _bWaiting = true;
-        while {_bWaiting} do {
-            if (!(alive _mainVeh) || _mainVeh getVariable ["isDefused",false]) then {
-                _bWaiting = false;
-            };
+        [_mainVeh, _bIsTrap, _roadBlockSidePos] spawn {
+            private _mainVeh = _this select 0;
+            private _bIsTrap = _this select 1;
+            private _roadBlockSidePos = _this select 2;
+            private _bWaiting = true;
+            while {_bWaiting} do {
+                if (!(alive _mainVeh) || _mainVeh getVariable ["isDefused",false]) then {
+                    _bWaiting = false;
+                };
 
-            if (_bIsTrap) then {
-                //LandVehicle
-                if (alive _mainVeh) then {
-                    private _nearUnits = nearestObjects [(_roadBlockSidePos), ["LandVehicle"], 10];
-                    {
-                        if (((driver _x) in switchableUnits || (driver _x) in playableUnits) && (alive _mainVeh)) then {
-                            private _type = selectRandom ["Bomb_03_F","Missile_AA_04_F","M_Mo_82mm_AT_LG","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo"];
-                            private _li_aaa = _type createVehicle ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
-                            _li_aaa setDamage 1;
-                            _mainVeh setVariable ["isDefused",true, true];
-                            [localize "STR_TRGM2_IEDOmteresting"] call TRGM_GLOBAL_fnc_notifyGlobal;
-                        };
-                        if (!_bWaiting) exitWith {true};
-                    } forEach _nearUnits;
+                if (_bIsTrap) then {
+                    //LandVehicle
+                    if (alive _mainVeh) then {
+                        private _nearUnits = nearestObjects [(_roadBlockSidePos), ["LandVehicle"], 10];
+                        {
+                            if (((driver _x) in switchableUnits || (driver _x) in playableUnits) && (alive _mainVeh)) then {
+                                private _type = selectRandom ["Bomb_03_F","Missile_AA_04_F","M_Mo_82mm_AT_LG","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo"];
+                                private _li_aaa = _type createVehicle ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
+                                _li_aaa setDamage 1;
+                                _mainVeh setVariable ["isDefused",true, true];
+                                [localize "STR_TRGM2_IEDOmteresting"] call TRGM_GLOBAL_fnc_notifyGlobal;
+                            };
+                            if (!_bWaiting) exitWith {true};
+                        } forEach _nearUnits;
+                    };
+                };
+                if (_bWaiting) then {
+                    sleep 5;
                 };
             };
-
-            if (_bWaiting) then {
-                sleep 5;
-            };
-        };
-
+        }
 
     };
 } else {

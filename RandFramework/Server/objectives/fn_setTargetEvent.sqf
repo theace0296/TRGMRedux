@@ -1,8 +1,10 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setTargetEvent";
-
 params ["_posOfAO",["_roadRange",2000],["_showMarker",false],["_forceTrap",false],["_objTarget",nil],["_isCache",false],["_isMainTask",false]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (!isServer || isNil "_posOfAO") exitWith {};
+
+["Loading Events : Target Event", true] call TRGM_GLOBAL_fnc_log;
 
 call TRGM_SERVER_fnc_initMissionVars;
 
@@ -85,8 +87,6 @@ if (!_isCache && count _nearestRoads > 0) then {
 
                 private _posOfTarget = [_mainVeh] call TRGM_GLOBAL_fnc_getRealPos;
 
-                ["Mission Events: Target 6", true] call TRGM_GLOBAL_fnc_log;
-
                 if (random 1 < .33) then {
                     [_posOfTarget] spawn TRGM_SERVER_fnc_createEnemySniper;
                 };
@@ -112,8 +112,6 @@ if (!_isCache && count _nearestRoads > 0) then {
                     private _thisIsDirectionAwayFromAO = true;
                     [_posOfTarget,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100,true,random 1 < .33,false] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
-
-                ["Mission Events: Target 4", true] call TRGM_GLOBAL_fnc_log;
             };
         };
     };
@@ -179,43 +177,45 @@ if (_isCache) then {
 
         //two guards at door!!!
         private _building = (nearestBuilding _posCache);
-        private _spawnedUnit = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-        _spawnedUnit setpos (_building buildingExit 0);
+        if !(isNil "_building") then {
+            private _spawnedUnit = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            _spawnedUnit setpos (_building buildingExit 0);
 
-        private _direction = [_building,_spawnedUnit] call BIS_fnc_DirTo;
-        _spawnedUnit setDir _direction;
-        _spawnedUnit setFormDir _direction;
+            private _direction = [_building,_spawnedUnit] call BIS_fnc_DirTo;
+            _spawnedUnit setDir _direction;
+            _spawnedUnit setFormDir _direction;
 
-        private _i = 1;
-        private _minDis = 7;
-        private _doLoop = true;
-        private _checkedPositions = [];
-        while {_doLoop && _i < 20} do
-        {
-            private _newPos = (_building buildingExit _i);
-            private _allowed = true;
+            private _i = 1;
+            private _minDis = 7;
+            private _doLoop = true;
+            private _checkedPositions = [];
+            while {_doLoop && _i < 20} do
             {
-                if !(_x distance _newPos > _minDis) then {
-                    _allowed = false;
+                private _newPos = (_building buildingExit _i);
+                private _allowed = true;
+                {
+                    if !(_x distance _newPos > _minDis) then {
+                        _allowed = false;
+                    };
+                } forEach _checkedPositions;
+                _checkedPositions pushBack _newPos;
+                if (_allowed) then {
+                    //_doLoop = false;
+                    private _spawnedUnit2 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), _newPos, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    private _direction2 = [_building,_spawnedUnit2] call BIS_fnc_DirTo;
+                    _spawnedUnit2 setDir _direction2;
+                    _spawnedUnit2 setFormDir _direction2;
                 };
-            } forEach _checkedPositions;
-            _checkedPositions pushBack _newPos;
-            if (_allowed) then {
-                //_doLoop = false;
-                private _spawnedUnit2 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), _newPos, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                private _direction2 = [_building,_spawnedUnit2] call BIS_fnc_DirTo;
-                _spawnedUnit2 setDir _direction2;
-                _spawnedUnit2 setFormDir _direction2;
+                _i = _i + 1;
             };
-            _i = _i + 1;
-        };
 
-        private _spawnedUnit3 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-        [getPos _building, [_spawnedUnit3], -1, false, false,false] spawn TRGM_SERVER_fnc_zenOccupyHouse;
+            private _spawnedUnit3 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            [getPos _building, [_spawnedUnit3], -1, false, false,false] spawn TRGM_SERVER_fnc_zenOccupyHouse;
 
-        if (random 1 < .50) then {
-            private _spawnedUnit4 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            [getPos _building, [_spawnedUnit4], -1, false, false,false] spawn TRGM_SERVER_fnc_zenOccupyHouse;
+            if (random 1 < .50) then {
+                private _spawnedUnit4 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                [getPos _building, [_spawnedUnit4], -1, false, false,false] spawn TRGM_SERVER_fnc_zenOccupyHouse;
+            };
         };
     } else {
         _objectiveCreated = false;

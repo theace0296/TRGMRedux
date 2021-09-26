@@ -52,6 +52,8 @@ if (_bAllow) then {
     {
         deleteWaypoint _x
     } foreach waypoints group _escortPilot;
+
+    [15, TRGM_VAR_iMissionIsCampaign] call TRGM_GLOBAL_fnc_populateLoadingWait;
     sleep 0.2;
     [] remoteExec ["TRGM_SERVER_fnc_startMission",0,true];
     //[(localize "STR_TRGM2_attemptendmission_Ending")] call TRGM_GLOBAL_fnc_notify;

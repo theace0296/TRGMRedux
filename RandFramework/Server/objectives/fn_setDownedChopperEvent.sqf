@@ -2,6 +2,8 @@
 params ["_mainObjPos",["_isFullMap",false]];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (!isServer || isNil "_mainObjPos") exitWith {};
+
 if (_isFullMap) then {
     ["Loading Full Map Events : Down Chopper Event", true] call TRGM_GLOBAL_fnc_log;
 } else {
@@ -136,20 +138,25 @@ _markerEventMedi setMarkerShape "ICON";
 _markerEventMedi setMarkerType "hd_dot";
 _markerEventMedi setMarkerText (localize "STR_TRGM2_distressSignal_military");
 
-private _doLoop = true;
-while {_doLoop} do
-{
-    if (!alive(_downedCiv)) then {
-        _doLoop = false;
+[_downedCiv, _completedMessage, _PointsAdjustMessage] spawn {
+    private _downedCiv = _this select 0;
+    private _completedMessage = _this select 1;
+    private _PointsAdjustMessage = _this select 2;
+    private _doLoop = true;
+    while {_doLoop} do
+    {
+        if (!alive(_downedCiv)) then {
+            _doLoop = false;
+        };
+        if (_downedCiv distance (getMarkerPos "mrkHQ") < 300) then {
+            _doLoop = false;
+            [_completedMessage] call TRGM_GLOBAL_fnc_notifyGlobal;
+            [0.3, _PointsAdjustMessage] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
+            [_downedCiv] join grpNull;
+            deleteVehicle _downedCiv;
+        };
+        sleep 10;
     };
-    if (_downedCiv distance (getMarkerPos "mrkHQ") < 300) then {
-        _doLoop = false;
-        [_completedMessage] call TRGM_GLOBAL_fnc_notifyGlobal;
-        [0.3, _PointsAdjustMessage] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
-        [_downedCiv] join grpNull;
-        deleteVehicle _downedCiv;
-    };
-    sleep 10;
 };
 
 true;

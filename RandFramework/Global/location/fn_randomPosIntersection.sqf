@@ -1,5 +1,4 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_randomPosIntersection";
-scriptname "BIS_fnc_randomPosIntersection";
 /*
     Author: Riccardo Argiolas
 

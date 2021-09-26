@@ -1,13 +1,14 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setOtherAreaStuff";
-///*orangestest
-
+params ["_mainObjPos"];
 format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
+if (!isServer) exitWith {};
+
+if (isNil "_mainObjPos") then {_mainObjPos = TRGM_VAR_ObjectivePositions select 0;};
 
 call TRGM_SERVER_fnc_initMissionVars;
-private _mainObjPos = TRGM_VAR_ObjectivePositions select 0;
 
-["Mission Events: Comms 10", true] call TRGM_GLOBAL_fnc_log;
+["Mission Events: CommsStart", true] call TRGM_GLOBAL_fnc_log;
 
 //Check if radio tower is near
 private _Towers = nearestObjects [_mainObjPos, TRGM_VAR_TowerBuildings, TRGM_VAR_TowerRadius];
@@ -19,9 +20,7 @@ private _TowersNear = [];
     }
 } forEach _Towers;
 
-["Mission Events: Comms 9", true] call TRGM_GLOBAL_fnc_log;
 if (count _TowersNear > 0) then {
-    ["Mission Events: Comms 8", true] call TRGM_GLOBAL_fnc_log;
     TRGM_VAR_TowerBuild = selectRandom _TowersNear;
     publicVariable "TRGM_VAR_TowerBuild";
     [TRGM_VAR_TowerBuild, [localize "STR_TRGM2_TRENDfncsetOtherAreaStuff_CheckEnemyComms",{[TRGM_VAR_IntelShownType, "CommsTower"] spawn TRGM_GLOBAL_fnc_showIntel;},[TRGM_VAR_TowerBuild]]] remoteExec ["addAction", 0, true];
@@ -36,7 +35,6 @@ if (count _TowersNear > 0) then {
     _towerMarkrer setMarkerType "hd_unknown";
     _towerMarkrer setMarkerText "Intel";
 
-    ["Mission Events: Comms 7", true] call TRGM_GLOBAL_fnc_log;
     if (_distanceHQ > TRGM_VAR_SideMissionMinDistFromBase) then {
         TRGM_VAR_bHasCommsTower =  true; publicVariable "TRGM_VAR_bHasCommsTower";
         TRGM_VAR_CommsTowerPos =  [_TowerX, _TowerY]; publicVariable "TRGM_VAR_CommsTowerPos";
@@ -49,11 +47,8 @@ if (count _TowersNear > 0) then {
         private _wp4PosTower = [ _wayX - _PatrolDist, _wayY + _PatrolDist, 0];
         private _wp5PosTower = [ _wayX + _PatrolDist, _wayY + _PatrolDist, 0];
 
-        ["Mission Events: Comms 6", true] call TRGM_GLOBAL_fnc_log;
         if (!(surfaceIsWater _wp1PosTower) && !(surfaceIsWater _wp2PosTower) && !(surfaceIsWater _wp3PosTower) && !(surfaceIsWater _wp4PosTower)) then {
-            ["Mission Events: Comms 5", true] call TRGM_GLOBAL_fnc_log;
             //1 in (_maxGroups*2) chance of having an AA/AT guy
-
             private _DiamPatrolGroupTower = createGroup TRGM_VAR_EnemySide;
                 if (random 1 < .50) then {
                     [_DiamPatrolGroupTower, call sAAManToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
@@ -80,9 +75,6 @@ if (count _TowersNear > 0) then {
             [_DiamPatrolGroupTower, 4] setWaypointType "CYCLE";
             _DiamPatrolGroupTower setBehaviour "SAFE";
         };
-        ["Mission Events: Comms 4", true] call TRGM_GLOBAL_fnc_log;
-
-        ["Mission Events: Comms 3", true] call TRGM_GLOBAL_fnc_log;
 
         private _trg = createTrigger ["EmptyDetector", position TRGM_VAR_TowerBuild];
         _trg setVariable ["DelMeOnNewCampaignDay",true];
@@ -91,145 +83,110 @@ if (count _TowersNear > 0) then {
         private _sTriggerString = "!alive(nearestObject [[" + _sSTringPos + "], '" + TRGM_VAR_TowerClassName + "'])";
 
         _trg setTriggerStatements [_sTriggerString, "TRGM_VAR_bCommsBlocked = true; publicVariable ""TRGM_VAR_bCommsBlocked""; [this] spawn TRGM_SERVER_fnc_commsBlocked;", ""];
-        ["Mission Events: Comms 2", true] call TRGM_GLOBAL_fnc_log;
-
-        ["Mission Events: Comms 1", true] call TRGM_GLOBAL_fnc_log;
     };
 };
 
 ["Mission Events: CommsEND", true] call TRGM_GLOBAL_fnc_log;
 
-
-["Loading Events : 15", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos,1900,false,false,nil, false] spawn TRGM_SERVER_fnc_setTargetEvent;
+    private _handle = [_mainObjPos,1900,false,false,nil, false] spawn TRGM_SERVER_fnc_setTargetEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-["Loading Events : 14", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos,1900,false,false,nil, true] spawn TRGM_SERVER_fnc_setTargetEvent;
+    private _handle = [_mainObjPos,1900,false,false,nil, true] spawn TRGM_SERVER_fnc_setTargetEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-["Loading Events : 13", true] call TRGM_GLOBAL_fnc_log;
+// if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+//     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent;
+//     waitUntil { sleep 5; scriptDone _handle; };
+//     sleep 1;
+// };
+
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-["Loading Events : 12", true] call TRGM_GLOBAL_fnc_log;
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
-    sleep 1;
-};
-
-["Loading Events : 11", true] call TRGM_GLOBAL_fnc_log;
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent;
-    sleep 1;
-};
-["Loading Events : 10", true] call TRGM_GLOBAL_fnc_log;
 if (selectRandom TRGM_VAR_ChanceOfOccurance || !isNil("TRGM_VAR_ForceWarZoneLoc")) then {
     if (!isNil("TRGM_VAR_ForceWarZoneLoc")) then {
-        [TRGM_VAR_ForceWarZoneLoc,4] spawn TRGM_SERVER_fnc_setFireFightEvent;
+        private _handle = [TRGM_VAR_ForceWarZoneLoc,4] spawn TRGM_SERVER_fnc_setFireFightEvent;
+        waitUntil { sleep 5; scriptDone _handle; };
     } else {
-        [_mainObjPos,4] spawn TRGM_SERVER_fnc_setFireFightEvent;
+        private _handle = [_mainObjPos,4] spawn TRGM_SERVER_fnc_setFireFightEvent;
+        waitUntil { sleep 5; scriptDone _handle; };
     };
     sleep 1;
 };
-["Loading Events : 9", true] call TRGM_GLOBAL_fnc_log;
+
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setMedicalEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setMedicalEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
-["Loading Events : 8", true] call TRGM_GLOBAL_fnc_log;
+
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
-["Loading Events : 7", true] call TRGM_GLOBAL_fnc_log;
+
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setDownConvoyEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setDownConvoyEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
-["Loading Events : 6", true] call TRGM_GLOBAL_fnc_log;
+
 if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
 
 
 //these are more likely to show (instead of using TRGM_VAR_ChanceOfOccurance), as a lot of times, these are not a trap, just an empty vehicle or a pile of rubbish
-["Loading Events : 5", true] call TRGM_GLOBAL_fnc_log;
+
 if (random 1 < .66) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
-["Loading Events : 4", true] call TRGM_GLOBAL_fnc_log;
+
 if (random 1 < .66) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
-["Loading Events : 3", true] call TRGM_GLOBAL_fnc_log;
+
 if (random 1 < .66) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
-["Loading Events : 2", true] call TRGM_GLOBAL_fnc_log;
+
 if (random 1 < .66) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
-["Loading Events : 1", true] call TRGM_GLOBAL_fnc_log;
+
 if (random 1 < .66) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
-["Loading Events : 0", true] call TRGM_GLOBAL_fnc_log;
+
 if (random 1 < .66) then {
-    [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
 ["Loading Events : END", true] call TRGM_GLOBAL_fnc_log;
-
-//worldName call BIS_fnc_mapSize << equals the width in meters
-//altis is 30720
-//kujari is 16384 wide
-//STratis is 8192
-private _mapSizeTxt = "LARGE";
-private _mapSize = worldName call BIS_fnc_mapSize;
-if (_mapSize < 13000) then {
-    _mapSizeTxt = "MEDIUM"
-};
-if (_mapSize < 10000) then {
-    _mapSizeTxt = "SMALL"
-};
-
-if (TRGM_VAR_IsFullMap) then {
-    ["Loading Full Map Events : BEGIN", true] call TRGM_GLOBAL_fnc_log;
-
-    [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
-    [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
-    [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
-    [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-    [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-
-    if (_mapSizeTxt isEqualTo "MEDIUM" || _mapSizeTxt isEqualTo "LARGE") then {
-        [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-        [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-        [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
-    };
-    if (_mapSizeTxt isEqualTo "LARGE") then {
-        [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
-        [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
-        [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-    };
-
-    ["Loading Full Map Events : END", true] call TRGM_GLOBAL_fnc_log;
-
-};
 
 true;

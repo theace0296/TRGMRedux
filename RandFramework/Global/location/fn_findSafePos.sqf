@@ -25,10 +25,6 @@ params [
     ["_object", "C_Quadbike_01_F", [objNull, ""]]
 ];
 
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-
-
-
 switch (typeName _object) do {
     case ("OBJECT") : {_object = typeOf _object};
 };

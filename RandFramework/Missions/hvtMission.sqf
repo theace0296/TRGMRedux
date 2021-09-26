@@ -171,10 +171,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             sleep 5; //allow five seconds for any scripts to be run on officer before he moves e.g. if set as hostage when friendly rebels)
 
             while {alive(_objMan) && {behaviour _objMan isEqualTo "SAFE"}} do {
-                [_objManName,_thisInitPos,_objMan,75] spawn TRGM_SERVER_fnc_hvtWalkAround;
+                private _walkAroundHandle = [_objManName,_thisInitPos,_objMan,75] spawn TRGM_SERVER_fnc_hvtWalkAround;
                 sleep 2;
                 waitUntil {sleep 1; speed _objMan < 0.5};
                 sleep 10;
+                waitUntil { sleep 1; scriptDone _walkAroundHandle; };
             };
         };
         [_sInformant1Name,_initPos] spawn TRGM_LOCAL_fnc_walkingGuyLoop;

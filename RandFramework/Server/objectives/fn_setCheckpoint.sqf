@@ -470,18 +470,12 @@ if (_PosFound) then {
                 group _objMan setBehaviour "SAFE";
             };
 
-            while {
-                alive(_objMan) && {
-                    behaviour _objMan isEqualto "SAFE"
-                }
-            } do {
-                [_objManname, _thisinitPos, _objMan, 35] spawn TRGM_SERVER_fnc_hvtWalkAround;
+            while { alive(_objMan) && {behaviour _objMan isEqualto "SAFE"} } do {
+                private _walkAroundHandle = [_objManname, _thisinitPos, _objMan, 35] spawn TRGM_SERVER_fnc_hvtWalkAround;
                 sleep 2;
-                waitUntil {
-                    sleep 1;
-                    speed _objMan < 0.5
-                };
+                waitUntil { sleep 1; speed _objMan < 0.5; };
                 sleep 10;
+                waitUntil { sleep 1; scriptDone _walkAroundHandle; };
             };
         };
         [_sCheckpointguyname, _pos5, _thisside] spawn TRGM_local_fnc_walkingGuyLoop;
