@@ -88,60 +88,71 @@ if (count _TowersNear > 0) then {
 
 ["Mission Events: CommsEND", true] call TRGM_GLOBAL_fnc_log;
 
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+private _chanceOfOccurance = 0.2;
+
+if (random 1 < _chanceOfOccurance) then {
+    _chanceOfOccurance = _chanceOfOccurance - 0.05;
     private _handle = [_mainObjPos,1900,false,false,nil, false] spawn TRGM_SERVER_fnc_setTargetEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+if (random 1 < _chanceOfOccurance) then {
+    _chanceOfOccurance = _chanceOfOccurance - 0.05;
     private _handle = [_mainObjPos,1900,false,false,nil, true] spawn TRGM_SERVER_fnc_setTargetEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-// if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+// if (random 1 < _chanceOfOccurance) then {
+//     _chanceOfOccurance = _chanceOfOccurance - 0.05;
 //     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent;
 //     waitUntil { sleep 5; scriptDone _handle; };
 //     sleep 1;
 // };
 
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+if (random 1 < _chanceOfOccurance) then {
+    _chanceOfOccurance = _chanceOfOccurance - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (selectRandom TRGM_VAR_ChanceOfOccurance || !isNil("TRGM_VAR_ForceWarZoneLoc")) then {
+if (random 1 < _chanceOfOccurance || !isNil("TRGM_VAR_ForceWarZoneLoc")) then {
     if (!isNil("TRGM_VAR_ForceWarZoneLoc")) then {
         private _handle = [TRGM_VAR_ForceWarZoneLoc,4] spawn TRGM_SERVER_fnc_setFireFightEvent;
         waitUntil { sleep 5; scriptDone _handle; };
     } else {
+        _chanceOfOccurance = _chanceOfOccurance - 0.05;
         private _handle = [_mainObjPos,4] spawn TRGM_SERVER_fnc_setFireFightEvent;
         waitUntil { sleep 5; scriptDone _handle; };
     };
     sleep 1;
 };
 
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+if (random 1 < _chanceOfOccurance) then {
+    _chanceOfOccurance = _chanceOfOccurance - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setMedicalEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+if (random 1 < _chanceOfOccurance) then {
+    _chanceOfOccurance = _chanceOfOccurance - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+if (random 1 < _chanceOfOccurance) then {
+    _chanceOfOccurance = _chanceOfOccurance - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setDownConvoyEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
+if (random 1 < _chanceOfOccurance) then {
+    _chanceOfOccurance = _chanceOfOccurance - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
@@ -151,37 +162,39 @@ if (selectRandom TRGM_VAR_ChanceOfOccurance) then {
 
 //these are more likely to show (instead of using TRGM_VAR_ChanceOfOccurance), as a lot of times, these are not a trap, just an empty vehicle or a pile of rubbish
 
-if (random 1 < .66) then {
+private _chanceOfIEDEvent = 0.66;
+
+if (random 1 < _chanceOfIEDEvent) then {
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (random 1 < .66) then {
+if (random 1 < _chanceOfIEDEvent) then {
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (random 1 < .66) then {
+if (random 1 < _chanceOfIEDEvent) then {
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (random 1 < .66) then {
+if (random 1 < _chanceOfIEDEvent) then {
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (random 1 < .66) then {
+if (random 1 < _chanceOfIEDEvent) then {
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;
 };
 
-if (random 1 < .66) then {
+if (random 1 < _chanceOfIEDEvent) then {
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     waitUntil { sleep 5; scriptDone _handle; };
     sleep 1;

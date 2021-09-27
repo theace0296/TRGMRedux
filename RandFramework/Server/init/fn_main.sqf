@@ -109,8 +109,6 @@ if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_MANAGE_IDX isEqualTo 
 
 format["Mission Core: %1", "GroupManagementSet"] call TRGM_GLOBAL_fnc_log;
 
-call TRGM_SERVER_fnc_initUnitVars;
-
 [format["Mission Core: %1", "GlobalVarsSet"], true] call TRGM_GLOBAL_fnc_log;
 
 call TRGM_GLOBAL_fnc_buildEnemyFaction;
@@ -135,17 +133,25 @@ TRGM_VAR_FactionSetupCompleted = true; publicVariable "TRGM_VAR_FactionSetupComp
 
 [HQMan] call TRGM_GLOBAL_fnc_setLoadout;
 
-private _airTransClassName = selectRandom (call SupplySupportChopperOptions);
 try {
+    private _airTransClassName = [chopper1, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
     if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName != typeOf chopper1}}) then {
         {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
-        private _safePos = ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos) findEmptyPosition [0, 20, _airTransClassName];
+        private _helipadPos = [heliPad1] call TRGM_GLOBAL_fnc_getRealPos;
+        private _safePos = _helipadPos findEmptyPosition [0, 20, _airTransClassName];
+        if !(count _safePos isEqualTo 3) then {
+            if (count _safePos isEqualTo 2) then {
+                _safePos = [_safePos # 0, _safePos # 1, _helipadPos # 2];
+            } else {
+                _safePos = _helipadPos;
+            };
+        };
         chopper1 = createVehicle [_airTransClassName, _safePos, [], 0, "NONE"];
         [TRGM_VAR_FriendlySide, chopper1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
         chopper1 setVehicleVarName "chopper1";
         publicVariable "chopper1";
         chopper1 allowDamage false;
-        chopper1 setPos ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos);
+        heliPad1 setPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
         chopper1 setVelocity [0, 0, 0];
         chopper1 setdamage 0;
         chopper1 engineOn false;
@@ -168,21 +174,28 @@ try {
             waitUntil { !([chopper1] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
             { _x enableAI "MOVE"; } forEach crew chopper1;
         };
-        chopper1 setPos ([heliPad1] call TRGM_GLOBAL_fnc_getRealPos);
     };
 } catch {};
 
-private _airSupClassName = selectRandom (call FriendlyChopper);
 try {
+    private _airSupClassName = [chopper2, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
     if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != typeOf chopper2}}) then {
         {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
-        private _safePos = ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos) findEmptyPosition [0, 20, _airSupClassName];
+        private _helipadPos = [airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos;
+        private _safePos = _helipadPos findEmptyPosition [0, 20, _airSupClassName];
+        if !(count _safePos isEqualTo 3) then {
+            if (count _safePos isEqualTo 2) then {
+                _safePos = [_safePos # 0, _safePos # 1, _helipadPos # 2];
+            } else {
+                _safePos = _helipadPos;
+            };
+        };
         chopper2 = createVehicle [_airSupClassName, _safePos, [], 0, "NONE"];
         [TRGM_VAR_FriendlySide, chopper2, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
         chopper2 setVehicleVarName "chopper2";
         publicVariable "chopper2";
         chopper2 allowDamage false;
-        chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
+        airSupportHeliPad setPos ([chopper2] call TRGM_GLOBAL_fnc_getRealPos);
         chopper2 setVelocity [0, 0, 0];
         chopper2 setdamage 0;
         chopper2 engineOn false;
@@ -198,7 +211,6 @@ try {
             waitUntil { !([chopper2] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
             { _x enableAI "MOVE"; } forEach crew chopper2;
         };
-        chopper2 setPos ([airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos);
     };
 } catch {};
 

@@ -233,7 +233,6 @@ if (isNil "TRGM_VAR_PunishmentTimer")                                then { TRGM
 if (isNil "TRGM_VAR_PunishmentRadius")                               then { TRGM_VAR_PunishmentRadius =  1000; publicVariable "TRGM_VAR_PunishmentRadius"; }; //if 0 will be no safezone
 
 /////// Mini mission and intel settings ///////
-if (isNil "TRGM_VAR_ChanceOfOccurance")                              then { TRGM_VAR_ChanceOfOccurance =  [true,false,false,false,false]; publicVariable "TRGM_VAR_ChanceOfOccurance"; };  //downed chopper, medical emergancy, downed convoy, etc...
 TRGM_VAR_IntelShownType = [1,2,3,4,5]; publicVariable "TRGM_VAR_IntelShownType";  // 1=Mortar    2=AAA    3=commsTower    4=checkpoints    5=ATMinefield
 if (isNil "TRGM_VAR_TowerRadius")                                    then { TRGM_VAR_TowerRadius =  3500; publicVariable "TRGM_VAR_TowerRadius"; };
 
