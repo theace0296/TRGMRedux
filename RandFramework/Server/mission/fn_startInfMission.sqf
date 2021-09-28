@@ -667,8 +667,8 @@ if (TRGM_VAR_IsFullMap) then {
     waitUntil { sleep 5; scriptDone _setDownCivCarEventHandle; };
     private _setDownedChopperEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
     waitUntil { sleep 5; scriptDone _setDownedChopperEventHandle; };
-    // private _setATMineEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
-    // waitUntil { sleep 5; scriptDone _setATMineEventHandle; };
+    private _setATMineEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
+    waitUntil { sleep 5; scriptDone _setATMineEventHandle; };
     private _setIEDEventHandle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
     waitUntil { sleep 5; scriptDone _setIEDEventHandle; };
     private _setIEDEvent2Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
@@ -679,8 +679,8 @@ if (TRGM_VAR_IsFullMap) then {
         waitUntil { sleep 5; scriptDone _setIEDEvent3Handle; };
         private _setIEDEvent4Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
         waitUntil { sleep 5; scriptDone _setIEDEvent4Handle; };
-        // private _setATMineEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
-        // waitUntil { sleep 5; scriptDone _setATMineEvent2Handle; };
+        private _setATMineEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
+        waitUntil { sleep 5; scriptDone _setATMineEvent2Handle; };
     };
     if (_mapSizeTxt isEqualTo "LARGE") then {
         private _setDownCivCarEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;

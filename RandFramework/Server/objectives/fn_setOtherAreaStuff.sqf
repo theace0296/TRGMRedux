@@ -104,12 +104,12 @@ if (random 1 < _chanceOfOccurance) then {
     sleep 1;
 };
 
-// if (random 1 < _chanceOfOccurance) then {
-//     _chanceOfOccurance = _chanceOfOccurance - 0.05;
-//     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent;
-//     waitUntil { sleep 5; scriptDone _handle; };
-//     sleep 1;
-// };
+if (random 1 < _chanceOfOccurance) then {
+    _chanceOfOccurance = _chanceOfOccurance - 0.05;
+    private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setATMineEvent;
+    waitUntil { sleep 5; scriptDone _handle; };
+    sleep 1;
+};
 
 if (random 1 < _chanceOfOccurance) then {
     _chanceOfOccurance = _chanceOfOccurance - 0.05;
