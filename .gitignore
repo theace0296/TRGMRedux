@@ -1,5 +1,6 @@
 copy.ps1
 updateNightly.ps1
+updateRelease.ps1
 launch.json
 tasks.json
 node_modules/

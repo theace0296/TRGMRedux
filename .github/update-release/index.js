@@ -37,7 +37,7 @@ const run = async () => {
 
     const releaseAssetsPath = getInput('path', { required: true });
     const releaseAssets = readdirSync(normalize(releaseAssetsPath))
-      .filter(file => extname(file).toLowerCase().includes('pbo'))
+      .filter(file => extname(file).toLowerCase().includes('pbo') || extname(file).toLowerCase().includes('zip'))
       .map(file =>
         isAbsolute(file) ? normalize(file) : normalize(resolve(releaseAssetsPath, file))
       )
