@@ -116,6 +116,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Pack Mission Files to Zip
+        run: |
+          Compress-Archive -Path "$($Env:GITHUB_WORKSPACE)\Publish\*.pbo" -DestinationPath "$($Env:GITHUB_WORKSPACE)\Publish\TRGM-Redux-Missions.zip"
+        shell: pwsh
+
       - name: Install Node
         uses: actions/setup-node@v2
         with:
