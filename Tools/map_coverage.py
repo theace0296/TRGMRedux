@@ -59,6 +59,7 @@ def get_formal_name_from_map_name(map_name):
         "winthera3": "Panthera (Winter)",
         "xcam_taunus": "X-Cam-Taunus",
         "stozec": "Gabreta",
+        "vn_khe_sanh": "Khe Sanh",
     }
     if map_name in formal_names:
         return formal_names[map_name]
