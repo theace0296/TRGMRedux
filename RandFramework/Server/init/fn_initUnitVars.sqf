@@ -191,11 +191,11 @@ else
 /////// Building arrays init ///////
 
 TRGM_VAR_BasicBuildings = [];
-"if (configName _x find 'Land_' isEqualTo 0 && {configName _x isKindOf 'Building' && {getnumber (_x >> 'numberOfDoors')  >= 1 or !(getarray (_x >> 'Ladders')  isEqualTo [])}}) then {TRGM_VAR_BasicBuildings pushBack configName _x}" configClasses (configFile >> "CfgVehicles") apply {configName _x};
+"if (configName _x isKindOf 'Building' && {getnumber (_x >> 'numberOfDoors')  >= 1 or !(getarray (_x >> 'Ladders')  isEqualTo [])}) then {TRGM_VAR_BasicBuildings pushBack configName _x}" configClasses (configFile >> "CfgVehicles") apply {configName _x};
 publicVariable "TRGM_VAR_BasicBuildings";
 
 TRGM_VAR_MilBuildings   = [];
-"if (configName _x find 'Land_' isEqualTo 0 && {configName _x isKindOf 'Building' && {(getnumber (_x >> 'numberOfDoors')  >= 1 or !(getarray (_x >> 'Ladders')  isEqualTo [])) && {getText( configFile >> 'CfgEditorSubCategories' >> getText( _x >> 'editorSubcategory' ) >> 'displayName' ) isEqualTo 'Military'}}}) then {TRGM_VAR_MilBuildings pushBack configName _x}" configClasses (configFile >> "CfgVehicles") apply {configName _x};
+"if (configName _x isKindOf 'Building' && {(getnumber (_x >> 'numberOfDoors')  >= 1 or !(getarray (_x >> 'Ladders')  isEqualTo [])) && {getText( configFile >> 'CfgEditorSubCategories' >> getText( _x >> 'editorSubcategory' ) >> 'displayName' ) isEqualTo 'Military'}}) then {TRGM_VAR_MilBuildings pushBack configName _x}" configClasses (configFile >> "CfgVehicles") apply {configName _x};
 publicVariable "TRGM_VAR_MilBuildings";
 
 TRGM_VAR_TowerBuildings = ["Land_TTowerBig_2_F","Land_TTowerBig_1_F (towertest)","land_Objects96","Land_wx_radiomast","LAND_uns_signaltower","rso_radiomast"];//,"Land_TTowerSmall_2_F","Land_TTowerSmall_1_F"];  //these small towers are too small for Altis or Malden.. looks strange if this is the comms tower and nearby is a massive unused tower
