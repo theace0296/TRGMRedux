@@ -273,6 +273,18 @@ if (call TRGM_GETTER_fnc_bTransportEnabled) then {
 
 TRGM_VAR_CustomObjectsSet = true; publicVariable "TRGM_VAR_CustomObjectsSet";
 
+try {
+    if !(isNil "SupProArti") then {
+        SupProArti setVariable ['BIS_SUPP_vehicles',str TRGM_VAR_WestArtillery,true];
+    };
+    if !(isNil "supReqAirSup") then {
+        supReqAirSup setVariable ['BIS_SUPP_vehicles',str (TRGM_VAR_WestPlanes + TRGM_VAR_WestArmedHelos),true];
+    };
+    if !(isNil "supReqSupDrop") then {
+        supReqSupDrop setVariable ['BIS_SUPP_vehicles',str TRGM_VAR_WestUnarmedHelos,true];
+    };
+} catch {};
+
 [format["Mission Core: %1", "FriendlyObjectsSet"], true] call TRGM_GLOBAL_fnc_log;
 
 [format["Mission Core: %1", "EnemyFactionDataProcessed"], true] call TRGM_GLOBAL_fnc_log;
@@ -363,6 +375,13 @@ TRGM_VAR_MaxBadPoints = 1; publicVariable "TRGM_VAR_MaxBadPoints";
 if (TRGM_VAR_iMissionIsCampaign) then {
     if (isServer) then {
         [] spawn TRGM_SERVER_fnc_initCampaign;
+        [] spawn {
+            [100] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
+            sleep 10;
+            TRGM_VAR_PopulateLoadingWait_percentage = 0; publicVariable "TRGM_VAR_PopulateLoadingWait_percentage";
+            waitUntil { TRGM_VAR_MissionLoaded; };
+            [30] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
+        };
     };
 } else {
     [] spawn TRGM_SERVER_fnc_startMission;
