@@ -1130,8 +1130,8 @@
                 <English>Your reputation needs to be higher to spawn vehicles</English>
             </Key>
             <Key ID="STR_TRGM2_SpawnVehicles_KIA">
-                <Original>Destoryed: %1</Original>
-                <English>Destoryed: %1</English>
+                <Original>Destroyed: %1</Original>
+                <English>Destroyed: %1</English>
             </Key>
             <Key ID="STR_TRGM2_ServerSave_Save1">
                 <Original>This campaign will saved each time your reputation changes.\n\nOnly you will be able to load this save data!\n\nThis save is only available to the current map</Original>
@@ -4006,6 +4006,19 @@
             <Key ID="STR_TRGM2_AmbushConvoyMissionDescription">
                 <Original>Intel has confirmed that a convoy is on route to the AO marked on the map</Original>
                 <English>Intel has confirmed that a convoy is on route to the AO marked on the map</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_DestroyArmoredVehiclesTitle">
+                <Original>Destroy Armored Vehicles</Original>
+                <English>Destroy Armored Vehicles</English>
+            </Key>
+            <Key ID="STR_TRGM2_DestroyArmoredVehiclesTask">
+                <Original>You have destroyed enemy armored vehicles, reputation increased</Original>
+                <English>You have destroyed enemy armored vehicles, reputation increased</English>
+            </Key>
+            <Key ID="STR_TRGM2_DestroyArmoredVehiclesDesc">
+                <Original>A few armored vehicles have been located, they are getting ready to reinforce an area in preperation of an attack. Locate and destroy these vehicles.</Original>
+                <English>A few armored vehicles have been located, they are getting ready to reinforce an area in preperation of an attack. Locate and destroy these vehicles.</English>
             </Key>
 
             <Key ID="STR_TRGM2_ClearAreaMissionTitle">

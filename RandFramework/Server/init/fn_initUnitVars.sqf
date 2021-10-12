@@ -317,6 +317,7 @@ TRGM_VAR_MissionParamTypesValues = [0,6,8,1,2,3,9,4,7,10,11,12,13,14,5]; publicV
 // 17 = Secure and Supply
 // 18 = Meeting Assassination
 // 19 = Convoy Ambush
+// 20 = Destroy armored vehicles
 // 99999 = CustomMission
 
 /*
@@ -326,8 +327,8 @@ Also, add new missions as cases in functions/mission/fn_startInfMission.sqf
 */
 
 // TRGM_VAR_SideMissionTasks   = [17]; publicVariable "TRGM_VAR_SideMissionTasks";
-TRGM_VAR_SideMissionTasks      = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]; publicVariable "TRGM_VAR_SideMissionTasks";
-TRGM_VAR_MainMissionTasks      = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]; publicVariable "TRGM_VAR_MainMissionTasks";
+TRGM_VAR_SideMissionTasks      = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]; publicVariable "TRGM_VAR_SideMissionTasks";
+TRGM_VAR_MainMissionTasks      = [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]; publicVariable "TRGM_VAR_MainMissionTasks";
 TRGM_VAR_MissionsThatHaveIntel = [1, 4, 5, 6]; publicVariable "TRGM_VAR_MissionsThatHaveIntel";
 
 TRGM_VAR_MissionParamObjectives       = [localize "STR_TRGM2_TRGMSetUnitGlobalVars_Random", localize "STR_TRGM2_startInfMission_MissionTitle1", localize "STR_TRGM2_startInfMission_MissionTitle2", localize "STR_TRGM2_startInfMission_MissionTitle3", localize "STR_TRGM2_startInfMission_MissionTitle4", localize "STR_TRGM2_startInfMission_MissionTitle5", localize "STR_TRGM2_startInfMission_MissionTitle6", localize "STR_TRGM2_startInfMission_MissionTitle7", localize "STR_TRGM2_startInfMission_MissionTitle8", localize "STR_TRGM2_startInfMission_MissionTitle9", localize "STR_TRGM2_startInfMission_MissionTitle10", localize "STR_TRGM2_startInfMission_MissionTitle11", localize "STR_TRGM2_startInfMission_MissionTitle12"];
@@ -353,6 +354,9 @@ TRGM_VAR_MissionParamObjectivesValues pushBack 18;
 
 TRGM_VAR_MissionParamObjectives       pushBack localize "STR_TRGM2_AmbushConvoyMissionTitle";
 TRGM_VAR_MissionParamObjectivesValues pushBack 19;
+
+TRGM_VAR_MissionParamObjectives       pushBack localize "STR_TRGM2_DestroyArmoredVehiclesTitle";
+TRGM_VAR_MissionParamObjectivesValues pushBack 20;
 
 if (TRGM_VAR_UseCustomMission) then {
     private _MissionTitle = [] call CUSTOM_MISSION_fnc_CustomMission;

@@ -376,6 +376,14 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             _args = ["Convoy eliminated, reputation increased.", 1, "Convoy eliminated"];
             ["Mission Setup: Generating Ambush Convoy", true] call TRGM_GLOBAL_fnc_log;
         };
+        case 20: {
+            ["Mission Setup: Init Destroy Armored vehicles", true] call TRGM_GLOBAL_fnc_log;
+            call MISSIONS_fnc_destroyVehiclesMission; //Destroy Armored vehicles
+            [localize "STR_TRGM2_DestroyArmoredVehiclesTitle"] call MISSION_fnc_CustomVars;
+            _bNewTaskSetup = true;
+            _args = [localize "STR_TRGM2_DestroyArmoredVehiclesTask", 1, "Destroyed Armor", selectRandom (call DestroyArmoredVeh), [localize "STR_TRGM2_DestroyArmoredVehiclesDesc"]];
+            ["Mission Setup: Generating Destroy Armored vehicles", true] call TRGM_GLOBAL_fnc_log;
+        };
         case 99999: {
             ["Mission Setup: Init Custom Mission", true] call TRGM_GLOBAL_fnc_log;
             call CUSTOM_MISSION_fnc_CustomMission; //Custom Mission
