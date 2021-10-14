@@ -93,8 +93,22 @@ class CfgRadio
     #include "RandFramework\Sounds\cfgRadio.hpp"
 };
 
+#define SPACER(INDEX) class Spacer_##INDEX##\
+{\
+    title = "";\
+    values[] = {""};\
+    texts[] = {""};\
+    default = "";\
+}
+
 class Params
 {
+    class DynamicSimulationOptions {
+        title = "~~ Dyanmic Simulation Options ~~";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
+    };
     class DynamicSimulationDistance
     {
         title = "Minimum distance between spawned units and players to enable AI simulation. (Setting to 'disabled' disables Dynamic Simulation)";
@@ -109,12 +123,26 @@ class Params
         texts[] = {"1","2","3","4","5","10","Disabled"};
         default = 2;
     };
+    SPACER(0);
+    class EnvironmentOptions {
+        title = "~~ Environment Options ~~";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
+    };
     class TimeMultiplier
     {
         title = "Sets the multiplier for real-world to in-game time.";
         values[] = {50,1,2,4,6,12};
         texts[] = {"0.5x (120 minutes real-world = 60 minutes in-game)","1 (60 minutes real-world = 60 minutes in-game)","2 (30 minutes real-world = 60 minutes in-game)","4 (15 minutes real-world = 60 minutes in-game)","6 (10 minutes real-world = 60 minutes in-game)","12 (5 minutes real-world = 60 minutes in-game)"};
         default = 1;
+    };
+    SPACER(1);
+    class CustomMissionOptions {
+        title = "~~ Custom Mission Options ~~";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
     };
     class OverrideMissionSetup
     {
@@ -129,6 +157,13 @@ class Params
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
         default = 0;
+    };
+    SPACER(2);
+    class CustomFactionOptions {
+        title = "~~ Custom Faction Options ~~";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
     };
     class CustomFriendlyFactionVehicles
     {
@@ -172,6 +207,13 @@ class Params
         texts[] = {"Disable","Enable"};
         default = 0;
     };
+    SPACER(3);
+    class CustomCampaignOptions {
+        title = "~~ Custom Campaign Options ~~";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
+    };
     class CustomCampaignObjectives
     {
         title = "Enable custom exclusions for campaign main objectives. (Configured in CustomMission/CustomCampaignObjectives.sqf)";
@@ -186,12 +228,26 @@ class Params
         texts[] = {"Disable","Enable"};
         default = 0;
     };
+    SPACER(4);
+    class AddonSpecificOptions {
+        title = "~~ Addon Specific Options ~~";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
+    };
     class EnableAceActions
     {
         title = "Enable ACE Actions";
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
         default = 0;
+    };
+    SPACER(5);
+    class TechnicalOptions {
+        title = "~~ Technical Options ~~";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
     };
     class DebugMode
     {
