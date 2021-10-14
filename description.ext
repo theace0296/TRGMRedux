@@ -93,6 +93,8 @@ class CfgRadio
     #include "RandFramework\Sounds\cfgRadio.hpp"
 };
 
+__COUNTER_RESET__;
+
 #define SPACER(INDEX) class Spacer_##INDEX##\
 {\
     title = "";\
@@ -123,7 +125,7 @@ class Params
         texts[] = {"1","2","3","4","5","10","Disabled"};
         default = 2;
     };
-    SPACER(0);
+    SPACER(__COUNTER__);
     class EnvironmentOptions {
         title = "~~ Environment Options ~~";
         values[] = {""};
@@ -137,7 +139,7 @@ class Params
         texts[] = {"0.5x (120 minutes real-world = 60 minutes in-game)","1 (60 minutes real-world = 60 minutes in-game)","2 (30 minutes real-world = 60 minutes in-game)","4 (15 minutes real-world = 60 minutes in-game)","6 (10 minutes real-world = 60 minutes in-game)","12 (5 minutes real-world = 60 minutes in-game)"};
         default = 1;
     };
-    SPACER(1);
+    SPACER(__COUNTER__);
     class CustomMissionOptions {
         title = "~~ Custom Mission Options ~~";
         values[] = {""};
@@ -158,7 +160,7 @@ class Params
         texts[] = {"Disable","Enable"};
         default = 0;
     };
-    SPACER(2);
+    SPACER(__COUNTER__);
     class CustomFactionOptions {
         title = "~~ Custom Faction Options ~~";
         values[] = {""};
@@ -207,7 +209,7 @@ class Params
         texts[] = {"Disable","Enable"};
         default = 0;
     };
-    SPACER(3);
+    SPACER(__COUNTER__);
     class CustomCampaignOptions {
         title = "~~ Custom Campaign Options ~~";
         values[] = {""};
@@ -228,7 +230,21 @@ class Params
         texts[] = {"Disable","Enable"};
         default = 0;
     };
-    SPACER(4);
+    SPACER(__COUNTER__);
+    class MissionGenerationOptions {
+        title = "~~ Mission Generation Options ~~";
+        values[] = {""};
+        texts[] = {""};
+        default = "";
+    };
+    class ReplaceFriendlyVehicles
+    {
+        title = "Enables the replacement of friendly vehicles with chosen faction vehicles";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 1;
+    };
+    SPACER(__COUNTER__);
     class AddonSpecificOptions {
         title = "~~ Addon Specific Options ~~";
         values[] = {""};
@@ -242,7 +258,7 @@ class Params
         texts[] = {"Disable","Enable"};
         default = 0;
     };
-    SPACER(5);
+    SPACER(__COUNTER__);
     class TechnicalOptions {
         title = "~~ Technical Options ~~";
         values[] = {""};
@@ -278,6 +294,8 @@ class Params
         default = 0;
     };
 };
+
+__COUNTER_RESET__;
 
 class RscTitles
 {

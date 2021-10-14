@@ -133,91 +133,95 @@ TRGM_VAR_FactionSetupCompleted = true; publicVariable "TRGM_VAR_FactionSetupComp
 
 [HQMan] call TRGM_GLOBAL_fnc_setLoadout;
 
-try {
-    private _airTransClassName = [chopper1, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
-    if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName != typeOf chopper1}}) then {
-        {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
-        private _helipadPos = [heliPad1] call TRGM_GLOBAL_fnc_getRealPos;
-        private _safePos = _helipadPos findEmptyPosition [0, 20, _airTransClassName];
-        if !(count _safePos isEqualTo 3) then {
-            if (count _safePos isEqualTo 2) then {
-                _safePos = [_safePos # 0, _safePos # 1, _helipadPos # 2];
-            } else {
-                _safePos = _helipadPos;
-            };
-        };
-        chopper1 = createVehicle [_airTransClassName, _safePos, [], 0, "NONE"];
-        [TRGM_VAR_FriendlySide, chopper1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
-        chopper1 setVehicleVarName "chopper1";
-        publicVariable "chopper1";
-        chopper1 allowDamage false;
-        heliPad1 setPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
-        chopper1 setVelocity [0, 0, 0];
-        chopper1 setdamage 0;
-        chopper1 engineOn false;
-        chopper1 lockDriver true;
-        chopper1D = driver chopper1;
-        chopper1D setVehicleVarName "chopper1D";
-        {_x allowDamage false;} forEach crew chopper1;
-        chopper1D allowDamage false;
-        chopper1D setCaptive true;
-        chopper1D disableAI "AUTOTARGET";
-        chopper1D disableAI "TARGET";
-        chopper1D disableAI "SUPPRESSION";
-        chopper1D disableAI "AUTOCOMBAT";
-        chopper1D setBehaviour "CARELESS";
-        publicVariable "chopper1D";
-        private _totalTurrets = [_airTransClassName, true] call BIS_fnc_allTurrets;
-        {chopper1 lockTurret [_x, true]} forEach _totalTurrets;
-        { _x disableAI "MOVE"; } forEach crew chopper1;
-        [] spawn {
-            waitUntil { !([chopper1] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
-            { _x enableAI "MOVE"; } forEach crew chopper1;
-        };
-    };
-} catch {};
+private _bReplaceFriendlyVehicles = [false, true] select ((["ReplaceFriendlyVehicles", 1] call BIS_fnc_getParamValue) isEqualTo 1);
 
-try {
-    private _airSupClassName = [chopper2, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
-    if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != typeOf chopper2}}) then {
-        {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
-        private _helipadPos = [airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos;
-        private _safePos = _helipadPos findEmptyPosition [0, 20, _airSupClassName];
-        if !(count _safePos isEqualTo 3) then {
-            if (count _safePos isEqualTo 2) then {
-                _safePos = [_safePos # 0, _safePos # 1, _helipadPos # 2];
-            } else {
-                _safePos = _helipadPos;
+if (_bReplaceFriendlyVehicles) then {
+    try {
+        private _airTransClassName = [chopper1, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
+        if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName != typeOf chopper1}}) then {
+            {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
+            private _helipadPos = [heliPad1] call TRGM_GLOBAL_fnc_getRealPos;
+            private _safePos = _helipadPos findEmptyPosition [0, 20, _airTransClassName];
+            if !(count _safePos isEqualTo 3) then {
+                if (count _safePos isEqualTo 2) then {
+                    _safePos = [_safePos # 0, _safePos # 1, _helipadPos # 2];
+                } else {
+                    _safePos = _helipadPos;
+                };
+            };
+            chopper1 = createVehicle [_airTransClassName, _safePos, [], 0, "NONE"];
+            [TRGM_VAR_FriendlySide, chopper1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
+            chopper1 setVehicleVarName "chopper1";
+            publicVariable "chopper1";
+            chopper1 allowDamage false;
+            heliPad1 setPos ([chopper1] call TRGM_GLOBAL_fnc_getRealPos);
+            chopper1 setVelocity [0, 0, 0];
+            chopper1 setdamage 0;
+            chopper1 engineOn false;
+            chopper1 lockDriver true;
+            chopper1D = driver chopper1;
+            chopper1D setVehicleVarName "chopper1D";
+            {_x allowDamage false;} forEach crew chopper1;
+            chopper1D allowDamage false;
+            chopper1D setCaptive true;
+            chopper1D disableAI "AUTOTARGET";
+            chopper1D disableAI "TARGET";
+            chopper1D disableAI "SUPPRESSION";
+            chopper1D disableAI "AUTOCOMBAT";
+            chopper1D setBehaviour "CARELESS";
+            publicVariable "chopper1D";
+            private _totalTurrets = [_airTransClassName, true] call BIS_fnc_allTurrets;
+            {chopper1 lockTurret [_x, true]} forEach _totalTurrets;
+            { _x disableAI "MOVE"; } forEach crew chopper1;
+            [] spawn {
+                waitUntil { !([chopper1] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+                { _x enableAI "MOVE"; } forEach crew chopper1;
             };
         };
-        chopper2 = createVehicle [_airSupClassName, _safePos, [], 0, "NONE"];
-        [TRGM_VAR_FriendlySide, chopper2, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
-        chopper2 setVehicleVarName "chopper2";
-        publicVariable "chopper2";
-        chopper2 allowDamage false;
-        airSupportHeliPad setPos ([chopper2] call TRGM_GLOBAL_fnc_getRealPos);
-        chopper2 setVelocity [0, 0, 0];
-        chopper2 setdamage 0;
-        chopper2 engineOn false;
-        chopper2 lockDriver true;
-        chopper2D = driver chopper2;
-        chopper2D setVehicleVarName "chopper2D";
-        publicVariable "chopper2D";
-        {_x allowDamage false;} forEach crew chopper2;
-        private _totalTurrets = [_airSupClassName, true] call BIS_fnc_allTurrets;
-        {chopper2 lockTurret [_x, true]} forEach _totalTurrets;
-        { _x disableAI "MOVE"; } forEach crew chopper2;
-        [] spawn {
-            waitUntil { !([chopper2] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
-            { _x enableAI "MOVE"; } forEach crew chopper2;
+    } catch {};
+
+    try {
+        private _airSupClassName = [chopper2, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
+        if (!isNil "chopper2" && {!(isNil "_airSupClassName") && {_airSupClassName != typeOf chopper2}}) then {
+            {deleteVehicle _x;} forEach crew chopper2 + [chopper2];
+            private _helipadPos = [airSupportHeliPad] call TRGM_GLOBAL_fnc_getRealPos;
+            private _safePos = _helipadPos findEmptyPosition [0, 20, _airSupClassName];
+            if !(count _safePos isEqualTo 3) then {
+                if (count _safePos isEqualTo 2) then {
+                    _safePos = [_safePos # 0, _safePos # 1, _helipadPos # 2];
+                } else {
+                    _safePos = _helipadPos;
+                };
+            };
+            chopper2 = createVehicle [_airSupClassName, _safePos, [], 0, "NONE"];
+            [TRGM_VAR_FriendlySide, chopper2, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
+            chopper2 setVehicleVarName "chopper2";
+            publicVariable "chopper2";
+            chopper2 allowDamage false;
+            airSupportHeliPad setPos ([chopper2] call TRGM_GLOBAL_fnc_getRealPos);
+            chopper2 setVelocity [0, 0, 0];
+            chopper2 setdamage 0;
+            chopper2 engineOn false;
+            chopper2 lockDriver true;
+            chopper2D = driver chopper2;
+            chopper2D setVehicleVarName "chopper2D";
+            publicVariable "chopper2D";
+            {_x allowDamage false;} forEach crew chopper2;
+            private _totalTurrets = [_airSupClassName, true] call BIS_fnc_allTurrets;
+            {chopper2 lockTurret [_x, true]} forEach _totalTurrets;
+            { _x disableAI "MOVE"; } forEach crew chopper2;
+            [] spawn {
+                waitUntil { !([chopper2] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
+                { _x enableAI "MOVE"; } forEach crew chopper2;
+            };
         };
-    };
-} catch {};
+    } catch {};
+};
 
 TRGM_VAR_transportHelosToGetActions = [chopper1];
 {
     try {
-        if (isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship"}) then {
+        if (_bReplaceFriendlyVehicles && {isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship"}}) then {
             private _faction = getText(configFile >> "CfgVehicles" >> typeOf _x >> "faction");
             private _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
             private _westFaction = (TRGM_VAR_AvailableFactions select _friendlyFactionIndex) select 0;
