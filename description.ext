@@ -93,8 +93,6 @@ class CfgRadio
     #include "RandFramework\Sounds\cfgRadio.hpp"
 };
 
-__COUNTER_RESET__;
-
 #define SPACER(INDEX) class Spacer_##INDEX##\
 {\
     title = "";\
@@ -294,8 +292,6 @@ class Params
         default = 0;
     };
 };
-
-__COUNTER_RESET__;
 
 class RscTitles
 {
