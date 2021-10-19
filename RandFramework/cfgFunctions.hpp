@@ -101,6 +101,7 @@ class TRGM_GLOBAL {
         class notify {};
         class notifyGlobal {};
         class populateLoadingWait {};
+        class timerGlobal {};
     };
 
     class ace {

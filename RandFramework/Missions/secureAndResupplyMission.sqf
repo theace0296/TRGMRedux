@@ -141,37 +141,21 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         sleep 10;
 
         (format[localize "STR_TRGM2_MinUntilSupplyChopperInArea", "5:00"]) call TRGM_GLOBAL_fnc_notifyGlobal;
-        [300, _iTaskIndex] spawn {
-            params ["_duration", "_taskIndex"];
-            _endTime = _duration + time;
-            while {_endTime - time >= 0 && !TRGM_VAR_OverrideSupplyChopperDelay} do {
-                _color = "#45f442";//green
-                _timeLeft = _endTime - time;
-                if (_timeLeft < 16) then {_color = "#eef441";};//yellow
-                if (_timeLeft < 6) then {_color = "#ff0000";};//red
-                if (_timeLeft < 0) exitWith {};
-                _content = parseText format ["Time Until Supplies Drop: <t color='%1'>--- %2 ---</t>", _color, [(_timeLeft/3600),"HH:MM:SS"] call BIS_fnc_timeToString];
-                [[_content, _duration + 1, _taskIndex, _taskIndex], {_this spawn TRGM_GUI_fnc_handleNotification}] remoteExec ["call"]; // After the first run, this will only update the text for the notification with index = _taskIndex
-            };
-        };
-        _timeout = 300 + time;
-        waitUntil {_timeout - time >= 0 || TRGM_VAR_OverrideSupplyChopperDelay}; //wait 5 mins before supply drop in area
+        private _timer1Handle = [300, _iTaskIndex, "Time Until Supplies Drop"] spawn TRGM_GLOBAL_fnc_timerGlobal;
+        waitUntil {scriptDone _timer1Handle}; //wait 5 mins before supply drop in area
+        sleep 5;
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;
+        sleep 5;
 
         private _spawnPos = _flag getRelPos[3000, random 360];
         private _exitPos = _flag getRelPos[25000, random 360];
         private _finishedVariable = format["SupplyDropped_%1", _iTaskIndex];
         private _finishedValue = 1;
-        private _resupplyUnit = ((allPlayers - (entities "HeadlessClient_F")) select {(_x distance _flag) < 150}) select 0;
+        private _resupplyUnit = selectRandom ((allPlayers - (entities "HeadlessClient_F")) select {(_x distance _flag) < 150});
         private _supplies1Handle = [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
-        waitUntil {
-            sleep 2;
-            (missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue) || scriptDone _supplies1Handle;
-        };
+        waitUntil { sleep 2; scriptDone _supplies1Handle; };
 
-        if !(missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue) then {
-            missionNamespace setVariable[format["SupplyDropped_%1", _iTaskIndex], _finishedValue];
-        };
+        missionNamespace setVariable[format["SupplyDropped_%1", _iTaskIndex], _finishedValue];
 
         _convoyVehicles = [call sTank1ArmedCar, selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), call sTank1ArmedCar];
         _convoyStartPos = _flag getRelPos[2000, random 360];
@@ -182,34 +166,19 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         sleep 10;
 
         (format[localize "STR_TRGM2_MinUntilSupplyChopperInArea", "5:00"]) call TRGM_GLOBAL_fnc_notifyGlobal;
-        [300, _iTaskIndex] spawn {
-            params ["_duration", "_taskIndex"];
-            _endTime = _duration + time;
-            while {_endTime - time >= 0 && !TRGM_VAR_OverrideSupplyChopperDelay} do {
-                _color = "#45f442";//green
-                _timeLeft = _endTime - time;
-                if (_timeLeft < 16) then {_color = "#eef441";};//yellow
-                if (_timeLeft < 6) then {_color = "#ff0000";};//red
-                if (_timeLeft < 0) exitWith {};
-                _content = parseText format ["Time Until Supplies Drop: <t color='%1'>--- %2 ---</t>", _color, [(_timeLeft/3600),"HH:MM:SS"] call BIS_fnc_timeToString];
-                [[_content, _duration + 1, _taskIndex, _taskIndex], {_this spawn TRGM_GUI_fnc_handleNotification}] remoteExec ["call"]; // After the first run, this will only update the text for the notification with index = _taskIndex
-            };
-        };
-        _timeout = 300 + time;
-        waitUntil {_timeout - time >= 0 || TRGM_VAR_OverrideSupplyChopperDelay}; //wait 5 mins before supply drop in area
+        private _timer2Handle = [300, _iTaskIndex, "Time Until Supplies Drop"] spawn TRGM_GLOBAL_fnc_timerGlobal;
+        waitUntil {scriptDone _timer2Handle}; //wait 5 mins before supply drop in area
+        sleep 5;
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;
+        sleep 5;
 
-
+        _spawnPos = _flag getRelPos[3000, random 360];
+        _exitPos = _flag getRelPos[25000, random 360];
         _finishedValue = 2;
+        _resupplyUnit = selectRandom ((allPlayers - (entities "HeadlessClient_F")) select {(_x distance _flag) < 150});
         private _supplies2Handle = [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
-        waitUntil {
-            sleep 2;
-            (missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue) || scriptDone _supplies2Handle;
-        };
-
-        if !(missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue) then {
-            missionNamespace setVariable[format["SupplyDropped_%1", _iTaskIndex], _finishedValue];
-        };
+        waitUntil { sleep 2; scriptDone _supplies2Handle; };
+        missionNamespace setVariable[format["SupplyDropped_%1", _iTaskIndex], _finishedValue];
 
         [_flag] spawn TRGM_SERVER_fnc_updateTask;
     };

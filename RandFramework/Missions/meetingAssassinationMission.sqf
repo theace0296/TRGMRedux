@@ -134,20 +134,8 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [[TRGM_VAR_FriendlySide, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
         [_sMessageOne] call TRGM_GLOBAL_fnc_notifyGlobal;
 
-        [_iWait, _iTaskIndex] spawn {
-            params ["_duration", "_taskIndex"];
-            _endTime = _duration + time;
-            while {_endTime - time >= 0} do {
-                _color = "#45f442";//green
-                _timeLeft = _endTime - time;
-                if (_timeLeft < 16) then {_color = "#eef441";};//yellow
-                if (_timeLeft < 6) then {_color = "#ff0000";};//red
-                if (_timeLeft < 0) exitWith {};
-                _content = parseText format ["Time Until HVT is in AO: <t color='%1'>--- %2 ---</t>", _color, [(_timeLeft/3600),"HH:MM:SS"] call BIS_fnc_timeToString];
-                [[_content, _duration + 1, _taskIndex, _taskIndex], {_this spawn TRGM_GUI_fnc_handleNotification}] remoteExec ["call"]; // After the first run, this will only update the text for the notification with index = _taskIndex
-            };
-        };
-        sleep _iWait;
+        private _hvtTimerHandle = [_iWait, _iTaskIndex, "Time Until HVT is in AO"] spawn TRGM_GLOBAL_fnc_timerGlobal;
+        waitUntil {scriptDone _hvtTimerHandle};
 
         _sMessageTwo = format["%1 is in the area and on way to AO (position is tracked and marked on map",name _mainHVT];
         [[TRGM_VAR_FriendlySide, "HQ"],_sMessageTwo] remoteExec ["sideChat", 0];

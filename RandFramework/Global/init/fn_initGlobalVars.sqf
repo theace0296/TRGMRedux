@@ -291,7 +291,7 @@ if (isNil "TRGM_VAR_iMissionIsCampaign")                      then {TRGM_VAR_iMi
 if (isNil "TRGM_VAR_iStartLocation")                          then {TRGM_VAR_iStartLocation = 2;                                      publicVariable "TRGM_VAR_iStartLocation";};
 if (isNil "TRGM_VAR_iUseRevive")                              then {TRGM_VAR_iUseRevive = 0;                                          publicVariable "TRGM_VAR_iUseRevive";};
 if (isNil "TRGM_VAR_iWeather")                                then {TRGM_VAR_iWeather = 1;                                            publicVariable "TRGM_VAR_iWeather";};
-if (isNil "TRGM_VAR_OverrideSupplyChopperDelay")              then {TRGM_VAR_OverrideSupplyChopperDelay = false;                      publicVariable "TRGM_VAR_OverrideSupplyChopperDelay"; };
+if (isNil "TRGM_VAR_OverrideTimer")                           then {TRGM_VAR_OverrideTimer = false;                                   publicVariable "TRGM_VAR_OverrideTimer"; };
 
 if (isServer) then {
     TRGM_VAR_serverFinishedInitGlobal = true; publicVariable "TRGM_VAR_serverFinishedInitGlobal";
