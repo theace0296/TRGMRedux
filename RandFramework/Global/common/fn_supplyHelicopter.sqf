@@ -1,6 +1,4 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_supplyHelicopter";
-
-
 params ["_finishedVariable", "_finishedValue", "_side", "_spawnPos", "_exitPos", "_destPos", "_unit"];
 
 format["SupplyHelicopter: %1, %2, %3, %4, %5, %6, %7", _finishedVariable, _finishedValue, _side, _spawnPos, _exitPos, _destPos, _unit] call TRGM_GLOBAL_fnc_log;
@@ -36,25 +34,19 @@ _heloGroup setCombatMode "BLUE";
     _airDropHelo setCaptive true;
 } forEach crew _airDropHelo;
 
-_airDropHelo setVariable ["TRGM_VAR_DroppedCrate", false];
-
-private _v1wp1 = _heloGroup addWaypoint [[(_spawnPos select 0), (_spawnPos select 1)], 100];
-[_heloGroup, 0] setWaypointStatements ["true", "(vehicle this) flyInHeight 200;"];
-[_heloGroup, 0] setWaypointSpeed "FULL";
-[_heloGroup, 0] setWaypointBehaviour "COMBAT";
-
-private _v1wp2 = _heloGroup addWaypoint [[(_destPos select 0), (_destPos select 1)], 100];
-[_heloGroup, 1] setWaypointStatements ["true", "(vehicle this) flyInHeight 200; "];
-[_heloGroup, 1] setWaypointSpeed "FULL";
-
-private _v1wp3 = _heloGroup addWaypoint [[(_exitPos select 0), (_exitPos select 1)], 100];
-[_heloGroup, 2] setWaypointStatements ["true", "(vehicle this) flyInHeight 200; (vehicle this) setVariable ['TRGM_VAR_DroppedCrate', true];"];
-[_heloGroup, 2] setWaypointSpeed "FULL";
-
+_airDropHelo doMove [(_spawnPos select 0), (_spawnPos select 1), 200];
 waitUntil {
     sleep 2;
-    _airDropHelo getVariable ["TRGM_VAR_DroppedCrate", false];
+    (_airDropHelo distance2D [(_spawnPos select 0), (_spawnPos select 1), 200]) < 100;
 };
+
+_airDropHelo doMove [(_destPos select 0), (_destPos select 1), 200];
+waitUntil {
+    sleep 2;
+    (_airDropHelo distance2D [(_destPos select 0), (_destPos select 1), 200]) < 100;
+};
+
+_airDropHelo doMove [(_exitPos select 0), (_exitPos select 1), 200];
 sleep 1;
 
 private _supplyObjectDummy = "B_supplyCrate_f" createVehicle[0, 0, 200];
@@ -86,14 +78,14 @@ deleteVehicle _supplyObjectDummy;
 "SmokeShellBlue" createVehicle _finalPos;
 sleep 0.1;
 private _supplyObject = "B_supplyCrate_f" createVehicle _finalPos;
-if !(isNil "_unit") then {
-    [_supplyObject, (units group _unit)] call TRGM_GLOBAL_fnc_initAmmoBox;
-};
+try {
+    if !(isNil "_unit") then {
+        [_supplyObject, (units group _unit)] call TRGM_GLOBAL_fnc_initAmmoBox;
+    };
+} catch {};
 _supplyObject allowDamage false;
 [_supplyObject] call TRGM_GLOBAL_fnc_setVehicleUpright;
 _supplyObject allowDamage true;
-
-_airDropHelo setVariable ["TRGM_VAR_DroppedCrate", false];
 
 {
     deleteVehicle _x;

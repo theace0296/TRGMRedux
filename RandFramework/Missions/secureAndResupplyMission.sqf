@@ -162,13 +162,16 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         private _exitPos = _flag getRelPos[25000, random 360];
         private _finishedVariable = format["SupplyDropped_%1", _iTaskIndex];
         private _finishedValue = 1;
-        private _resupplyUnit = ((allPlayers - (entities "HeadlessClient_F")) select {(_x distance _flag) < 150});
-        [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
+        private _resupplyUnit = ((allPlayers - (entities "HeadlessClient_F")) select {(_x distance _flag) < 150}) select 0;
+        private _supplies1Handle = [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
         waitUntil {
             sleep 2;
-            missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue;
+            (missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue) || scriptDone _supplies1Handle;
         };
 
+        if !(missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue) then {
+            missionNamespace setVariable[format["SupplyDropped_%1", _iTaskIndex], _finishedValue];
+        };
 
         _convoyVehicles = [call sTank1ArmedCar, selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), selectRandom (call UnarmedScoutVehicles), call sTank1ArmedCar];
         _convoyStartPos = _flag getRelPos[2000, random 360];
@@ -198,12 +201,15 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
 
         _finishedValue = 2;
-        [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
+        private _supplies2Handle = [_finishedVariable, _finishedValue, TRGM_VAR_FriendlySide, _spawnPos, _exitPos, [_flag] call TRGM_GLOBAL_fnc_getRealPos, _resupplyUnit] spawn TRGM_GLOBAL_fnc_supplyHelicopter;
         waitUntil {
             sleep 2;
-            missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue;
+            (missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue) || scriptDone _supplies2Handle;
         };
 
+        if !(missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] isEqualTo _finishedValue) then {
+            missionNamespace setVariable[format["SupplyDropped_%1", _iTaskIndex], _finishedValue];
+        };
 
         [_flag] spawn TRGM_SERVER_fnc_updateTask;
     };
