@@ -279,13 +279,13 @@ TRGM_VAR_CustomObjectsSet = true; publicVariable "TRGM_VAR_CustomObjectsSet";
 
 try {
     if !(isNil "SupProArti") then {
-        SupProArti setVariable ['BIS_SUPP_vehicles',str TRGM_VAR_WestArtillery,true];
+        SupProArti setVariable ['BIS_SUPP_vehicles',TRGM_VAR_WestArtillery,true];
     };
     if !(isNil "supReqAirSup") then {
-        supReqAirSup setVariable ['BIS_SUPP_vehicles',str (TRGM_VAR_WestPlanes + TRGM_VAR_WestArmedHelos),true];
+        supReqAirSup setVariable ['BIS_SUPP_vehicles',(TRGM_VAR_WestPlanes + TRGM_VAR_WestArmedHelos),true];
     };
     if !(isNil "supReqSupDrop") then {
-        supReqSupDrop setVariable ['BIS_SUPP_vehicles',str TRGM_VAR_WestUnarmedHelos,true];
+        supReqSupDrop setVariable ['BIS_SUPP_vehicles',TRGM_VAR_WestUnarmedHelos,true];
     };
 } catch {};
 
