@@ -548,15 +548,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                     };
 
                     if (!_bIsSameMrkPos) then {
-                        if (_bIsMainObjective) then {
-                            _markerInformant1 setMarkerText format["(%2) %1 ",_MissionTitle,localize "STR_TRGM2_startInfMission_MainMission"];
-                        } else {
-                            if (_bCreateTask) then {
-                                _markerInformant1 setMarkerText format["%1 ",_MissionTitle];
-                            } else {
-                                _markerInformant1 setMarkerText format["(%2) %1 ",_MissionTitle,localize "STR_TRGM2_startInfMission_OptionalMission"];
-                            };
-                        };
+                        _markerInformant1 setMarkerText format["%1 ",_MissionTitle];
                     };
 
                     if (_iTaskIndex isEqualTo 0 && TRGM_VAR_iMissionIsCampaign) then {_allowFriendlyIns = false};
