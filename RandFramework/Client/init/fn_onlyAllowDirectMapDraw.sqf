@@ -1,5 +1,5 @@
 // private _fnc_scriptName = "TRGM_CLIENT_fnc_onlyAllowDirectMapDraw";
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 
 while {isMultiplayer && (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MAP_DRAW_DIRECT_ONLY_IDX isEqualTo 1)} do {

@@ -22,7 +22,7 @@ if (isNil "_SaveType") then {_SaveType = 0};
 if (_SaveType > 2) then {_SaveType = 0};
 
 disableSerialization;
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 
 

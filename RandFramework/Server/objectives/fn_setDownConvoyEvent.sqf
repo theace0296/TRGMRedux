@@ -1,6 +1,6 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setDownConvoyEvent";
 params ["_posOfAO"];
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (!isServer || isNil "_posOfAO") exitWith {};
 
@@ -149,7 +149,7 @@ while {_iteration <= 3} do {
         _downedCivMedic setDir 270;
         _downedCivMedic addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_paramedicKilled;}]; //ParamedicKilled
 
-        [_downedCiv,["Carry",{
+        [_downedCiv,[localize "STR_TRGM2_fnpostinit_Carry",{
             private _civ = _this select 0;
             private _player = _this select 1;
             [_civ, _player] spawn TRGM_GLOBAL_fnc_carryAndJoinWounded;
@@ -165,8 +165,8 @@ while {_iteration <= 3} do {
                 };
                 if (_downedCiv distance (getMarkerPos "mrkHQ") < 500) then {
                     _doLoop = false;
-                    ["Wounded unit returned to base"] call TRGM_GLOBAL_fnc_notifyGlobal;
-                    [0.1, format["Brought wounded %1 to base",name _downedCiv]] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
+                    [localize "STR_TRGM2_DownedConvoy_Hint"] call TRGM_GLOBAL_fnc_notifyGlobal;
+                    [0.1, format[localize "STR_TRGM2_DownedConvoy_Message",name _downedCiv]] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
                     [_downedCiv] join grpNull;
                     deleteVehicle _downedCiv;
                 };
@@ -189,7 +189,7 @@ while {_iteration <= 3} do {
             _downedCiv2 playmove "Acts_CivilTalking_2";
             _downedCiv2 disableAI "anim";
             _downedCiv2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
-            [_downedCiv2, ["Ask if needs assistance",{["We need to get our wounded out of here, help us get these guys back to base!!"] call TRGM_GLOBAL_fnc_notify;},[_downedCiv2]]] remoteExec ["addAction", 0, true];
+            [_downedCiv2, [localize "STR_TRGM2_AskNeedsAssistanceAction",{[localize "STR_TRGM2_DownedConvoy_Speach"] call TRGM_GLOBAL_fnc_notify;},[_downedCiv2]]] remoteExec ["addAction", 0, true];
             private _directionFromMed2ToCiv2 = [_downedCivMedic2, _downedCiv2] call BIS_fnc_DirTo;
             _downedCivMedic2 setDir _directionFromMed2ToCiv2;
             private _directionFromCiv2ToMed2 = [_downedCiv2, _downedCivMedic2] call BIS_fnc_DirTo;

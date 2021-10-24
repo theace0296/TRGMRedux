@@ -1,6 +1,6 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_speakToFriendlyCheckpoint";
 params ["_thisCheckpointUnit", "_caller", "_id", "_thisArrayParams"];
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 
 
@@ -18,7 +18,7 @@ if (side _caller isEqualTo TRGM_VAR_FriendlySide) then {
             _checkpointRespawnMarker setMarkerType "Empty";
         };
     } else {
-        ["He doesnt seem to be saying much at this time"] call TRGM_GLOBAL_fnc_notify;
+        [localize "STR_TRGM2_SpeakToFriendlyCheckpoint_DontTell"] call TRGM_GLOBAL_fnc_notify;
     };
 };
 

@@ -684,6 +684,58 @@
                 <Spanish>No parece que diga mucho en este momento</Spanish>
                 <Korean>현재 그는 말해 줄 것이 없는 것 같다</Korean>
             </Key>
+            <Key ID="STR_TRGM2_DownedChopper_CompletedMessage0">
+                <Original>The stranded reporter has returned to base in one piece!, well done!</Original>
+                <English>The stranded reporter has returned to base in one piece!, well done!</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedChopper_CompletedMessage1">
+                <Original>The stranded medic has returned to base in one piece!, well done!</Original>
+                <English>The stranded medic has returned to base in one piece!, well done!</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedChopper_CompletedMessage2">
+                <Original>Our stranded guy has returned to base in one piece!, well done!</Original>
+                <English>Our stranded guy has returned to base in one piece!, well done!</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedChopper_PointsAdjustMessage0">
+                <Original>Reporter rescued</Original>
+                <English>Reporter rescued</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedChopper_PointsAdjustMessage1">
+                <Original>Paramedic rescued</Original>
+                <English>Paramedic rescued</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedChopper_PointsAdjustMessage2">
+                <Original>Friendly unit rescued</Original>
+                <English>Friendly unit rescued</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedChopper_Speach">
+                <Original>Please get me back to base!</Original>
+                <English>Please get me back to base!</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedChopper_SpeakTo">
+                <Original>Talk to wounded guy</Original>
+                <English>Talk to wounded guy</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedConvoy_Hint">
+                <Original>Wounded unit returned to base</Original>
+                <English>Wounded unit returned to base</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedConvoy_Message">
+                <Original>Brought wounded %1 to base</Original>
+                <English>Brought wounded %1 to base</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownedConvoy_Speach">
+                <Original>We need to get our wounded out of here, help us get these guys back to base!</Original>
+                <English>We need to get our wounded out of here, help us get these guys back to base!</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownCivCar_Message">
+                <Original>Helped a stranded civilian</Original>
+                <English>Helped a stranded civilian</English>
+            </Key>
+            <Key ID="STR_TRGM2_DownCivCar_Speach">
+                <Original>Please help, my car has broken down, I need to get home to my family!</Original>
+                <English>Please help, my car has broken down, I need to get home to my family!</English>
+            </Key>
             <Key ID="STR_TRGM2_startInfMission_MissionTitle1">
                 <Original>Hack Data</Original>
                 <English>Hack Data</English>
@@ -923,6 +975,14 @@
                 <Spanish>Opcional</Spanish>
                 <Korean>선택</Korean>
             </Key>
+            <Key ID="STR_TRGM2_startInfMission_UnknownMission">
+                <Original>Objective Unknown</Original>
+                <English>Objective Unknown</English>
+            </Key>
+            <Key ID="STR_TRGM2_startInfMission_UnknownMissionTitle">
+                <Original>Objective unknown, recon the area!</Original>
+                <English>Objective unknown, recon the area!</English>
+            </Key>
             <Key ID="STR_TRGM2_startInfMission_markerInformant">
                 <Original>An informat is located here.  No enemy reported at this location</Original>
                 <English>An informat is located here.  No enemy reported at this location</English>
@@ -940,8 +1000,8 @@
                 <Korean>일: %1 : %2</Korean>
             </Key>
             <Key ID="STR_TRGM2_startInfMission_RTBNextMission">
-                <Original>return to base for next assignment!!</Original>
-                <English>return to base for next assignment!!</English>
+                <Original>Return to base for next assignment!!</Original>
+                <English>Return to base for next assignment!!</English>
                 <Chinese>返回基地等待新的指派!!</Chinese>
                 <Chinesesimp>返回基地等待新的指派!!</Chinesesimp>
                 <Spanish>Vuelve a base para la siguiente misión!</Spanish>
@@ -954,6 +1014,18 @@
                 <Chinesesimp>第%1天任务结束</Chinesesimp>
                 <Spanish>Día %1 tarea completada</Spanish>
                 <Korean>%1 일의 작업 완료</Korean>
+            </Key>
+            <Key ID="STR_TRGM2_ObjectiveComplete">
+                <Original>Objective Completed.</Original>
+                <English>Objective Completed.</English>
+            </Key>
+            <Key ID="STR_TRGM2_ObjectiveCompleteRepIncreased">
+                <Original>Objective completed, reputation increased.</Original>
+                <English>Objective completed, reputation increased.</English>
+            </Key>
+            <Key ID="STR_TRGM2_ObjectiveFailed">
+                <Original>Objective Failed.</Original>
+                <English>Objective Failed.</English>
             </Key>
             <Key ID="STR_TRGM2_startInfMission_HoldReputation_Desc">
                 <Original>Make too many mistakes, kill civs, lose too many units, your reputation will lower.  Try not to make too many errors</Original>
@@ -1941,6 +2013,10 @@
                 <Chinesesimp>%1被杀害了</Chinesesimp>
                 <Spanish>%1 ha muerto</Spanish>
                 <Korean>%1 가 살해되었습니다</Korean>
+            </Key>
+            <Key ID="STR_TRGM2_ParamedicKilledBy">
+                <Original>Paramedic Killed by %1</Original>
+                <English>Paramedic Killed by %1</English>
             </Key>
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_Enemy1">
                 <Original>CSAT and FIA as militia</Original>
@@ -3380,6 +3456,10 @@
                 <Spanish>Arrastrar</Spanish>
                 <Korean>끌기</Korean>
             </Key>
+            <Key ID="STR_TRGM2_fnpostinit_JoinGroup">
+                <Original>Join Group</Original>
+                <English>Join Group</English>
+            </Key>
             <Key ID="STR_TRGM2_fnpostinit_Carry">
                 <Original>Carry</Original>
                 <English>Carry</English>
@@ -3607,6 +3687,38 @@
                 <Original>We have been informed of the location to a bomb and need it defused!  Speak to the informant to get the details to defuse the bomb (suggest making a note of the colour and code!)</Original>
                 <English>We have been informed of the location to a bomb and need it defused!  Speak to the informant to get the details to defuse the bomb (suggest making a note of the colour and code!)</English>
                 <Korean>우리는 폭탄의 위치를 알았고 폭탄을 해체해야합니다! 정보원이 폭탄을 해체하기위한 세부사항을 알려줄 것입니다. (색상과 코드를 꼭 기억하세요!)</Korean>
+            </Key>
+            <Key ID="STR_TRGM2_AskNeedsAssistanceAction">
+                <Original>Ask if needs assistance</Original>
+                <English>Ask if needs assistance</English>
+            </Key>
+            <Key ID="STR_TRGM2_MedSupplysNeededString">
+                <Original>Please can you supply us with %1 * %2.  Place them in this vehicle!</Original>
+                <English>Please can you supply us with %1 * %2.  Place them in this vehicle!</English>
+            </Key>
+            <Key ID="STR_TRGM2_MedEventThankYouString">
+                <Original>Thank you, this should help us get things under control</Original>
+                <English>Thank you, this should help us get things under control</English>
+            </Key>
+            <Key ID="STR_TRGM2_MedEventTaskString">
+                <Original>Assited with medical emergency</Original>
+                <English>Assited with medical emergency</English>
+            </Key>
+            <Key ID="STR_TRGM2_StandedMoveVehicle">
+                <Original>We are stranded in the middle of an AT mine area. please help move this car ovrt 100 meters in any direction from here!</Original>
+                <English>We are stranded in the middle of an AT mine area. please help move this car ovrt 100 meters in any direction from here!</English>
+            </Key>
+            <Key ID="STR_TRGM2_AttemptTalkToDeadGuy">
+                <Original>Is there a reason you are trying to talk to a dead guy?</Original>
+                <English>Is there a reason you are trying to talk to a dead guy?</English>
+            </Key>
+            <Key ID="STR_TRGM2_CivThanksForHelp">
+                <Original>Thank you for your help</Original>
+                <English>Thank you for your help</English>
+            </Key>
+            <Key ID="STR_TRGM2_MiniTaskHelpedCiv">
+                <Original>Helped a stranded friendly</Original>
+                <English>Helped a stranded friendly</English>
             </Key>
             <Key ID="STR_TRGM2_BombMissionDefuseAction">
                 <Original>Defuse Bomb</Original>
@@ -4020,6 +4132,10 @@
                 <Original>A few armored vehicles have been located, they are getting ready to reinforce an area in preperation of an attack. Locate and destroy these vehicles.</Original>
                 <English>A few armored vehicles have been located, they are getting ready to reinforce an area in preperation of an attack. Locate and destroy these vehicles.</English>
             </Key>
+            <Key ID="STR_TRGM2_DestroyArmoredVehiclesBoard">
+                <Original>Destroyed Armor</Original>
+                <English>Destroyed Armor</English>
+            </Key>
 
             <Key ID="STR_TRGM2_ClearAreaMissionTitle">
                 <Original>Secure and Resupply</Original>
@@ -4262,6 +4378,11 @@
             <Key ID="STR_TRGM2_jumpIntoWater">
                 <Original>Jump into Water</Original>
                 <English>Jump into Water</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_debugFunctionString">
+                <Original>%1 called by %2 on %3</Original>
+                <English>%1 called by %2 on %3</English>
             </Key>
 
         </Container>

@@ -1,6 +1,6 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setDownedChopperEvent";
 params ["_mainObjPos",["_isFullMap",false]];
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (!isServer || isNil "_mainObjPos") exitWith {};
 
@@ -13,8 +13,8 @@ if (_isFullMap) then {
 call TRGM_SERVER_fnc_initMissionVars;
 
 private _iVictimType = selectRandom [0,1,2];  //0=reporter, 1=medic, 2=friendlyPilot
-private _completedMessage = ["The stranded reporter has returned to base in one piece!, well done!", "The stranded medic has returned to base in one piece!, well done!", "Our stranded guy has returned to base in one piece!, well done!"] select _iVictimType;
-private _PointsAdjustMessage = ["Reporter rescued", "Paramedic rescued", "Friendly unit rescued"] select _iVictimType;
+private _completedMessage = localize (format ["STR_TRGM2_DownedChopper_CompletedMessage%1", _iVictimType]);
+private _PointsAdjustMessage = localize (format ["STR_TRGM2_DownedChopper_PointsAdjustMessage%1", _iVictimType]);
 private _sVictim = selectRandom ([Reporters, Paramedics, FriendlyVictims] select _iVictimType);
 private _sVictimVeh = selectRandom ([ReporterChoppers, AirAmbulances, FriendlyVictimVehs] select _iVictimType);
 
@@ -81,7 +81,7 @@ private _flatPos2 = [_flatPos , 10, 25, 3, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],_sVict
 private _group = createGroup civilian;
 private _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
 
-[_downedCiv,["Join Group",{
+[_downedCiv,[localize "STR_TRGM2_fnpostinit_JoinGroup",{
     private _civ = _this select 0;
     private _player = _this select 1;
     [_civ] join (group _player);
@@ -101,14 +101,14 @@ _downedCiv setDir (_downedCivDirection);
 _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
 private _bloodPool1 = createVehicle [selectRandom _bloodPools, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "CAN_COLLIDE"];
 _bloodPool1 setDir (floor(random 360));
-[_downedCiv, ["Talk to wounded guy",{["Please get me back to base!!"] call TRGM_GLOBAL_fnc_notify;},[_downedCiv]]] remoteExec ["addAction", 0, true];
+[_downedCiv, [localize "STR_TRGM2_DownedChopper_SpeakTo",{[localize "STR_TRGM2_DownedChopper_Speach"] call TRGM_GLOBAL_fnc_notify;},[_downedCiv]]] remoteExec ["addAction", 0, true];
 
 private _trialDir = (floor(random 360));
 private _trialPos = (getPos _bloodPool1) getPos [3,_trialDir];
 private _bloodTrail1 = createVehicle ["BloodTrail_01_New_F", _trialPos, [], 0, "CAN_COLLIDE"];
 _bloodTrail1 setDir _trialDir;
 
-[_downedCiv,["Carry",{
+[_downedCiv,[localize "STR_TRGM2_fnpostinit_Carry",{
     private _civ = _this select 0;
     private _player = _this select 1;
     [_civ, _player] spawn TRGM_GLOBAL_fnc_carryAndJoinWounded;

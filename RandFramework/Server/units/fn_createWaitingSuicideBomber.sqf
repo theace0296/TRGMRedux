@@ -1,7 +1,7 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_createWaitingSuicideBomber";
 //Must be set on a road!
 params ["_triggerArea"];
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 
 

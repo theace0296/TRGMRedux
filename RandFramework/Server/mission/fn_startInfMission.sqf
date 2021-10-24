@@ -1,5 +1,5 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_startInfMission";
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (!isServer) exitWith {};
 
@@ -381,14 +381,14 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_destroyVehiclesMission; //Destroy Armored vehicles
             [localize "STR_TRGM2_DestroyArmoredVehiclesTitle"] call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = [localize "STR_TRGM2_DestroyArmoredVehiclesTask", 1, "Destroyed Armor", selectRandom (call DestroyArmoredVeh), [localize "STR_TRGM2_DestroyArmoredVehiclesDesc"]];
+            _args = [localize "STR_TRGM2_DestroyArmoredVehiclesTask", 1, localize "STR_TRGM2_DestroyArmoredVehiclesBoard", selectRandom (call DestroyArmoredVeh), [localize "STR_TRGM2_DestroyArmoredVehiclesDesc"]];
             ["Mission Setup: Generating Destroy Armored vehicles", true] call TRGM_GLOBAL_fnc_log;
         };
         case 99999: {
             ["Mission Setup: Init Custom Mission", true] call TRGM_GLOBAL_fnc_log;
             call CUSTOM_MISSION_fnc_CustomMission; //Custom Mission
             call MISSION_fnc_CustomVars;
-            _args = ["Objective completed, reputation increased.", 1, "Objective completed"];
+            _args = [localize "STR_TRGM2_ObjectiveCompleteRepIncreased", 1, localize "STR_TRGM2_ObjectiveComplete"];
             ["Mission Setup: Generating Custom Mission", true] call TRGM_GLOBAL_fnc_log;
         };
         default { };
@@ -582,7 +582,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
                         publicVariable "TRGM_VAR_ActiveTasks";
                     } else {
                         if (_bIsHidden) then {
-                            [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], "Objective unknown, recon the area!", format["%1 : %2",_iTaskIndex+1,"Objective Unknown"],""]] call FHQ_fnc_ttAddTasks;
+                            [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], localize "STR_TRGM2_startInfMission_UnknownMissionTitle", format["%1 : %2",_iTaskIndex+1,localize "STR_TRGM2_startInfMission_UnknownMission"],""]] call FHQ_fnc_ttAddTasks;
                         } else {
                             [TRGM_VAR_FriendlySide,[format["InfSide%1",_iTaskIndex], _sTaskDescription, format["%1 : %2",_iTaskIndex+1,_MissionTitle],""]] call FHQ_fnc_ttAddTasks;
                         };
@@ -602,7 +602,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
         if (TRGM_VAR_MainMissionTitle != "") then {TRGM_VAR_CurrentZeroMissionTitle = TRGM_VAR_MainMissionTitle};
         publicVariable "TRGM_VAR_CurrentZeroMissionTitle";
         if (!_HasNonHiddenObjective && _HasHiddenObjective) then {
-            TRGM_VAR_MainMissionTitle = "Objective Unknown";
+            TRGM_VAR_MainMissionTitle = localize "STR_TRGM2_startInfMission_UnknownMission";
         };
     };
     ["Mission Setup: 8-0", true] call TRGM_GLOBAL_fnc_log;

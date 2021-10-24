@@ -3,13 +3,33 @@ import os
 import re
 import sys
 
-from sqf.parser import parse
+from sqf.parser import identify_token, parse_strings_and_comments, tokenize, parse_block, EndOfFile, _analyze_tokens, String
 import sqf.analyzer
 from sqf.exceptions import SQFParserError, SQFWarning
+
+unique_strings = []
+
+
+def parse(script):
+    parsed_tokens = parse_strings_and_comments(tokenize(script))
+    tokens = [identify_token(x) for x in parsed_tokens]
+    strings = list(filter(lambda x: isinstance(x, String) and ' ' in x.value and '_' not in x.value and ':' not in x.value and '\n' not in x.value, parsed_tokens))
+    if len(strings) > 0:
+        for x in strings:
+            if x.value not in unique_strings:
+                unique_strings.append(x.value)
+
+    result = parse_block(tokens + [EndOfFile()], _analyze_tokens)[0]
+
+    result.set_position((1, 1))
+
+    return result
 
 
 def string_not_in_exclusions_list(string):
     if "(not private)" in string:
+        return False
+    if "_fnc_scriptName" in string or "_fnc_scriptNameParent" in string:
         return False
     if "<Variable(get)>" in string:
         return False
@@ -129,6 +149,8 @@ def entry_point(args):
         exclude = list(map(lambda x: x if x.startswith(
             '/') else os.path.join(directory, x), args.exclude))
         analyze_dir(directory, writer, exceptions_list, exclude)
+
+    [writer.write('%s\n' % string) for string in unique_strings]
 
     if args.output is not None:
         writer.close()

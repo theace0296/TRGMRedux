@@ -1,5 +1,5 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_initUnitVars";
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 
 
@@ -148,7 +148,7 @@ TRGM_GETTER_fnc_bVehiclesLeadersOnly = { TRGM_VAR_AdvancedSettings select TRGM_V
 publicVariable "TRGM_GETTER_fnc_bVehiclesLeadersOnly";
 
 //////// Transport Options ///////
-TRGM_GETTER_fnc_bTransportEnabled = { !(TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX isEqualTo 0); };
+TRGM_GETTER_fnc_bTransportEnabled = { (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX) > 0; };
 publicVariable "TRGM_GETTER_fnc_bTransportEnabled";
 TRGM_GETTER_fnc_bTransportLeaderOnly = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENABLE_TRANSPORT_IDX isEqualTo 2; };
 publicVariable "TRGM_GETTER_fnc_bTransportLeaderOnly";

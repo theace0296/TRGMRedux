@@ -1,5 +1,5 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_updateTask";
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 params ["_missionObjective", ["_missionStatus", "succeeded"], ["_customRepReason", ""], ["_customHintString", ""], ["_repAmountOnFail", 0]];
 
@@ -37,11 +37,11 @@ TRGM_VAR_ClearedPositions pushBack [_centralAO_x, _centralAO_y];
 publicVariable "TRGM_VAR_ClearedPositions";
 
 if (_repAmountOnComplete > 0 && _repAmountOnFail isEqualTo 0) then {
-    [_repAmountOnComplete, [[_customRepReason, _repReasonOnComplete] select (_customRepReason isEqualTo ""), "Objective Completed."] select (_repReasonOnComplete isEqualTo "")] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
+    [_repAmountOnComplete, [[_customRepReason, _repReasonOnComplete] select (_customRepReason isEqualTo ""), localize "STR_TRGM2_ObjectiveComplete"] select (_repReasonOnComplete isEqualTo "")] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
     [[_customHintString, _hintStrOnComplete] select (_customHintString isEqualTo "")] call TRGM_GLOBAL_fnc_notifyGlobal;
 } else {
     if (_repAmountOnFail > 0) then {
-        [_repAmountOnFail, [_customRepReason, "Objective Failed."] select (_customRepReason isEqualTo "")] spawn TRGM_GLOBAL_fnc_adjustBadPoints;
+        [_repAmountOnFail, [_customRepReason, localize "STR_TRGM2_ObjectiveFailed"] select (_customRepReason isEqualTo "")] spawn TRGM_GLOBAL_fnc_adjustBadPoints;
         [[_customHintString, _hintStrOnComplete] select (_customHintString isEqualTo "")] call TRGM_GLOBAL_fnc_notifyGlobal;
     };
 };

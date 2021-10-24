@@ -1,6 +1,6 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setMedicalEvent";
 params ["_posOfAO"];
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (!isServer || isNil "_posOfAO") exitWith {};
 
@@ -208,7 +208,7 @@ while {_iteration <= 2} do {
         [_downedCivMedic] remoteExec ["fncMedicalParamedicLight", 0, true];
 
         if (_iteration isEqualTo 1) then {
-            [_downedCivMedic, ["Ask if needs assistance",{[format["Please can you supply us with %1 * %2.  Place them in this vehicle!",requiredItemsCount,RequestedMedicalItemName]] call TRGM_GLOBAL_fnc_notify;},[_downedCivMedic]]] remoteExec ["addAction", 0, true];
+            [_downedCivMedic, [localize "STR_TRGM2_AskNeedsAssistanceAction",{[format[localize "STR_TRGM2_MedSupplysNeededString",requiredItemsCount,RequestedMedicalItemName]] call TRGM_GLOBAL_fnc_notify;},[_downedCivMedic]]] remoteExec ["addAction", 0, true];
             [_mainVeh,_downedCivMedic] spawn {
                 private _mainVeh = _this select 0;
                 private _downedCivMedic = _this select 1;
@@ -217,10 +217,10 @@ while {_iteration <= 2} do {
                     private _VanillaItemCount = {RequestedMedicalItem isEqualTo _x} count (itemcargo _mainVeh);
                     private _AceItemCount = {RequestedMedicalItem isEqualTo _x} count (itemcargo _mainVeh);
                     if (_VanillaItemCount >= requiredItemsCount || _AceItemCount >= requiredItemsCount) then {
-                        ["Thank you, this should help us get things under control"] call TRGM_GLOBAL_fnc_notifyGlobal;
+                        [localize "STR_TRGM2_MedEventThankYouString"] call TRGM_GLOBAL_fnc_notifyGlobal;
                         private _completed = true;
                         removeAllActions _downedCivMedic;
-                        [0.3, "Assited with medical emergency"] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
+                        [0.3, localize "STR_TRGM2_MedEventTaskString"] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
                     };
                     sleep selectRandom [2];
                 };

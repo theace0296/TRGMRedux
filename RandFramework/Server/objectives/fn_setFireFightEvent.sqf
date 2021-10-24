@@ -1,6 +1,6 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setFireFightEvent";
 params ["_posOfAO", "_eventType"];
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 //1=fullWar  2=AOOnly  3=WarzoneOnly 4=warzoneOnlyFullWar
 if (!isServer || isNil "_posOfAO" || isNil "_eventType" || !(_eventType in [1, 2, 3, 4])) exitWith {};

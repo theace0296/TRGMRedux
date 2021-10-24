@@ -1,6 +1,6 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setATMineEvent";
 params ["_posOfAO", ["_isFullMap", false]];
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (!isServer || isNil "_posOfAO") exitWith {};
 
@@ -91,12 +91,12 @@ if (random 1 < .20) then {
     _guardUnit2 setDir (floor random 360);
     [_guardUnit2, "WATCH", "ASIS"] call BIS_fnc_ambientAnimCombat;
 
-    [_guardUnit1, ["Ask if needs assistance", {
+    [_guardUnit1, [localize "STR_TRGM2_AskNeedsAssistanceAction", {
         private _guardUnit1 = _this select 0;
         if (alive _guardUnit1) then {
-            ["We are stranded in the middle of an AT mine area. please help move this car ovrt 100 meters in any direction from here!"] call TRGM_GLOBAL_fnc_notify;
+            [localize "STR_TRGM2_StandedMoveVehicle"] call TRGM_GLOBAL_fnc_notify;
         } else {
-            ["Is there a reason you are trying to talk to a dead guy??"] call TRGM_GLOBAL_fnc_notify;
+            [localize "STR_TRGM2_AttemptTalkToDeadGuy"] call TRGM_GLOBAL_fnc_notify;
         }
     }, [_guardUnit1]]] remoteExec ["addAction", 0, true];
 
@@ -155,9 +155,9 @@ if (random 1 < .20) then {
                 };
                 if (_bWavedone) then {
                     if ((_mainVeh distance _guardUnit1) > 100) then {
-                        ["Thank you for your help"] call TRGM_GLOBAL_fnc_notifyGlobal;
+                        [localize "STR_TRGM2_CivThanksForHelp"] call TRGM_GLOBAL_fnc_notifyGlobal;
                         [_guardUnit1] remoteExecCall ["removeAllActions", 0];
-                        [0.2, "Helped a stranded friendly"] spawn TRGM_GLOBAL_fnc_adjustmaxBadPoints;
+                        [0.2, localize "STR_TRGM2_MiniTaskHelpedCiv"] spawn TRGM_GLOBAL_fnc_adjustmaxBadPoints;
                         _bWaiting = false;
                     };
                 };

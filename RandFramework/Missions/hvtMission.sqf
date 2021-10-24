@@ -210,13 +210,13 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _objInformant setPosATL (selectRandom _allpositionsMainBuiding);
             removeAllWeapons _objInformant;
 
-            [_objInformant,["Carry",{
+            [_objInformant,[localize "STR_TRGM2_fnpostinit_Carry",{
                 _civ = _this select 0;
                 _player = _this select 1;
                 [_civ, _player] spawn TRGM_GLOBAL_fnc_carryAndJoinWounded;
             }]] remoteExecCall ["addAction", 0];
 
-            [_objInformant,["Join Group",{
+            [_objInformant,[localize "STR_TRGM2_fnpostinit_JoinGroup",{
                 _civ=_this select 0;
                 _player=_this select 1;
                 [_civ] join (group _player);

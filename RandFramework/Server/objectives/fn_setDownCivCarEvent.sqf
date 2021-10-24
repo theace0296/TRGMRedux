@@ -1,6 +1,6 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setDownCivCarEvent";
 params ["_posOfAO",["_isFullMap",false]];
-format["%1 called by %2 on %3", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (!isServer || isNil "_posOfAO") exitWith {};
 
@@ -121,13 +121,13 @@ if (count _nearestRoads > 0) then {
         _downedCiv setDir (_downedCivDirection);
         _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
 
-        [_downedCiv, ["Ask if needs assistance",{
+        [_downedCiv, [localize "STR_TRGM2_AskNeedsAssistanceAction",{
             private _downedCiv = _this select 0;
             if (alive _downedCiv) then {
-                ["Please help, my car has broken down, i need to get home to my family!"] call TRGM_GLOBAL_fnc_notify;
+                [localize "STR_TRGM2_DownCivCar_Speach"] call TRGM_GLOBAL_fnc_notify;
             }
             else {
-                ["Is there a reason you are trying to talk to a dead guy??"] call TRGM_GLOBAL_fnc_notify;
+                [localize "STR_TRGM2_AttemptTalkToDeadGuy"] call TRGM_GLOBAL_fnc_notify;
             }
         },[_downedCiv]]] remoteExec ["addAction", 0, true];
 
@@ -242,12 +242,12 @@ if (count _nearestRoads > 0) then {
                             //_downedCiv assignAsDriver _mainVeh;
                             //[_downedCiv] orderGetIn true;
 
-                            ["Thank you for your help my friend"] call TRGM_GLOBAL_fnc_notifyGlobal;
+                            [localize "STR_TRGM2_CivThanksForHelp"] call TRGM_GLOBAL_fnc_notifyGlobal;
                             [_downedCiv] remoteExecCall ["removeAllActions", 0];
                             [_group,"LIMITED"] remoteExecCall ["setSpeedMode", 0];
                             [_downedCiv,_mainVeh] remoteExecCall ["assignAsDriver", 0];
                             [[_downedCiv],true] remoteExecCall ["orderGetIn", 0];
-                            [0.2, "Helped a stranded civilian"] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
+                            [0.2, localize "STR_TRGM2_DownCivCar_Message"] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
                             sleep 10;
                             [_downedCiv,(TRGM_VAR_ObjectivePositions select 0)] remoteExecCall ["doMove", 0];
                         };
