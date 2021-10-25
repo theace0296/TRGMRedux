@@ -15,13 +15,23 @@ def parse(script):
     tokens = [identify_token(x) for x in parsed_tokens]
     strings = list(filter(lambda x:
                           isinstance(x, String) and
+                          x.value.strip() != '' and
                           '_' not in x.value and
                           ':' not in x.value and
-                          '\n' not in x.value,
+                          '\n' not in x.value and
+                          '.sqf' not in x.value and
+                          '=' not in x.value and
+                          x.value != x.value.upper() and
+                          x.value != x.value.lower(),
                           parsed_tokens))
     if len(strings) > 0:
         for x in strings:
-            if x.value not in unique_strings:
+            hasKeyword = False
+            for keyword in KEYWORDS:
+                if keyword in x.value:
+                    hasKeyword = True
+                    break
+            if x.value not in unique_strings and not hasKeyword:
                 unique_strings.append(x.value)
 
     result = parse_block(tokens + [EndOfFile()], _analyze_tokens)[0]
@@ -157,7 +167,13 @@ def entry_point(args):
 
     with open(f'{args.directory.rstrip("/")}\\sqflint.log', 'a') as log:
         for string in unique_strings:
-            log.write(string)
+            log.write(f'<Key ID="STR_TRGM2_{string.replace(" ", "_")}">')
+            log.write('\n')
+            log.write(f'    <Original>{string}</Original>')
+            log.write('\n')
+            log.write(f'    <English>{string}</English>')
+            log.write('\n')
+            log.write('</Key>')
             log.write('\n')
         log.close()
 

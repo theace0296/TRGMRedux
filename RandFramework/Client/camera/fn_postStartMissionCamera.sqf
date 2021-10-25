@@ -34,8 +34,8 @@ if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "
     private _LineFour = (localize "STR_TRGM2_StartMission_Time") + str(_time24);
 
     if (_isHiddenObj) then {
-        _LineTwo = (localize "STR_TRGM2_StartMission_Mission") + "Unknown";
-        _LineThree = "location unknown"
+        _LineTwo = (localize "STR_TRGM2_StartMission_Mission") + (localize "STR_TRGM2_StartMission_MissionUnknown");
+        _LineThree = localize "STR_TRGM2_StartMission_LocationUnknown";
     };
 
     if (!(TRGM_VAR_iMissionIsCampaign)) then {

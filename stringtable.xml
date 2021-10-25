@@ -464,6 +464,10 @@
                 <Spanish>Vuelve a la base principal (CG) para debrief</Spanish>
                 <Korean>보고를 위해 HQ로 복귀하세요</Korean>
             </Key>
+            <Key ID="STR_TRGM2_mainInit_DebriefTitle">
+                <Original>DeBrief</Original>
+                <English>DeBrief</English>
+            </Key>
             <Key ID="STR_TRGM2_mainInit_ReputationDropped">
                 <Original>Your reputation has dropped.  Team rank now: </Original>
                 <English>Your reputation has dropped.  Team rank now: </English>
@@ -1456,6 +1460,14 @@
                 <Chinesesimp>任务: </Chinesesimp>
                 <Spanish>Misión: </Spanish>
                 <Korean>임무: </Korean>
+            </Key>
+            <Key ID="STR_TRGM2_StartMission_MissionUnknown">
+                <Original>Unknown</Original>
+                <English>Unknown</English>
+            </Key>
+            <Key ID="STR_TRGM2_StartMission_LocationUnknown">
+                <Original>Location Unknown</Original>
+                <English>Location Unknown</English>
             </Key>
             <Key ID="STR_TRGM2_StartMission_Time">
                 <Original>Time: </Original>

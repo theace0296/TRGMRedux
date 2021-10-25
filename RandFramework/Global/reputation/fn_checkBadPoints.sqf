@@ -45,7 +45,7 @@ while {true} do {
                 };
                 sleep 2;
 
-                [TRGM_VAR_FriendlySide, ["DeBrief", localize "STR_TRGM2_mainInit_Debrief", "Debrief", ""]] call FHQ_fnc_ttAddTasks;
+                [TRGM_VAR_FriendlySide, [localize "STR_TRGM2_mainInit_DebriefTitle", localize "STR_TRGM2_mainInit_Debrief", localize "STR_TRGM2_mainInit_DebriefTitle", ""]] call FHQ_fnc_ttAddTasks;
             };
             if (_dCurrentRep <= 0 && {TRGM_VAR_iMissionParamRepOption isEqualTo 0}) then { //note... when gaining rep, we increase the TRGM_VAR_MaxBadPoints, and when lower, we incrase TRGM_VAR_BadPoints (rep is calulated by the difference)
                 ["tskKeepAboveAverage", "failed"] call FHQ_fnc_ttSetTaskState;
