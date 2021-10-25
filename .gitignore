@@ -9,3 +9,4 @@ upload-to-workshop/
 .vscode/UpdateWorkshopItems
 .vscode/steam_appid.txt
 .vscode/*.log
+sqflint.log
