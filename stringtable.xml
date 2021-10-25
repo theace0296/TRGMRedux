@@ -2,13 +2,17 @@
 <Project name="TRGM2_Language">
     <Package name="RootFolder">
         <Container name="Description">
+            <Key ID="STR_TRGM2_Description_Author">
+                <Original>Treendy, Redux by TheAce0296</Original>
+                <English>Treendy, Redux by TheAce0296</English>
+            </Key>
+            <Key ID="STR_TRGM2_Description_Name">
+                <Original>TRGM Redux</Original>
+                <English>TRGM Redux</English>
+            </Key>
             <Key ID="STR_TRGM2_Description_OnLoadIntro">
-                <Original>Mission by Treendy</Original>
-                <English>Mission by Treendy</English>
-                <Chinese>任務由Treendy製作</Chinese>
-                <Chinesesimp>任务由Treendy制作</Chinesesimp>
-                <Spanish>Misión por Treendy</Spanish>
-                <Korean>Treendy 의 임무</Korean>
+                <Original>Mission by Treendy, Redux by TheAce0296</Original>
+                <English>Mission by Treendy, Redux by TheAce0296</English>
             </Key>
             <Key ID="STR_TRGM2_Description_overviewText">
                 <Original>Treendy's Randomly Generated Missions.  Each play through will be different in many ways.  Also option to play in campaign mode and customise some of the mission settings.</Original>
@@ -184,6 +188,10 @@
     </Package>
     <Package name="RandFrameworkFolder">
         <Container name="Root">
+            <Key ID="STR_TRGM2_IlluminatePosition_Text">
+                <Original>Illuminate your position for 5 mins (eta 60 seconds)</Original>
+                <English>Illuminate your position for 5 mins (eta 60 seconds)</English>
+            </Key>
             <Key ID="STR_TRGM2_AirSupportRequested_Text">
                 <Original>Air support requested</Original>
                 <English>Air support requested</English>
@@ -1998,6 +2006,10 @@
                 <Spanish>Misiones Generadas Aleatoriamente de Treendy</Spanish>
                 <Korean>Treendy의 무작위 생성 임무</Korean>
             </Key>
+            <Key ID="STR_TRGM2_TRGMInitPlayerLocal_TRGM2Starring">
+                <Original>Starring</Original>
+                <English>Starring</English>
+            </Key>
             <Key ID="STR_TRGM2_TRGMInitPlayerLocal_RTBDebreif">
                 <Original>RTB to debreif</Original>
                 <English>RTB to debreif</English>
@@ -3730,6 +3742,14 @@
                 <English>Bomb Disposal</English>
                 <Korean>폭탄 처리</Korean>
             </Key>
+            <Key ID="STR_TRGM2_BombMissionBoard">
+                <Original>Defused Bomb</Original>
+                <English>Defused Bomb</English>
+            </Key>
+            <Key ID="STR_TRGM2_BombMissionHint">
+                <Original>Defused Bomb, reputation increased.</Original>
+                <English>Defused Bomb, reputation increased.</English>
+            </Key>
             <Key ID="STR_TRGM2_BombMissionReadSerialAction">
                 <Original>Read Serial Number</Original>
                 <English>Read Serial Number</English>
@@ -3753,6 +3773,14 @@
                 <Original>We have intel of three IED positions which are marked on your map, they will be either a pile of rubble or an abandoned vehicle, we need you to defuse them all. Note: Engineers/Explosive experts have 100% chance of finding and defusing an IED, however anyone else will have to search a few times, and if they attempt defusing, they may set off the charge!</Original>
                 <English>We have intel of three IED positions which are marked on your map, they will be either a pile of rubble or an abandoned vehicle, we need you to defuse them all. Note: Engineers/Explosive experts have 100% chance of finding and defusing an IED, however anyone else will have to search a few times, and if they attempt defusing, they may set off the charge!</English>
                 <Korean>우리는 당신의 지도에 표시된 세 가지 폭발물 공격 위치의 정보를 가지고 있으며, 그들은 잔해 더미 또는 버려진 차량 중 하나가 될 것입니다. 우리는 모두 당신을 물리쳐야합니다. 참고 : 공병/폭발물 전문가가 폭발물 공격을 찾고 회피 할 확률은 100 %입니다. 그러나 다른 사람이 몇 번 검색해야하며, 진압을 시도하면 요금이 부과 될 수 있습니다!</Korean>
+            </Key>
+            <Key ID="STR_TRGM2_IEDMissionBoard">
+                <Original>Defused IEDs</Original>
+                <English>Defused IEDs</English>
+            </Key>
+            <Key ID="STR_TRGM2_IEDMissionHint">
+                <Original>Defused IEDs, reputation increased.</Original>
+                <English>Defused IEDs, reputation increased.</English>
             </Key>
             <Key ID="STR_TRGM2_IEDMarkerText">
                 <Original>IED</Original>
@@ -3892,6 +3920,14 @@
                 <English>We have intel of three Targets which are marked on your map, blow them up!</English>
                 <Korean>우리는 지도에 표시되어있는 3개의 목표의 정보를 가지고 있습니다. 그들을 작살내세요!</Korean>
             </Key>
+            <Key ID="STR_TRGM2_TargetMissionBoard">
+                <Original>Targets destoryed</Original>
+                <English>Targets destoryed</English>
+            </Key>
+            <Key ID="STR_TRGM2_TargetMissionHint">
+                <Original>Targets destoryed, reputation increased.</Original>
+                <English>Targets destoryed, reputation increased.</English>
+            </Key>
             <Key ID="STR_TRGM2_TargetMarkerText">
                 <Original>Target</Original>
                 <English>Target</English>
@@ -3960,6 +3996,14 @@
                 <Original>Location of enemy cache found, destroy it</Original>
                 <English>Location of enemy cache found, destroy it</English>
                 <Korean>적 은닉처 위치를 찾았습니다</Korean>
+            </Key>
+            <Key ID="STR_TRGM2_CacheMissionBoard">
+                <Original>Cache destoryed</Original>
+                <English>Cache destoryed</English>
+            </Key>
+            <Key ID="STR_TRGM2_CacheMissionHint">
+                <Original>Cache destoryed, reputation increased.</Original>
+                <English>Cache destoryed, reputation increased.</English>
             </Key>
 
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MiniMissions">
@@ -4110,6 +4154,14 @@
                 <Original>Intel has confirmed that our target %1 is on route to the AO marked on the map","%1 is flying into the area for a short meeting to hand over some documents! We need this HVT terminated!</Original>
                 <English>Intel has confirmed that our target %1 is on route to the AO marked on the map","%1 is flying into the area for a short meeting to hand over some documents! We need this HVT terminated!</English>
             </Key>
+            <Key ID="STR_TRGM2_MeetingAssassinationMissionBoard">
+                <Original>HVT assassinated</Original>
+                <English>HVT assassinated</English>
+            </Key>
+            <Key ID="STR_TRGM2_MeetingAssassinationMissionHint">
+                <Original>HVT assassinated, reputation increased.</Original>
+                <English>HVT assassinated, reputation increased.</English>
+            </Key>
 
             <Key ID="STR_TRGM2_AmbushConvoyMissionTitle">
                 <Original>Ambush Convoy</Original>
@@ -4118,6 +4170,14 @@
             <Key ID="STR_TRGM2_AmbushConvoyMissionDescription">
                 <Original>Intel has confirmed that a convoy is on route to the AO marked on the map</Original>
                 <English>Intel has confirmed that a convoy is on route to the AO marked on the map</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyMissionBoard">
+                <Original>Convoy eliminated</Original>
+                <English>Convoy eliminated</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyMissionHint">
+                <Original>Convoy eliminated, reputation increased.</Original>
+                <English>Convoy eliminated, reputation increased.</English>
             </Key>
 
             <Key ID="STR_TRGM2_DestroyArmoredVehiclesTitle">
@@ -4149,15 +4209,21 @@
                 <Original>Lower Flag and call in supply drop</Original>
                 <English>Lower Flag and call in supply drop</English>
             </Key>
-
             <Key ID="STR_TRGM2_MinUntilSupplyChopperInArea">
                 <Original>Minutes until supply chopper in area: %1</Original>
                 <English>Minutes until supply chopper in area: %1</English>
             </Key>
-
             <Key ID="STR_TRGM2_SupplyChopperInbound">
-                <Original>supply choppers inbound</Original>
-                <English>supply choppers inbound</English>
+                <Original>Supply choppers inbound</Original>
+                <English>Supply choppers inbound</English>
+            </Key>
+            <Key ID="STR_TRGM2_ClearAreaMissionBoard">
+                <Original>Area Cleared</Original>
+                <English>Area Cleared</English>
+            </Key>
+            <Key ID="STR_TRGM2_ClearAreaMissionHint">
+                <Original>Area Cleared, reputation increased.</Original>
+                <English>Area Cleared, reputation increased.</English>
             </Key>
 
             <Key ID="STR_TRGM2_InitClickSomewhere">
@@ -4365,6 +4431,10 @@
                 <English>Mission info copied to clipboard!</English>
             </Key>
 
+            <Key ID="STR_TRGM2_distressSignal_civilian_training">
+                <Original>Stranded Civ</Original>
+                <English>Stranded Civ</English>
+            </Key>
             <Key ID="STR_TRGM2_distressSignal_civilian">
                 <Original>Civilian Distress Signal</Original>
                 <English>Civilian Distress Signal</English>

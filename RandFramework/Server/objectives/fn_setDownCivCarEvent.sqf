@@ -94,7 +94,7 @@ if (count _nearestRoads > 0) then {
             private _markerEventMedi = createMarker [format["_markerEventMedi%1",(floor(random 360))], ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos)];
             _markerEventMedi setMarkerShape "ICON";
             _markerEventMedi setMarkerType "hd_dot";
-            _markerEventMedi setMarkerText "Stranded Civ";
+            _markerEventMedi setMarkerText (localize "STR_TRGM2_distressSignal_civilian_training");
         }
         else {
             if (false) then { //will never show this for broken down civ! (only here if need to test)

@@ -3,7 +3,7 @@ import os
 import re
 import sys
 
-from sqf.parser import identify_token, parse_strings_and_comments, tokenize, parse_block, EndOfFile, _analyze_tokens, String
+from sqf.parser import identify_token, parse_strings_and_comments, tokenize, parse_block, EndOfFile, _analyze_tokens, String, KEYWORDS
 import sqf.analyzer
 from sqf.exceptions import SQFParserError, SQFWarning
 
@@ -13,7 +13,12 @@ unique_strings = []
 def parse(script):
     parsed_tokens = parse_strings_and_comments(tokenize(script))
     tokens = [identify_token(x) for x in parsed_tokens]
-    strings = list(filter(lambda x: isinstance(x, String) and ' ' in x.value and '_' not in x.value and ':' not in x.value and '\n' not in x.value, parsed_tokens))
+    strings = list(filter(lambda x:
+                          isinstance(x, String) and
+                          '_' not in x.value and
+                          ':' not in x.value and
+                          '\n' not in x.value,
+                          parsed_tokens))
     if len(strings) > 0:
         for x in strings:
             if x.value not in unique_strings:
@@ -150,7 +155,11 @@ def entry_point(args):
             '/') else os.path.join(directory, x), args.exclude))
         analyze_dir(directory, writer, exceptions_list, exclude)
 
-    [writer.write('%s\n' % string) for string in unique_strings]
+    with open(f'{args.directory.rstrip("/")}\\sqflint.log', 'a') as log:
+        for string in unique_strings:
+            log.write(string)
+            log.write('\n')
+        log.close()
 
     if args.output is not None:
         writer.close()

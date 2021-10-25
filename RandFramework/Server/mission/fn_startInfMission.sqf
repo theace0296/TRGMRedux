@@ -328,7 +328,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_defuseIEDsMission; //Defuse 3 IEDs
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Defused IEDs, reputation increased.", 1, "Defused IEDs"];
+            _args = [localize "STR_TRGM2_IEDMissionHint", 1, localize "STR_TRGM2_IEDMissionBoard"];
             ["Mission Setup: Generating Defuse 3 IEDs", true] call TRGM_GLOBAL_fnc_log;
         };
         case 14: {
@@ -336,7 +336,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_bombDisposalMission; //Defuse Bomb
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Defused Bomb, reputation increased.", 1, "Defused Bomb"];
+            _args = [localize "STR_TRGM2_BombMissionHint", 1, localize "STR_TRGM2_BombMissionBoard"];
             ["Mission Setup: Generating Defuse Bomb", true] call TRGM_GLOBAL_fnc_log;
         };
         case 15: {
@@ -344,7 +344,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_searchAndDestroyMission; //Search and Destroy
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Targets destoryed, reputation increased.", 1, "Targets destoryed"];
+            _args = [localize "STR_TRGM2_TargetMissionHint", 1, localize "STR_TRGM2_TargetMissionBoard"];
             ["Mission Setup: Generating Search and Destroy", true] call TRGM_GLOBAL_fnc_log;
         };
         case 16: {
@@ -352,7 +352,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_destroyCacheMission; //Destroy Cache
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Cache destoryed, reputation increased.", 1, "Cache destoryed"];
+            _args = [localize "STR_TRGM2_CacheMissionHint", 1, localize "STR_TRGM2_CacheMissionBoard"];
             ["Mission Setup: Generating Destroy Cache", true] call TRGM_GLOBAL_fnc_log;
         };
         case 17:  {
@@ -360,7 +360,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_secureAndResupplyMission; //Secure and Resupply
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Area Cleared, reputation increased.", 1, "Area Cleared"];
+            _args = [localize "STR_TRGM2_ClearAreaMissionHint", 1, localize "STR_TRGM2_ClearAreaMissionBoard"];
             ["Mission Setup: Generating Secure and Resupply", true] call TRGM_GLOBAL_fnc_log;
         };
         case 18:  {
@@ -368,7 +368,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_meetingAssassinationMission; //Meeting Assassination
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["HVT assassinated, reputation increased.", 1, "HVT assassinated"];
+            _args = [localize "STR_TRGM2_MeetingAssassinationMissionHint", 1, localize "STR_TRGM2_MeetingAssassinationMissionBoard"];
             ["Mission Setup: Generating Meeting Assassination", true] call TRGM_GLOBAL_fnc_log;
         };
         case 19:  {
@@ -376,7 +376,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_ambushConvoyMission //Ambush Convoy
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Convoy eliminated, reputation increased.", 1, "Convoy eliminated"];
+            _args = [localize "STR_TRGM2_AmbushConvoyMissionHint", 1, localize "STR_TRGM2_AmbushConvoyMissionBoard"];
             ["Mission Setup: Generating Ambush Convoy", true] call TRGM_GLOBAL_fnc_log;
         };
         case 20: {

@@ -39,7 +39,7 @@ if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "
     };
 
     if (!(TRGM_VAR_iMissionIsCampaign)) then {
-        _LineOne = "TRGM Redux"
+        _LineOne = localize "STR_TRGM2_Description_Name";
     };
 
     if (TRGM_VAR_MaxBadPoints >= 10) then {

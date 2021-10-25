@@ -1,7 +1,7 @@
 
-author = "Treendy, Redux by TheAce0296";
-OnLoadName = "TRGM Redux";
-OnLoadmission = "TRGM Redux";
+author = $STR_TRGM2_Description_Author;
+OnLoadName = $STR_TRGM2_Description_Name;
+OnLoadmission = $STR_TRGM2_Description_Name;
 OnLoadIntro = $STR_TRGM2_Description_OnLoadIntro;
 loadScreen = "TRGMReduxBanner.jpg";
 overviewText = $STR_TRGM2_Description_overviewText;

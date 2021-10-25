@@ -31,7 +31,7 @@ call FHQ_fnc_ttiPostInit;
       ["", ""],
       ["", ""],
    {true},
-      [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_Credits"), "Treendy, Redux by TheAce0296"],
+      [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_Credits"), localize "STR_TRGM2_Description_Author"],
       [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_ScriptsUsed"), localize "STR_TRGM2_TRGMSetUnitGlobalVars_ScriptsUsed"]
 ] call FHQ_fnc_ttAddBriefing;
 

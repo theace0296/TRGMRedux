@@ -55,7 +55,7 @@ call TRGM_CLIENT_fnc_missionSetupCamera;
 waitUntil { TRGM_VAR_bOptionsSet };
 
 private _txt5Layer = "txt5" call BIS_fnc_rscLayer;
-private _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>TRGM Redux</t>";
+private _texta = format ["<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>%1</t>", localize "STR_TRGM2_Description_Name"];
 [_texta, -0, 0.150, 7, 1,0,_txt5Layer] spawn BIS_fnc_dynamicText;
 
 
