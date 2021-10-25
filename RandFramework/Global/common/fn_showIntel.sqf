@@ -35,9 +35,6 @@ while {_IntelToShow isEqualTo 0 && _iAttemptCount < 100} do {
     if (_IntelToShow in _IntelFound) then {_IntelToShow = 0};
 };
 
-
-TRGM_VAR_TempIntelShowPos =  ""; publicVariable "TRGM_VAR_TempIntelShowPos";
-
 private _showIntel = true;
 
 if (_FoundViaType isEqualTo "CommsTower") then {
@@ -54,38 +51,28 @@ if (_FoundViaType isEqualTo "CommsTower") then {
 
 if (_IntelToShow isEqualTo 0 || !_showIntel) then { //Nothing found
     [(localize "STR_TRGM2_showIntel_NoIntel")] call TRGM_GLOBAL_fnc_notify;
-}
-else {
+} else {
     missionNamespace setVariable [format ["TRGM_VAR_IntelFound_%1", _iTaskIndex], _IntelFound + [_IntelToShow], true];
 };
 
 if (_IntelToShow isEqualTo 1) then { //Mortor team location
-    [[], {
-        TRGM_VAR_TempIntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,(call sMortar) + (call sMortarMilitia),3000];
-        publicVariable "TRGM_VAR_TempIntelShowPos";
-    }] remoteExec ["call", 2];
-    waitUntil {sleep 2; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
-    private _iCount = count TRGM_VAR_TempIntelShowPos;
+    private _IntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,(call sMortar) + (call sMortarMilitia),3000];
+    private _iCount = count _IntelShowPos;
     if (_iCount > 0) then {
         {
             private _test = createMarker [format["MrkIntelMortor%1",_forEachIndex], getPos _x];
             _test setMarkerShape "ICON";
             _test setMarkerType "o_art";
             _test setMarkerText "Mortar";
-        } forEach TRGM_VAR_TempIntelShowPos;
+        } forEach _IntelShowPos;
         [(localize "STR_TRGM2_showIntel_MortarMapUpdated")] call TRGM_GLOBAL_fnc_notify;
-    }
-    else {
+    } else {
         [(localize "STR_TRGM2_showIntel_MortarMapNoUpdate")] call TRGM_GLOBAL_fnc_notify;
     };
 };
 if (_IntelToShow isEqualTo 2) then { //AAA team location
-    [[], {
-        TRGM_VAR_TempIntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,[(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh),3000];
-        publicVariable "TRGM_VAR_TempIntelShowPos";
-    }] remoteExec ["call", 2];
-    waitUntil {sleep 2; typeName TRGM_VAR_TempIntelShowPos isEqualTo "ARRAY"};
-    private _iCount = count TRGM_VAR_TempIntelShowPos;
+    private _IntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,[(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh),3000];
+    private _iCount = count _IntelShowPos;
     private _iStep = 0;
     if (_iCount > 0) then {
         {
@@ -94,10 +81,9 @@ if (_IntelToShow isEqualTo 2) then { //AAA team location
             _test setMarkerType "o_art";
             _test setMarkerText (localize "STR_TRGM2_showIntel_AAAMarker");
             _iStep = _iStep + 1;
-        } forEach TRGM_VAR_TempIntelShowPos;
+        } forEach _IntelShowPos;
         [(localize "STR_TRGM2_showIntel_AAAMapUpdated")] call TRGM_GLOBAL_fnc_notify;
-    }
-    else {
+    } else {
         [(localize "STR_TRGM2_showIntel_AAAMapNoUpdate")] call TRGM_GLOBAL_fnc_notify;
     };
 };
@@ -128,8 +114,7 @@ if (_IntelToShow isEqualTo 4) then { //All checkpoints
     } forEach TRGM_VAR_CheckPointAreas;
     if (_bFoundcheckpoints) then {
         [(localize "STR_TRGM2_showIntel_CheckpointMapUpdated")] call TRGM_GLOBAL_fnc_notify;
-    }
-    else {
+    } else {
         [(localize "STR_TRGM2_showIntel_CheckpointMapNoUpdate")] call TRGM_GLOBAL_fnc_notify;
     };
 
@@ -137,8 +122,7 @@ if (_IntelToShow isEqualTo 4) then { //All checkpoints
 if (_IntelToShow isEqualTo 5) then { //AT Mine field
     if (count TRGM_VAR_ATFieldPos isEqualTo 0) then {
         [(localize "STR_TRGM2_showIntel_NoATArea")] call TRGM_GLOBAL_fnc_notify;
-    }
-    else {
+    } else {
         {
             private _test = createMarker [format["ATIntel%1%2",_x select 0,_x select 1], _x];
             _test setMarkerShape "ICON";

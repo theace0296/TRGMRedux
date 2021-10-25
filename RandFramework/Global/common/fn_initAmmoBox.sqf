@@ -19,14 +19,14 @@ params [["_box", objNull, [objNull]], ["_units", [], [objNull, []]]];
 
 if (isNil "_box" || {isNull _box}) exitWith {};
 
-private _allPlayers = ((allPlayers - (entities "HeadlessClient_F"));
+private _allPlayers = (allPlayers - (entities "HeadlessClient_F"));
 
 if (typeName _units isEqualTo "OBJECT") then {
     _units = units group _units;
 };
 
 if (_units isEqualTo []) then {
-    _units = _allPlayers select {(_x distance2D _box) < 1500});
+    _units = _allPlayers select {(_x distance2D _box) < 1500};
 };
 
 if (_units isEqualTo []) then {
