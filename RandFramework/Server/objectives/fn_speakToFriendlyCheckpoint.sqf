@@ -10,7 +10,16 @@ if (side _caller isEqualTo TRGM_VAR_FriendlySide) then {
 
     [_thisCheckpointUnit] remoteExec ["removeAllActions", 0, true];
     if (alive _thisCheckpointUnit) then {
-        [TRGM_VAR_IntelShownType,"TalkFriendCheckPoint"] spawn TRGM_GLOBAL_fnc_showIntel;
+        private _iTaskIndex = 0;
+        {
+            private _indexPos = TRGM_VAR_ObjectivePositions select _iTaskIndex;
+            private _indexDistance = _CheckpointPos distance2D _indexPos;
+            private _currDistance = _CheckpointPos distance2D _x;
+            if (_currDistance < _indexDistance) then {
+                _iTaskIndex = _foreachindex;
+            };
+        } forEach TRGM_VAR_ObjectivePositions;
+        ["TalkFriendCheckPoint", _iTaskIndex] spawn TRGM_GLOBAL_fnc_showIntel;
         if (call TRGM_GETTER_fnc_bCheckpointRespawnAfterVisitOnly) then {
             private _markerName = format ["respawn_west_%1", _checkPointName];
             private _checkpointRespawnMarker = createMarker [_markerName, _CheckpointPos];

@@ -238,7 +238,6 @@ if (isNil "TRGM_VAR_CampaignInitiated")                       then {TRGM_VAR_Cam
 if (isNil "TRGM_VAR_CheckPointAreas")                         then {TRGM_VAR_CheckPointAreas = [];                                    publicVariable "TRGM_VAR_CheckPointAreas";};
 if (isNil "TRGM_VAR_CivDeathCount")                           then {TRGM_VAR_CivDeathCount = 0;                                       publicVariable "TRGM_VAR_CivDeathCount";};
 if (isNil "TRGM_VAR_ClearedPositions")                        then {TRGM_VAR_ClearedPositions = [];                                   publicVariable "TRGM_VAR_ClearedPositions";};
-if (isNil "TRGM_VAR_CommsTowerPos")                           then {TRGM_VAR_CommsTowerPos = [0,0];                                   publicVariable "TRGM_VAR_CommsTowerPos";};
 if (isNil "TRGM_VAR_CoreCompleted")                           then { TRGM_VAR_CoreCompleted = false;                                  publicVariable "TRGM_VAR_CoreCompleted";};
 if (isNil "TRGM_VAR_CurrentZeroMissionTitle")                 then {TRGM_VAR_CurrentZeroMissionTitle = "";                            publicVariable "TRGM_VAR_CurrentZeroMissionTitle";};
 if (isNil "TRGM_VAR_CustomObjectsSet")                        then {TRGM_VAR_CustomObjectsSet = false;                                publicVariable "TRGM_VAR_CustomObjectsSet";};
@@ -252,7 +251,6 @@ if (isNil "TRGM_VAR_HiddenPossitions")                        then {TRGM_VAR_Hid
 if (isNil "TRGM_VAR_ISUNSUNG")                                then {TRGM_VAR_ISUNSUNG = false;                                        publicVariable "TRGM_VAR_ISUNSUNG";};
 if (isNil "TRGM_VAR_InfTaskCount")                            then {TRGM_VAR_InfTaskCount = 0;                                        publicVariable "TRGM_VAR_InfTaskCount";};
 if (isNil "TRGM_VAR_InfTaskStarted")                          then {TRGM_VAR_InfTaskStarted = false;                                  publicVariable "TRGM_VAR_InfTaskStarted";};
-if (isNil "TRGM_VAR_IntelFound")                              then {TRGM_VAR_IntelFound = [];                                         publicVariable "TRGM_VAR_IntelFound";};
 if (isNil "TRGM_VAR_IntroMusic")                              then {TRGM_VAR_IntroMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic;   publicVariable "TRGM_VAR_IntroMusic";};
 if (isNil "TRGM_VAR_IsFullMap")                               then {TRGM_VAR_IsFullMap = false;                                       publicVariable "TRGM_VAR_IsFullMap";};
 if (isNil "TRGM_VAR_IsSnowMap")                               then {TRGM_VAR_IsSnowMap = false;                                       publicVariable "TRGM_VAR_IsSnowMap";};
@@ -278,8 +276,8 @@ if (isNil "TRGM_VAR_ToUseMilitia_Side")                        then {TRGM_VAR_To
 if (isNil "TRGM_VAR_bAndSoItBegins")                          then {TRGM_VAR_bAndSoItBegins = false;                                  publicVariable "TRGM_VAR_bAndSoItBegins";};
 if (isNil "TRGM_VAR_bBaseHasChopper")                         then {TRGM_VAR_bBaseHasChopper = false;                                 publicVariable "TRGM_VAR_bBaseHasChopper";};
 if (isNil "TRGM_VAR_bBreifingPrepped")                        then {TRGM_VAR_bBreifingPrepped = false;                                publicVariable "TRGM_VAR_bBreifingPrepped";};
-if (isNil "TRGM_VAR_bCommsBlocked")                           then {TRGM_VAR_bCommsBlocked = false;                                   publicVariable "TRGM_VAR_bCommsBlocked";};
-if (isNil "TRGM_VAR_bHasCommsTower")                          then {TRGM_VAR_bHasCommsTower = false;                                  publicVariable "TRGM_VAR_bHasCommsTower";};
+if (isNil "TRGM_VAR_bCommsBlocked")                           then {TRGM_VAR_bCommsBlocked = [false];                                 publicVariable "TRGM_VAR_bCommsBlocked";};
+if (isNil "TRGM_VAR_bHasCommsTower")                          then {TRGM_VAR_bHasCommsTower = [false];                                publicVariable "TRGM_VAR_bHasCommsTower";};
 if (isNil "TRGM_VAR_bMortarFiring")                           then {TRGM_VAR_bMortarFiring = false;                                   publicVariable "TRGM_VAR_bMortarFiring";};
 if (isNil "TRGM_VAR_bOptionsSet")                             then {TRGM_VAR_bOptionsSet = false;                                     publicVariable "TRGM_VAR_bOptionsSet";};
 if (isNil "TRGM_VAR_bOptionsSet")                             then {TRGM_VAR_bOptionsSet = false;                                     publicVariable "TRGM_VAR_bOptionsSet";};

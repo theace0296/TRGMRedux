@@ -75,7 +75,8 @@ if (_SpottedUnitCount > 0) then {
         _TankMaxCount = 120;
         _AirMaxCount = 120;
     };
-    if (TRGM_VAR_bCommsBlocked) then {
+    private _commsDown = TRGM_VAR_bCommsBlocked select _iTaskIndex;
+    if (!(isNil "_commsDown") && {_commsDown}) then {
         _InfMaxCount = 600; //10 mins
         _TankMaxCount = 600;
         _AirMaxCount = 600;

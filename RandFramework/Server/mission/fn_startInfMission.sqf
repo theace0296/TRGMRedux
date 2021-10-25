@@ -184,6 +184,9 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
         _iTaskIndex = TRGM_VAR_InfTaskCount;
     };
 
+    TRGM_VAR_bCommsBlocked set [_iTaskIndex, false];
+    publicVariable "TRGM_VAR_bCommsBlocked";
+
     private _iThisTaskType = _ThisTaskTypes select TRGM_VAR_InfTaskCount;
 
     private _bIsMainObjective = _IsMainObjs select TRGM_VAR_InfTaskCount; if (isNil "_bIsMainObjective") then { _bIsMainObjective = false; }; //more chance of bad things, and set middle area stuff around (comms, base etc...)
@@ -646,7 +649,7 @@ else {
 {
     [80 + (_forEachIndex * 2), TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
     if !(_x in TRGM_VAR_HiddenPossitions) then {
-        private _setAreaEventsHandle = [_x] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
+        private _setAreaEventsHandle = [_x, _forEachIndex] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
         waitUntil { sleep 5; scriptDone _setAreaEventsHandle; };
     };
 } forEach TRGM_VAR_ObjectivePositions;

@@ -15,7 +15,7 @@ if (side _caller isEqualTo TRGM_VAR_FriendlySide && !_bCreateTask) then {
             format["mrkMainObjective%1", _i] setMarkerType "mil_unknown";
             [localize "STR_TRGM2_bugRadio_MapUpdated"] spawn TRGM_GLOBAL_fnc_notifyGlobal;
         } else {
-            [TRGM_VAR_IntelShownType,"BugRadio"] spawn TRGM_GLOBAL_fnc_showIntel;
+            ["BugRadio", _iTaskIndex] spawn TRGM_GLOBAL_fnc_showIntel;
         };
     };
 };

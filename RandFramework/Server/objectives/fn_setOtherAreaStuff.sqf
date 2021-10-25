@@ -1,10 +1,12 @@
 // private _fnc_scriptName = "TRGM_SERVER_fnc_setOtherAreaStuff";
-params ["_mainObjPos"];
+params ["_mainObjPos", "_iTaskIndex"];
 format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 if (!isServer) exitWith {};
 
 if (isNil "_mainObjPos") then {_mainObjPos = TRGM_VAR_ObjectivePositions select 0;};
+
+if (isNil "_iTaskIndex") then {_iTaskIndex = TRGM_VAR_ObjectivePositions findIf {_x isEqualTo _mainObjPos};};
 
 call TRGM_SERVER_fnc_initMissionVars;
 
@@ -21,13 +23,10 @@ private _TowersNear = [];
 } forEach _Towers;
 
 if (count _TowersNear > 0) then {
-    TRGM_VAR_TowerBuild = selectRandom _TowersNear;
-    publicVariable "TRGM_VAR_TowerBuild";
-    [TRGM_VAR_TowerBuild, [localize "STR_TRGM2_TRENDfncsetOtherAreaStuff_CheckEnemyComms",{[TRGM_VAR_IntelShownType, "CommsTower"] spawn TRGM_GLOBAL_fnc_showIntel;},[TRGM_VAR_TowerBuild]]] remoteExec ["addAction", 0, true];
-    TRGM_VAR_TowerClassName = typeOf TRGM_VAR_TowerBuild;
-    publicVariable "TRGM_VAR_TowerBuild";
-    private _TowerX = position TRGM_VAR_TowerBuild select 0;
-    private _TowerY = position TRGM_VAR_TowerBuild select 1;
+    private _TowerBuild = selectRandom _TowersNear;
+    missionNamespace setVariable [format ["TRGM_VAR_CommsTower%1", _iTaskIndex], _TowerBuild, true];
+    [_TowerBuild, [localize "STR_TRGM2_TRENDfncsetOtherAreaStuff_CheckEnemyComms",{["CommsTower", _this select 3 select 0] spawn TRGM_GLOBAL_fnc_showIntel;},[_iTaskIndex]]] remoteExec ["addAction", 0, true];
+    (position _TowerBuild) params ["_TowerX", "_TowerY", "_TowerZ"];
     private _distanceHQ = getMarkerPos "mrkHQ" distance [_TowerX, _TowerY];
 
     private _towerMarkrer = createMarker [format["_markerEnemyComms%1",(floor(random 360))], [_TowerX, _TowerY]];
@@ -36,8 +35,7 @@ if (count _TowersNear > 0) then {
     _towerMarkrer setMarkerText "Intel";
 
     if (_distanceHQ > TRGM_VAR_SideMissionMinDistFromBase) then {
-        TRGM_VAR_bHasCommsTower =  true; publicVariable "TRGM_VAR_bHasCommsTower";
-        TRGM_VAR_CommsTowerPos =  [_TowerX, _TowerY]; publicVariable "TRGM_VAR_CommsTowerPos";
+        TRGM_VAR_bHasCommsTower set [_iTaskIndex, true]; publicVariable "TRGM_VAR_bHasCommsTower";
         private _PatrolDist = 70;
         private _wayX = _TowerX;
         private _wayY = _TowerY;
@@ -76,13 +74,12 @@ if (count _TowersNear > 0) then {
             _DiamPatrolGroupTower setBehaviour "SAFE";
         };
 
-        private _trg = createTrigger ["EmptyDetector", position TRGM_VAR_TowerBuild];
+        private _trg = createTrigger ["EmptyDetector", [_TowerX, _TowerY, _TowerZ]];
         _trg setVariable ["DelMeOnNewCampaignDay",true];
         _trg setTriggerArea [100, 100, 0, false];
-        private _sSTringPos = format["%1,%2", position TRGM_VAR_TowerBuild select 0, position TRGM_VAR_TowerBuild select 1];
-        private _sTriggerString = "!alive(nearestObject [[" + _sSTringPos + "], '" + TRGM_VAR_TowerClassName + "'])";
+        private _sTriggerString = format["!alive(missionNamespace getVariable ['TRGM_VAR_CommsTower%1', objNull])", _iTaskIndex];
 
-        _trg setTriggerStatements [_sTriggerString, "TRGM_VAR_bCommsBlocked = true; publicVariable ""TRGM_VAR_bCommsBlocked""; [this] spawn TRGM_SERVER_fnc_commsBlocked;", ""];
+        _trg setTriggerStatements [_sTriggerString, format ["TRGM_VAR_bCommsBlocked set [%1, true]; publicVariable ""TRGM_VAR_bCommsBlocked""; [this] spawn TRGM_SERVER_fnc_commsBlocked;", _iTaskIndex], ""];
     };
 };
 

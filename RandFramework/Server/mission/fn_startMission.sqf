@@ -57,6 +57,7 @@ if (_bAllowStart) then {
 
             TRGM_VAR_ATFieldPos =  []; publicVariable "TRGM_VAR_ATFieldPos";
             {
+                missionNamespace setVariable [format ["TRGM_VAR_IntelFound_%1", _forEachIndex], [], true];
                 private _y = _x;
                 {
                     //if (_y distance getPos _x > TRGM_VAR_PunishmentRadius) then {
@@ -94,17 +95,15 @@ if (_bAllowStart) then {
             TRGM_VAR_InfTaskCount =  0; publicVariable "TRGM_VAR_InfTaskCount";
             TRGM_VAR_ActiveTasks =  []; publicVariable "TRGM_VAR_ActiveTasks";
             TRGM_VAR_ObjectivePositions =  []; publicVariable "TRGM_VAR_ObjectivePositions";
-            TRGM_VAR_bCommsBlocked =  false; publicVariable "TRGM_VAR_bCommsBlocked";
+            TRGM_VAR_bCommsBlocked =  [false]; publicVariable "TRGM_VAR_bCommsBlocked";
             TRGM_VAR_bBaseHasChopper =  false; publicVariable "TRGM_VAR_bBaseHasChopper";
             TRGM_VAR_ParaDropped =  false; publicVariable "TRGM_VAR_ParaDropped";
-            TRGM_VAR_bHasCommsTower =  false; publicVariable "TRGM_VAR_bHasCommsTower";
-            TRGM_VAR_CommsTowerPos =  [0,0]; publicVariable "TRGM_VAR_CommsTowerPos";
+            TRGM_VAR_bHasCommsTower =  [false]; publicVariable "TRGM_VAR_bHasCommsTower";
             TRGM_VAR_AODetails =  []; publicVariable "TRGM_VAR_AODetails";
             TRGM_VAR_CheckPointAreas =  []; publicVariable "TRGM_VAR_CheckPointAreas";
             TRGM_VAR_SentryAreas =  []; publicVariable "TRGM_VAR_SentryAreas";
             TRGM_VAR_bMortarFiring =  false; publicVariable "TRGM_VAR_bMortarFiring";
             TRGM_VAR_iCampaignDay =  TRGM_VAR_iCampaignDay + 1; publicVariable "TRGM_VAR_iCampaignDay";
-            TRGM_VAR_IntelFound =  []; publicVariable "TRGM_VAR_IntelFound";
             TRGM_VAR_ClearedPositions =  []; publicVariable "TRGM_VAR_ClearedPositions";
             TRGM_VAR_AllowUAVLocateHelp =  false; publicVariable "TRGM_VAR_AllowUAVLocateHelp";
             TRGM_VAR_NewMissionMusic =  nil; publicVariable "TRGM_VAR_NewMissionMusic";

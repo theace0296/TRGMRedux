@@ -4,7 +4,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 
-private _iSelected = _thisCiv getVariable "taskIndex";
+private _iTaskIndex = _thisCiv getVariable "taskIndex";
 private _bCreateTask = _thisCiv getVariable "createTask";
 
 if (alive _thisCiv) then {
@@ -28,15 +28,14 @@ if (side _caller isEqualTo TRGM_VAR_FriendlySide && !_bCreateTask) then {
     };
 
     if (_ballowSearch) then {
-        for "_i" from 0 to 3 step 1 do {
-            if (getMarkerType format["mrkMainObjective%1", _i] isEqualTo "empty") then {
-                format["mrkMainObjective%1", _i] setMarkerType "mil_unknown";
-                [localize "STR_TRGM2_bugRadio_MapUpdated"] call TRGM_GLOBAL_fnc_notifyGlobal;
-            } else {
-                [TRGM_VAR_IntelShownType,"SpeakInform"] spawn TRGM_GLOBAL_fnc_showIntel;
-                sleep 5;
-                [TRGM_VAR_IntelShownType,"SpeakInform"] spawn TRGM_GLOBAL_fnc_showIntel;
-            };
+        if (getMarkerType format["mrkMainObjective%1", _iTaskIndex] isEqualTo "empty") then {
+            format["mrkMainObjective%1", _iTaskIndex] setMarkerType "mil_unknown";
+            [localize "STR_TRGM2_bugRadio_MapUpdated"] call TRGM_GLOBAL_fnc_notifyGlobal;
+        } else {
+            private _firstHandle = ["SpeakInform", _iTaskIndex] spawn TRGM_GLOBAL_fnc_showIntel;
+            sleep 5;
+            waitUntil {scriptDone _firstHandle;};
+            ["SpeakInform", _iTaskIndex] spawn TRGM_GLOBAL_fnc_showIntel;
         };
     };
 };
