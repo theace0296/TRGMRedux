@@ -167,13 +167,13 @@ def entry_point(args):
 
     with open(f'{args.directory.rstrip("/")}\\sqflint.log', 'a') as log:
         for string in unique_strings:
-            log.write(f'<Key ID="STR_TRGM2_{string.replace(" ", "_")}">')
+            log.write(f'            <Key ID="STR_TRGM2_{string.replace(" ", "_")}">')
             log.write('\n')
-            log.write(f'    <Original>{string}</Original>')
+            log.write(f'                <Original>{string}</Original>')
             log.write('\n')
-            log.write(f'    <English>{string}</English>')
+            log.write(f'                <English>{string}</English>')
             log.write('\n')
-            log.write('</Key>')
+            log.write('            </Key>')
             log.write('\n')
         log.close()
 

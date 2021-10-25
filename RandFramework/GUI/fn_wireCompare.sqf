@@ -26,11 +26,11 @@ private _wire = _thisBomb getVariable ["missionBombWire","NONE"];
 private _compare = [_wire, _cutWire] call BIS_fnc_areEqual;
 
 if (_compare) then {
-    cutText ["Wire cut", "PLAIN DOWN"];
+    cutText [localize "STR_TRGM2_Wire_cut", "PLAIN DOWN"];
     //DEFUSED = true;
     playSound "button_close";
     _thisBomb setVariable ["_wireCut",true,true];
-    ["Timer activated"] call TRGM_GLOBAL_fnc_notify;
+    [localize "STR_TRGM2_Timer_activated"] call TRGM_GLOBAL_fnc_notify;
     sleep 1;
     private _countDown = 10;
     while {_countDown > 0 && !(_thisBomb getVariable ["isDefused",false])} do {

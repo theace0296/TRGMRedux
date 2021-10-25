@@ -24,7 +24,7 @@ if (side player isEqualTo civilian) then {
     [player, true] remoteExec ["hideObjectGlobal", 2];
 
     player addaction ["Teleport",{titleText[localize "STR_TRGM2_tele_SelectPosition", "PLAIN"]; onMapSingleClick "vehicle player setPos _pos; onMapSingleClick '';true;";}];
-    player addaction ["Toggle Fast Run",{
+    player addaction [localize "STR_TRGM2_Toggle_Fast_Run",{
         private _bCurrentFastRun = player getVariable ["fastRun",false];
         player setVariable ["fastRun",!_bCurrentFastRun];
     }];

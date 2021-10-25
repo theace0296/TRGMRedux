@@ -112,13 +112,13 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _mainHVT setVariable ["ObjectiveParams", [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
     missionNamespace setVariable [format ["missionObjectiveParams%1", _iTaskIndex], [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
 
-    [_mainHVT, ["This is our target!","{[""This is our target""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
+    [_mainHVT, [localize "STR_TRGM2_This_Is_Our_Target","{[localize ""STR_TRGM2_This_Is_Our_Target""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
 
     _sTargetName2 = format["objInformant2_%1",_iTaskIndex];
     _guardUnit3 allowDamage false;
     _guardUnit3 setVariable [_sTargetName2, _guardUnit3, true];
     missionNamespace setVariable [_sTargetName2, _guardUnit3];
-    [_guardUnit3, ["This is our friendly agent!","{[""This is our target""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
+    [_guardUnit3, [localize "STR_TRGM2_This_Is_Our_Friendly_Agent","{[localize ""STR_TRGM2_This_Is_Our_Friendly_Agent""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
 
     sleep 1;
     [_hvtLzPos, [_guardUnit1] call TRGM_GLOBAL_fnc_getRealPos,_guardUnit1,_mainHVT,_guardUnit3,_hvtGroup,_hvtGuardGroup,_iTaskIndex] spawn { //spawn script so we can have timer that will action our mission movements without pausing the main initialisation process
@@ -130,14 +130,14 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         _iWait = (420 * (_iTaskIndex + 1)) + floor(random 300);
         sleep floor(random 120);
-        _sMessageOne = format["%1 is due to arrive in the area at %2",name _mainHVT, (daytime  + (_iWait/3600) call BIS_fnc_timeToString)];
+        _sMessageOne = format[localize "STR_TRGM2_MeetingDueToDepartAt",name _mainHVT, (daytime  + (_iWait/3600) call BIS_fnc_timeToString)];
         [[TRGM_VAR_FriendlySide, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
         [_sMessageOne] call TRGM_GLOBAL_fnc_notifyGlobal;
 
-        private _hvtTimerHandle = [_iWait, _iTaskIndex, "Time Until HVT is in AO"] spawn TRGM_GLOBAL_fnc_timerGlobal;
+        private _hvtTimerHandle = [_iWait, _iTaskIndex, localize "STR_TRGM2_Time_Until_HVT_In_AO"] spawn TRGM_GLOBAL_fnc_timerGlobal;
         waitUntil {scriptDone _hvtTimerHandle};
 
-        _sMessageTwo = format["%1 is in the area and on way to AO (position is tracked and marked on map",name _mainHVT];
+        _sMessageTwo = format[localize "STR_TRGM2_OnTheWayToAO_PositionMarkedOnMap",name _mainHVT];
         [[TRGM_VAR_FriendlySide, "HQ"],_sMessageTwo] remoteExec ["sideChat", 0];
         [_sMessageTwo] call TRGM_GLOBAL_fnc_notifyGlobal;
 
@@ -183,7 +183,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _mrkMeetingHVTMarker = createMarker [format["HVT%1",_iTaskIndex], [_hvtChopper] call TRGM_GLOBAL_fnc_getRealPos];
         _mrkMeetingHVTMarker setMarkerShape "ICON";
         _mrkMeetingHVTMarker setMarkerType "o_inf";
-        _mrkMeetingHVTMarker setMarkerText format["HVT %1",name(_mainHVT)];
+        _mrkMeetingHVTMarker setMarkerText format[localize "STR_TRGM2_MeetingAssassinationMissionHVTMarker",name(_mainHVT)];
         [_hvtChopper,_mrkMeetingHVTMarker] spawn {
             _hvtChopper = _this select 0;
             _mrkMeetingHVTMarker = _this select 1;
@@ -194,7 +194,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         };
 
         sleep 2;
-        ["HVT is on route to AO now!"] call TRGM_GLOBAL_fnc_notifyGlobal;
+        [localize "STR_TRGM2_MeetingAssassinationMissionHVTOnRoute"] call TRGM_GLOBAL_fnc_notifyGlobal;
 
         _mainHVT setCaptive true;
         _guardUnit3 setCaptive true;
@@ -361,7 +361,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         sleep 120;
         if (alive(_mainHVT)) then {
             ["He got away!"] call TRGM_GLOBAL_fnc_notify;
-            [_mainHVT, "failed", "HVT Escaped", "HVT Escaped, rep lowered", 1] spawn TRGM_SERVER_fnc_updateTask;
+            [_mainHVT, "failed", localize "STR_TRGM2_AmbushConvoyFailedHVTEscapedKilledMissionBoard", localize "STR_TRGM2_AmbushConvoyFailedHVTEscapedMissionHint", 1] spawn TRGM_SERVER_fnc_updateTask;
         };
         sleep 5;
 
@@ -372,22 +372,22 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     };
 
     _guardUnit3 setVariable ["MainObjective", _mainHVT, true];
-    _guardUnit3 addEventHandler ["Killed", {[(_guardUnit3 getVariable "MainObjective"), "failed", "Our agent was killed!!!", "You killed our agent! Rep lowered", 0.8] spawn TRGM_SERVER_fnc_updateTask; }];
+    _guardUnit3 addEventHandler ["Killed", {[(_guardUnit3 getVariable "MainObjective"), "failed", localize "STR_TRGM2_AmbushConvoyFailedAgentKilledMissionBoard", localize "STR_TRGM2_AmbushConvoyFailedAgentKilledMissionHint", 0.8] spawn TRGM_SERVER_fnc_updateTask; }];
 
     if (_bIsMainObjective) then { //if mainobjective (i.e. heavy mission or final campaign mission) we will require team to get document from corpse
-        [_mainHVT, ["Take document",{(_this select 0) spawn TRGM_SERVER_fnc_updateTask;},[_iTaskIndex,_bCreateTask],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
+        [_mainHVT, [localize "STR_TRGM2_AmbushConvoyMission_TakeDocument",{(_this select 0) spawn TRGM_SERVER_fnc_updateTask;},[_iTaskIndex,_bCreateTask],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
     }
     else { //if single mission or side then we can pass this task as soon as HVT is killed
         _mainHVT addEventHandler ["Killed", {(_this select 0) spawn TRGM_SERVER_fnc_updateTask;}];
     };
 
-    _MissionTitle = format["Meeting Assassination: %1",name(_mainHVT)];    //you can adjust this here to change what shows as marker and task text
+    _MissionTitle = format[localize "STR_TRGM2_MeetingAssassinationMissionTitle_WithName",name(_mainHVT)];    //you can adjust this here to change what shows as marker and task text
     _sTaskDescription = format[localize "STR_TRGM2_MeetingAssassinationMissionDescription",name(_mainHVT)]; //adjust this based on veh? and man? if van then if car then?
         //or just random description that will fit all situations??
     if (_bIsMainObjective) then {
-        sTaskDescription = _sTaskDescription + "<br /><br />Once killed, search his body for the documents he is carrying!"
+        sTaskDescription = _sTaskDescription + localize "STR_TRGM2_MeetingAssassinationMissionDescription2";
     };
-    _sTaskDescription = _sTaskDescription + "<br /><br />!NOTE: we have an under cover agent flying in with our HVT, so watch your fire! Our agent will give a signal (tie his shoelace) to confirm his identity, but if you fail to see that, then you can confirm who the HVT is by who meets up and talks to they guy waiting at the AO.<br />Try not to get spotted before you take out the target, getting spotted will cause the HVT to run to the meeting and will have a smoke shield in place!";
+    _sTaskDescription = _sTaskDescription + localize "STR_TRGM2_MeetingAssassinationMissionDescription3";
 };
 
 //TEST ON SERVER!!!!!

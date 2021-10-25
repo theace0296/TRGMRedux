@@ -36,7 +36,7 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
                     _HQPosMarker  setMarkerType "hd_dot";
                     _HQPosMarker  setMarkerSize [5,5];
                     _HQPosMarker  setMarkerColor "ColorGreen";
-                    _HQPosMarker  setMarkerText "HQ Location";
+                    _HQPosMarker  setMarkerText (localize "STR_TRGM2_HQ_Location");
                     waitUntil { sleep 1; ((TRGM_VAR_MapClicked isEqualTo 2) || !visibleMap); };
                     deleteMarker _HQPosMarker;
                     if (TRGM_VAR_MapClicked isEqualTo 2) then {

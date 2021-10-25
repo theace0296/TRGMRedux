@@ -19,7 +19,7 @@ Marker1 = createMarker ["Marker1", _HQpos];
 "Marker1" setMarkerShape "ICON";
 "Marker1" setMarkerType "mil_flag";
 "Marker1" setMarkerColor "ColorBlue";
-"Marker1" setMarkerText "Head Quarters";
+"Marker1" setMarkerText (localize "STR_TRGM2_Init_MarkerText_HQ");
 publicVariable "Marker1";
 
 mrkHQ = createMarker ["mrkHQ", _HQpos];
@@ -163,7 +163,7 @@ publicVariable "baseRadio";
 endMissionBoard = ["MapBoard_seismic_F", _HQpos, [-3.5,2.8,0.6]] call _object_spawn;
 endMissionBoard setdir 315;
 endMissionBoard setVehicleVarName "endMissionBoard";
-[endMissionBoard, ["End Mission", "[] remoteExec [""TRGM_SERVER_fnc_endMission""];", [], 0, true, true, "", "_this isEqualTo player && leader group _this isEqualTo _this"]] remoteExec ["addAction", 0, true];
+[endMissionBoard, [localize "STR_TRGM2_SetMissionBoardOptions_EndMission", "[] remoteExec [""TRGM_SERVER_fnc_endMission""];", [], 0, true, true, "", "_this isEqualTo player && leader group _this isEqualTo _this"]] remoteExec ["addAction", 0, true];
 publicVariable "endMissionBoard";
 
 endMissionBoard2 = createVehicle ["MapBoard_seismic_F",[0,0,0],[],0,"CAN_COLLIDE"];
@@ -171,7 +171,7 @@ endMissionBoard2 setPos [0,0,0];
 endMissionBoard2 enableSimulation false;
 endMissionBoard2 allowdamage false;
 endMissionBoard2 setVehicleVarName "endMissionBoard2";
-[endMissionBoard2, ["End Mission", "[] remoteExec [""TRGM_SERVER_fnc_endMission""];", [], 0, true, true, "", "_this isEqualTo player && leader group _this isEqualTo _this"]] remoteExec ["addAction", 0, true];
+[endMissionBoard2, [localize "STR_TRGM2_SetMissionBoardOptions_EndMission", "[] remoteExec [""TRGM_SERVER_fnc_endMission""];", [], 0, true, true, "", "_this isEqualTo player && leader group _this isEqualTo _this"]] remoteExec ["addAction", 0, true];
 publicVariable "endMissionBoard2";
 
 box1 = ["B_CargoNet_01_ammo_F", _HQpos, [4,1.5,0.6]] call _object_spawn;
@@ -209,7 +209,7 @@ transportChopper = createMarker ["transportChopper", ([chopper1] call TRGM_GLOBA
 "transportChopper" setMarkerShape "ICON";
 "transportChopper" setMarkerType "b_air";
 "transportChopper" setMarkerColor "ColorBlue";
-"transportChopper" setMarkerText "Transport Chopper";
+"transportChopper" setMarkerText (localize "STR_TRGM2_Init_MarkerText_TransportChopper");
 publicVariable "transportChopper";
 sleep 5;
 

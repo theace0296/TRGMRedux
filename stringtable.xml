@@ -812,6 +812,10 @@
                 <Spanish>Has destruido los camiones de munición enemigos, reputación aumentada</Spanish>
                 <Korean>적의 탄약 차량을 성공적으로 파괴하면, 명성이 높아 집니다.</Korean>
             </Key>
+            <Key ID="STR_TRGM2_startInfMission_MissionTitle3_Destory_Board">
+                <Original>Destroyed ammo trucks</Original>
+                <English>Destroyed ammo trucks</English>
+            </Key>
             <Key ID="STR_TRGM2_startInfMission_MissionTitle3_Desc">
                 <Original>Two ammo truck have been located, they are getting ready to convoy these to reinforce an area in preperation of an attack.  Locate and destroy these vehicles.</Original>
                 <English>Two ammo truck have been located, they are getting ready to convoy these to reinforce an area in preperation of an attack.  Locate and destroy these vehicles.</English>
@@ -859,6 +863,14 @@
                 <Chinesesimp>转送敌方通讯信号到总部</Chinesesimp>
                 <Spanish>Transmite las comunicaciones del enemigo al CG</Spanish>
                 <Korean>HQ에 적 통신 전송</Korean>
+            </Key>
+            <Key ID="STR_TRGM2_startInfMission_MissionTitle6_Board">
+                <Original>Bugged radio</Original>
+                <English>Bugged radio</English>
+            </Key>
+            <Key ID="STR_TRGM2_startInfMission_MissionTitle6_Hint">
+                <Original>Bugged radio, reputation increased.</Original>
+                <English>Bugged radio, reputation increased.</English>
             </Key>
             <Key ID="STR_TRGM2_startInfMission_MissionTitle6_Button">
                 <Original>Send transmission to HQ</Original>
@@ -931,6 +943,10 @@
                 <Chinesesimp>成功歼灭重要目标，声誉已提高</Chinesesimp>
                 <Spanish>Un objetivo de alto valor ha sido eliminado, reputación incrementada</Spanish>
                 <Korean>고가치 표적이 제게 되었으며, 명성 증가됨</Korean>
+            </Key>
+            <Key ID="STR_TRGM2_startInfMission_MissionTitle8_Eliminated_Board">
+                <Original>HVT Killed</Original>
+                <English>HVT Killed</English>
             </Key>
             <Key ID="STR_TRGM2_startInfMission_MissionTitle8_MustSearch">
                 <Original>&lt;br/&gt;&lt;br/&gt;You must search the body to identify this target!&lt;br/&gt;&lt;br/&gt;</Original>
@@ -3580,6 +3596,18 @@
                 <Chinese>援救戰俘</Chinese>
                 <Chinesesimp>援救战俘</Chinesesimp>
             </Key>
+            <Key ID="STR_TRGM2_Rescue_POW_Board">
+                <Original>Rescued a POW</Original>
+                <English>Rescued a POW</English>
+            </Key>
+            <Key ID="STR_TRGM2_Rescue_POW_Hint">
+                <Original>Rescued a POW, reputation increased.</Original>
+                <English>Rescued a POW, reputation increased.</English>
+            </Key>
+            <Key ID="STR_TRGM2_Rescue_POW_Desc">
+                <Original>We need you to locate and rescue our POW, the enemy are trying to gain valuable information from our guy!</Original>
+                <English>We need you to locate and rescue our POW, the enemy are trying to gain valuable information from our guy!</English>
+            </Key>
             <Key ID="STR_TRGM2_Rescue_Reporter">
                 <Original>Rescue Reporter</Original>
                 <English>Rescue Reporter</English>
@@ -3587,6 +3615,18 @@
                 <Korean>기자 구출</Korean>
                 <Chinese>援救記者</Chinese>
                 <Chinesesimp>援救记者</Chinesesimp>
+            </Key>
+            <Key ID="STR_TRGM2_Rescue_Reporter_Board">
+                <Original>Rescued a Reporter</Original>
+                <English>Rescued a Reporter</English>
+            </Key>
+            <Key ID="STR_TRGM2_Rescue_Reporter_Hint">
+                <Original>Rescued a Reporter, reputation increased.</Original>
+                <English>Rescued a Reporter, reputation increased.</English>
+            </Key>
+            <Key ID="STR_TRGM2_Rescue_Reporter_Desc">
+                <Original>We need you to locate and rescue a reporter!</Original>
+                <English>We need you to locate and rescue a reporter!</English>
             </Key>
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_MissionTypeDescriptions1b">
                 <Original>This is the same as the top mission type, however, the two optional objectives are not marked on the map.  There will be one main objective that is occupied by a heavy enemy army.\n\nYou will also have two optional mini missions, these mini missions will either give you intel on the main AO, or will help increase your reputation depending on the mission type.</Original>
@@ -3643,12 +3683,20 @@
                 <Chinese>你們摧毀了敵方的防空高炮，聲譽值提高</Chinese>
                 <Chinesesimp>你们摧毁了敌方的防空高炮，声誉值提高</Chinesesimp>
             </Key>
+            <Key ID="STR_TRGM2_startInfMission_MissionTitle9_Destory_Board">
+                <Original>Destroyed AAA</Original>
+                <English>Destroyed AAA</English>
+            </Key>
             <Key ID="STR_TRGM2_startInfMission_MissionTitle10_Destory">
                 <Original>You have destroyed enemy artillery, reputation increased</Original>
                 <English>You have destroyed enemy artillery, reputation increased</English>
                 <Korean>당신은 적 야포를 파괴하였습니다. 명성이 올라감</Korean>
                 <Chinese>你們摧毀了敵方的火炮，聲譽值提高</Chinese>
                 <Chinesesimp>你们摧毁了敌方的火炮，声誉值提高</Chinesesimp>
+            </Key>
+            <Key ID="STR_TRGM2_startInfMission_MissionTitle10_Destory_Board">
+                <Original>Destroyed Artillery</Original>
+                <English>Destroyed Artillery</English>
             </Key>
             <Key ID="STR_TRGM2_TRGMSetUnitGlobalVars_GroupManagement">
                 <Original>Enable Group Management</Original>
@@ -3868,6 +3916,22 @@
                 <Original>Code Entered</Original>
                 <English>Code Entered</English>
                 <Korean>입력된 코드</Korean>
+            </Key>
+            <Key ID="STR_TRGM2_Hacked_data">
+                <Original>Hacked data</Original>
+                <English>Hacked data</English>
+            </Key>
+            <Key ID="STR_TRGM2_Hacked_data_rep_increased">
+                <Original>Hacked data, reputation increased</Original>
+                <English>Hacked data, reputation increased</English>
+            </Key>
+            <Key ID="STR_TRGM2_Downloaded_data">
+                <Original>Downloaded research data</Original>
+                <English>Downloaded research data</English>
+            </Key>
+            <Key ID="STR_TRGM2_Downloaded_data_rep_increased">
+                <Original>Data secured, reputation increased</Original>
+                <English>Data secured, reputation increased</English>
             </Key>
             <Key ID="STR_TRGM2_CivTalk">
                 <Original>Talk/Search civ</Original>
@@ -4162,9 +4226,21 @@
                 <Original>Meeting Assassination</Original>
                 <English>Meeting Assassination</English>
             </Key>
+            <Key ID="STR_TRGM2_MeetingAssassinationMissionTitle_WithName">
+                <Original>Meeting Assassination: %1</Original>
+                <English>Meeting Assassination: %1</English>
+            </Key>
             <Key ID="STR_TRGM2_MeetingAssassinationMissionDescription">
                 <Original>Intel has confirmed that our target %1 is on route to the AO marked on the map","%1 is flying into the area for a short meeting to hand over some documents! We need this HVT terminated!</Original>
                 <English>Intel has confirmed that our target %1 is on route to the AO marked on the map","%1 is flying into the area for a short meeting to hand over some documents! We need this HVT terminated!</English>
+            </Key>
+            <Key ID="STR_TRGM2_MeetingAssassinationMissionDescription2">
+                <Original><br /><br />Once killed, search his body for the documents he is carrying!</Original>
+                <English><br /><br />Once killed, search his body for the documents he is carrying!</English>
+            </Key>
+            <Key ID="STR_TRGM2_MeetingAssassinationMissionDescription3">
+                <Original><br /><br />!NOTE: we have an under cover agent flying in with our HVT, so watch your fire! Our agent will give a signal (tie his shoelace) to confirm his identity, but if you fail to see that, then you can confirm who the HVT is by who meets up and talks to they guy waiting at the AO.<br />Try not to get spotted before you take out the target, getting spotted will cause the HVT to run to the meeting and will have a smoke shield in place!</Original>
+                <English><br /><br />!NOTE: we have an under cover agent flying in with our HVT, so watch your fire! Our agent will give a signal (tie his shoelace) to confirm his identity, but if you fail to see that, then you can confirm who the HVT is by who meets up and talks to they guy waiting at the AO.<br />Try not to get spotted before you take out the target, getting spotted will cause the HVT to run to the meeting and will have a smoke shield in place!</English>
             </Key>
             <Key ID="STR_TRGM2_MeetingAssassinationMissionBoard">
                 <Original>HVT assassinated</Original>
@@ -4174,14 +4250,38 @@
                 <Original>HVT assassinated, reputation increased.</Original>
                 <English>HVT assassinated, reputation increased.</English>
             </Key>
+            <Key ID="STR_TRGM2_MeetingAssassinationMissionHVTOnRoute">
+                <Original>HVT is on route to AO now!</Original>
+                <English>HVT is on route to AO now!</English>
+            </Key>
+            <Key ID="STR_TRGM2_MeetingAssassinationMissionHVTMarker">
+                <Original>HVT %1</Original>
+                <English>HVT %1</English>
+            </Key>
 
             <Key ID="STR_TRGM2_AmbushConvoyMissionTitle">
                 <Original>Ambush Convoy</Original>
                 <English>Ambush Convoy</English>
             </Key>
             <Key ID="STR_TRGM2_AmbushConvoyMissionDescription">
-                <Original>Intel has confirmed that a convoy is on route to the AO marked on the map</Original>
-                <English>Intel has confirmed that a convoy is on route to the AO marked on the map</English>
+                <Original>Intel has confirmed that our target is on route to the AO marked on the map. The HVT is moving with a convoy into the area! We need this HVT terminated!</Original>
+                <English>Intel has confirmed that our target is on route to the AO marked on the map. The HVT is moving with a convoy into the area! We need this HVT terminated!</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyMissionDescription2">
+                <Original><br /><br />Once killed, search his body for the documents he is carrying!</Original>
+                <English><br /><br />Once killed, search his body for the documents he is carrying!</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyMissionDescription3">
+                <Original><br /><br />!NOTE: We have an under cover agent in the vehicle with our HVT, so watch your fire! Our agent will give a signal (tie his shoelace) to confirm his identity.</Original>
+                <English><br /><br />!NOTE: We have an under cover agent in the vehicle with our HVT, so watch your fire! Our agent will give a signal (tie his shoelace) to confirm his identity.</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyMissionDescription4">
+                <Original><br /><br />TIP: Shoot the driver to make the convoy stop and everyone get out of the vehicle.</Original>
+                <English><br /><br />TIP: Shoot the driver to make the convoy stop and everyone get out of the vehicle.</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyMission_TakeDocument">
+                <Original>Take document</Original>
+                <English>Take document</English>
             </Key>
             <Key ID="STR_TRGM2_AmbushConvoyMissionBoard">
                 <Original>Convoy eliminated</Original>
@@ -4190,6 +4290,35 @@
             <Key ID="STR_TRGM2_AmbushConvoyMissionHint">
                 <Original>Convoy eliminated, reputation increased.</Original>
                 <English>Convoy eliminated, reputation increased.</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyFailedAgentKilledMissionHint">
+                <Original>You killed our agent! Rep lowered</Original>
+                <English>You killed our agent! Rep lowered</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyFailedAgentKilledMissionBoard">
+                <Original>Agent Killed</Original>
+                <English>Agent Killed</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyFailedHVTEscapedMissionHint">
+                <Original>HVT Escaped, rep lowered</Original>
+                <English>HVT Escaped, rep lowered</English>
+            </Key>
+            <Key ID="STR_TRGM2_AmbushConvoyFailedHVTEscapedMissionBoard">
+                <Original>HVT Escaped</Original>
+                <English>HVT Escaped</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_OnTheWayToAO_PositionMarkedOnMap">
+                <Original>%1 is in the area and on way to AO (position is tracked and marked on map</Original>
+                <English>%1 is in the area and on way to AO (position is tracked and marked on map</English>
+            </Key>
+            <Key ID="STR_TRGM2_ConvoyDueToDepartAt">
+                <Original>The convoy is due to depart at %1</Original>
+                <English>The convoy is due to depart at %1</English>
+            </Key>
+            <Key ID="STR_TRGM2_MeetingDueToDepartAt">
+                <Original>%1 is due to arrive in the area at %2</Original>
+                <English>%1 is due to arrive in the area at %2</English>
             </Key>
 
             <Key ID="STR_TRGM2_DestroyArmoredVehiclesTitle">
@@ -4460,6 +4589,67 @@
             <Key ID="STR_TRGM2_jumpIntoWater">
                 <Original>Jump into Water</Original>
                 <English>Jump into Water</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_HQ_Location">
+                <Original>HQ Location</Original>
+                <English>HQ Location</English>
+            </Key>
+            <Key ID="STR_TRGM2_Toggle_Fast_Run">
+                <Original>Toggle Fast Run</Original>
+                <English>Toggle Fast Run</English>
+            </Key>
+            <Key ID="STR_TRGM2_Wire_cut">
+                <Original>Wire cut</Original>
+                <English>Wire cut</English>
+            </Key>
+            <Key ID="STR_TRGM2_Timer_activated">
+                <Original>Timer activated</Original>
+                <English>Timer activated</English>
+            </Key>
+            <Key ID="STR_TRGM2_Convoy_Stop_N">
+                <Original>Convoy Stop %1</Original>
+                <English>Convoy Stop %1</English>
+            </Key>
+            <Key ID="STR_TRGM2_Time_Until_Convoy_Departs">
+                <Original>Time Until Convoy Departs</Original>
+                <English>Time Until Convoy Departs</English>
+            </Key>
+            <Key ID="STR_TRGM2_Time_Until_HVT_In_AO">
+                <Original>Time Until HVT is in AO</Original>
+                <English>Time Until HVT is in AO</English>
+            </Key>
+            <Key ID="STR_TRGM2_This_Is_Our_Target">
+                <Original>This is our target!</Original>
+                <English>This is our target!</English>
+            </Key>
+            <Key ID="STR_TRGM2_This_Is_Our_Friendly_Agent">
+                <Original>This is our friendly agent!</Original>
+                <English>This is our friendly agent!</English>
+            </Key>
+            <Key ID="STR_TRGM2_Time_Until_Supplies_Drop">
+                <Original>Time Until Supplies Drop</Original>
+                <English>Time Until Supplies Drop</English>
+            </Key>
+            <Key ID="STR_TRGM2_Medikit">
+                <Original>Medikit</Original>
+                <English>Medikit</English>
+            </Key>
+            <Key ID="STR_TRGM2_First_Aid_Kits">
+                <Original>First Aid Kits</Original>
+                <English>First Aid Kits</English>
+            </Key>
+            <Key ID="STR_TRGM2_Blood_IV">
+                <Original>Blood IV (1000ml)</Original>
+                <English>Blood IV (1000ml)</English>
+            </Key>
+            <Key ID="STR_TRGM2_Basic_Field_Dressing">
+                <Original>Basic Field Dressing (QuikClot)</Original>
+                <English>Basic Field Dressing (QuikClot)</English>
+            </Key>
+            <Key ID="STR_TRGM2_Surgical_Kits">
+                <Original>Surgical Kits</Original>
+                <English>Surgical Kits</English>
             </Key>
 
             <Key ID="STR_TRGM2_debugFunctionString">

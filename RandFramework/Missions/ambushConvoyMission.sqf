@@ -98,7 +98,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                 private _stopMarker = createMarker [format["ConvoyStop%1_%2",count _convoyStopPositons,_iTaskIndex], _stopPosition];
                 _stopMarker setMarkerShape "ICON";
                 _stopMarker setMarkerType "mil_marker";
-                _stopMarker setMarkerText format["Convoy Stop %1", count _convoyStopPositons];
+                _stopMarker setMarkerText format[localize "STR_TRGM2_Convoy_Stop_N", count _convoyStopPositons];
             };
         } forEach convoyPath;
 
@@ -131,7 +131,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _sTargetName = format["objInformant%1",_iTaskIndex]; //ignore that it is "objInformant", all objectives have this name, do not change this!
         _mainHVT setVariable [_sTargetName, _mainHVT, true];
         missionNamespace setVariable [_sTargetName, _mainHVT];
-        [_mainHVT, ["This is our target!","{[""This is our target""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
+        [_mainHVT, [localize "STR_TRGM2_This_Is_Our_Target","{[localize ""STR_TRGM2_This_Is_Our_Target""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
         _mainHVT setCaptive true;
         removeAllWeapons _mainHVT;
 
@@ -141,7 +141,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _guardUnit3 setVariable [_sTargetName2, _guardUnit3, true];
             missionNamespace setVariable [_sTargetName2, _guardUnit3];
             if (_hasInformant) then {
-                [_guardUnit3, ["This is our friendly agent!","{[""This is our friendly agent!""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
+                [_guardUnit3, [localize "STR_TRGM2_This_Is_Our_Friendly_Agent","{[localize ""STR_TRGM2_This_Is_Our_Friendly_Agent""] call TRGM_GLOBAL_fnc_notify; }",[],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
                 _guardUnit3 setCaptive true;
                 removeAllWeapons _guardUnit3;
             };
@@ -164,11 +164,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         _iWait = (420 * (_iTaskIndex + 1)) + floor(random 300);
         sleep floor(random 120);
-        _sMessageOne = format["The convoy is due to depart at %1", (daytime  + (_iWait/3600) call BIS_fnc_timeToString)];
+        _sMessageOne = format[localize "STR_TRGM2_ConvoyDueToDepartAt", (daytime  + (_iWait/3600) call BIS_fnc_timeToString)];
         [[TRGM_VAR_FriendlySide, "HQ"],_sMessageOne] remoteExec ["sideChat", 0];
         [_sMessageOne] call TRGM_GLOBAL_fnc_notifyGlobal;
 
-        private _convoyTimerHandle = [_iWait, _iTaskIndex, "Time Until Convoy Departs"] spawn TRGM_GLOBAL_fnc_timerGlobal;
+        private _convoyTimerHandle = [_iWait, _iTaskIndex, localize "STR_TRGM2_Time_Until_Convoy_Departs"] spawn TRGM_GLOBAL_fnc_timerGlobal;
         waitUntil {scriptDone _convoyTimerHandle};
 
         {
@@ -184,7 +184,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _x allowDamage true;
         } forEach units _hvtGroup;
 
-        _sMessageTwo = format["%1 is in the area and on way to AO (position is tracked and marked on map",name _mainHVT];
+        _sMessageTwo = format[localize "STR_TRGM2_OnTheWayToAO_PositionMarkedOnMap",name _mainHVT];
         [[TRGM_VAR_FriendlySide, "HQ"],_sMessageTwo] remoteExec ["sideChat", 0];
         [_sMessageTwo] call TRGM_GLOBAL_fnc_notifyGlobal;
 
@@ -217,7 +217,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                 _guardUnit3 call BIS_fnc_ambientAnim__terminate;
             };
             _guardUnit3 setVariable ["MainObjective", _mainHVT, true];
-            _guardUnit3 addEventHandler ["Killed", {[((_this select 0) getVariable "MainObjective"), "failed", "Our agent was killed!!!", "You killed our agent! Rep lowered", 0.8] spawn TRGM_SERVER_fnc_updateTask; }];
+            _guardUnit3 addEventHandler ["Killed", {[((_this select 0) getVariable "MainObjective"), "failed", localize "STR_TRGM2_AmbushConvoyFailedAgentKilledMissionBoard", localize "STR_TRGM2_AmbushConvoyFailedAgentKilledMissionHint", 0.8] spawn TRGM_SERVER_fnc_updateTask; }];
         };
 
         _mainHVT setVariable ["ObjectiveParams", [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
@@ -247,24 +247,24 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         };
 
         if (_bIsMainObjective) then { //if mainobjective (i.e. heavy mission or final campaign mission) we will require team to get document from corpse
-            [_mainHVT, ["Take document",{(_this select 0) spawn TRGM_SERVER_fnc_updateTask;},[_iTaskIndex,_bCreateTask],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
+            [_mainHVT, [localize "STR_TRGM2_AmbushConvoyMission_TakeDocument",{(_this select 0) spawn TRGM_SERVER_fnc_updateTask;},[_iTaskIndex,_bCreateTask],10,true,true,"","_this distance _target < 3"]] remoteExec ["addAction", 0, true];
         }
         else { //if single mission or side then we can pass this task as soon as HVT is killed
             _mainHVT addEventHandler ["Killed", {(_this select 0) spawn TRGM_SERVER_fnc_updateTask;}];
         };
     };
 
-    _MissionTitle = "Ambush Convoy";    //you can adjust this here to change what shows as marker and task text
-    _sTaskDescription = "Intel has confirmed that our target is on route to the AO marked on the map. The HVT is moving with a convoy into the area! We need this HVT terminated!";
+    _MissionTitle = localize "STR_TRGM2_AmbushConvoyMissionTitle";    //you can adjust this here to change what shows as marker and task text
+    _sTaskDescription = localize "STR_TRGM2_AmbushConvoyMissionDescription";
         //adjust this based on veh? and man? if van then if car then?
         //or just random description that will fit all situations??
     if (_bIsMainObjective) then {
-        sTaskDescription = _sTaskDescription + "<br /><br />Once killed, search his body for the documents he is carrying!"
+        sTaskDescription = _sTaskDescription + (localize "STR_TRGM2_AmbushConvoyMissionDescription2");
     };
     if (_hasInformant) then {
-        _sTaskDescription = _sTaskDescription + "<br /><br />!NOTE: We have an under cover agent in the vehicle with our HVT, so watch your fire! Our agent will give a signal (tie his shoelace) to confirm his identity.";
+        _sTaskDescription = _sTaskDescription + (localize "STR_TRGM2_AmbushConvoyMissionDescription3");
     };
-    _sTaskDescription = _sTaskDescription + "<br /><br />TIP: Shoot the driver to make the convoy stop and everyone get out of the vehicle.";
+    _sTaskDescription = _sTaskDescription + (localize "STR_TRGM2_AmbushConvoyMissionDescription4");
 };
 
 publicVariable "MISSION_fnc_CustomRequired";

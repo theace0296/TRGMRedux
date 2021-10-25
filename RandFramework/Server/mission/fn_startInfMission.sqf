@@ -232,7 +232,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_hackDataMission; //Hack Data
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Hacked data, reputation increased", 1, "Hacked data"];
+            _args = [localize "STR_TRGM2_Hacked_data_rep_increased", 1, localize "STR_TRGM2_Hacked_data"];
             ["Mission Setup: Generating Hack Data", true] call TRGM_GLOBAL_fnc_log;
         };
         case 2: {
@@ -240,7 +240,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_stealDataFromResearchVehMission; //Steal data from research vehicle
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Data secured, reputation increased", 1, "Downloaded research data"];
+            _args = [localize "STR_TRGM2_Downloaded_data_rep_increased", 1, localize "STR_TRGM2_Downloaded_data"];
             ["Mission Setup: Generating Steal data from research vehicle", true] call TRGM_GLOBAL_fnc_log;
         };
         case 3: {
@@ -248,7 +248,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_destroyVehiclesMission; //Destroy ammo trucks
             [localize "STR_TRGM2_startInfMission_MissionTitle3"] call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = [localize "STR_TRGM2_startInfMission_MissionTitle3_Destory", 1, "Destroyed ammo trucks", selectRandom (call sideAmmoTruck), [localize "STR_TRGM2_startInfMission_MissionTitle3_Desc"]];
+            _args = [localize "STR_TRGM2_startInfMission_MissionTitle3_Destory", 1, localize "STR_TRGM2_startInfMission_MissionTitle3_Destory_Board", selectRandom (call sideAmmoTruck), [localize "STR_TRGM2_startInfMission_MissionTitle3_Desc"]];
             ["Mission Setup: Generating Destroy ammo trucks", true] call TRGM_GLOBAL_fnc_log;
         };
         case 4: {
@@ -272,7 +272,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_bugRadioMission; //Transmit Enemy Comms to HQ
             call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Bugged radio, reputation increased.", 0.5, "Bugged radio"];
+            _args = [localize "STR_TRGM2_startInfMission_MissionTitle6_Hint", 0.5, localize "STR_TRGM2_startInfMission_MissionTitle6_Board"];
             ["Mission Setup: Generating Transmit Enemy Comms to HQ", true] call TRGM_GLOBAL_fnc_log;
         };
         case 7: {
@@ -280,7 +280,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_hvtMission; //Eliminate Officer   -   gain 1 point if side, if main, need to id him before complete
             [localize "STR_TRGM2_startInfMission_MissionTitle7"] call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = [localize "STR_TRGM2_startInfMission_MissionTitle8_Eliminated", 1, "HVT Killed", selectRandom InterogateOfficerClasses, TRGM_VAR_EnemySide, "KILL", localize "STR_TRGM2_startInfMission_MissionTitle8_Button", "", [(localize "STR_TRGM2_startInfMission_MissionTitle7_Desc") + (["", localize "STR_TRGM2_startInfMission_MissionTitle8_MustSearch"] select (_bIsMainObjective)) + TRGM_VAR_OfficerImage]];
+            _args = [localize "STR_TRGM2_startInfMission_MissionTitle8_Eliminated", 1, localize "STR_TRGM2_startInfMission_MissionTitle8_Eliminated_Board", selectRandom InterogateOfficerClasses, TRGM_VAR_EnemySide, "KILL", localize "STR_TRGM2_startInfMission_MissionTitle8_Button", "", [(localize "STR_TRGM2_startInfMission_MissionTitle7_Desc") + (["", localize "STR_TRGM2_startInfMission_MissionTitle8_MustSearch"] select (_bIsMainObjective)) + TRGM_VAR_OfficerImage]];
             ["Mission Setup: Generating Eliminate Officer", true] call TRGM_GLOBAL_fnc_log;
         };
         case 8: {
@@ -288,7 +288,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_hvtMission; //Assasinate weapon dealer   -   gain 1 point if side, no intel from him... if main need to id him before complete
             [localize "STR_TRGM2_startInfMission_MissionTitle8"] call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = [localize "STR_TRGM2_startInfMission_MissionTitle8_Eliminated", 1, "HVT Killed", selectRandom WeaponDealerClasses, Civilian, "KILL", localize "STR_TRGM2_startInfMission_MissionTitle8_Button", "", [(localize "STR_TRGM2_startInfMission_MissionTitle8_Desc") + (["", localize "STR_TRGM2_startInfMission_MissionTitle8_MustSearch"] select (_bIsMainObjective)) + TRGM_VAR_WeaponDealerImage]];
+            _args = [localize "STR_TRGM2_startInfMission_MissionTitle8_Eliminated", 1, localize "STR_TRGM2_startInfMission_MissionTitle8_Eliminated_Board", selectRandom WeaponDealerClasses, Civilian, "KILL", localize "STR_TRGM2_startInfMission_MissionTitle8_Button", "", [(localize "STR_TRGM2_startInfMission_MissionTitle8_Desc") + (["", localize "STR_TRGM2_startInfMission_MissionTitle8_MustSearch"] select (_bIsMainObjective)) + TRGM_VAR_WeaponDealerImage]];
             ["Mission Setup: Generating Assasinate weapon dealer", true] call TRGM_GLOBAL_fnc_log;
         };
         case 9: {
@@ -296,7 +296,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_destroyVehiclesMission; //Destroy AAA vehicles
             [localize "STR_TRGM2_startInfMission_MissionTitle9"] call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = [localize "STR_TRGM2_startInfMission_MissionTitle9_Destory", 1, "Destroyed AAA", selectRandom (call DestroyAAAVeh), [localize "STR_TRGM2_startInfMission_MissionTitle9_Desc"]];
+            _args = [localize "STR_TRGM2_startInfMission_MissionTitle9_Destory", 1, localize "STR_TRGM2_startInfMission_MissionTitle9_Destory_Board", selectRandom (call DestroyAAAVeh), [localize "STR_TRGM2_startInfMission_MissionTitle9_Desc"]];
             ["Mission Setup: Generating Destroy AAA vehicles", true] call TRGM_GLOBAL_fnc_log;
         };
         case 10: {
@@ -304,7 +304,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_destroyVehiclesMission; //Destroy Artillery vehicles
             [localize "STR_TRGM2_startInfMission_MissionTitle10"] call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = [localize "STR_TRGM2_startInfMission_MissionTitle10_Destory", 1, "Destroyed Artillery", selectRandom (call sArtilleryVeh), [localize "STR_TRGM2_startInfMission_MissionTitle10_Desc"]];
+            _args = [localize "STR_TRGM2_startInfMission_MissionTitle10_Destory", 1, localize "STR_TRGM2_startInfMission_MissionTitle10_Destory_Board", selectRandom (call sArtilleryVeh), [localize "STR_TRGM2_startInfMission_MissionTitle10_Desc"]];
             ["Mission Setup: Generating Destroy Artillery vehicles", true] call TRGM_GLOBAL_fnc_log;
         };
         case 11: {
@@ -312,7 +312,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_hvtMission; //Rescue POW
             [localize "STR_TRGM2_Rescue_POW"] call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Rescued a POW, reputation increased.", 1, "Rescued a POW", selectRandom FriendlyVictims, TRGM_VAR_FriendlySide, "RESCUE", "", "", ["We need you to locate and rescue our POW, the enemy are trying to gain valuable information from our guy!"]];
+            _args = [localize "STR_TRGM2_Rescue_POW_Hint", 1, localize "STR_TRGM2_Rescue_POW_Board", selectRandom FriendlyVictims, TRGM_VAR_FriendlySide, "RESCUE", "", "", [localize "STR_TRGM2_Rescue_POW_Desc"]];
             ["Mission Setup: Generating Rescue POW", true] call TRGM_GLOBAL_fnc_log;
         };
         case 12: {
@@ -320,7 +320,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             call MISSIONS_fnc_hvtMission; //Rescue Reporter
             [localize "STR_TRGM2_Rescue_Reporter"] call MISSION_fnc_CustomVars;
             _bNewTaskSetup = true;
-            _args = ["Rescued a Reporter, reputation increased.", 1, "Rescued a Reporter", selectRandom Reporters, Civilian, "RESCUE", "", "", ["We need you to locate and rescue a reporter!"]];
+            _args = [localize "STR_TRGM2_Rescue_Reporter_Hint", 1, localize "STR_TRGM2_Rescue_Reporter_Board", selectRandom Reporters, Civilian, "RESCUE", "", "", [localize "STR_TRGM2_Rescue_Reporter_Desc"]];
             ["Mission Setup: Generating Rescue Reporter", true] call TRGM_GLOBAL_fnc_log;
         };
         case 13: {

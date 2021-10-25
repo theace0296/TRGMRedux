@@ -141,7 +141,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         sleep 10;
 
         (format[localize "STR_TRGM2_MinUntilSupplyChopperInArea", "5:00"]) call TRGM_GLOBAL_fnc_notifyGlobal;
-        private _timer1Handle = [300, _iTaskIndex, "Time Until Supplies Drop"] spawn TRGM_GLOBAL_fnc_timerGlobal;
+        private _timer1Handle = [300, _iTaskIndex, localize "STR_TRGM2_Time_Until_Supplies_Drop"] spawn TRGM_GLOBAL_fnc_timerGlobal;
         waitUntil {scriptDone _timer1Handle}; //wait 5 mins before supply drop in area
         sleep 5;
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;
@@ -166,7 +166,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         sleep 10;
 
         (format[localize "STR_TRGM2_MinUntilSupplyChopperInArea", "5:00"]) call TRGM_GLOBAL_fnc_notifyGlobal;
-        private _timer2Handle = [300, _iTaskIndex, "Time Until Supplies Drop"] spawn TRGM_GLOBAL_fnc_timerGlobal;
+        private _timer2Handle = [300, _iTaskIndex, localize "STR_TRGM2_Time_Until_Supplies_Drop"] spawn TRGM_GLOBAL_fnc_timerGlobal;
         waitUntil {scriptDone _timer2Handle}; //wait 5 mins before supply drop in area
         sleep 5;
         (localize "STR_TRGM2_SupplyChopperInbound") call TRGM_GLOBAL_fnc_notifyGlobal;

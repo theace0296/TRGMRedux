@@ -8,12 +8,12 @@ call TRGM_SERVER_fnc_initMissionVars;
 private _requiredItemIndex = selectRandom [0,1,2];
 requiredItemsCount = [10,5,2] select _requiredItemIndex;
 RequestedMedicalItem = ["FirstAidKit","FirstAidKit","Medikit"] select _requiredItemIndex;
-RequestedMedicalItemName = ["First Aid Kits","First Aid Kits","Medikit"] select _requiredItemIndex;
+RequestedMedicalItemName = [localize "STR_TRGM2_First_Aid_Kits", localize "STR_TRGM2_First_Aid_Kits",localize "STR_TRGM2_Medikit"] select _requiredItemIndex;
 
 if (isClass(configFile >> "CfgPatches" >> "ace_medical")) then {
     RequestedMedicalItem = ["ACE_bloodIV","ACE_quikclot","ACE_surgicalKit"] select _requiredItemIndex;
     requiredItemsCount = [5,5,2] select _requiredItemIndex;
-    RequestedMedicalItemName = ["Blood IV (1000ml)","Basic Field Dressing (QuikClot)","Surgical Kits"] select _requiredItemIndex;
+    RequestedMedicalItemName = [localize "STR_TRGM2_Blood_IV",localize "STR_TRGM2_Basic_Field_Dressing",localize "STR_TRGM2_Surgical_Kits"] select _requiredItemIndex;
 };
 publicVariable "requiredItemsCount";
 publicVariable "RequestedMedicalItem";
