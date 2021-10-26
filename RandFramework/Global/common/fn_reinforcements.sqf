@@ -148,6 +148,15 @@ if (_skill < 1) then {_skill = 1;};
 //Assign the crew to a group & assign cargo to the helo
 [_side, _helo, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
 {[_x] joinSilent _heloCrew;} forEach crew _helo;
+_heloCrew enableAttack false;
+_heloCrew setBehaviour "CARELESS";
+_heloCrew setCombatMode "BLUE";
+{
+    _x disableAi "TARGET";
+    _x disableAi "AUTOTARGET";
+    _x disableAi "FSM";
+    _x setCaptive true;
+} forEach crew _helo;
 {_x assignAsCargo _helo; _x moveInCargo _helo;} forEach units _infgrp;
 _infgrp deleteGroupWhenEmpty true;
 _heloCrew deleteGroupWhenEmpty true;
@@ -163,6 +172,7 @@ if (_bodyDelete) then {
 //Find a flat position around the LZ marker & create an HPad there.
 private _flatPos = [_LZMrk , 0, 600, 20, 0, 0.3, 0, [],[_LZMrk,_LZMrk], _helo] call TRGM_GLOBAL_fnc_findSafePos;
 private _hPad = createVehicle ["Land_HelipadEmpty_F", _flatPos, [], 0, "NONE"];
+private _hPadPos = getPos _hPad;
 
 //Debug output map markers
 private ["_mrkPos","_mrkLZ","_mrkHelo","_mrkinf","_mrkTarget"];
@@ -209,58 +219,43 @@ if (_debugMode) then {
 //Give the helicopter an unload waypoint onto the hpad
 
 if (!_paraDrop) then {
-    private _heloWp = _heloCrew addWaypoint [_hPad, 0];
-    _heloWp setWaypointType "TR UNLOAD";
-    _heloWp setWaypointBehaviour "CARELESS";
-    _heloWp setWaypointCombatMode "BLUE";
-    _heloWp setWaypointSpeed "FULL";
-    if (_spawnMrk select 2 isEqualTo 0) then {
-        _heloWp setWaypointStatements ["true", "{unAssignVehicle _x; _x action [""eject"", vehicle _x]; sleep 0.5;} forEach crew vehicle this;"];
-    }
-    else {
-        _heloWp setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
-    };
+    _helo doMove [(_hPadPos select 0), (_hPadPos select 1), 200];
+    waitUntil {sleep 2; (_helo distance2D [(_hPadPos select 0), (_hPadPos select 1), 200]) < 200;};
+    _helo land "GET OUT";
 
     //wait until the helicopter is touching the ground before ejecting the cargo
-    if !(_spawnMrk select 2 isEqualTo 0) then {
-        waitUntil {sleep 2; isTouchingGround _helo || {!canMove _helo}};
-        {unAssignVehicle _x; _x action ["eject", vehicle _x]; sleep 0.5;} forEach units _infgrp; //Eject the cargo
-    };
-
-    //wait Until the infantry group is no longer in the helicopter before assigning a new WP to the helicopter
-    waitUntil {sleep 2; {!alive _x || !(_x in _helo)} count (units _infGrp) isEqualTo count (units _infGrp)};
-    if (_debugMode) then {player globalChat format ["Helo Cargo Count: %1", {alive _x && (_x in _helo)} count (units _infGrp)];};
-    _heloWp = _heloCrew addWaypoint [[0,0,0], 0];
-    _heloWp setWaypointType "MOVE";
-    _heloWp setWaypointBehaviour "AWARE";
-    _heloWp setWaypointCombatMode "RED";
-    _heloWp setWaypointSpeed "FULL";
-    _heloWp setWaypointStatements ["true", "{deleteVehicle _x;} forEach crew (vehicle this) + [vehicle this];"];
+    waitUntil {sleep 2; !([_helo] call TRGM_GLOBAL_fnc_helicopterIsFlying) || {!canMove _helo}};
+    {unAssignVehicle _x; _x action ["eject", vehicle _x]; sleep 0.5;} forEach units _infgrp; //Eject the cargo
 } else {
     //disable collision to avoid deaths and setup the paradrop
     {_x disableCollisionWith _helo} forEach units _infGrp;
     _helo flyInHeight 200;
+    _helo doMove [(_hPadPos select 0), (_hPadPos select 1), 200];
+    waitUntil {sleep 2; (_helo distance2D [(_hPadPos select 0), (_hPadPos select 1), 200]) < 200;};
 
-    private _heloWp = _heloCrew addWaypoint [_hPad, 0];
-    _heloWp setWaypointType "MOVE";
-    _heloWp setWaypointBehaviour "CARELESS";
-    _heloWp setWaypointCombatMode "BLUE";
-    _heloWp setWaypointSpeed "FULL";
-    _heloWp setWaypointStatements ["true", "nul = [assignedCargo (vehicle this)] spawn TRGM_GLOBAL_fnc_para;"];
-
-    _heloWp = _heloCrew addWaypoint [[0,0,0], 0];
-    _heloWp setWaypointType "MOVE";
-    _heloWp setWaypointBehaviour "AWARE";
-    _heloWp setWaypointCombatMode "RED";
-    _heloWp setWaypointSpeed "FULL";
-    _heloWp setWaypointStatements ["true", "{deleteVehicle _x;} forEach crew (vehicle this) + [vehicle this];"];
+    [units _infGrp] spawn TRGM_GLOBAL_fnc_para;
 };
 
 //wait until cargo is empty & if _sadMode is passed as true, then add a SAD WP on the nearest enemy.. else, go into patrol mode
-    waitUntil {sleep 2; {!alive _x || !(_x in _helo)} count (units _infGrp) isEqualTo count (units _infGrp)};
-    if (_debugMode) then {
-        {deleteMarker _x;} forEach [_mrkLZ, _mrkPos];
-    };
+waitUntil {sleep 2; [_helo] call TRGM_GLOBAL_fnc_isOnlyBoardCrewOnboard;};
+if (_debugMode) then {player globalChat format ["Helo Cargo Count: %1", {alive _x && (_x in _helo)} count (units _infGrp)];};
+
+_helo doMove [0, 0, 200];
+
+[_helo, _heloCrew] spawn {
+    waitUntil {sleep 2; (_helo distance2D [(_hPadPos select 0), (_hPadPos select 1), 200]) > 3000;};
+    private _helo = _this select 0;
+    private _heloGroup = _this select 1;
+    {
+        deleteVehicle _x;
+    }
+    forEach crew _helo + [_helo];
+    deleteGroup _heloGroup;
+};
+
+if (_debugMode) then {
+    {deleteMarker _x;} forEach [_mrkLZ, _mrkPos];
+};
 
 if (_sadMode) then {
     if (_debugMode) then {player globalChat "Scanning for targets to enable SAD Mode";};
@@ -301,7 +296,6 @@ if (_sadMode) then {
 } else {
     [_infGrp, getPosATL (leader _infGrp), 200] call BIS_fnc_taskPatrol;
     if (_debugMode) then {player globalChat "Patrol Mode";};
-
 };
 
 // Cycle mode gets a bit too intense for most situations, commenting out to avoid usage...

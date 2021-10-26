@@ -29,10 +29,10 @@ try {
     _heloGroup setBehaviour "CARELESS";
     _heloGroup setCombatMode "BLUE";
     {
-        _airDropHelo disableAi "TARGET";
-        _airDropHelo disableAi "AUTOTARGET";
-        _airDropHelo disableAi "FSM";
-        _airDropHelo setCaptive true;
+        _x disableAi "TARGET";
+        _x disableAi "AUTOTARGET";
+        _x disableAi "FSM";
+        _x setCaptive true;
     } forEach crew _airDropHelo;
 
     _airDropHelo doMove [(_spawnPos select 0), (_spawnPos select 1), 200];
