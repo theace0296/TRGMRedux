@@ -41,8 +41,13 @@ if (_FoundViaType isEqualTo "CommsTower") then {
     [(localize "STR_TRGM2_PickingUpComms")] call TRGM_GLOBAL_fnc_notify;
     private _TowerBuild = missionNamespace getVariable [format ["TRGM_VAR_CommsTower%1", _iTaskIndex], objNull];
     if (!(isNil "_TowerBuild") && {!(isNull _TowerBuild)}) then {
-        _showIntel = _TowerBuild getVariable ["TRGM_VAR_ShowIntel", true];
-        _TowerBuild setVariable ["TRGM_VAR_ShowIntel", selectRandom [true, false, false], true];
+        private _towerShowIntel = _TowerBuild getVariable "TRGM_VAR_ShowIntel";
+        if !(isNil "_towerShowIntel") then {
+            _showIntel = _towerShowIntel;
+        };
+        if (_showIntel) then {
+            _TowerBuild setVariable ["TRGM_VAR_ShowIntel", selectRandom [true, false, false], true];
+        };
     };
     sleep 4;
 };
