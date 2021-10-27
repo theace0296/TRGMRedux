@@ -44,6 +44,7 @@ if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetu
         TRGM_VAR_AdvancedSettings        = _AdvancedSettings; publicVariable "TRGM_VAR_AdvancedSettings";
         TRGM_VAR_arrayTime               = _arrayTime; publicVariable "TRGM_VAR_arrayTime";
         TRGM_VAR_IsFullMap               = _IsFullMap; publicVariable "TRGM_VAR_IsFullMap";
+        [str(TRGM_VAR_AdvancedSettings)] call TRGM_GLOBAL_fnc_log;
     };
 
     {
@@ -53,6 +54,8 @@ if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetu
             TRGM_VAR_AdvancedSettings set [_index, _defaultValue];
         };
     } forEach TRGM_VAR_AdvControls;
+    publicVariable "TRGM_VAR_AdvancedSettings";
+    [str(TRGM_VAR_AdvancedSettings)] call TRGM_GLOBAL_fnc_log;
 
     if (isClass(configFile >> "CfgPatches" >> "ace_medical")) then {
         if (TRGM_VAR_iUseRevive != 0) then { //Ace is active, so need to make sure "no revive" is selected
@@ -75,7 +78,7 @@ if (!isNull (findDisplay 6000)) then {
         private _value = nil;
         if (_lnpCtrlType isEqualTo "RscCombo") then {
             TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "\n\nHERE80:" + str(lbCurSel _ctrlItem);
-            _value = _Options select ([lbCurSel _ctrlItem, 0] select (lbCurSel _ctrlItem isEqualTo -1));
+            _value = _Values select ([lbCurSel _ctrlItem, 0] select (lbCurSel _ctrlItem isEqualTo -1));
         };
         if (_lnpCtrlType isEqualTo "RscEdit") then {
             _value = ctrlText _InpCtrlID;
@@ -86,6 +89,7 @@ if (!isNull (findDisplay 6000)) then {
         TRGM_VAR_AdvancedSettings set [_index, _value];
     } forEach TRGM_VAR_AdvControls;
     publicVariable "TRGM_VAR_AdvancedSettings";
+    [str(TRGM_VAR_AdvancedSettings)] call TRGM_GLOBAL_fnc_log;
 };
 
 closedialog 0;

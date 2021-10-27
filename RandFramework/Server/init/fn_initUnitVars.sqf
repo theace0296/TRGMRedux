@@ -118,6 +118,7 @@ TRGM_VAR_AdvancedSettings = [];
 } forEach TRGM_VAR_AdvControls;
 publicVariable "TRGM_VAR_DefaultAdvancedSettings";
 publicVariable "TRGM_VAR_AdvancedSettings";
+[str(TRGM_VAR_AdvancedSettings)] call TRGM_GLOBAL_fnc_log;
 
 /////// Group Name ///////
 TRGM_GETTER_fnc_sGroupName = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_NAME_IDX; };

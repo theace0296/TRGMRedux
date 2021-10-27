@@ -19,8 +19,6 @@ disableSerialization;
 
 format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-
-
 closedialog 0;
 
 sleep 0.1;
@@ -87,7 +85,7 @@ _lblctrlTitle ctrlCommit 0;
         if !(isNil "_appendText") then {
             _ctrlText = format ["%1%2", _ctrlText, _appendText];
         };
-        _ctrlVal ctrlSetText _ctrlText;
+        _valctrl ctrlSetText _ctrlText;
         _valctrl ctrlCommit 0;
 
         _inpctrl ctrlAddEventHandler ["SliderPosChanged", {
