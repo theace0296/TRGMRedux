@@ -122,7 +122,7 @@ if (isServer) then {
 
     ["Mission Setup: 4", true] call TRGM_GLOBAL_fnc_log;
     sleep 1;
-    if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_VIRTUAL_ARSENAL_IDX isEqualTo 1) then {
+    if (call TRGM_GETTER_fnc_bEnableVirtualArsenal) then {
         [_AmmoBox1, [localize "STR_TRGM2_startInfMission_VirtualArsenal",{["Open",true] spawn BIS_fnc_arsenal}]] remoteExec ["addAction", 0];
     };
 

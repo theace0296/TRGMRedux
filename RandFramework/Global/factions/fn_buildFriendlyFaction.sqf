@@ -3,7 +3,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 
-private _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
+private _friendlyFactionIndex = call TRGM_GETTER_fnc_friendlyFactionIndex;
 (TRGM_VAR_AvailableFactions select _friendlyFactionIndex) params ["_westClassName", "_westDisplayName"];
 
 private _westData = TRGM_VAR_AllFactionMap get _westClassName;

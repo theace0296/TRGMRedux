@@ -19,7 +19,7 @@ while {true} do {
                };
             };
         };
-        if (leader (group (vehicle player)) isEqualTo player && TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SUPPORT_OPTION_IDX isEqualTo 1) then {
+        if (leader (group (vehicle player)) isEqualTo player && (call TRGM_GETTER_fnc_bSupportOption)) then {
             if (TRGM_VAR_iMissionIsCampaign) then {
                 if (TRGM_VAR_CampaignInitiated) then {
 

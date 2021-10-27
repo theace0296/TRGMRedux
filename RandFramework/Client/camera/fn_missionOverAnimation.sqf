@@ -39,7 +39,7 @@ while {!_bEnd} do {
         sleep 8;
         ["<t font='PuristaMedium' align='center' size='2.9' color='#ffffff'>" + localize "STR_TRGM2_Description_Name" + "</t><br/><t font='PuristaMedium' align='center' size='1' color='#ffffff'>" + localize "STR_TRGM2_TRGMInitPlayerLocal_TRGM2Title" + "</t>",-1,0.2,6,1,0,789] spawn BIS_fnc_dynamicText;
         sleep 10;
-        ["<t font='PuristaMedium' align='center' size='2.9' color='#ffffff'>" + (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_NAME_IDX) + "</t><br/><t font='PuristaMedium' align='center' size='1' color='#ffffff'><br />" + localize "STR_TRGM2_TRGMInitPlayerLocal_RTBDebreif" + "</t>",-1,0.2,6,1,0,789] spawn BIS_fnc_dynamicText;
+        ["<t font='PuristaMedium' align='center' size='2.9' color='#ffffff'>" + (call TRGM_GETTER_fnc_sGroupName) + "</t><br/><t font='PuristaMedium' align='center' size='1' color='#ffffff'><br />" + localize "STR_TRGM2_TRGMInitPlayerLocal_RTBDebreif" + "</t>",-1,0.2,6,1,0,789] spawn BIS_fnc_dynamicText;
         sleep 10;
         private _stars = "";
         private _iCount = 0;

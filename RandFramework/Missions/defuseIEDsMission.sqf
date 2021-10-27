@@ -39,13 +39,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     params ["_markerType","_objectiveMainBuilding","_centralAO_x","_centralAO_y","_roadSearchRange", "_bCreateTask", "_iTaskIndex", "_bIsMainObjective", ["_args", []]];
     if (_markerType != "empty") then { _markerType = "hd_unknown"; }; // Set marker type here...
 
-    _compactIedTargets = false;
-    if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_IEDTARGET_COMPACT_SPACING_IDX isEqualTo 1) then {
-        _compactIedTargets = true;
-    };
-    if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_IEDTARGET_COMPACT_SPACING_IDX isEqualTo 0) then {
-        _compactIedTargets = random 1 < .50;
-    };
+    _compactIedTargets = call TRGM_GETTER_fnc_bCompactTargetMissions;
 
     _spacingBetweenTargets = 1500;
     if (_compactIedTargets) then {_spacingBetweenTargets = 150};

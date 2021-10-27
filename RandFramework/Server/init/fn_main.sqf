@@ -103,7 +103,7 @@ TRGM_VAR_PopulateLoadingWait_percentage = 0; publicVariable "TRGM_VAR_PopulateLo
 [format["Mission Core: %1", "Init"], true] call TRGM_GLOBAL_fnc_log;
 [5] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
 
-if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_MANAGE_IDX isEqualTo 1) then {
+if (call TRGM_GETTER_fnc_bEnableGroupManagement) then {
     ["Initialize"] call BIS_fnc_dynamicGroups;//Exec on Server
 };
 
@@ -223,7 +223,7 @@ TRGM_VAR_transportHelosToGetActions = [chopper1];
     try {
         if (_bReplaceFriendlyVehicles && {isClass(configFile >> "CfgVehicles" >> typeOf _x) && {_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship"}}) then {
             private _faction = getText(configFile >> "CfgVehicles" >> typeOf _x >> "faction");
-            private _friendlyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_FRIENDLY_FACTIONS_IDX;
+            private _friendlyFactionIndex = call TRGM_GETTER_fnc_friendlyFactionIndex;
             private _westFaction = (TRGM_VAR_AvailableFactions select _friendlyFactionIndex) select 0;
             if (getNumber(configFile >> "CfgFactionClasses" >> _faction >> "side") isEqualTo 1 && {_faction != _westFaction}) then {
                 private _newVehClass = [_x, TRGM_VAR_FriendlySide] call TRGM_GLOBAL_fnc_getFactionVehicle;
@@ -428,9 +428,7 @@ if (TRGM_VAR_iMissionIsCampaign) then {
 
 [format["Mission Core: %1", "RunFlashLightState"], true] call TRGM_GLOBAL_fnc_log;
 
-private _iEnemyFlashLightOption = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_SELECT_ENEMY_FLASHLIGHTS_IDX;
-if (_iEnemyFlashLightOption isEqualTo 0) then {_iEnemyFlashLightOption = selectRandom [1,2]}; //1=yes, 2=no
-if (_iEnemyFlashLightOption isEqualTo 1) then {
+if (call TRGM_GETTER_fnc_bEnemyFlashlight) then {
     {
         if ((side _x) isEqualTo TRGM_VAR_EnemySide) then
         {

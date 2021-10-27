@@ -117,15 +117,14 @@ if (call TRGM_GLOBAL_fnc_isCbaLoaded && call TRGM_GLOBAL_fnc_isAceLoaded) then {
     playMusic "";
 };
 
-private _iEnableGroupManagement = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_MANAGE_IDX;
-if (_iEnableGroupManagement isEqualTo 1) then {
+if (call TRGM_GETTER_fnc_bEnableGroupManagement) then {
     ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;//Exec on client
 };
 
 [] spawn TRGM_CLIENT_fnc_playerScripts;
 player addEventHandler ["Respawn", { [] spawn TRGM_CLIENT_fnc_playerScripts; }];
 
-if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_VIRTUAL_ARSENAL_IDX isEqualTo 1) then {
+if (call TRGM_GETTER_fnc_bEnableVirtualArsenal) then {
     box1 addAction [localize "STR_TRGM2_startInfMission_VirtualArsenal", {["Open",true] spawn BIS_fnc_arsenal}];
 };
 
@@ -153,11 +152,8 @@ if (_isTraining) then {
 
 }
 else {
-    private _iTicketCount = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_RESPAWN_TICKET_COUNT_IDX;
-    [player, _iTicketCount] call BIS_fnc_respawnTickets;
-
-    private _iRespawnTimer = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_RESPAWN_TIMER_IDX;
-    setPlayerRespawnTime _iRespawnTimer;
+    [player, call TRGM_GETTER_fnc_iTicketCount] call BIS_fnc_respawnTickets;
+    setPlayerRespawnTime (call TRGM_GETTER_fnc_iRespawnTimer);
 };
 
 

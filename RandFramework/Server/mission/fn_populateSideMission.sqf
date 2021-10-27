@@ -140,15 +140,7 @@ TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["\n\ntrendFunctions.sqf
 if (!_bFriendlyInsurgents) then {
     if (!_bThisMissionCivsOnly) then {
 
-        private _minimission = false;
-        if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MINIMISSIONS_IDX isEqualTo 1) then {
-            _minimission = true;
-        };
-        if (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MINIMISSIONS_IDX isEqualTo 0) then {
-            _minimission = random 1 < .50;
-        };
-
-
+        private _minimission = call TRGM_GETTER_fnc_bMiniMissions;
         TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["\n\ntrendFunctions.sqf : inside populate enemy -  _bFriendlyInsurgents: %1 - _bThisMissionCivsOnly: %2 ",str(_bFriendlyInsurgents),str(_bThisMissionCivsOnly)];
         //Spawn patrol
         //if main need a couple of these and always have 2 or 3

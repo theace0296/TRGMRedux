@@ -48,7 +48,9 @@ _lblctrlTitle ctrlCommit 0;
     private _inpXPos = ([0, ((2 * _ctrlWidth) + 0.1)] select (_forEachIndex > 12)) + (0.4 * safezoneW + safezoneX);
     private _ctrlYPos = ((0.27 + _currentLinePos) * safezoneH + safezoneY);
 
-    _x params ["_lblCtrlID", "_lblText", "_lnpCtrlType", "_Options", "_Values", "_DefaultValue", "_toolTip", "_appendText"];
+    _x params ["_index", "_lblText", "_lnpCtrlType", "_Options", "_Values", "_DefaultValue", "_toolTip", "_appendText"];
+    #define ADVCTRLIDC(IDX) 6001 + (2 * IDX)
+    private _lblCtrlID = ADVCTRLIDC(_index);
     private _InpCtrlID = _lblCtrlID + 1;
 
     _display ctrlCreate ["RscText", _lblCtrlID];
@@ -65,23 +67,27 @@ _lblctrlTitle ctrlCommit 0;
         {
             _inpctrl lbAdd _x;
         } forEach _Options;
-        private _savedValue = _Values find (TRGM_VAR_AdvancedSettings select _forEachIndex);
+        private _savedValue = _Values find (TRGM_VAR_AdvancedSettings select _index);
         _inpctrl lbSetCurSel ([_savedValue, _DefaultValue] select (isNil "_savedValue"));
     };
     if (_lnpCtrlType isEqualTo "RscEdit") then {
-        private _savedValue = (TRGM_VAR_AdvancedSettings select _forEachIndex);
+        private _savedValue = (TRGM_VAR_AdvancedSettings select _index);
         _inpctrl ctrlSetText ([_savedValue, _DefaultValue] select (isNil "_savedValue"));
     };
     if (_lnpCtrlType isEqualTo "RscXSliderH") then {
         _inpctrl sliderSetRange [_Options, _Values];
         _inpctrl sliderSetSpeed [(_Values / _Options), 1];
-        private _savedValue = (TRGM_VAR_AdvancedSettings select _forEachIndex);
+        private _savedValue = (TRGM_VAR_AdvancedSettings select _index);
         _inpctrl sliderSetPosition ([_savedValue, _DefaultValue] select (isNil "_savedValue"));
 
         _display ctrlCreate ["ctrlEdit", (_InpCtrlID+500)];
         private _valctrl = _display displayCtrl (_InpCtrlID+500);
         _valctrl ctrlSetPosition [_inpXPos+(.75*_ctrlWidth), _ctrlYPos,.25*_ctrlWidth,_ctrlHeight];
-        _valctrl ctrlSetText (str(round ([_savedValue, _DefaultValue] select (isNil "_savedValue"))) + "s");
+        private _ctrlText = str(round ([_savedValue, _DefaultValue] select (isNil "_savedValue")));
+        if !(isNil "_appendText") then {
+            _ctrlText = format ["%1%2", _ctrlText, _appendText];
+        };
+        _ctrlVal ctrlSetText _ctrlText;
         _valctrl ctrlCommit 0;
 
         _inpctrl ctrlAddEventHandler ["SliderPosChanged", {

@@ -46,61 +46,13 @@ if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetu
         TRGM_VAR_IsFullMap               = _IsFullMap; publicVariable "TRGM_VAR_IsFullMap";
     };
 
-    if (count TRGM_VAR_AdvancedSettings < 6) then {
-        TRGM_VAR_AdvancedSettings pushBack 10;
-    };
-
-    if (count TRGM_VAR_AdvancedSettings < 7) then {
-        TRGM_VAR_AdvancedSettings pushBack (TRGM_VAR_DefaultEnemyFactionValue select 0);
-    };
-
-    if (TRGM_VAR_AdvancedSettings select 6 isEqualTo 0) then { //we had an issue with some being set to zero (due to a bad published version, this makes sure any zeros are adjusted to correct id)
-        TRGM_VAR_AdvancedSettings set [6,TRGM_VAR_DefaultEnemyFactionValue select 0];
-    };
-
-    if (count TRGM_VAR_AdvancedSettings < 8) then {
-        TRGM_VAR_AdvancedSettings pushBack (TRGM_VAR_DefaultMilitiaFactionValue select 0);
-    };
-
-    if (count TRGM_VAR_AdvancedSettings < 9) then {
-        TRGM_VAR_AdvancedSettings pushBack (TRGM_VAR_DefaultFriendlyFactionValue select 0);
-    };
-
-    if !(TRGM_VAR_AdvancedSettings select 6 in TRGM_VAR_DefaultEnemyFactionArray) then {
-        private _bFound = false;
-        {
-            if (!_bFound && _x in TRGM_VAR_DefaultEnemyFactionArray) then {
-                _bFound = true;
-                TRGM_VAR_AdvancedSettings set [6,_x];
-            };
-        } forEach TRGM_VAR_DefaultEnemyFactionValue;
-    };
-
-    if !(TRGM_VAR_AdvancedSettings select 7 in TRGM_VAR_DefaultMilitiaFactionArray) then {
-        private _bFound = false;
-        {
-            if (!_bFound && _x in TRGM_VAR_DefaultMilitiaFactionArray) then {
-                _bFound = true;
-                TRGM_VAR_AdvancedSettings set [7,_x];
-            };
-        } forEach TRGM_VAR_DefaultMilitiaFactionValue;
-    };
-
-    if !(TRGM_VAR_AdvancedSettings select 8 in TRGM_VAR_DefaultFriendlyFactionArray) then {
-        private _bFound = false;
-        {
-            if (!_bFound && _x in TRGM_VAR_DefaultFriendlyFactionArray) then {
-                _bFound = true;
-                TRGM_VAR_AdvancedSettings set [8,_x];
-            };
-        } forEach TRGM_VAR_DefaultFriendlyFactionValue;
-    };
-
-    for [{private _i = 9}, {_i < count TRGM_VAR_DefaultAdvancedSettings}, {_i = _i + 1}] do {
-        if (count TRGM_VAR_AdvancedSettings < (_i + 1)) then {
-            TRGM_VAR_AdvancedSettings pushBack (TRGM_VAR_DefaultAdvancedSettings select _i);
+    {
+        private _index = _x select 0;
+        private _defaultValue = _x select 5;
+        if (count TRGM_VAR_AdvancedSettings <= _index) then {
+            TRGM_VAR_AdvancedSettings set [_index, _defaultValue];
         };
-    };
+    } forEach TRGM_VAR_AdvControls;
 
     if (isClass(configFile >> "CfgPatches" >> "ace_medical")) then {
         if (TRGM_VAR_iUseRevive != 0) then { //Ace is active, so need to make sure "no revive" is selected
@@ -113,25 +65,25 @@ if (isNil "TRGM_VAR_InitialLoadedPreviousSettings" && !TRGM_VAR_ForceMissionSetu
 if (!isNull (findDisplay 6000)) then {
     TRGM_VAR_AdvancedSettings = [];
     {
-        private _CurrentControl = _x;
-        private _lnpCtrlType = _x select 2;
-        private _ThisControlOptions = (_x select 4);
-        private _ThisControlIDX = (_x select 0) + 1;
-        private _ctrlItem = (findDisplay 6000) displayCtrl _ThisControlIDX;
+        _x params ["_index", "_lblText", "_lnpCtrlType", "_Options", "_Values", "_DefaultValue", "_toolTip", "_appendText"];
+        #define ADVCTRLIDC(IDX) 6001 + (2 * IDX)
+        private _lblCtrlID = ADVCTRLIDC(_index);
+        private _InpCtrlID = _lblCtrlID + 1;
+        private _ctrlItem = (findDisplay 6000) displayCtrl _InpCtrlID;
         TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "\n\n" + str(lbCurSel _ctrlItem);
         publicVariable "TRGM_VAR_debugMessages";
         private _value = nil;
         if (_lnpCtrlType isEqualTo "RscCombo") then {
             TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + "\n\nHERE80:" + str(lbCurSel _ctrlItem);
-            _value = _ThisControlOptions select ([lbCurSel _ctrlItem, 0] select (lbCurSel _ctrlItem isEqualTo -1));
+            _value = _Options select ([lbCurSel _ctrlItem, 0] select (lbCurSel _ctrlItem isEqualTo -1));
         };
         if (_lnpCtrlType isEqualTo "RscEdit") then {
-            _value = ctrlText _ThisControlIDX;
+            _value = ctrlText _InpCtrlID;
         };
         if (_lnpCtrlType isEqualTo "RscXSliderH") then {
-            _value = sliderPosition _ThisControlIDX;
+            _value = sliderPosition _InpCtrlID;
         };
-        TRGM_VAR_AdvancedSettings pushBack _value;
+        TRGM_VAR_AdvancedSettings set [_index, _value];
     } forEach TRGM_VAR_AdvControls;
     publicVariable "TRGM_VAR_AdvancedSettings";
 };

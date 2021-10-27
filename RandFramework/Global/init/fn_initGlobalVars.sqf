@@ -228,7 +228,6 @@ if (isNil "TRGM_VAR_AODetails")                               then {TRGM_VAR_AOD
 if (isNil "TRGM_VAR_ATFieldPos")                              then {TRGM_VAR_ATFieldPos = [];                                         publicVariable "TRGM_VAR_ATFieldPos";};
 if (isNil "TRGM_VAR_ActiveTasks")                             then {TRGM_VAR_ActiveTasks = [];                                        publicVariable "TRGM_VAR_ActiveTasks";};
 if (isNil "TRGM_VAR_AdminPlayer")                             then {TRGM_VAR_AdminPlayer = objNull;                                   publicVariable "TRGM_VAR_AdminPlayer";};
-if (isNil "TRGM_VAR_AdvancedSettings")                        then {TRGM_VAR_AdvancedSettings = TRGM_VAR_DefaultAdvancedSettings;     publicVariable "TRGM_VAR_AdvancedSettings";};
 if (isNil "TRGM_VAR_AllowAOFires")                            then {TRGM_VAR_AllowAOFires =   true;                                   publicVariable "TRGM_VAR_AllowAOFires";};
 if (isNil "TRGM_VAR_AllowUAVLocateHelp")                      then {TRGM_VAR_AllowUAVLocateHelp = false;                              publicVariable "TRGM_VAR_AllowUAVLocateHelp";};
 if (isNil "TRGM_VAR_BadPoints")                               then {TRGM_VAR_BadPoints = 0;                                           publicVariable "TRGM_VAR_BadPoints";};

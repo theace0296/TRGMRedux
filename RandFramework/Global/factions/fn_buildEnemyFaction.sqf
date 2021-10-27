@@ -3,7 +3,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 
-private _enemyFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_ENEMY_FACTIONS_IDX;
+private _enemyFactionIndex = call TRGM_GETTER_fnc_enemyFactionIndex;
 (TRGM_VAR_AvailableFactions select _enemyFactionIndex) params ["_eastClassName", "_eastDisplayName"];
 
 private _eastData = TRGM_VAR_AllFactionMap get _eastClassName;
@@ -68,7 +68,7 @@ EnemyBaseChoppers           = { _veh = ["O_Heli_Light_02_unarmed_F"]; if (count 
 
 
 
-private _guerFactionIndex = TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MILITIA_FACTIONS_IDX;
+private _guerFactionIndex = call TRGM_GETTER_fnc_militiaFactionIndex;
 (TRGM_VAR_AvailableFactions select _guerFactionIndex) params ["_guerClassName", "_guerDisplayName"];
 
 private _guerData = TRGM_VAR_AllFactionMap get _guerClassName;

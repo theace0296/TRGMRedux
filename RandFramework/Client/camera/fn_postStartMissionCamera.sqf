@@ -75,7 +75,7 @@ if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "
     _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>" + _LineOne +"</t>";
     [_texta, -0, 0.150, 7, 1,0,_txt5Layer] spawn BIS_fnc_dynamicText;
 
-    _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>" + (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_GROUP_NAME_IDX) + "</t>";
+    _texta = "<t font ='EtelkaMonospaceProBold' align = 'center' size='0.8' color='#Ffffff'>" + (call TRGM_GETTER_fnc_sGroupName) + "</t>";
     [_texta, -0, 0.350, 7, 1,0,_txt6Layer] spawn BIS_fnc_dynamicText;
 
     showcinemaborder true;
