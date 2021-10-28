@@ -42,8 +42,11 @@ private _units = [];
 
 {
     // We are using "icon" instead of "role" because the icon is better for determining unit role, since, for example, RHS doesn't correctly label the unit role.
-    // Also, discard VR, Unarmed, and Survivor units
-    if (getText(_x >> "icon") != "iconManVirtual" && {!(["VR ", getText(_x >> "displayName"), true] call BIS_fnc_inString) && {!(["unarmed", getText(_x >> "displayName")] call BIS_fnc_inString) && {!(["survivor", getText(_x >> "displayName")] call BIS_fnc_inString)}}}) then {
+    // Also, discard VR, Unarmed, and Survivor units (Using vr[space] seems to catch the vr units correctly)
+    private _badNames = ["vr ", "unarmed", "survivor", "story", "competitor", "parade dress"];
+    private _displayName = getText(_x >> "displayName");
+    private _fnc_displayNameOkay = { {[_x, _displayName] call BIS_fnc_inString} count _badNames isEqualTo 0 };
+    if (getText(_x >> "icon") != "iconManVirtual" && { call _fnc_displayNameOkay }) then {
         _units pushBack [(configname _x), getText(_x >> "displayName"), getText(_x >> "icon"), getText(_x >> "textSingular"), getNumber(_x >> "attendant"), getNumber(_x >> "engineer"), getNumber(_x >> "canDeactivateMines"), getNumber(_x >> "uavHacker")];
     };
 } forEach _unitConfigPaths;
