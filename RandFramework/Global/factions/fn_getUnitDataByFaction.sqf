@@ -42,7 +42,7 @@ private _units = [];
 
 {
     // We are using "icon" instead of "role" because the icon is better for determining unit role, since, for example, RHS doesn't correctly label the unit role.
-    // Also, discard VR, Unarmed, and Survivor units (Using vr[space] seems to catch the vr units correctly)
+    // Also, discard VR, Unarmed, Survivor, Story, and Parade units (Using vr[space] seems to catch the vr units correctly without getting false-positives)
     private _badNames = ["vr ", "unarmed", "survivor", "story", "competitor", "parade dress"];
     private _displayName = getText(_x >> "displayName");
     private _fnc_displayNameOkay = { {[_x, _displayName] call BIS_fnc_inString} count _badNames isEqualTo 0 };
