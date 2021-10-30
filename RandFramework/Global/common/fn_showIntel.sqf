@@ -1,16 +1,18 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_showIntel";
 params ["_FoundViaType", "_iTaskIndex"];
 
+[format ["ShowIntel: %1 - %2", _FoundViaType, _iTaskIndex]] call TRGM_GLOBAL_fnc_notifyGlobal;
+
 if !(side player isEqualTo TRGM_VAR_FriendlySide) exitWith {};
 
-if (isNil _iTaskIndex) then {
+if (isNil "_iTaskIndex") then {
     _iTaskIndex = TRGM_VAR_ObjectivePositions findIf {!(_x in TRGM_VAR_ClearedPositions);};
     if (_iTaskIndex < 0) then {
         _iTaskIndex = 0;
     };
 };
 
-if ((TRGM_VAR_iMissionParamObjectives # _iTaskIndex # 0) in TRGM_VAR_MissionsThatHaveIntel) exitWith {
+if (_FoundViaType in ["BugRadio", "HackData", "IntOfficer", "SpeakInform"] && {(TRGM_VAR_iMissionParamObjectives # _iTaskIndex # 0) in TRGM_VAR_MissionsThatHaveIntel}) exitWith {
     {
         _x params ["_taskType", "_isHeavy", "_isHidden", "_sameAOAsPrev"];
         if (_isHidden) then {
@@ -54,13 +56,13 @@ if (_FoundViaType isEqualTo "CommsTower") then {
 
 
 
-if (_IntelToShow isEqualTo 0 || !_showIntel) then { //Nothing found
+if (_IntelToShow isEqualTo 0 || !_showIntel) exitWith { //Nothing found
     [(localize "STR_TRGM2_showIntel_NoIntel")] call TRGM_GLOBAL_fnc_notify;
 } else {
     missionNamespace setVariable [format ["TRGM_VAR_IntelFound_%1", _iTaskIndex], _IntelFound + [_IntelToShow], true];
 };
 
-if (_IntelToShow isEqualTo 1) then { //Mortor team location
+if (_IntelToShow isEqualTo 1) exitWith { //Mortor team location
     private _IntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,(call sMortar) + (call sMortarMilitia),3000];
     private _iCount = count _IntelShowPos;
     if (_iCount > 0) then {
@@ -75,7 +77,7 @@ if (_IntelToShow isEqualTo 1) then { //Mortor team location
         [(localize "STR_TRGM2_showIntel_MortarMapNoUpdate")] call TRGM_GLOBAL_fnc_notify;
     };
 };
-if (_IntelToShow isEqualTo 2) then { //AAA team location
+if (_IntelToShow isEqualTo 2) exitWith { //AAA team location
     private _IntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,[(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh),3000];
     private _iCount = count _IntelShowPos;
     private _iStep = 0;
@@ -92,7 +94,7 @@ if (_IntelToShow isEqualTo 2) then { //AAA team location
         [(localize "STR_TRGM2_showIntel_AAAMapNoUpdate")] call TRGM_GLOBAL_fnc_notify;
     };
 };
-if (_IntelToShow isEqualTo 3) then { //Comms tower location
+if (_IntelToShow isEqualTo 3) exitWith { //Comms tower location
     private _TowerBuild = missionNamespace getVariable [format ["TRGM_VAR_CommsTower%1", _iTaskIndex], objNull];
     if (!(isNil "_TowerBuild") && {!(isNull _TowerBuild)}) then {
         private _test = createMarker ["CommsIntelAAA1", getPos _TowerBuild];
@@ -104,7 +106,7 @@ if (_IntelToShow isEqualTo 3) then { //Comms tower location
         [(localize "STR_TRGM2_showIntel_CommsTowerMapNoUpdate")] call TRGM_GLOBAL_fnc_notify;
     };
 };
-if (_IntelToShow isEqualTo 4) then { //All checkpoints
+if (_IntelToShow isEqualTo 4) exitWith { //All checkpoints
     private _bFoundcheckpoints = false;
     {
         private _distanceToCheckPoint = (_x select 0) distance (TRGM_VAR_ObjectivePositions select _iTaskIndex);
@@ -124,7 +126,7 @@ if (_IntelToShow isEqualTo 4) then { //All checkpoints
     };
 
 };
-if (_IntelToShow isEqualTo 5) then { //AT Mine field
+if (_IntelToShow isEqualTo 5) exitWith { //AT Mine field
     if (count TRGM_VAR_ATFieldPos isEqualTo 0) then {
         [(localize "STR_TRGM2_showIntel_NoATArea")] call TRGM_GLOBAL_fnc_notify;
     } else {
