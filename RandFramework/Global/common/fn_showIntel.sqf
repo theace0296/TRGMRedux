@@ -58,9 +58,9 @@ if (_FoundViaType isEqualTo "CommsTower") then {
 
 if (_IntelToShow isEqualTo 0 || !_showIntel) exitWith { //Nothing found
     [(localize "STR_TRGM2_showIntel_NoIntel")] call TRGM_GLOBAL_fnc_notify;
-} else {
-    missionNamespace setVariable [format ["TRGM_VAR_IntelFound_%1", _iTaskIndex], _IntelFound + [_IntelToShow], true];
 };
+
+missionNamespace setVariable [format ["TRGM_VAR_IntelFound_%1", _iTaskIndex], _IntelFound + [_IntelToShow], true];
 
 if (_IntelToShow isEqualTo 1) exitWith { //Mortor team location
     private _IntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,(call sMortar) + (call sMortarMilitia),3000];
