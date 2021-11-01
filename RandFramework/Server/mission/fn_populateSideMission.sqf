@@ -75,7 +75,7 @@ if ((_sideType isEqualTo 7 || _sideType isEqualTo 5) && _bFriendlyInsurgents) th
     _officerObject setPosATL (selectRandom _allpositionsMainBuiding);
     removeAllWeapons _officerObject;
 };
-if (_sideType isEqualTo 4) then { //if mission is informat, then dont be walkig around
+if (_sideType isEqualTo 4) then { //if mission is informant, then dont be walkig around
     private _sInformantName = format["objInformant%1",_iTaskIndex];
     private _InformantObject = missionNamespace getVariable [_sInformantName , objNull];
     _InformantObject setVariable ["StopWalkScript", true];
