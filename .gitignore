@@ -10,3 +10,5 @@ upload-to-workshop/
 .vscode/steam_appid.txt
 .vscode/*.log
 sqflint.log
+.vscode/data.json
+.vscode/convertArmaHashMapToJson.js
