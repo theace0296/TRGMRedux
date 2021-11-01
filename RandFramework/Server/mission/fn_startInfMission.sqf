@@ -100,7 +100,7 @@ if (TRGM_VAR_iMissionIsCampaign) then {
         _MarkerTypes = _MarkerTypes + [_markerType];
         _CreateTasks = _CreateTasks + [_isHidden];
         _SamePrevAOStats = _SamePrevAOStats + [_sameAOAsPrev];
-        private _civOnly = [false, !_isHeavy] select (random 1 < .33);
+        private _civOnly = [false, !_isHeavy] select (_taskType isEqualTo 4 && random 1 < .33);
         _bSideMissionsCivOnly = _bSideMissionsCivOnly + [_civOnly];
     } forEach TRGM_VAR_iMissionParamObjectives;
 

@@ -1012,8 +1012,8 @@
                 <English>Objective unknown, recon the area!</English>
             </Key>
             <Key ID="STR_TRGM2_startInfMission_markerInformant">
-                <Original>An informat is located here.  No enemy reported at this location</Original>
-                <English>An informat is located here.  No enemy reported at this location</English>
+                <Original>An informant is located here.  No enemy reported at this location</Original>
+                <English>An informant is located here.  No enemy reported at this location</English>
                 <Chinese>一位線人位在這邊。該區域沒有回報說有出現過敵人</Chinese>
                 <Chinesesimp>一位线人位在这边。该区域没有回报说有出现过敌人</Chinesesimp>
                 <Spanish>Un contacto se encuentra en esta localización. Información de nula presencia enemiga en la zona</Spanish>
