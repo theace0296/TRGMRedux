@@ -159,6 +159,7 @@ class TRGM_GLOBAL {
         class getUnitDataByFaction {};
         class getVehicleArraysFromVehData {};
         class getVehicleDataByFaction {};
+        class ignoreUnit {};
         class isAmmo {};
         class isArmed {};
         class isFuel {};

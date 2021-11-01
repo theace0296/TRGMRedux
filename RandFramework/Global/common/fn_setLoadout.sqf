@@ -69,7 +69,7 @@ switch (side _unit) do {
 if (isNil "_className" ||isNil "_dispName" || isNil "_icon" || isNil "_calloutName") then {
 
 } else {
-    if (["Ass.", _dispName] call BIS_fnc_inString || ["Asst", _dispName] call BIS_fnc_inString || ["Assi", _dispName] call BIS_fnc_inString || ["Story", _dispName] call BIS_fnc_inString || ["Support", _className] call BIS_fnc_inString || ["Crew", _className] call BIS_fnc_inString) then {
+    if ([_configPath] call TRGM_GLOBAL_fnc_ignoreUnit) then {
         _unit setUnitLoadout (getUnitLoadout (selectRandom _riflemen));
     } else {
         switch (_icon) do {

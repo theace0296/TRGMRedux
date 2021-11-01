@@ -48,11 +48,9 @@ private _pilots = [];
 private _uavOperators = [];
 {
     _x params ["_className", "_dispName", "_icon", "_calloutName", ["_isMedic", 0], ["_isEngineer", 0], ["_isExpSpecialist", 0], ["_isUAVHacker", 0]];
-    if (isNil "_className" ||isNil "_dispName" || isNil "_icon" || isNil "_calloutName") then {
-
+    if (isNil "_className" || isNil "_dispName" || isNil "_icon" || isNil "_calloutName") then {
     } else {
-        if (["Ass.", _dispName] call BIS_fnc_inString || ["Asst", _dispName] call BIS_fnc_inString || ["Assi", _dispName] call BIS_fnc_inString || ["Story", _dispName] call BIS_fnc_inString || ["Support", _className] call BIS_fnc_inString || ["Crew", _className] call BIS_fnc_inString) then {
-            // Do nothing for these units. (Currently removing any "assistant", "crew", and "support" type units, since they are generally redundant)
+        if ([configFile >> "CfgVehicles" >> _className] call TRGM_GLOBAL_fnc_ignoreUnit) then {
         } else {
             switch (_icon) do {
                 case "iconManEngineer":     { _engineers pushBackUnique _className; };
