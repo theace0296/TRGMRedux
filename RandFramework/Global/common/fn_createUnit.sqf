@@ -18,7 +18,8 @@ if !(_special in ["NONE", "FORM", "CAN_COLLIDE", "CARGO"]) then {
 };
 
 private _side = side _group;
-private _unitType = [_type, _side] call TRGM_GLOBAL_fnc_getUnitType;
+private _unitType = [_type] call TRGM_GLOBAL_fnc_getUnitType;
+if !(_side in [WEST, INDEPENDENT, EAST]) exitWith { _unitType = ""; };
 private _tempUnitType = _type;
 
 if !(_unitType isEqualTo "") then {
@@ -118,6 +119,9 @@ if !(_unitType isEqualTo "") then {
         };
         case "uavops": {
             _tempUnitType = _uavOps;
+        };
+        default {
+            _tempUnitType = _riflemen;
         };
     };
 };

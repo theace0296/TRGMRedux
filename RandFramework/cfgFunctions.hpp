@@ -156,6 +156,7 @@ class TRGM_GLOBAL {
         class getFactionDataBySide {};
         class getFactionVehicle {};
         class getUnitArraysFromUnitData {};
+        class getUnitData {};
         class getUnitDataByFaction {};
         class getVehicleArraysFromVehData {};
         class getVehicleDataByFaction {};

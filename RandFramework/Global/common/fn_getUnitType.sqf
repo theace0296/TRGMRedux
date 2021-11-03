@@ -2,35 +2,67 @@
 params [["_type", "", [""]]];
 
 
-
-if !(_side in [WEST, INDEPENDENT, EAST]) exitWith { ""; };
-
 private _configPath = (configFile >> "CfgVehicles" >> _type);
-[_type, getText(_configPath >> "displayName"), getText(_configPath >> "icon"), getText(_configPath >> "textSingular"), getNumber(_configPath >> "attendant"), getNumber(_configPath >> "engineer"), getNumber(_configPath >> "canDeactivateMines"), getNumber(_configPath >> "uavHacker")] params ["_className", "_dispName", "_icon", "_calloutName", "_isMedic", "_isEngineer", "_isExpSpecialist", "_isUAVHacker"];
+private _unitData = [_configPath] call TRGM_GLOBAL_fnc_getUnitData;
+_unitData params ["_className", "_dispName", "_rawDispName", "_icon", "_calloutName", "_isMedic", "_isEngineer", "_isExpSpecialist", "_isUAVHacker", "_role"];
 
 private _returnType = "riflemen";
-if (isNil "_className" ||isNil "_dispName" || isNil "_icon" || isNil "_calloutName") then {
+if (isNil "_className" || isNil "_dispName" || isNil "_rawDispName" || isNil "_icon" || isNil "_calloutName") then {
 
 } else {
     if ([_configPath] call TRGM_GLOBAL_fnc_ignoreUnit) then {
         _returnType = "riflemen";
     } else {
-        switch (_icon) do {
-            case "iconManEngineer":     { _returnType = "engineers"; };
-            case "iconManMedic":      { _returnType = "medics"; };
-            case "iconManExplosive": { _returnType = "explosivespecs"; };
-            case "iconManLeader":     { _returnType = "leaders"; };
-            case "iconManOfficer":     { _returnType = "leaders"; };
-            case "iconManMG":         { _returnType = "autoriflemen"; };
-            case "iconManAT":         { if (["AA", _dispName, true] call BIS_fnc_inString || ["AA", _className] call BIS_fnc_inString) then { _returnType = "aasoldiers"; } else { _returnType = "atsoldiers"; }; };
+        switch (toLower _icon) do {
+            case "iconmanengineer":    { _returnType = "engineers"; };
+            case "iconmanmedic":       { _returnType = "medics"; };
+            case "iconmanexplosive":   { _returnType = "explosivespecs"; };
+            case "iconmanleader":      { _returnType = "leaders"; };
+            case "iconmanofficer":     { _returnType = "leaders"; };
+            case "iconmanmg":          { _returnType = "autoriflemen"; };
+            case "iconmanat":          { _returnType = (["atsoldiers", "aasoldiers"] select (({ ["AA", _x, true] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0) && !({ ["AT", _x, true] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0))); };
             default {
-                if (_isEngineer isEqualTo 1) then { _returnType = "engineers"; };
-                if (_isMedic isEqualTo 1) then { _returnType = "medics"; };
+                if (_isEngineer isEqualTo 1)      then { _returnType = "engineers"; };
+                if (_isMedic isEqualTo 1)         then { _returnType = "medics"; };
                 if (_isExpSpecialist isEqualTo 1) then { _returnType = "explosivespecs"; };
-                if (_isUAVHacker isEqualTo 1) then { _returnType = "uavops"; };
-                if (["Auto", _dispName, true] call BIS_fnc_inString || ["Machine", _dispName, true] call BIS_fnc_inString) then { _returnType = "autoriflemen"; };
-                if (_calloutName isEqualTo "AT soldier") then { if (["AA", _dispName, true] call BIS_fnc_inString || ["AA", _className] call BIS_fnc_inString) then { _returnType = "aasoldiers"; } else { _returnType = "atsoldiers"; }; };
-                if ((_icon isEqualTo "iconMan")) then { if (_calloutName isEqualTo "sniper") then { _returnType = "snipers"; } else { if (["Grenadier", _dispName] call BIS_fnc_inString || ["Grenadier", _className] call BIS_fnc_inString) then { _returnType = "grenadiers"; } else { if (["Pilot", _dispName] call BIS_fnc_inString || ["Pilot", _className] call BIS_fnc_inString) then { _returnType = "pilots"; } else { _returnType = "riflemen"; }; }; }; };
+                if (_isUAVHacker isEqualTo 1)     then { _returnType = "uavops"; };
+                if ([_isEngineer, _isMedic, _isExpSpecialist, _isUAVHacker] isEqualTo [0,0,0,0]) then {
+                    switch (toLower _calloutName) do {
+                        case "pilot": { _returnType = "pilots"; };
+                        case "sniper": { _returnType = "snipers"; };
+                        case "at soldier": { _returnType = (["atsoldiers", "aasoldiers"] select (({ ["AA", _x, true] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0) && !({ ["AT", _x, true] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0))); };
+                        case "machinegunner": { _returnType = "autoriflemen"; };
+                        case "officer": { _returnType = "leaders"; };
+                        case "infantry";
+                        default {
+                            if ({ ["pilot", _x] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0) then {
+                                _returnType = "pilots";
+                            } else {
+                                if ({ ["AT", _x, true] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0) then {
+                                    _returnType = "atsoldiers";
+                                } else {
+                                    if ({ ["AA", _x, true] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0) then {
+                                        _returnType = "aasoldiers";
+                                    } else {
+                                        if ({ ["grenadier", _x] call BIS_fnc_inString || ["GL", _x, true] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0) then {
+                                            _returnType = "grenadiers"; }
+                                        else {
+                                            if ({ ["scout", _x] call BIS_fnc_inString || ["sniper", _x] call BIS_fnc_inString || ["marksman", _x] call BIS_fnc_inString || ["ghillie", _x] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0) then {
+                                                _returnType = "snipers";
+                                            } else {
+                                                if ({ ["machinegunner", _x] call BIS_fnc_inString || ["autorifleman", _x] call BIS_fnc_inString } count [_role, _className, _rawDispName] > 0) then {
+                                                    _returnType = "autoriflemen";
+                                                } else {
+                                                    _returnType = "riflemen";
+                                                };
+                                            };
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
             };
         };
     };

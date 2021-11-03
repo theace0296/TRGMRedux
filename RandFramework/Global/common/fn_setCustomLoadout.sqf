@@ -72,32 +72,46 @@ if (TRGM_VAR_useCustomFriendlyFactionLoadouts || TRGM_VAR_useCustomEnemyFactionL
         };
     };
 
-    [_unitClassName, getText(_configPath >> "displayName"), getText(_configPath >> "icon"), getText(_configPath >> "textSingular"), getNumber(_configPath >> "attendant"), getNumber(_configPath >> "engineer"), getNumber(_configPath >> "canDeactivateMines"), getNumber(_configPath >> "uavHacker")] params ["_className", "_dispName", "_icon", "_calloutName", "_isMedic", "_isEngineer", "_isExpSpecialist", "_isUAVHacker"];
-
-    if (isNil "_className" ||isNil "_dispName" || isNil "_icon" || isNil "_calloutName") then {
-
-    } else {
-        if ([_configPath] call TRGM_GLOBAL_fnc_ignoreUnit) then {
+    private _unitType = [_unitClassName] call TRGM_GLOBAL_fnc_getUnitType;
+    switch (_unitType) do {
+        case "riflemen": {
             _unit setUnitLoadout _riflemen;
-        } else {
-            switch (_icon) do {
-                case "iconManEngineer":     { _unit setUnitLoadout _engineers; };
-                case "iconManMedic":      { _unit setUnitLoadout _medics; };
-                case "iconManExplosive": { _unit setUnitLoadout _explosiveSpecs; };
-                case "iconManLeader":     { _unit setUnitLoadout _leaders; };
-                case "iconManOfficer":     { _unit setUnitLoadout _leaders; };
-                case "iconManMG":         { _unit setUnitLoadout _autoriflemen; };
-                case "iconManAT":         { if (["AA", _dispName, true] call BIS_fnc_inString || ["AA", _className] call BIS_fnc_inString) then { _unit setUnitLoadout _aasoldiers; } else { _unit setUnitLoadout _atsoldiers; }; };
-                default {
-                    if (_isEngineer isEqualTo 1) then { _unit setUnitLoadout _engineers; };
-                    if (_isMedic isEqualTo 1) then { _unit setUnitLoadout _medics; };
-                    if (_isExpSpecialist isEqualTo 1) then { _unit setUnitLoadout _explosiveSpecs; };
-                    if (_isUAVHacker isEqualTo 1) then { _unit setUnitLoadout _uavOps; };
-                    if (["Auto", _dispName, true] call BIS_fnc_inString || ["Machine", _dispName, true] call BIS_fnc_inString) then { _unit setUnitLoadout _autoriflemen; };
-                    if (_calloutName isEqualTo "AT soldier") then { if (["AA", _dispName, true] call BIS_fnc_inString || ["AA", _className] call BIS_fnc_inString) then { _unit setUnitLoadout _aasoldiers; } else { _unit setUnitLoadout _atsoldiers; }; };
-                    if ((_icon isEqualTo "iconMan")) then { if (_calloutName isEqualTo "sniper") then { _unit setUnitLoadout _snipers; } else { if (["Grenadier", _dispName] call BIS_fnc_inString || ["Grenadier", _className] call BIS_fnc_inString) then { _unit setUnitLoadout _grenadiers; } else { if (["Pilot", _dispName] call BIS_fnc_inString || ["Pilot", _className] call BIS_fnc_inString) then { _unit setUnitLoadout _pilots; } else { _unit setUnitLoadout _riflemen; }; }; }; };
-                };
-            };
+        };
+        case "leaders": {
+            _unit setUnitLoadout _leaders;
+        };
+        case "atsoldiers": {
+            _unit setUnitLoadout _atsoldiers;
+        };
+        case "aasoldiers": {
+            _unit setUnitLoadout _aasoldiers;
+        };
+        case "engineers": {
+            _unit setUnitLoadout _engineers;
+        };
+        case "grenadiers": {
+            _unit setUnitLoadout _grenadiers;
+        };
+        case "medics": {
+            _unit setUnitLoadout _medics;
+        };
+        case "autoriflemen": {
+            _unit setUnitLoadout _autoriflemen;
+        };
+        case "snipers": {
+            _unit setUnitLoadout _snipers;
+        };
+        case "explosivespecs": {
+            _unit setUnitLoadout _explosiveSpecs;
+        };
+        case "pilots": {
+            _unit setUnitLoadout _pilots;
+        };
+        case "uavops": {
+            _unit setUnitLoadout _uavOps;
+        };
+        default {
+            _unit setUnitLoadout _riflemen;
         };
     };
 };
