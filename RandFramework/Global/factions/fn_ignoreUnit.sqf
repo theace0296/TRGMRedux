@@ -3,10 +3,6 @@ params [["_configPath", configNull, [configNull]]];
 
 if (isNil "_configPath" || {isNull _configPath}) exitWith { true; };
 
-private _badNames = ["vr ", "unarmed", "survivor", "story", "competitor", "parade dress", "ass.", "asst", "assi"];
-private _displayName = getText(_configPath >> "displayName");
-private _fnc_displayNameOkay = { {[_x, _displayName] call BIS_fnc_inString} count _badNames isEqualTo 0 };
-
 private _badWeapons = ["Throw", "Put"];
 private _fnc_weaponsOkay = { !(getArray(_configPath >> "weapons") isEqualTo _badWeapons); };
 
@@ -22,6 +18,6 @@ private _badClassNames = ["support", "crew"];
 private _className = configName _configPath;
 private _fnc_classNameOkay = { {[_x, _className] call BIS_fnc_inString} count _badClassNames isEqualTo 0 };
 
-if (call _fnc_displayNameOkay && {call _fnc_weaponsOkay && {call _fnc_iconsOkay && {call _fnc_rolesOkay && {call _fnc_classNameOkay}}}}) exitWith { false; };
+if (call _fnc_weaponsOkay && {call _fnc_iconsOkay && {call _fnc_rolesOkay && {call _fnc_classNameOkay}}}) exitWith { false; };
 
 true;
