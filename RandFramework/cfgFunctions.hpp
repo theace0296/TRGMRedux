@@ -128,6 +128,7 @@ class TRGM_GLOBAL {
         class fireAOFlares {};
         class fireIllumFlares {};
         class getUnitType {};
+        class getVehicleType {};
         class getRealPos {};
         class hideTerrainObjects {};
         class initAmmoBox {};
@@ -159,8 +160,10 @@ class TRGM_GLOBAL {
         class getUnitData {};
         class getUnitDataByFaction {};
         class getVehicleArraysFromVehData {};
+        class getVehicleData {};
         class getVehicleDataByFaction {};
         class ignoreUnit {};
+        class ignoreVehicle {};
         class isAmmo {};
         class isArmed {};
         class isFuel {};

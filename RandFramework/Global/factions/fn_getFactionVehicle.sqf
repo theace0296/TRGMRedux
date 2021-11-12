@@ -2,8 +2,6 @@
 params [["_vehClassName", "", [objNull, ""]], ["_side", WEST]];
 format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-
-
 switch (typeName _vehClassName) do {
     case ("OBJECT") : {_vehClassName = typeOf _vehClassName};
 };
@@ -71,50 +69,21 @@ switch (_side) do {
     };
 };
 
-[_vehClassName, getText(_configPath >> "displayName"), getText(_configPath >> "textSingular"), getText(configfile >> "CfgEditorSubcategories" >> getText(_configPath >> "editorSubcategory") >> "displayName"), (configName _configPath) call TRGM_GLOBAL_fnc_isTransport, (configName _configPath) call TRGM_GLOBAL_fnc_isArmed] params [["_className", ""], ["_dispName", ""], ["_calloutName", ""], ["_category", ""], ["_isTransport", false], ["_isArmed", false]];
-
-if (isNil "_className" || isNil "_dispName" || isNil "_calloutName" || isNil "_category") then {
-
-} else {
-    if (["GMG", _dispName] call BIS_fnc_inString || ["Quadbike", _className] call BIS_fnc_inString || ["Designator", _className] call BIS_fnc_inString || ["Radar", _className] call BIS_fnc_inString || ["SAM", _className] call BIS_fnc_inString) then {
-        _returnVeh = _UnarmedCars;
-    } else {
-        if ([" (", _category] call BIS_fnc_inString) then {
-            _category = (_category splitString " (") select 0
-        };
-        if (_calloutName isEqualTo "mortar" || _className isKindOf "StaticMortar") then {
-            _returnVeh = _Mortars;
-        } else {
-            if (_className isKindOf "StaticMGWeapon" || _className isKindOf "StaticGrenadeLauncher") then {
-                _returnVeh = _Turrets;
-            } else {
-                switch (_category) do {
-                    case "Turrets":        { _returnVeh = _Turrets; };
-                    case "Boats":          { _returnVeh = _Boats; };
-                    case "Boat":           { _returnVeh = _Boats; };
-                    case "Artillery":      { _returnVeh = _Artillery; };
-                    case "Anti-Air":       { _returnVeh = _AntiAir; };
-                    case "Anti-aircraft":  { _returnVeh = _AntiAir; };
-                    case "Planes":         { _returnVeh = _Planes; };
-                    case "Plane":          { _returnVeh = _Planes; };
-                    case "APCs":           { _returnVeh = _APCs; };
-                    case "APC":            { _returnVeh = _APCs; };
-                    case "IFV":            { _returnVeh = _APCs; };
-                    case "Tanks":          { _returnVeh = _Tanks; };
-                    case "Tank":           { _returnVeh = _Tanks; };
-                    case "Helicopters":    { if (_isArmed && !_isTransport) then { _returnVeh = _ArmedHelos; } else { _returnVeh = _UnarmedHelos; }; };
-                    case "Helicopter":     { if (_isArmed && !_isTransport) then { _returnVeh = _ArmedHelos; } else { _returnVeh = _UnarmedHelos; }; };
-                    case "Cars":           { if (_isArmed && !_isTransport) then { _returnVeh = _ArmedCars; } else { _returnVeh = _UnarmedCars; }; };
-                    case "Car":            { if (_isArmed && !_isTransport) then { _returnVeh = _ArmedCars; } else { _returnVeh = _UnarmedCars; }; };
-                    case "Bikes":          { if (_isArmed && !_isTransport) then { _returnVeh = _ArmedCars; } else { _returnVeh = _UnarmedCars; }; };
-                    case "MRAP":           { if (_isArmed && !_isTransport) then { _returnVeh = _ArmedCars; } else { _returnVeh = _UnarmedCars; }; };
-                    case "Truck":          { if (_isArmed && !_isTransport) then { _returnVeh = _ArmedCars; } else { _returnVeh = _UnarmedCars; }; };
-                    case "Trucks":         { if (_isArmed && !_isTransport) then { _returnVeh = _ArmedCars; } else { _returnVeh = _UnarmedCars; }; };
-                    default { };
-                };
-            };
-        };
-    };
+private _vehType = [_vehClassName] call TRGM_GLOBAL_fnc_getVehicleType;
+switch (_vehType) do {
+    case "UnarmedCars": { _returnVeh = _UnarmedCars; };
+    case "ArmedCars": { _returnVeh = _ArmedCars; };
+    case "Mortars": { _returnVeh = _Mortars; };
+    case "Turrets": { _returnVeh = _Turrets; };
+    case "Boats": { _returnVeh = _Boats; };
+    case "Artillery": { _returnVeh = _Artillery; };
+    case "AntiAir": { _returnVeh = _AntiAir; };
+    case "Planes": { _returnVeh = _Planes; };
+    case "APCs": { _returnVeh = _APCs; };
+    case "Tanks": { _returnVeh = _Tanks; };
+    case "ArmedHelos": { _returnVeh = _ArmedHelos; };
+    case "UnarmedHelos": { _returnVeh = _UnarmedHelos; };
+    default { _returnVeh = _UnarmedCars; };
 };
 
 private _fallbackReturnVeh = _returnVeh;
@@ -135,11 +104,11 @@ if (_vehClassName call TRGM_GLOBAL_fnc_isMedical && ({_x call TRGM_GLOBAL_fnc_is
                 _returnVeh = _returnVeh select {_x call TRGM_GLOBAL_fnc_isAmmo};
                 if (isNil "_returnVeh" || { _returnVeh isEqualTo []}) exitWith {_vehClassName};
             } else {
-                if (_isArmed && ({_x call TRGM_GLOBAL_fnc_isArmed} count _returnVeh) > 0) then {
+                if (_vehClassName call TRGM_GLOBAL_fnc_isArmed && ({_x call TRGM_GLOBAL_fnc_isArmed} count _returnVeh) > 0) then {
                     _returnVeh = _returnVeh select {_x call TRGM_GLOBAL_fnc_isArmed};
                     if (isNil "_returnVeh" || { _returnVeh isEqualTo []}) exitWith {_vehClassName};
                 } else {
-                    if (_isTransport && ({_x call TRGM_GLOBAL_fnc_isTransport} count _returnVeh) > 0) then {
+                    if (_vehClassName call TRGM_GLOBAL_fnc_isTransport && ({_x call TRGM_GLOBAL_fnc_isTransport} count _returnVeh) > 0) then {
                         _returnVeh = _returnVeh select {_x call TRGM_GLOBAL_fnc_isTransport};
                         if (isNil "_returnVeh" || { _returnVeh isEqualTo []}) exitWith {_vehClassName};
                     };

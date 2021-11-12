@@ -1,5 +1,20 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_ignoreUnit";
-params [["_configPath", configNull, [configNull]]];
+params [["_configOrNameOrObject", configNull, [configNull, "", objNull]]];
+
+private _configPath = [];
+
+switch (typeName _configOrNameOrObject) do {
+    case "STRING": {
+        _configPath = configFile >> "CfgVehicles" >> _configOrNameOrObject;
+    };
+    case "OBJECT": {
+        _configPath = configFile >> "CfgVehicles" >> (typeOf _configOrNameOrObject);
+    };
+    case "CONFIG": {
+        _configPath = _configOrNameOrObject;
+    };
+    default {};
+};
 
 if (isNil "_configPath" || {isNull _configPath}) exitWith { true; };
 
