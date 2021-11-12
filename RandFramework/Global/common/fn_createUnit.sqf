@@ -1,8 +1,6 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_createUnit";
 params [["_group", grpNull, [grpNull]], ["_type", nil, [""]], ["_position", nil, [nil, objNull, grpNull, []]], ["_markers", [], [[]]], ["_placement", 0, [0]], ["_special", "NONE", [""]], ["_disableDynamicShowHide", false, [false]]];
 
-
-
 if (isNull _group || _type isEqualTo "" || isNil "_position") exitWith {objNull};
 
 if !(_markers isEqualType []) then {

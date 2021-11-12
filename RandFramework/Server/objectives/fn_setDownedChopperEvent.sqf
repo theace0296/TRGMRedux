@@ -80,6 +80,12 @@ while {_iCount > 0} do {
 private _flatPos2 = [_flatPos , 10, 25, 3, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],_sVictim] call TRGM_GLOBAL_fnc_findSafePos;
 private _group = createGroup civilian;
 private _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+private _iterations = 0;
+while {isNil "_downedCiv" || {isNull _downedCiv}} do {
+    _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+    if (_iterations > 5) exitWith {};
+    _iterations = _iterations + 1;
+};
 
 [_downedCiv,[localize "STR_TRGM2_fnpostinit_JoinGroup",{
     private _civ = _this select 0;
