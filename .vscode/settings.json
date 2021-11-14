@@ -51,4 +51,32 @@
       "editor.defaultFormatter": "Smith.sqf-formatter"
     },
     "sqflint.warnings": false,
+    "editor.tokenColorCustomizations": {
+      "textMateRules": [
+        {
+          "scope": "variable.other",
+          "settings": {
+              "foreground": "#9cdcfe"
+          }
+        },
+        {
+          "scope": "variable.other.private",
+          "settings": {
+              "foreground": "#4fc1ff"
+          }
+        },
+        {
+          "scope": "meta.function-call",
+          "settings": {
+              "foreground": "#AB58C4"
+          }
+        },
+        {
+          "scope": "variable.other",
+          "settings": {
+            "foreground": "#dcdcaa",
+          }
+        }
+      ]
+    }
 }
