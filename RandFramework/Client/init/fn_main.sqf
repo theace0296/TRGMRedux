@@ -139,7 +139,8 @@ if (_isTraining) then {
     //training
     [player, 100] call BIS_fnc_respawnTickets;
 
-    if (call TRGM_GLOBAL_fnc_isAceLoaded) then {
+    private _useAceInteractionForTransport = [false, true] select ((["EnableAceActions", 0] call BIS_fnc_getParamValue) isEqualTo 1);
+    if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
         myaction = ['TraceBulletAction',localize 'STR_TRGM2_TRGMInitPlayerLocal_TraceBullets','',{},{true}] call ace_interact_menu_fnc_createAction;
         [player, 1, ["ACE_SelfActions"], myaction] call ace_interact_menu_fnc_addActionToObject;
 

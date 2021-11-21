@@ -12,29 +12,53 @@ waitUntil { _vehicle getVariable ["landingInProgress", false]; };
 
 [[_vehicle], {
     params ["_thisVehicle"];
-    private _actionId = _thisVehicle addAction [
-        localize "STR_TRGM2_jumpIntoWater",
-        {
+    private _useAceInteractionForTransport = [false, true] select ((["EnableAceActions", 0] call BIS_fnc_getParamValue) isEqualTo 1);
+    if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
+        private _vehicleAction = [
+            'JumpIntoWater',
+            localize "STR_TRGM2_jumpIntoWater",
+            '',
             {
-                [[_x], {
-                    sleep (floor(random 5) max 1);
-                    unassignVehicle (_this select 0);
-                    moveOut (_this select 0);
-                }] remoteExec ["spawn", _x];
-            } forEach units group (_this select 1);
-        },
-        nil,
-        -20, //priority
-        false,
-        true,
-        "",
-        "_this in (crew _target) && (speed _target) < 1",
-        -1,
-        false,
-        ""
-    ];
-    waitUntil {([_thisVehicle] call TRGM_GLOBAL_fnc_isOnlyBoardCrewOnboard);};
-    _thisVehicle removeAction _actionId;
+                {
+                    [[_x], {
+                        sleep (floor(random 5) max 1);
+                        unassignVehicle (_this select 0);
+                        moveOut (_this select 0);
+                    }] remoteExec ["spawn", _x];
+                } forEach units group (_this select 1);
+            },
+            {
+                (_this select 1) in (crew (_this select 0)) && (speed (_this select 0)) < 1;
+            }
+        ] call ACE_interact_menu_fnc_createAction;
+        [_vehicleAction, _vehicle] call TRGM_GLOBAL_fnc_addAceActionToObject;
+        waitUntil {([_thisVehicle] call TRGM_GLOBAL_fnc_isOnlyBoardCrewOnboard);};
+        [_vehicleAction, _vehicle] call TRGM_GLOBAL_fnc_removeAceActionFromObject;
+    } else {
+        private _actionId = _thisVehicle addAction [
+            localize "STR_TRGM2_jumpIntoWater",
+            {
+                {
+                    [[_x], {
+                        sleep (floor(random 5) max 1);
+                        unassignVehicle (_this select 0);
+                        moveOut (_this select 0);
+                    }] remoteExec ["spawn", _x];
+                } forEach units group (_this select 1);
+            },
+            nil,
+            -20, //priority
+            false,
+            true,
+            "",
+            "_this in (crew _target) && (speed _target) < 1",
+            -1,
+            false,
+            ""
+        ];
+        waitUntil {([_thisVehicle] call TRGM_GLOBAL_fnc_isOnlyBoardCrewOnboard);};
+        _thisVehicle removeAction _actionId;
+    };
 }] remoteExec ["spawn", 0, true];
 
 waitUntil { getPos _vehicle select 2 >= 0 && getPos _vehicle select 2 <= 6; };

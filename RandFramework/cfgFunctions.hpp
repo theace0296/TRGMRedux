@@ -108,6 +108,8 @@ class TRGM_GLOBAL {
         file = "RandFramework\Global\ace";
         class addAceActionToObject {};
         class addAceActionToPlayer {};
+        class removeAceActionFromObject {};
+        class removeAceActionFromPlayer {};
     };
 
     class common {
