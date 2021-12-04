@@ -63,7 +63,7 @@ if (_IntelToShow isEqualTo 0 || !_showIntel) exitWith { //Nothing found
 missionNamespace setVariable [format ["TRGM_VAR_IntelFound_%1", _iTaskIndex], _IntelFound + [_IntelToShow], true];
 
 if (_IntelToShow isEqualTo 1) exitWith { //Mortor team location
-    private _IntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,(call sMortar) + (call sMortarMilitia),3000];
+    private _IntelShowPos = allUnits select { (typeof _x) in ((call sMortar) + (call sMortarMilitia)) && { (_x distance2D (TRGM_VAR_ObjectivePositions select _iTaskIndex)) < 3000 }; };
     private _iCount = count _IntelShowPos;
     if (_iCount > 0) then {
         {
@@ -78,7 +78,7 @@ if (_IntelToShow isEqualTo 1) exitWith { //Mortor team location
     };
 };
 if (_IntelToShow isEqualTo 2) exitWith { //AAA team location
-    private _IntelShowPos = nearestObjects [TRGM_VAR_ObjectivePositions select _iTaskIndex,[(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh),3000];
+    private _IntelShowPos = allUnits select { (typeof _x) in ([(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh)) && { (_x distance2D (TRGM_VAR_ObjectivePositions select _iTaskIndex)) < 3000 }; };
     private _iCount = count _IntelShowPos;
     private _iStep = 0;
     if (_iCount > 0) then {
