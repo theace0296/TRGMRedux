@@ -141,7 +141,8 @@ while {_iteration <= 3} do {
 
         [_downedCiv] spawn {
             private _downedCiv = _this select 0;
-            while{ (alive _downedCiv)} do {
+            if (isNil "_downedCiv") exitWith {};
+            while{!(isNil "_downedCiv") && (alive _downedCiv)} do {
                 _downedCiv say3D selectRandom WoundedSounds;
                 sleep selectRandom [2,2.5,3];
             }
@@ -169,10 +170,11 @@ while {_iteration <= 3} do {
 
         [_downedCiv] spawn {
             private _downedCiv = _this select 0;
+            if (isNil "_downedCiv") exitWith {};
             private _doLoop = true;
             while {_doLoop} do
             {
-                if (!alive(_downedCiv)) then {
+                if ((isNil "_downedCiv") || !alive(_downedCiv)) then {
                     _doLoop = false;
                 };
                 if (_downedCiv distance (getMarkerPos "mrkHQ") < 500) then {

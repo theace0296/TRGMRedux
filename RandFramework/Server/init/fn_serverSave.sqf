@@ -46,16 +46,16 @@ if (_SaveVersion != "") then {
     }] remoteExec ["call", 2]; //Save this to server only
 
 
-    TRGM_VAR_laptop1 remoteExec ["removeAllActions"];
+    laptop1 remoteExec ["removeAllActions"];
 
     if (TRGM_VAR_SaveType isEqualTo 1) then {
         if (_IsFirstSave) then {[(localize "STR_TRGM2_ServerSave_Save1")] call TRGM_GLOBAL_fnc_notify;};
-        [TRGM_VAR_laptop1, [localize "STR_TRGM2_ServerSave_SaveLocal",{[(localize "STR_TRGM2_ServerSave_SaveHint")] call TRGM_GLOBAL_fnc_notify}]] remoteExec ["addAction", 0];
+        [laptop1, [localize "STR_TRGM2_ServerSave_SaveLocal",{[(localize "STR_TRGM2_ServerSave_SaveHint")] call TRGM_GLOBAL_fnc_notify}]] remoteExec ["addAction", 0];
 
     }
     else {
         if (_IsFirstSave) then {[(localize "STR_TRGM2_ServerSave_Save2")] call TRGM_GLOBAL_fnc_notify;};
-        TRGM_VAR_laptop1 addAction [localize "STR_TRGM2_ServerSave_SaveGlobal",{[(localize "STR_TRGM2_ServerSave_SaveHint")] call TRGM_GLOBAL_fnc_notify}];
+        laptop1 addAction [localize "STR_TRGM2_ServerSave_SaveGlobal",{[(localize "STR_TRGM2_ServerSave_SaveHint")] call TRGM_GLOBAL_fnc_notify}];
     };
 
     true;

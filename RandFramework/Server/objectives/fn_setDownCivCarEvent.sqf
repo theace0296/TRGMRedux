@@ -123,6 +123,7 @@ if (count _nearestRoads > 0) then {
 
         [_downedCiv, [localize "STR_TRGM2_AskNeedsAssistanceAction",{
             private _downedCiv = _this select 0;
+            if (isNil "_downedCiv") exitWith {};
             if (alive _downedCiv) then {
                 [localize "STR_TRGM2_DownCivCar_Speach"] call TRGM_GLOBAL_fnc_notify;
             }
@@ -173,6 +174,8 @@ if (count _nearestRoads > 0) then {
                                 private _roadBlockPos = _this select 1;
                                 private _group = _this select 2;
 
+                                if (isNil "_downedCiv") exitWith {};
+
                                 _downedCiv enableAI "anim";
                                 _downedCiv switchMove "";
                                 _downedCiv setBehaviour "CARELESS";
@@ -189,6 +192,7 @@ if (count _nearestRoads > 0) then {
                                 _downedCiv disableAI "anim";
                                 [_downedCiv] spawn {
                                     private _downedCiv = _this select 0;
+                                    if (isNil "_downedCiv") exitWith {};
                                     waitUntil {sleep 2; !alive(_downedCiv)};
                                     [_downedCiv, ""] remoteExec ["switchMove", 0];
                                 };

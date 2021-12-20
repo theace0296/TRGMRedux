@@ -196,7 +196,8 @@ while {_iteration <= 2} do {
 
         [_downedCiv] spawn {
             private _downedCiv = _this select 0;
-            while{ (alive _downedCiv)} do {
+            if (isNil "_downedCiv") exitWith {};
+            while{!(isNil "_downedCiv") && (alive _downedCiv)} do {
                 _downedCiv say3D selectRandom WoundedSounds;
                 sleep selectRandom [2,2.5,3];
             };

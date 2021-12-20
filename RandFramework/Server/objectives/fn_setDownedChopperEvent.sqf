@@ -122,7 +122,8 @@ _bloodTrail1 setDir _trialDir;
 
 [_downedCiv] spawn {
     private _downedCiv = _this select 0;
-    while{alive _downedCiv} do {
+    if (isNil "_downedCiv") exitWith {};
+    while{!(isNil "_downedCiv") && alive _downedCiv} do {
         private _woundedSound = selectRandom WoundedSounds;
         [_downedCiv,_woundedSound] remoteExecCall ["say3D", 0];
         sleep selectRandom [2,2.5,3];
@@ -131,7 +132,8 @@ _bloodTrail1 setDir _trialDir;
 
 [_downedCiv] spawn {
     private _downedCiv = _this select 0;
-    while{alive _downedCiv} do {
+    if (isNil "_downedCiv") exitWith {};
+    while{!(isNil "_downedCiv") && alive _downedCiv} do {
         private _flareposX = ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos) select 0;
         private _flareposY = ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos) select 1;
         private _flare1 = "F_40mm_red" createvehicle [_flareposX+20,_flareposY+20, 250]; _flare1 setVelocity [0,0,-10];
@@ -148,10 +150,11 @@ _markerEventMedi setMarkerText (localize "STR_TRGM2_distressSignal_military");
     private _downedCiv = _this select 0;
     private _completedMessage = _this select 1;
     private _PointsAdjustMessage = _this select 2;
+    if (isNil "_downedCiv") exitWith {};
     private _doLoop = true;
     while {_doLoop} do
     {
-        if (!alive(_downedCiv)) then {
+        if (!(isNil "_downedCiv") && !alive(_downedCiv)) then {
             _doLoop = false;
         };
         if (_downedCiv distance (getMarkerPos "mrkHQ") < 300) then {
