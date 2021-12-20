@@ -163,7 +163,7 @@ if (count _nearestRoads > 0) then {
                     _group setSpeedMode "FULL";
                     _downedCiv setUnitPos "UP";
                 };
-                if (!_bWaveDone) then {
+                if (!_bWaveDone && !(isNil "_downedCiv")) then {
                     private _nearUnits = nearestObjects [([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), ["Man","Car","Helicopter"], 100];
                     //(driver ((nearestObjects [([box1] call TRGM_GLOBAL_fnc_getRealPos), ["car"], 20]) select 0)) in switchableUnits
                     {
@@ -206,7 +206,7 @@ if (count _nearestRoads > 0) then {
                 };
                 if (_bWaveDone) then {
                     //_bIsTrap
-                    if (_bIsTrap) then {
+                    if (_bIsTrap && !(isNil "_downedCiv")) then {
                         _expl1 = _mainVeh getVariable "TRGM_VAR_expl1";
                         _expl2 = _mainVeh getVariable "TRGM_VAR_expl2";
                         _expl3 = _mainVeh getVariable "TRGM_VAR_expl3";

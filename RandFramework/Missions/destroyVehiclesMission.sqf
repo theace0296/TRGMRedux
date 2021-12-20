@@ -111,7 +111,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
     _blackListPositions = [];
     _firstTargetName = format["objInformant0_%1", _iTaskIndex];
-    _firstTarget = null;
+    _firstTarget = objNull;
     _allTargets = [];
     for [{private _i = 0}, {_i < selectRandom[2,3,4]}, {_i = _i + 1}] do {
         private _returnArr = [_iTaskIndex, _i, _vehicleType, _centralAO_x, _centralAO_y, _blackListPositions] call TRGM_LOCAL_fnc_addTruckToDestroy;
