@@ -74,7 +74,9 @@ while {_iCount <= _unitCount} do
                 _sCivClass = selectRandom sCivilian;
             };
             private _newCiv = [_sideCivGroup, _sCivClass, _wayPosInit, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _newCiv call compile _sInitString;
+            if !(isNil "_newCiv") then {
+                _newCiv call compile _sInitString;
+            };
         };
     };
 
