@@ -114,6 +114,13 @@ if (count _nearestRoads > 0) then {
         //[str(_backOfVehArea)] call TRGM_GLOBAL_fnc_notify;
         private _group = createGroup civilian;
         private _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+        private _iterations = 0;
+        while {isNil "_downedCiv" || {isNull _downedCiv}} do {
+            _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            if (_iterations > 5) exitWith {};
+            _iterations = _iterations + 1;
+        };
+        if (isNil "_downedCiv") exitWith {};
         [_downedCiv, "Acts_CivilShocked_1"] remoteExec ["switchMove", 0];
         //_downedCiv playMoveNow "Acts_CivilInjuredGeneral_1"; //"AinjPpneMstpSnonWrflDnon";
         _downedCiv disableAI "anim";
