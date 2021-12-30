@@ -1,12 +1,17 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_getUnitType";
 params [["_type", "", [""]]];
 
+private _returnType = "riflemen";
+if (isNil "_type" || { _type isEqualTo ""}) exitWith {_returnType;};
 
 private _configPath = (configFile >> "CfgVehicles" >> _type);
+if (isNil "_configPath") exitWith {_returnType;};
+
 private _unitData = [_configPath] call TRGM_GLOBAL_fnc_getUnitData;
+if (isNil "_unitData" || {!(_unitData isEqualType [])}) exitWith {_returnType;};
+
 _unitData params ["_className", "_dispName", "_rawDispName", "_icon", "_calloutName", "_isMedic", "_isEngineer", "_isExpSpecialist", "_isUAVHacker", "_role"];
 
-private _returnType = "riflemen";
 if (isNil "_className" || isNil "_dispName" || isNil "_rawDispName" || isNil "_icon" || isNil "_calloutName" || [_configPath] call TRGM_GLOBAL_fnc_ignoreUnit) then {
     _returnType = "riflemen";
 } else {
