@@ -1,7 +1,11 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_showIntel";
-params ["_FoundViaType", "_iTaskIndex"];
+params ["_FoundViaType", "_iTaskIndex", "_iteration"];
 
-[format ["ShowIntel: %1 - %2", _FoundViaType, _iTaskIndex]] call TRGM_GLOBAL_fnc_notifyGlobal;
+if (isNil "_iteration") then {
+    _iteration = 0;
+};
+
+if (_iteration > 1) exitWith {};
 
 if !(side player isEqualTo TRGM_VAR_FriendlySide) exitWith {};
 
@@ -18,7 +22,7 @@ if (_FoundViaType in ["BugRadio", "HackData", "IntOfficer", "SpeakInform"] && {(
         if (_isHidden) then {
             format["mrkMainObjective%1", _forEachIndex] setMarkerType "mil_unknown";
         } else {
-            private _showIntelHandle = [_FoundViaType, _forEachIndex] spawn TRGM_GLOBAL_fnc_showIntel;
+            private _showIntelHandle = [_FoundViaType, _forEachIndex, _iteration + 1] spawn TRGM_GLOBAL_fnc_showIntel;
             waitUntil {sleep 1; scriptDone _showIntelHandle;};
         };
     } forEach TRGM_VAR_iMissionParamObjectives;
