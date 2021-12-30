@@ -86,6 +86,7 @@ while {isNil "_downedCiv" || {isNull _downedCiv}} do {
     if (_iterations > 5) exitWith {};
     _iterations = _iterations + 1;
 };
+if (isNil "_downedCiv") exitWith {};
 
 [_downedCiv,[localize "STR_TRGM2_fnpostinit_JoinGroup",{
     private _civ = _this select 0;

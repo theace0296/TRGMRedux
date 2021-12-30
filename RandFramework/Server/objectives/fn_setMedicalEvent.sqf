@@ -179,27 +179,29 @@ while {_iteration <= 2} do {
             if (_iterations > 5) exitWith {};
             _iterations = _iterations + 1;
         };
-        _downedCiv setDamage 0.8;
-        [_downedCiv, "Acts_CivilInjuredGeneral_1"] remoteExec ["switchMove", 0];
+        if !(isNil "_downedCiv") then {
+            _downedCiv setDamage 0.8;
+            [_downedCiv, "Acts_CivilInjuredGeneral_1"] remoteExec ["switchMove", 0];
 
-        _downedCiv disableAI "anim";
-        private _downedCivDirection = (floor(random 360));
-        _downedCiv setDir (_downedCivDirection);
-        _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
-        private _bloodPool1 = createVehicle [selectRandom _bloodPools, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "CAN_COLLIDE"];
-        _bloodPool1 setDir (floor(random 360));
+            _downedCiv disableAI "anim";
+            private _downedCivDirection = (floor(random 360));
+            _downedCiv setDir (_downedCivDirection);
+            _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
+            private _bloodPool1 = createVehicle [selectRandom _bloodPools, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "CAN_COLLIDE"];
+            _bloodPool1 setDir (floor(random 360));
 
-        private _trialDir = (floor(random 360));
-        private _trialPos = (getPos _bloodPool1) getPos [3,_trialDir];
-        private _bloodTrail1 = createVehicle ["BloodTrail_01_New_F", _trialPos, [], 0, "CAN_COLLIDE"];
-        _bloodTrail1 setDir _trialDir;
+            private _trialDir = (floor(random 360));
+            private _trialPos = (getPos _bloodPool1) getPos [3,_trialDir];
+            private _bloodTrail1 = createVehicle ["BloodTrail_01_New_F", _trialPos, [], 0, "CAN_COLLIDE"];
+            _bloodTrail1 setDir _trialDir;
 
-        [_downedCiv] spawn {
-            private _downedCiv = _this select 0;
-            if (isNil "_downedCiv") exitWith {};
-            while{!(isNil "_downedCiv") && (alive _downedCiv)} do {
-                _downedCiv say3D selectRandom WoundedSounds;
-                sleep selectRandom [2,2.5,3];
+            [_downedCiv] spawn {
+                private _downedCiv = _this select 0;
+                if (isNil "_downedCiv") exitWith {};
+                while{!(isNil "_downedCiv") && (alive _downedCiv)} do {
+                    _downedCiv say3D selectRandom WoundedSounds;
+                    sleep selectRandom [2,2.5,3];
+                };
             };
         };
 
@@ -211,87 +213,96 @@ while {_iteration <= 2} do {
             if (_iterations > 5) exitWith {};
             _iterations = _iterations + 1;
         };
-        _downedCivMedic playmove "Acts_TreatingWounded02";
-        _downedCivMedic disableAI "anim";
-        _downedCivMedic attachTo [_downedCiv, [0.5,-0.3,-0.1]];
-        _downedCivMedic setDir 270;
-        _downedCivMedic addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_paramedicKilled;}]; //ParamedicKilled
+        if !(isNil "_downedCivMedic") then {
+            _downedCivMedic playmove "Acts_TreatingWounded02";
+            _downedCivMedic disableAI "anim";
+            _downedCivMedic attachTo [_downedCiv, [0.5,-0.3,-0.1]];
+            _downedCivMedic setDir 270;
+            _downedCivMedic addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_paramedicKilled;}]; //ParamedicKilled
 
 
-        [_downedCivMedic] remoteExec ["fncMedicalParamedicLight", 0, true];
+            [_downedCivMedic] remoteExec ["fncMedicalParamedicLight", 0, true];
 
-        if (_iteration isEqualTo 1) then {
-            [_downedCivMedic, [localize "STR_TRGM2_AskNeedsAssistanceAction",{[format[localize "STR_TRGM2_MedSupplysNeededString",requiredItemsCount,RequestedMedicalItemName]] call TRGM_GLOBAL_fnc_notify;},[_downedCivMedic]]] remoteExec ["addAction", 0, true];
-            [_mainVeh,_downedCivMedic] spawn {
-                private _mainVeh = _this select 0;
-                private _downedCivMedic = _this select 1;
-                private _completed = false;
-                while{(alive _mainVeh && !_completed)} do {
-                    private _VanillaItemCount = {RequestedMedicalItem isEqualTo _x} count (itemcargo _mainVeh);
-                    private _AceItemCount = {RequestedMedicalItem isEqualTo _x} count (itemcargo _mainVeh);
-                    if (_VanillaItemCount >= requiredItemsCount || _AceItemCount >= requiredItemsCount) then {
-                        [localize "STR_TRGM2_MedEventThankYouString"] call TRGM_GLOBAL_fnc_notifyGlobal;
-                        private _completed = true;
-                        removeAllActions _downedCivMedic;
-                        [0.3, localize "STR_TRGM2_MedEventTaskString"] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
+            if (_iteration isEqualTo 1) then {
+                [_downedCivMedic, [localize "STR_TRGM2_AskNeedsAssistanceAction",{[format[localize "STR_TRGM2_MedSupplysNeededString",requiredItemsCount,RequestedMedicalItemName]] call TRGM_GLOBAL_fnc_notify;},[_downedCivMedic]]] remoteExec ["addAction", 0, true];
+                [_mainVeh,_downedCivMedic] spawn {
+                    private _mainVeh = _this select 0;
+                    private _downedCivMedic = _this select 1;
+                    private _completed = false;
+                    while{(alive _mainVeh && !_completed)} do {
+                        private _VanillaItemCount = {RequestedMedicalItem isEqualTo _x} count (itemcargo _mainVeh);
+                        private _AceItemCount = {RequestedMedicalItem isEqualTo _x} count (itemcargo _mainVeh);
+                        if (_VanillaItemCount >= requiredItemsCount || _AceItemCount >= requiredItemsCount) then {
+                            [localize "STR_TRGM2_MedEventThankYouString"] call TRGM_GLOBAL_fnc_notifyGlobal;
+                            private _completed = true;
+                            removeAllActions _downedCivMedic;
+                            [0.3, localize "STR_TRGM2_MedEventTaskString"] spawn TRGM_GLOBAL_fnc_adjustMaxBadPoints;
+                        };
+                        sleep selectRandom [2];
                     };
-                    sleep selectRandom [2];
+                };
+
+                private _Crater = createVehicle ["Crater", _backOfVehArea, [], 20, "CAN_COLLIDE"];
+
+                private _downedCivMedic2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                _iterations = 0;
+                while {isNil "_downedCivMedic2" || {isNull _downedCivMedic2}} do {
+                    _downedCivMedic2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    if (_iterations > 5) exitWith {};
+                    _iterations = _iterations + 1;
+                };
+                if !(isNil "_downedCivMedic2") then {
+                    _downedCivMedic2 playmove "Acts_CivilListening_2";
+                    _downedCivMedic2 disableAI "anim";
+                    _downedCivMedic2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_paramedicKilled;}]; //ParamedicKilled
+                    private _downedCiv2 = [_group, selectRandom Paramedics,([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    _iterations = 0;
+                    while {isNil "_downedCiv2" || {isNull _downedCiv2}} do {
+                        _downedCiv2 = [_group, selectRandom Paramedics,([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                        if (_iterations > 5) exitWith {};
+                        _iterations = _iterations + 1;
+                    };
+                    if !(isNil "_downedCiv2") then {
+                        _downedCiv2 playmove "Acts_CivilTalking_2";
+                        _downedCiv2 disableAI "anim";
+                        _downedCiv2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
+                        private _directionFromMed2ToCiv2 = [_downedCivMedic2, _downedCiv2] call BIS_fnc_DirTo;
+                        _downedCivMedic2 setDir _directionFromMed2ToCiv2;
+                        private _directionFromCiv2ToMed2 = [_downedCiv2, _downedCivMedic2] call BIS_fnc_DirTo;
+                        _downedCiv2 setDir _directionFromCiv2ToMed2;
+                    };
                 };
             };
-
-            private _Crater = createVehicle ["Crater", _backOfVehArea, [], 20, "CAN_COLLIDE"];
-
-            private _downedCivMedic2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = 0;
-            while {isNil "_downedCivMedic2" || {isNull _downedCivMedic2}} do {
-                _downedCivMedic2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                if (_iterations > 5) exitWith {};
-                _iterations = _iterations + 1;
-            };
-            _downedCivMedic2 playmove "Acts_CivilListening_2";
-            _downedCivMedic2 disableAI "anim";
-            _downedCivMedic2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_paramedicKilled;}]; //ParamedicKilled
-
-            private _downedCiv2 = [_group, selectRandom Paramedics,([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = 0;
-            while {isNil "_downedCiv2" || {isNull _downedCiv2}} do {
-                _downedCiv2 = [_group, selectRandom Paramedics,([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                if (_iterations > 5) exitWith {};
-                _iterations = _iterations + 1;
-            };
-            _downedCiv2 playmove "Acts_CivilTalking_2";
-            _downedCiv2 disableAI "anim";
-            _downedCiv2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
-            private _directionFromMed2ToCiv2 = [_downedCivMedic2, _downedCiv2] call BIS_fnc_DirTo;
-            _downedCivMedic2 setDir _directionFromMed2ToCiv2;
-            private _directionFromCiv2ToMed2 = [_downedCiv2, _downedCivMedic2] call BIS_fnc_DirTo;
-            _downedCiv2 setDir _directionFromCiv2ToMed2;
-        };
-        if (_iteration isEqualTo 2) then {
-            _downedCiv2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = 0;
-            while {isNil "_downedCiv2" || {isNull _downedCiv2}} do {
+            if (_iteration isEqualTo 2) then {
                 _downedCiv2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                if (_iterations > 5) exitWith {};
-                _iterations = _iterations + 1;
-            };
-            _downedCiv2 playmove "Acts_CivilHiding_2";
-            _downedCiv2 disableAI "anim";
-            _downedCiv2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
-            _directionFromCiv2ToMed2 = [_downedCiv2, _downedCiv] call BIS_fnc_DirTo;
-            _downedCiv2 setDir _directionFromCiv2ToMed2;
+                _iterations = 0;
+                while {isNil "_downedCiv2" || {isNull _downedCiv2}} do {
+                    _downedCiv2 = [_group, selectRandom sCivilian,_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    if (_iterations > 5) exitWith {};
+                    _iterations = _iterations + 1;
+                };
+                if !(isNil "_downedCiv2") then {
+                    _downedCiv2 playmove "Acts_CivilHiding_2";
+                    _downedCiv2 disableAI "anim";
+                    _downedCiv2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
+                    _directionFromCiv2ToMed2 = [_downedCiv2, _downedCiv] call BIS_fnc_DirTo;
+                    _downedCiv2 setDir _directionFromCiv2ToMed2;
+                };
 
-            private _downedCiv3 = [_group, selectRandom sCivilian,_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = 0;
-            while {isNil "_downedCiv3" || {isNull _downedCiv3}} do {
-                _downedCiv3 = [_group, selectRandom sCivilian,_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                if (_iterations > 5) exitWith {};
-                _iterations = _iterations + 1;
+                private _downedCiv3 = [_group, selectRandom sCivilian,_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                _iterations = 0;
+                while {isNil "_downedCiv3" || {isNull _downedCiv3}} do {
+                    _downedCiv3 = [_group, selectRandom sCivilian,_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    if (_iterations > 5) exitWith {};
+                    _iterations = _iterations + 1;
+                };
+                if !(isNil "_downedCiv3") then {
+                    _downedCiv3 playmove "Acts_CivilShocked_1";
+                    _downedCiv3 disableAI "anim";
+                    _downedCiv3 setDir (floor(random 360));
+                    _downedCiv3 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
+                };
             };
-            _downedCiv3 playmove "Acts_CivilShocked_1";
-            _downedCiv3 disableAI "anim";
-            _downedCiv3 setDir (floor(random 360));
-            _downedCiv3 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}]; //ParamedicKilled
         };
 
         private _rubbish1 = createVehicle [selectRandom TRGM_VAR_MedicalMessItems, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 1.5, "CAN_COLLIDE"];
@@ -344,8 +355,10 @@ while {_iteration <= 2} do {
                 if (_iterations > 5) exitWith {};
                 _iterations = _iterations + 1;
             };
-            _manPolice setDir (floor(random 360));
-            [_manPolice] call TRGM_GLOBAL_fnc_makeNPC;
+            if !(isNil "_manPolice") then {
+                _manPolice setDir (floor(random 360));
+                [_manPolice] call TRGM_GLOBAL_fnc_makeNPC;
+            };
         };
 
         // CivCars
