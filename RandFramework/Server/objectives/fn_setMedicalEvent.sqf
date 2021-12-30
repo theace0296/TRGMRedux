@@ -179,29 +179,28 @@ while {_iteration <= 2} do {
             if (_iterations > 5) exitWith {};
             _iterations = _iterations + 1;
         };
-        if !(isNil "_downedCiv") then {
-            _downedCiv setDamage 0.8;
-            [_downedCiv, "Acts_CivilInjuredGeneral_1"] remoteExec ["switchMove", 0];
+        if (isNil "_downedCiv") exitWith {};
+        _downedCiv setDamage 0.8;
+        [_downedCiv, "Acts_CivilInjuredGeneral_1"] remoteExec ["switchMove", 0];
 
-            _downedCiv disableAI "anim";
-            private _downedCivDirection = (floor(random 360));
-            _downedCiv setDir (_downedCivDirection);
-            _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
-            private _bloodPool1 = createVehicle [selectRandom _bloodPools, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "CAN_COLLIDE"];
-            _bloodPool1 setDir (floor(random 360));
+        _downedCiv disableAI "anim";
+        private _downedCivDirection = (floor(random 360));
+        _downedCiv setDir (_downedCivDirection);
+        _downedCiv addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_civKilled;}];
+        private _bloodPool1 = createVehicle [selectRandom _bloodPools, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 0, "CAN_COLLIDE"];
+        _bloodPool1 setDir (floor(random 360));
 
-            private _trialDir = (floor(random 360));
-            private _trialPos = (getPos _bloodPool1) getPos [3,_trialDir];
-            private _bloodTrail1 = createVehicle ["BloodTrail_01_New_F", _trialPos, [], 0, "CAN_COLLIDE"];
-            _bloodTrail1 setDir _trialDir;
+        private _trialDir = (floor(random 360));
+        private _trialPos = (getPos _bloodPool1) getPos [3,_trialDir];
+        private _bloodTrail1 = createVehicle ["BloodTrail_01_New_F", _trialPos, [], 0, "CAN_COLLIDE"];
+        _bloodTrail1 setDir _trialDir;
 
-            [_downedCiv] spawn {
-                private _downedCiv = _this select 0;
-                if (isNil "_downedCiv") exitWith {};
-                while{!(isNil "_downedCiv") && (alive _downedCiv)} do {
-                    _downedCiv say3D selectRandom WoundedSounds;
-                    sleep selectRandom [2,2.5,3];
-                };
+        [_downedCiv] spawn {
+            private _downedCiv = _this select 0;
+            if (isNil "_downedCiv") exitWith {};
+            while{!(isNil "_downedCiv") && (alive _downedCiv)} do {
+                _downedCiv say3D selectRandom WoundedSounds;
+                sleep selectRandom [2,2.5,3];
             };
         };
 
