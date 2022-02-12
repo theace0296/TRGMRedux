@@ -3,9 +3,14 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 while {isMultiplayer && (call TRGM_GETTER_fnc_bMapDrawDirectOnly)} do {
-    waitUntil { ({private _ret = false; private _sTest = _x splitString "/"; if (count _sTest > 2 && {str(_sTest select 2) != str("5")}) then {_ret = true}; ret; } count allMapMarkers) > 0; };
-    {
-        deleteMarker _x;
-    } forEach (allMapMarkers select {private _ret = false; private _sTest = _x splitString "/"; if (count _sTest > 2 && {str(_sTest select 2) != str("5")}) then {_ret = true}; ret; });
-    sleep 5;
+    try {
+        waitUntil { ({private _ret = false; private _sTest = _x splitString "/"; if (count _sTest > 2 && {str(_sTest select 2) != str("5")}) then {_ret = true}; ret; } count allMapMarkers) > 0; };
+        {
+            deleteMarker _x;
+        } forEach (allMapMarkers select {private _ret = false; private _sTest = _x splitString "/"; if (count _sTest > 2 && {str(_sTest select 2) != str("5")}) then {_ret = true}; ret; });
+        sleep 5;
+    } catch {
+        TRGM_GLOBAL_bMapDrawDirectFailed = true;
+        publicVariable "TRGM_GLOBAL_bMapDrawDirectFailed";
+    };
 };

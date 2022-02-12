@@ -145,7 +145,12 @@ TRGM_GETTER_fnc_iRespawnTimer = { TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVS
 publicVariable "TRGM_GETTER_fnc_iRespawnTimer";
 
 ////// Map Draw Direct Only ///////
-TRGM_GETTER_fnc_bMapDrawDirectOnly = { (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MAP_DRAW_DIRECT_ONLY_IDX) isEqualTo 1; };
+TRGM_GLOBAL_bMapDrawDirectFailed = false;
+publicVariable "TRGM_GLOBAL_bMapDrawDirectFailed";
+TRGM_GETTER_fnc_bMapDrawDirectOnly = {
+    if (TRGM_GLOBAL_bMapDrawDirectFailed) exitWith { false };
+    (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_MAP_DRAW_DIRECT_ONLY_IDX) isEqualTo 1;
+};
 publicVariable "TRGM_GETTER_fnc_bMapDrawDirectOnly";
 
 /////// Faction Indicies ///////
