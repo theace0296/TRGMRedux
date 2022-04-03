@@ -258,7 +258,7 @@ if (!_bFriendlyInsurgents) then {
             private _flatPos = _sidePos;
             _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,_sidePos]] call TRGM_GLOBAL_fnc_findSafePos;
             private _vehicle = createVehicle [selectRandom (call sMortarToUse), _flatPos, [], 0, "NONE"];
-            [createGroup TRGM_VAR_EnemySide, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+            [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
         };
 
         //Spawn vehicle
@@ -270,27 +270,27 @@ if (!_bFriendlyInsurgents) then {
             if (_minimission) then {
                 private _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sTank1ArmedCarToUse)] call TRGM_GLOBAL_fnc_findSafePos;
                 private _vehicle = createVehicle [(call sTank1ArmedCarToUse), _flatPos, [], 0, "NONE"];
-                [createGroup TRGM_VAR_EnemySide, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
             } else {
                 private _vehiclesToUse = [(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)];
                 if (_bIsMainObjective && (call _randomChance)) then {
                     private _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
-                    [createGroup TRGM_VAR_EnemySide, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                 };
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective && (call _randomChance)) then {
                     private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
-                    [createGroup TRGM_VAR_EnemySide, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                 };
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
                     private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
-                    [createGroup TRGM_VAR_EnemySide, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
 
                     private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
-                    [createGroup TRGM_VAR_EnemySide, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
 
                 };
             };
@@ -300,7 +300,7 @@ if (!_bFriendlyInsurgents) then {
             if (_bIsMainObjective || (call _randomChance)) then {
                 private _vehiclesToUse = [(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)];
                 private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
-                private _vehOneGroup = createGroup TRGM_VAR_EnemySide;
+                private _vehOneGroup = (createGroup [TRGM_VAR_EnemySide, true]);
                 private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
                 [_vehOneGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                 [_vehOneGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
@@ -308,7 +308,7 @@ if (!_bFriendlyInsurgents) then {
 
                 if (_bIsMainObjective && (call _randomChance)) then {
                     private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
-                    private _vehTwoGroup = createGroup TRGM_VAR_EnemySide;
+                    private _vehTwoGroup = (createGroup [TRGM_VAR_EnemySide, true]);
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
                     [_vehTwoGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                     [_vehTwoGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
@@ -321,7 +321,7 @@ if (!_bFriendlyInsurgents) then {
         if (_bIsMainObjective || (call _randomChance)) then {
             if (!_minimission || (_minimission && (call _randomChance))) then {
                 private _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
-                private _vehScountOneGroup = createGroup TRGM_VAR_EnemySide;
+                private _vehScountOneGroup = (createGroup [TRGM_VAR_EnemySide, true]);
                 private _vehicle = createVehicle [selectRandom (call UnarmedScoutVehicles), _flatPos, [], 0, "NONE"];
                 [_vehScountOneGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                 [_vehScountOneGroup, _sidePos, 3000 ] call bis_fnc_taskPatrol;
@@ -329,7 +329,7 @@ if (!_bFriendlyInsurgents) then {
             };
             if (_bIsMainObjective && (call _randomChance)) then {
                 private _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
-                private _vehScoutTwoGroup = createGroup TRGM_VAR_EnemySide;
+                private _vehScoutTwoGroup = (createGroup [TRGM_VAR_EnemySide, true]);
                 private _vehicle = createVehicle [selectRandom (call UnarmedScoutVehicles), _flatPos, [], 0, "NONE"];
                 [_vehScoutTwoGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                 [_vehScoutTwoGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
@@ -365,7 +365,7 @@ if (!_bFriendlyInsurgents) then {
             if ((_bIsMainObjective && (call _randomChance)) || (!_bIsMainObjective && (call _randomChance))) then {
                 if ((call sAAAVehMilitia) != "") then {
                     private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sAAAVehToUse)] call TRGM_GLOBAL_fnc_findSafePos;
-                    private _AAAGroup = createGroup TRGM_VAR_EnemySide;
+                    private _AAAGroup = (createGroup [TRGM_VAR_EnemySide, true]);
                     private _vehicle = createVehicle [(call sAAAVehToUse), _flatPos, [], 0, "NONE"];
                     [_AAAGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                     {
@@ -625,7 +625,7 @@ if (!_bFriendlyInsurgents) then {
                 private _distanceFromBase = getMarkerPos "mrkHQ" distance getPos _x;
                 if (SelectRandom _milOccupyOdds && _distanceFromBase > TRGM_VAR_BaseAreaRange && !(_thisMilBuilPos in TRGM_VAR_OccupiedHousesPos)) then {
                     _iCount = _iCount + 1;
-                    private _MilGroup1 = createGroup TRGM_VAR_EnemySide;
+                    private _MilGroup1 = (createGroup [TRGM_VAR_EnemySide, true]);
                     private _objMilUnit1 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1000,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                     private _objMilUnit2 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1002,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                     private _objMilUnit3 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1003,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
@@ -645,7 +645,7 @@ if (!_bFriendlyInsurgents) then {
                     };
 
                     if (call _randomChance) then {
-                        private _MilGroup4 = createGroup TRGM_VAR_EnemySide;
+                        private _MilGroup4 = (createGroup [TRGM_VAR_EnemySide, true]);
                         private _sCheckpointGuyName = format["objMilGuyName%1",(floor(random 999999))];
                         private _pos5 = [getpos _x , 0, 30, 5, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[getpos _x,getpos _x]] call TRGM_GLOBAL_fnc_findSafePos;
                         private _guardUnit5 = [_MilGroup4, (call sRiflemanToUse),_pos5,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
@@ -674,7 +674,7 @@ if (!_bFriendlyInsurgents) then {
                     if (count _HeliPads > 0 && !TRGM_VAR_bBaseHasChopper && (call _randomChance)) then {
                         TRGM_VAR_baseHeliPad =  selectRandom _HeliPads; publicVariable "TRGM_VAR_baseHeliPad";
                         TRGM_VAR_bBaseHasChopper =  true; publicVariable "TRGM_VAR_bBaseHasChopper";
-                        private _BaseChopperGroup = createGroup TRGM_VAR_EnemySide;
+                        private _BaseChopperGroup = (createGroup [TRGM_VAR_EnemySide, true]);
                         private _EnemyBaseChopper = selectRandom (call EnemyBaseChoppers) createVehicle getPosATL TRGM_VAR_baseHeliPad;
                         _EnemyBaseChopper setDir direction TRGM_VAR_baseHeliPad;
                         [_BaseChopperGroup, call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+10,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;

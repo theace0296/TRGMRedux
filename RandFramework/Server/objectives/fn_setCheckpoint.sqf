@@ -306,7 +306,7 @@ if (TRGM_VAR_ISUNSUNG) then {
 private _pos1 = _initItem getPos [3, ([_direction, 100] call TRGM_GLOBAL_fnc_addtodirection)];
 
 private _pos2 = _initItem getPos [4, ([_direction, 80] call TRGM_GLOBAL_fnc_addtodirection)];
-private _group = creategroup _thisside;
+private _group = (createGroup [_thisside, true]);
 _group setFormDir _direction;
 
 private _sUnittype = selectRandom _thisUnittypes;
@@ -347,16 +347,18 @@ if (random 1 < .66) then {
         dostop [_guardUnit2];
         _guardUnit2 setDir (_direction);
     };
+    [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 } else {
+    [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
     private _pos3 = [_behindBlockPos2, 0, 10, 10, 0, 0.5, 0, [], [_behindBlockPos2, _behindBlockPos2]] call TRGM_GLOBAL_fnc_findSafePos;
     private _pos4 = [_behindBlockPos2, 0, 10, 10, 0, 0.5, 0, [], [_behindBlockPos2, _behindBlockPos2]] call TRGM_GLOBAL_fnc_findSafePos;
 
     private _chatDir1 = [_pos3, _pos4] call BIS_fnc_Dirto;
     private _chatDir2 = [_pos4, _pos3] call BIS_fnc_Dirto;
 
-    private _group2 = creategroup _thisside;
+    private _group2 = (createGroup [_thisside, true]);
     _group2 setFormDir _chatDir1;
-    private _group3 = creategroup _thisside;
+    private _group3 = (createGroup [_thisside, true]);
     _group3 setFormDir _chatDir2;
 
     private _sUnittype = selectRandom _thisUnittypes;
@@ -375,6 +377,7 @@ if (random 1 < .66) then {
         dostop [_guardUnit3];
         _guardUnit3 setDir (_chatDir1);
     };
+    [_group2] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
     _sUnittype = selectRandom _thisUnittypes;
     private _guardUnit4 = [_group3, _sUnittype, _pos4, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
@@ -385,6 +388,7 @@ if (random 1 < .66) then {
             _iterations = _iterations + 1;
         };
     };
+    [_group3] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
     if (!(isNil "_guardUnit4") && {!(isNull _guardUnit4)}) then {
         if (_thisside isEqualto TRGM_VAR_Friendlyside) then {
             [_guardUnit4] call TRGM_GLOBAL_fnc_makeNPC;
@@ -415,7 +419,7 @@ if (random 1 < .66) then {
     };
 };
 
-private _group4 = creategroup _thisside;
+private _group4 = (createGroup [_thisside, true]);
 private _sCheckpointguyname = format["objCheckpointguyname%1", (floor(random 999999))];
 
 private _pos5 = [_behindBlockPos2, 0, 10, 10, 0, 0.5, 0, [], [_behindBlockPos2, _behindBlockPos2], _sUnittype] call TRGM_GLOBAL_fnc_findSafePos;
@@ -428,6 +432,7 @@ if (isNil "_guardUnit5" || {isNull _guardUnit5}) then {
         _iterations = _iterations + 1;
     };
 };
+[_group4] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 if (!(isNil "_guardUnit5") && {!(isNull _guardUnit5)}) then {
     if (_thisside isEqualto TRGM_VAR_Friendlyside) then {
         [_guardUnit5] call TRGM_GLOBAL_fnc_makeNPC;

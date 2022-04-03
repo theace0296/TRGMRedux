@@ -8,6 +8,11 @@ waitUntil { sleep 5; scriptDone _initVarsHandle; };
 
 CODEINPUT = [];
 
+
+if (!hasInterface && !isDedicated) then {
+    call TRGM_GLOBAL_fnc_loadbalancer_fpsLoop;
+};
 if (hasInterface) then {
+   call TRGM_GLOBAL_fnc_loadbalancer_fpsLoop;
    [] spawn TRGM_CLIENT_fnc_main;
 };

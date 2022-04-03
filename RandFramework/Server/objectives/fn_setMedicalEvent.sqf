@@ -171,7 +171,7 @@ while {_iteration <= 2} do {
         //_direction is direction of road
         //_mainVehDirection is direction of first veh
         //use these to lay down guys, cones, rubbish, barriers, lights etc...
-        private _group = createGroup civilian;
+        private _group = (createGroup [civilian, true]);
         private _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         private _iterations = 0;
         while {isNil "_downedCiv" || {isNull _downedCiv}} do {
@@ -303,6 +303,7 @@ while {_iteration <= 2} do {
                 };
             };
         };
+        [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
         private _rubbish1 = createVehicle [selectRandom TRGM_VAR_MedicalMessItems, ([_downedCiv] call TRGM_GLOBAL_fnc_getRealPos), [], 1.5, "CAN_COLLIDE"];
         _rubbish1 setDir (floor(random 360));
@@ -347,10 +348,11 @@ while {_iteration <= 2} do {
         if (_iteration isEqualTo 1 && random 1 < .50) then {
             private _flatPosPolice1 = [_vehPos , 30, 50, 10, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],selectRandom PoliceVehicles] call TRGM_GLOBAL_fnc_findSafePos;
             private _carPolice = createVehicle [selectRandom PoliceVehicles, _flatPosPolice1, [], 0, "NONE"];
-            private _manPolice = [createGroup civilian, selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            private _policeGroup = (createGroup [civilian, true]);
+            private _manPolice = [_policeGroup, selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = 0;
             while {isNil "_manPolice" || {isNull _manPolice}} do {
-                _manPolice = [createGroup civilian, selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                _manPolice = [_policeGroup, selectRandom Police,([_carPolice] call TRGM_GLOBAL_fnc_getRealPos),[],15,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 if (_iterations > 5) exitWith {};
                 _iterations = _iterations + 1;
             };
@@ -358,6 +360,7 @@ while {_iteration <= 2} do {
                 _manPolice setDir (floor(random 360));
                 [_manPolice] call TRGM_GLOBAL_fnc_makeNPC;
             };
+            [_policeGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
         };
 
         // CivCars

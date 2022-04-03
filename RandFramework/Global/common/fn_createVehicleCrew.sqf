@@ -10,7 +10,7 @@ private ["_group", "_side"];
 
 if (_sideOrGroup isEqualType WEST) then {
     _side = _sideOrGroup;
-    _group = createGroup _side;
+    _group = (createGroup [_side, true]);
 } else {
     _side = side _sideOrGroup;
     _group = _sideOrGroup;
@@ -91,5 +91,7 @@ private _turrets = [_vehicleType, false] call BIS_fnc_allTurrets;
 if (_sideOrGroup isEqualType WEST && {!((driver _vehicle) isEqualTo (leader _group))}) then {
     [_group, driver _vehicle] remoteExec ["selectLeader", groupOwner _group];
 };
+
+[_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 _crew;

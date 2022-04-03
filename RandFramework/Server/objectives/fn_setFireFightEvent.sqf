@@ -91,10 +91,11 @@ TRGM_VAR_WarEventActive = true;
             private _li_aaa = _type createVehicleLocal [_xPos+(random 250),_yPos+(random 250),0];
             _li_aaa setDamage 1;
         } else {
-            private _group = createGroup TRGM_VAR_EnemySide;
+            private _group = (createGroup [TRGM_VAR_EnemySide, true]);
             private _sUnitType = selectRandom [(call sRiflemanToUse),(call sMachineGunManToUse)];
             private _tempFireUnit = [_group, _sUnitType,[_xPos+(random 250),_yPos+(random 250),0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             hideObject _tempFireUnit;
+            [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
             sleep 1;
             private _shotsToFire = selectRandom[3,10,15];
             private _weapon = currentWeapon _tempFireUnit;
@@ -130,7 +131,7 @@ TRGM_VAR_WarEventActive = true;
         private _pos = _eventLocationPos getPos [3000,random 360];//random 360 and 3 clicks out and no playable units within 2 clicks
         _pos = [_pos select 0,_pos select 1, 365];
         private _dir = [_pos, _eventLocationPos] call BIS_fnc_DirTo;//dir from pos to _eventLocationPos
-        private _WarzoneGroupp1 = createGroup TRGM_VAR_FriendlySide;
+        private _WarzoneGroupp1 = (createGroup [TRGM_VAR_FriendlySide, true]);
         private _WarZoneAir1 = createVehicle [_AirToUse, _pos, [], 0, "FLY"];
         _WarZoneAir1 setDir _dir;
         [TRGM_VAR_FriendlySide, _WarZoneAir1, true] call TRGM_GLOBAL_fnc_createVehicleCrew;

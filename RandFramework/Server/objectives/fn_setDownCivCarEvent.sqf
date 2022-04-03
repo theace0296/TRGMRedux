@@ -112,7 +112,7 @@ if (count _nearestRoads > 0) then {
         //use these to lay down guys, cones, rubbish, barriers, lights etc...
 
         //[str(_backOfVehArea)] call TRGM_GLOBAL_fnc_notify;
-        private _group = createGroup civilian;
+        private _group = (createGroup [civilian, true]);
         private _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         private _iterations = 0;
         while {isNil "_downedCiv" || {isNull _downedCiv}} do {
@@ -121,6 +121,7 @@ if (count _nearestRoads > 0) then {
             _iterations = _iterations + 1;
         };
         if (isNil "_downedCiv") exitWith {};
+        [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
         [_downedCiv, "Acts_CivilShocked_1"] remoteExec ["switchMove", 0];
         //_downedCiv playMoveNow "Acts_CivilInjuredGeneral_1"; //"AinjPpneMstpSnonWrflDnon";
         _downedCiv disableAI "anim";

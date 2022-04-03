@@ -12,7 +12,7 @@ while {alive _thisCiv && !_bFired} do {
     {
         if ((_x in playableunits)) then {
             if (random 1 < .33) then {
-                private _grpName = createGroup TRGM_VAR_EnemySide;
+                private _grpName = (createGroup [TRGM_VAR_EnemySide, true]);
                 [_thisCiv] joinSilent _grpName;
 
                 _thisCiv dotarget _x;

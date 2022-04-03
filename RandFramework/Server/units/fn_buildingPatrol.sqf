@@ -5,7 +5,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 private _unitCount = selectRandom _unitCounts;
-private _group = createGroup _InsurgentSide;
+private _group = (createGroup [_InsurgentSide, true]);
 private _flatPos = [_sidePos , 100, _distFromCent, 4, 0, 0.5, 0,[],[[0,0,0],[0,0,0]]] call TRGM_GLOBAL_fnc_findSafePos;
 private _wayX = (_flatPos select 0);
 private _wayY = (_flatPos select 1);
@@ -18,6 +18,7 @@ while {_iCount <= _unitCount} do
     [_wayX,_wayY,_group,_iCount,_IncludTeamLeader] call TRGM_SERVER_fnc_spawnPatrolUnit;
     _iCount = _iCount + 1;
 };
+[_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 //set waypoints to other buildings
 private _iCountWaypoints = 0;

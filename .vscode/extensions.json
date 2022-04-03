@@ -1,16 +1,16 @@
 {
-	// See https://go.microsoft.com/fwlink/?LinkId=827846
-	// for the documentation about the extensions.json format
-	"recommendations": [
-		"matthewthorning.align-vertically",
-		"me-dutour-mathieu.vscode-github-actions",
-		"github.vscode-pull-request-github",
-		"eamodio.gitlens",
-		"billw2011.sqf-debugger",
+    // See https://go.microsoft.com/fwlink/?LinkId=827846
+    // for the documentation about the extensions.json format
+    "recommendations": [
+        "matthewthorning.align-vertically",
+        "me-dutour-mathieu.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "billw2011.sqf-debugger",
     "smith.sqf-formatter",
-		"armitxes.sqf",
+        "armitxes.sqf",
     "eelislynne.sqf-wiki",
-		"senfo.sqflint",
-		"redhat.vscode-yaml"
-	]
+        "senfo.sqflint",
+        "redhat.vscode-yaml"
+    ]
 }

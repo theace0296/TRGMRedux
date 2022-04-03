@@ -13,7 +13,7 @@ if (side _killer isEqualTo TRGM_VAR_FriendlySide && str(_killed) != str(_killer)
     [0.2,format[localize "STR_TRGM2_InsKilled_RebelKilled", name _killer]] spawn TRGM_GLOBAL_fnc_adjustBadPoints;
 
     private _nearestunits = nearestObjects [getPos _killed,["Man","Car","Tank"],2000];
-    private _grpName = createGroup TRGM_VAR_EnemySide;
+    private _grpName = (createGroup [TRGM_VAR_EnemySide, true]);
     {
         private _isRebel = _x getVariable ["IsRebel", false];
         if (_isRebel) then {

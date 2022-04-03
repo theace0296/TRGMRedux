@@ -91,12 +91,12 @@ if (!_isCache && count _nearestRoads > 0) then {
                     [_posOfTarget] spawn TRGM_SERVER_fnc_createEnemySniper;
                 };
 
-                private _spawnedUnitTarget1 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), _posOfTarget, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                private _spawnedUnitTarget1 = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), _posOfTarget, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 private _directionTarget1 = [_mainVeh,_spawnedUnitTarget1] call BIS_fnc_DirTo;
                 _spawnedUnitTarget1 setDir _directionTarget1;
                 _spawnedUnitTarget1 setFormDir _directionTarget1;
 
-                private _spawnedUnitTarget2 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), _posOfTarget, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                private _spawnedUnitTarget2 = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), _posOfTarget, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 private _directionTarget2 = [_mainVeh,_spawnedUnitTarget2] call BIS_fnc_DirTo;
                 _spawnedUnitTarget2 setDir _directionTarget2;
                 _spawnedUnitTarget2 setFormDir _directionTarget2;
@@ -178,7 +178,7 @@ if (_isCache) then {
         //two guards at door!!!
         private _building = (nearestBuilding _posCache);
         if !(isNil "_building") then {
-            private _spawnedUnit = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            private _spawnedUnit = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _spawnedUnit setpos (_building buildingExit 0);
 
             private _direction = [_building,_spawnedUnit] call BIS_fnc_DirTo;
@@ -201,7 +201,7 @@ if (_isCache) then {
                 _checkedPositions pushBack _newPos;
                 if (_allowed) then {
                     //_doLoop = false;
-                    private _spawnedUnit2 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), _newPos, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    private _spawnedUnit2 = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), _newPos, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                     private _direction2 = [_building,_spawnedUnit2] call BIS_fnc_DirTo;
                     _spawnedUnit2 setDir _direction2;
                     _spawnedUnit2 setFormDir _direction2;
@@ -209,11 +209,11 @@ if (_isCache) then {
                 _i = _i + 1;
             };
 
-            private _spawnedUnit3 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            private _spawnedUnit3 = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
             [getPos _building, [_spawnedUnit3], -1, false, false,false] spawn TRGM_SERVER_fnc_zenOccupyHouse;
 
             if (random 1 < .50) then {
-                private _spawnedUnit4 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                private _spawnedUnit4 = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 [getPos _building, [_spawnedUnit4], -1, false, false,false] spawn TRGM_SERVER_fnc_zenOccupyHouse;
             };
         };
@@ -274,12 +274,12 @@ if (!_objectiveCreated) then {
         [_posObj] spawn TRGM_SERVER_fnc_createEnemySniper;
     };
 
-    private _spawnedUnitTarget1 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), _posObj, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+    private _spawnedUnitTarget1 = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), _posObj, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
     private _directionTarget1 = [_mainVeh,_spawnedUnitTarget1] call BIS_fnc_DirTo;
     _spawnedUnitTarget1 setDir _directionTarget1;
     _spawnedUnitTarget1 setFormDir _directionTarget1;
 
-    private _spawnedUnitTarget2 = [(createGroup TRGM_VAR_EnemySide), (call sRiflemanToUse), _posObj, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+    private _spawnedUnitTarget2 = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), _posObj, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
     private _directionTarget2 = [_mainVeh,_spawnedUnitTarget2] call BIS_fnc_DirTo;
     _spawnedUnitTarget2 setDir _directionTarget2;
     _spawnedUnitTarget2 setFormDir _directionTarget2;

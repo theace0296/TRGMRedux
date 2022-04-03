@@ -8,7 +8,7 @@ if !(isServer) exitWith {};
 TRGM_VAR_CalledAirsupportIndex = TRGM_VAR_CalledAirsupportIndex + 1;
 publicVariable "TRGM_VAR_CalledAirsupportIndex";
 
-private _groupp1 = createGroup TRGM_VAR_EnemySide;
+private _groupp1 = (createGroup [TRGM_VAR_EnemySide, true]);
 
 private _AirVehicle = nil;
 if (_IsAirType isEqualTo 1) then {

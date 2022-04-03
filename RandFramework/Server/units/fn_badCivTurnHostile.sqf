@@ -4,7 +4,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 
-private _grpName = createGroup TRGM_VAR_EnemySide;
+private _grpName = (createGroup [TRGM_VAR_EnemySide, true]);
 [_badCiv] joinSilent _grpName;
 
 [_badCiv] call TRGM_SERVER_fnc_badCivApplyAssingnedArmament;

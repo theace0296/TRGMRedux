@@ -127,7 +127,7 @@ if !(_unitType isEqualTo "") then {
 private _unit = _group createUnit [_tempUnitType, _position, _markers, _placement, _special];
 if !(_type isEqualTo _tempUnitType) then {
     [_unit, _type] call TRGM_GLOBAL_fnc_setLoadout;
-    private _tempUnit = (createGroup CIVILIAN) createUnit [_type, [0,0,0], [], 0, 'NONE'];
+    private _tempUnit = ((createGroup [CIVILIAN, true])) createUnit [_type, [0,0,0], [], 0, 'NONE'];
     private _speaker = speaker _tempUnit;
     private _face = face _tempUnit;
     private _pitch = pitch _tempUnit;

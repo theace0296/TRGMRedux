@@ -69,7 +69,7 @@ if !(_noDelay) then {
     };
 };
 
-private _heloCrew = createGroup _side;
+private _heloCrew = (createGroup [_side, true]);
 
 //set the scope of local variables that are defined in other scope(s), so they can be used over the entire script
 private ["_helo","_infgrp"];
@@ -92,7 +92,7 @@ if (_debugMode) then {
 //Side Check to spawn appropriate helicopter & cargo
 switch (_side) do {
     case WEST : {
-        _infgrp = createGroup WEST;
+        _infgrp = (createGroup [WEST, true]);
 
         [_infgrp, (call fTeamleader),    [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
         [_infgrp, (call fGrenadier),     [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
@@ -102,7 +102,7 @@ switch (_side) do {
         _helo = createVehicle [(call ReinforceVehicleFriendly), _spawnMrk, [], 0, "FLY"];
     };
     case EAST : {
-        _infgrp = createGroup EAST;
+        _infgrp = (createGroup [EAST, true]);
 
         [_infgrp, (call sTeamleader),    [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
         [_infgrp, (call sGrenadier),     [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
@@ -112,7 +112,7 @@ switch (_side) do {
         _helo = createVehicle [(call ReinforceVehicle), _spawnMrk, [], 0, "FLY"];
     };
     case INDEPENDENT : {
-        _infgrp = createGroup INDEPENDENT;
+        _infgrp = (createGroup [INDEPENDENT, true]);
 
         [_infgrp, (call sTeamleaderMilitia),    [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
         [_infgrp, (call sGrenadierMilitia),     [0,0], [], 5, "NONE"] call TRGM_GLOBAL_fnc_createUnit; sleep(_AdditionalUnitCreationDelay);
@@ -128,6 +128,8 @@ if (_debugMode) then {
     player globalChat format ["Helo Array: %1", _helo];
     player globalChat format ["Cargo Group: %1", _infGrp];
 };
+
+[_infGrp] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 //Set the infantry groups skill levels (_skill is a 1 based index, so use _skill - 1 for selecting on a zero based index)
 if (_skill > 4) then {_skill = 4;};

@@ -20,7 +20,7 @@ private _HidingPlacesTooClose = nearestTerrainObjects [_triggerArea, ["HIDE","BU
 private _nearestHidingPlaces = _nearestHidingPlaces - _HidingPlacesTooClose;
 
 if (count _nearestHidingPlaces > 5) then {
-    private _ambushGroup = createGroup TRGM_VAR_EnemySide;
+    private _ambushGroup = (createGroup [TRGM_VAR_EnemySide, true]);
 
     private _groupSize = selectRandom [5,6,7];
     private _iCount = 0;
@@ -63,6 +63,7 @@ if (count _nearestHidingPlaces > 5) then {
         };
     };
 
+    [_ambushGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
     {
         _x setCombatMode "RED";
         _x setBehaviour "AWARE";

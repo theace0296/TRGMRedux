@@ -20,7 +20,7 @@ params [
 if (isNil "_side" || isNil "_vehicles" || isNil "_startPos" || isNil "_endPos") exitWith {};
 
 private _finalGroup = [];
-private _group = creategroup _side;
+private _group = (createGroup [_side, true]);
 _group setFormation "FILE";
 _group setSpeedMode "LIMITED";
 
@@ -192,6 +192,8 @@ if (_disableAIMods) then {
 {
     _x allowDamage true;
 } forEach _finalGroup;
+
+[_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 if (!_noWaypoints) then {
     [_group, _convoySpeed, _convoySeparation, _pushThrough] spawn TRGM_GLOBAL_fnc_convoy;

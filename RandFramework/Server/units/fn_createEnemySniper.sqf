@@ -11,8 +11,8 @@ private _maxRange = 800;
 private _minRange = 600;
 private _minHeight = 20;
 
-private _spawnedUnit = [(createGroup TRGM_VAR_EnemySide), (call sSniperToUse), [-135,-253,0], [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-private _spawnedTempTarget = [(createGroup TRGM_VAR_EnemySide), (call sSniperToUse), _targetPos, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+private _spawnedUnit = [((createGroup [TRGM_VAR_EnemySide, true])), (call sSniperToUse), [-135,-253,0], [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+private _spawnedTempTarget = [((createGroup [TRGM_VAR_EnemySide, true])), (call sSniperToUse), _targetPos, [], 10, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
 
 for "_i" from 1 to 20 do {
     if (!_foundPlace) then {
@@ -49,6 +49,7 @@ for "_i" from 1 to 20 do {
     };
 };
 deleteVehicle _spawnedTempTarget;
+[group _spawnedUnit] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 if (_foundPlace) then {
     while {alive(_spawnedUnit)} do {

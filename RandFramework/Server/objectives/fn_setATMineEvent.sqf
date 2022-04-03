@@ -68,7 +68,7 @@ if (random 1 < .20) then {
 
     private _pos1 = _mainVeh getPos [5, (floor random 360)];
     private _pos2 = _mainVeh getPos [5, (floor random 360)];
-    private _group = creategroup TRGM_VAR_Friendlyside;
+    private _group = (createGroup [TRGM_VAR_Friendlyside, true]);
     private _sUnittype = selectRandom (call FriendlyCheckpointunits);
 
     private _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
@@ -90,6 +90,8 @@ if (random 1 < .20) then {
     dostop [_guardUnit2];
     _guardUnit2 setDir (floor random 360);
     [_guardUnit2, "WATCH", "ASIS"] call BIS_fnc_ambientAnimCombat;
+
+    [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
     [_guardUnit1, [localize "STR_TRGM2_AskNeedsAssistanceAction", {
         private _guardUnit1 = _this select 0;

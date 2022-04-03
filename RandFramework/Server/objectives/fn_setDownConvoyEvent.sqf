@@ -116,7 +116,7 @@ while {_iteration <= 3} do {
         //_mainVehDirection is direction of first veh
         //use these to lay down guys, cones, rubbish, barriers, lights etc...
 
-        private _group = createGroup civilian;
+        private _group = (createGroup [civilian, true]);
         private _downedCiv = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         private _iterations = 0;
         while {isNil "_downedCiv" || {isNull _downedCiv}} do {
@@ -125,6 +125,7 @@ while {_iteration <= 3} do {
             _iterations = _iterations + 1;
         };
         if (isNil "_downedCiv") exitWith {};
+        [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
         _downedCiv setDamage 0.8;
         [_downedCiv, "Acts_CivilInjuredGeneral_1"] remoteExec ["switchMove", 0];

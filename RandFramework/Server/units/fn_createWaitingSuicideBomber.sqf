@@ -13,8 +13,9 @@ private _HidingPlacesTooClose = nearestTerrainObjects [_triggerArea, ["HIDE","BU
 private _nearestHidingPlaces = _nearestHidingPlaces - _HidingPlacesTooClose;
 
 if (count _nearestHidingPlaces > 5) then {
-    private _ambushGroup = createGroup TRGM_VAR_EnemySide;
+    private _ambushGroup = (createGroup [TRGM_VAR_EnemySide, true]);
     private _objMilUnit = [_ambushGroup, selectRandom sCivilian,getPos (selectRandom _nearestHidingPlaces),[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+    [_ambushGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
     doStop _objMilUnit;
     _ambushGroup setCombatMode "BLUE";
     _ambushGroup setBehaviour "SAFE";

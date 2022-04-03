@@ -31,8 +31,6 @@ if (_isFullMap) then {
 
 if ((_flatPos select 0) isEqualTo 0 && (_flatPos select 1) isEqualTo 0) exitWith {};
 
-private _groupCamp1 = createGroup TRGM_VAR_EnemySide;
-
 private _aaaX = _flatPos select 0;
 private _aaaY = _flatPos select 1;
 
@@ -78,7 +76,7 @@ while {_iCount > 0} do {
 };
 
 private _flatPos2 = [_flatPos , 10, 25, 3, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],_sVictim] call TRGM_GLOBAL_fnc_findSafePos;
-private _group = createGroup civilian;
+private _group = (createGroup [civilian, true]);
 private _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
 private _iterations = 0;
 while {isNil "_downedCiv" || {isNull _downedCiv}} do {
@@ -87,6 +85,7 @@ while {isNil "_downedCiv" || {isNull _downedCiv}} do {
     _iterations = _iterations + 1;
 };
 if (isNil "_downedCiv") exitWith {};
+[_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 [_downedCiv,[localize "STR_TRGM2_fnpostinit_JoinGroup",{
     private _civ = _this select 0;

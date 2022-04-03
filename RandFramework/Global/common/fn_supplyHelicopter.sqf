@@ -18,7 +18,7 @@ try {
         case INDEPENDENT: { _airToUse = (call ReinforceVehicleMilitia); };
         default {};
     };
-    private _heloGroup = createGroup _side;
+    private _heloGroup = (createGroup [_side, true]);
     private _airDropHelo = createVehicle [_airToUse, [(_spawnPos select 0), (_spawnPos select 1)], [], 0, "FLY"];
 
     [_heloGroup, _airDropHelo, true] call TRGM_GLOBAL_fnc_createVehicleCrew;

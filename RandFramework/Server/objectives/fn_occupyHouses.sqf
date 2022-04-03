@@ -27,10 +27,11 @@ if (!_bThisMissionCivsOnly) then {
                 //[format["test:%1",(_randBuilding distance getMarkerPos "mrkHQ")]] call TRGM_GLOBAL_fnc_notify;
                 //sleep 1;
 
-                private _thisGroup = createGroup _InsurgentSide;
+                private _thisGroup = (createGroup [_InsurgentSide, true]);
                 [_thisGroup, (call sRiflemanToUse), position _randBuilding, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 if (random 1 < .50) then {[_thisGroup, (call sRiflemanToUse), position _randBuilding, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
                 private _teamLeaderUnit = [_thisGroup, (call sTeamleaderToUse),_randBuildingPos,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                [_thisGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
                 [_randBuildingPos, units group _teamLeaderUnit, -1, true, false,true] spawn TRGM_SERVER_fnc_zenOccupyHouse;
 
                 private _iCountNoOfCPs = selectRandom[0,0,0,0,1];  //number of checkpoints (so high chance of not being any, or one may be near an occupied building)

@@ -44,7 +44,7 @@ if (isServer) then { // only do once -> on the serer
                         //load armament
                         if (!_bActivated) then {
                             _bActivated = true;
-                            private _grpName = createGroup TRGM_VAR_EnemySide;
+                            private _grpName = (createGroup [TRGM_VAR_EnemySide, true]);
                             [_thisCiv] joinSilent _grpName;
 
                             _thisCiv addMagazines [_magazine,_amount];

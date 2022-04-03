@@ -62,12 +62,12 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
     _sInformant1Name = format["objInformant%1",_iTaskIndex];
 
-    _objInformant = [createGroup _sideToUse, _infClassToUse, [0,0,500], [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
+    _objInformant = [(createGroup [_sideToUse, true]), _infClassToUse, [0,0,500], [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
 
     if (isNil "_objInformant" || {isNull _objInformant}) then {
         private _iterations = 0;
         while {(isNil "_objInformant" || {isNull _objInformant}) && {_iterations < 20}} do {
-            _objInformant = [createGroup _sideToUse, _infClassToUse, [0,0,500], [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
+            _objInformant = [(createGroup [_sideToUse, true]), _infClassToUse, [0,0,500], [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
         };
     };
@@ -151,7 +151,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
     if (_hvtType isEqualTo "INTERROGATE" || _hvtType isEqualTo "KILL") then { //if interrogate or kill task
         if (_sideToUse isEqualTo TRGM_VAR_EnemySide) then {  //only give weapon if enemy side unit
-            _grpName = createGroup TRGM_VAR_EnemySide;
+            _grpName = (createGroup [TRGM_VAR_EnemySide, true]);
             [_objInformant] joinSilent _grpName;
             _objInformant addMagazine "30Rnd_9x21_Mag_SMG_02";
             _objInformant addMagazine "30Rnd_9x21_Mag_SMG_02";

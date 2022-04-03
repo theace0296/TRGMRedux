@@ -104,6 +104,16 @@ class TRGM_GLOBAL {
         class timerGlobal {};
     };
 
+    class loadbalancer {
+        file = "RandFramework\Global\loadbalancer";
+        class loadbalancer_aggregate {};
+        class loadbalancer_fpsLoop {};
+        class loadbalancer_getHost {};
+        class loadbalancer_init {};
+        class loadbalancer_setFps {};
+        class loadbalancer_setGroupOwner {};
+    };
+
     class ace {
         file = "RandFramework\Global\ace";
         class addAceActionToObject {};

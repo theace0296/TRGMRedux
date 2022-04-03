@@ -83,11 +83,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     },[_bombSerialNumber]]]; remoteExec ["addAction", 0, true];
 
 
-    _objInformant = [createGroup Civilian, selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
+    _objInformant = [(createGroup [Civilian, true]), selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
     if (isNil "_objInformant" || {isNull _objInformant}) then {
         private _iterations = 0;
         while {(isNil "_objInformant" || {isNull _objInformant}) && {_iterations < 20}} do {
-            _objInformant = [createGroup Civilian, selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
+            _objInformant = [(createGroup [Civilian, true]), selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
         };
     };

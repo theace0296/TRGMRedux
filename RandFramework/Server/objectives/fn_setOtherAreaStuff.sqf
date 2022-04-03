@@ -47,7 +47,7 @@ if (count _TowersNear > 0) then {
 
         if (!(surfaceIsWater _wp1PosTower) && !(surfaceIsWater _wp2PosTower) && !(surfaceIsWater _wp3PosTower) && !(surfaceIsWater _wp4PosTower)) then {
             //1 in (_maxGroups*2) chance of having an AA/AT guy
-            private _DiamPatrolGroupTower = createGroup TRGM_VAR_EnemySide;
+            private _DiamPatrolGroupTower = (createGroup [TRGM_VAR_EnemySide, true]);
                 if (random 1 < .50) then {
                     [_DiamPatrolGroupTower, call sAAManToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
                     _iHasAA = 1;
@@ -60,7 +60,7 @@ if (count _TowersNear > 0) then {
             if (random 1 < .50) then {[_DiamPatrolGroupTower, call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
             if (random 1 < .50) then {[_DiamPatrolGroupTower, call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
             if (random 1 < .50) then {[_DiamPatrolGroupTower, call sRiflemanToUse, [_wayX, _wayY], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;};
-
+            [_DiamPatrolGroupTower] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
             private _wp1Tower = _DiamPatrolGroupTower addWaypoint [_wp1PosTower, 0];
             private _wp2Tower = _DiamPatrolGroupTower addWaypoint [_wp2PosTower, 0];
             private _wp3Tower = _DiamPatrolGroupTower addWaypoint [_wp3PosTower, 0];

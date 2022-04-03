@@ -40,9 +40,9 @@ while {_iCount <= _unitCount} do
     };
     private _sideCivGroup = nil;
     if (_bIsRebels) then {
-        _sideCivGroup = createGroup TRGM_VAR_FriendlySide;
+        _sideCivGroup = (createGroup [TRGM_VAR_FriendlySide, true]);
     } else {
-        _sideCivGroup = createGroup Civilian;
+        _sideCivGroup = (createGroup [Civilian, true]);
     };
     private _allBuildingPos = _randBuilding buildingPos -1;
 
@@ -106,5 +106,7 @@ while {_iCount <= _unitCount} do
 
     _iCount = _iCount + 1;
 };
+
+[_sideCivGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 true;
