@@ -35,10 +35,11 @@ private _IntelFound = missionNamespace getVariable [format ["TRGM_VAR_IntelFound
 
 private _IntelToShow = 0;
 private _iAttemptCount = 0;
-while {_IntelToShow isEqualTo 0 && _iAttemptCount < 100} do {
+waitUntil {
     _iAttemptCount = _iAttemptCount + 1;
     _IntelToShow = selectRandom _AllowedIntelToShow;
     if (_IntelToShow in _IntelFound) then {_IntelToShow = 0};
+    _IntelToShow isNotEqualTo 0 || _iAttemptCount >= 100;
 };
 
 private _showIntel = true;

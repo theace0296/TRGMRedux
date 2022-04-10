@@ -69,10 +69,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     TRGM_LOCAL_fnc_radioLoop = {
         _radio = _this select 0;
         _bPlay = true;
-        while {_bPlay && !isNil "_radio"} do {
+        waitUntil {
             if (!alive _radio) then {_bPlay = false};
             playSound3D ["A3\Sounds_F\sfx\radio\" + selectRandom TRGM_VAR_EnemyRadioSounds + ".wss",_radio,false,getPosASL _radio,0.5,1,0];
             sleep selectRandom [10,15,20,30];
+            !_bPlay || isNil "_radio";
         };
     };
     [_objRadio1] spawn TRGM_LOCAL_fnc_radioLoop;

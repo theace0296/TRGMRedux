@@ -31,17 +31,18 @@ if (count _nearestRoads > 0) then {
     private _iAttemptLimit = 5;
     private _direction = nil;
 
-    while {!_PosFound && _iAttemptLimit > 0 && count _nearestRoads > 0} do {
+    waitUntil {
         _nearestRoad = selectRandom _nearestRoads;
         _roadConnectedTo = roadsConnectedTo _nearestRoad;
         if (count _roadConnectedTo > 0) then {
             _connectedRoad = _roadConnectedTo select 0;
             _direction = [_nearestRoad, _connectedRoad] call BIS_fnc_DirTo;
             _PosFound = true;
-        }
-        else {
+        } else {
             _iAttemptLimit = _iAttemptLimit - 1;
         };
+        sleep 1;
+        _PosFound || _iAttemptLimit <= 0 || count _nearestRoads <= 0;
     };
 
     if (_PosFound) then {
@@ -115,10 +116,10 @@ if (count _nearestRoads > 0) then {
         private _group = (createGroup [civilian, true]);
         private _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         private _iterations = 0;
-        while {isNil "_downedCiv" || {isNull _downedCiv}} do {
+        waitUntil {
             _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            if (_iterations > 5) exitWith {};
             _iterations = _iterations + 1;
+            (!(isNil "_downedCiv") && !(isNull _downedCiv)) || _iterations >= 5;
         };
         if (isNil "_downedCiv") exitWith {};
         [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
@@ -160,7 +161,7 @@ if (count _nearestRoads > 0) then {
             private _bIsTrap = _this select 4;
             private _bWaiting = true;
             private _bWaveDone = false;
-            while {_bWaiting} do {
+            waitUntil {
                 if (!(alive _mainVeh)) then {
                     _bWaiting = false;
                     private _runAwayTo = [0,0,0]; //_vehPos getPos [500,([_mainVeh, _downedCiv] call BIS_fnc_DirTo)];
@@ -268,6 +269,7 @@ if (count _nearestRoads > 0) then {
                 if (_bWaiting) then {
                     sleep 1;
                 };
+                !_bWaiting;
             };
         };
     };

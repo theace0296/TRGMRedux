@@ -3,7 +3,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 //loop here, sleep 5 (doesnt need to be too fast looping!!)
-while {true} do {
+waitUntil {
     if (getPlayerUID player in TRGM_VAR_KilledPlayers && (vehicle player isEqualTo player) && alive(player)) then {
         {
             if (getPlayerUID player isEqualTo _x select 0) then {
@@ -19,5 +19,6 @@ while {true} do {
             };
         } forEach TRGM_VAR_KilledPositions;
     };
-    sleep 5;
+    sleep 30;
+    false;
 };

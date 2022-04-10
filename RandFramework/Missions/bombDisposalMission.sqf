@@ -86,9 +86,10 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _objInformant = [(createGroup [Civilian, true]), selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
     if (isNil "_objInformant" || {isNull _objInformant}) then {
         private _iterations = 0;
-        while {(isNil "_objInformant" || {isNull _objInformant}) && {_iterations < 20}} do {
+        waitUntil {
             _objInformant = [(createGroup [Civilian, true]), selectRandom InformantClasses,[-200,-200,0],[],0,"NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
+            (!(isNil "_objInformant") && !(isNull _objInformant)) || _iterations >= 20;
         };
     };
     if (isNil "_objInformant" || {isNull _objInformant}) exitWith {};
@@ -109,7 +110,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _infBuilding = nil;
     _attemptLimit = 5;
     _bBuildingFound = false;
-    while {!_bBuildingFound || _attemptLimit > 0} do {
+    waitUntil {
         _infBuilding = selectRandom _buildings;
         _allBuildingPos = _infBuilding buildingPos -1;
         if (count _allBuildingPos > 2) then {
@@ -119,6 +120,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _bBuildingFound = true;
         };
         _attemptLimit = _attemptLimit - 1;
+        _bBuildingFound || _attemptLimit <= 0;
     };
     if (!_bBuildingFound) then {
         //didnt find a building with enough space... so have the guy outside

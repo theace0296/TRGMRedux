@@ -14,8 +14,7 @@ private _iCount = 0; //_unitCount
 private _randBuilding = nil;
 private _bAllCivsBad = random 1 < .25;
 private _bRebelLeaderPicked = false;
-while {_iCount <= _unitCount} do
-{
+waitUntil {
     //spanwn civ in random building pos
     _randBuilding = selectRandom _allBuildings;
     private _sInitString = "";
@@ -82,8 +81,7 @@ while {_iCount <= _unitCount} do
 
     //set waypoints to other buildings
     private _iCountWaypoints = 0;
-    while {_iCountWaypoints <= 4} do
-    {
+    waitUntil {
         private _randBuilding2 = selectRandom _allBuildings; //pick one building from our buildings array
         private _allBuildingPos2 = _randBuilding2 buildingPos -1;
 
@@ -101,10 +99,14 @@ while {_iCount <= _unitCount} do
         [_sideCivGroup, _iCountWaypoints] setWaypointBehaviour "SAFE";
         if (_iCountWaypoints isEqualTo 4) then{[_sideCivGroup, 8] setWaypointType "CYCLE";};
         _iCountWaypoints = _iCountWaypoints + 1;
+        sleep 1;
+        _iCountWaypoints > 4;
     };
     _sideCivGroup setBehaviour "SAFE";
 
     _iCount = _iCount + 1;
+    sleep 5;
+    _iCount > _unitCount;
 };
 
 [_sideCivGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;

@@ -13,17 +13,17 @@ private _allBuildings = nearestObjects [_sidePos, TRGM_VAR_BasicBuildings, _dist
 
 //Spawn in units
 private _iCount = 0; //_unitCount
-while {_iCount <= _unitCount} do
-{
+waitUntil {
     [_wayX,_wayY,_group,_iCount,_IncludTeamLeader] call TRGM_SERVER_fnc_spawnPatrolUnit;
     _iCount = _iCount + 1;
+    sleep 1;
+    _iCount > _unitCount;
 };
 [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 //set waypoints to other buildings
 private _iCountWaypoints = 0;
-while {_iCountWaypoints <= _buildingCount} do
-{
+waitUntil {
     private _randBuilding2 = selectRandom _allBuildings; //pick one building from our buildings array
     private _allBuildingPos2 = _randBuilding2 buildingPos -1;
 
@@ -40,6 +40,8 @@ while {_iCountWaypoints <= _buildingCount} do
     [_group, _iCountWaypoints] setWaypointBehaviour "SAFE";
     if (_iCountWaypoints isEqualTo _buildingCount) then{[_group, 8] setWaypointType "CYCLE";};
     _iCountWaypoints = _iCountWaypoints + 1;
+    sleep 1;
+    _iCountWaypoints > _buildingCount;
 };
 _group setBehaviour "SAFE";
 

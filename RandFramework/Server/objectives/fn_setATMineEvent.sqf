@@ -24,7 +24,7 @@ publicVariable "TRGM_VAR_ATFieldPos";
 
 private _minesPlaced = false;
 private _icountmines = 0;
-while {!_minesPlaced} do {
+waitUntil {
     private _xPos = (_currentATFieldPos select 0)-100;
     private _yPos = (_currentATFieldPos select 1)-100;
     private _randomPos = [_xPos+(random 200), _yPos+(random 200), 0];
@@ -40,6 +40,7 @@ while {!_minesPlaced} do {
     if (_icountmines >= 50) then {
         _minesPlaced = true
     };
+    _minesPlaced;
 };
 
 if (random 1 < .20) then {
@@ -73,8 +74,9 @@ if (random 1 < .20) then {
 
     private _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
     if (isnil "_guardUnit1" || {isNull _guardUnit1}) then {
-        while {isnil "_guardUnit1" || {isNull _guardUnit1}} do {
+        waitUntil {
             _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            !(isNil "_guardUnit1") && !(isNull _guardUnit1);
         };
     };
     dostop [_guardUnit1];
@@ -83,8 +85,9 @@ if (random 1 < .20) then {
 
     private _guardUnit2 = [_group, _sUnittype, _pos2, [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
     if (isnil "_guardUnit2" || {isNull _guardUnit2}) then {
-        while {isnil "_guardUnit2" || {isNull _guardUnit2}} do {
+        waitUntil {
             _guardUnit2 = [_group, _sUnittype, _pos2, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
+            !(isNil "_guardUnit2") && !(isNull _guardUnit2);
         };
     };
     dostop [_guardUnit2];
@@ -108,7 +111,7 @@ if (random 1 < .20) then {
         private _group = _this select 2;
         private _bWaiting = true;
         private _bWavedone = false;
-        while {_bWaiting} do {
+        waitUntil {
             if (!(alive _mainVeh)) then {
                 _bWaiting = false;
             } else {
@@ -167,6 +170,7 @@ if (random 1 < .20) then {
             if (_bWaiting) then {
                 sleep 1;
             };
+            !_bWaiting;
         };
     };
 };

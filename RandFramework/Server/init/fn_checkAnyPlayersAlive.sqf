@@ -4,8 +4,8 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 sleep 3;
-private _bEnded = false;
-while {!_bEnded} do {
+private  = false;
+waitUntil {
     private _bAnyAlive = false;
     {
         if (isPlayer _x) then {
@@ -25,5 +25,6 @@ while {!_bEnded} do {
         _bEnded = true;
         sleep 5;
     };
-    sleep 3;
+    sleep 30;
+    _bEnded;
 };

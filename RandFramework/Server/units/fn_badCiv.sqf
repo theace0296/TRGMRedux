@@ -37,7 +37,7 @@ if (isServer) then { // only do once -> on the serer
         private _bActivated = false;
 
         // continiously watch for players and decide to engage or not
-        while {alive _thisCiv && !_bFired} do {
+        waitUntil {
             {
                 if ((_x in playableUnits) || _x in switchableUnits) then {
                     if (random 1 < .33) then {
@@ -69,8 +69,8 @@ if (isServer) then { // only do once -> on the serer
                 };
 
             } forEach (nearestObjects [([_thisCiv] call TRGM_GLOBAL_fnc_getRealPos),["Man"],10]);
-
             sleep 2;
+            !(alive _thisCiv) || _bFired;
         };
     };
 

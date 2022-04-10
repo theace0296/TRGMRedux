@@ -175,7 +175,7 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
 
 private _populateAOHandles = [];
 
-while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
+waitUntil {
     private _iTaskIndex = TRGM_VAR_InfTaskCount;
     if (_bIsCampaign) then {
         _iTaskIndex = (TRGM_VAR_iCampaignDay - 1) + TRGM_VAR_InfTaskCount;
@@ -416,7 +416,7 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
 
     ["Mission Setup: 10", true] call TRGM_GLOBAL_fnc_log;
     private _attempts = 0;
-    while {!_bInfor1Found} do {
+    waitUntil {
         _attempts = _attempts + 1;
         ["Mission Setup: 9", true] call TRGM_GLOBAL_fnc_log;
         private _markerInformant1 = nil;
@@ -590,6 +590,8 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
             };
         };
         ["Mission Setup: 8-1", true] call TRGM_GLOBAL_fnc_log;
+        sleep 1;
+        _bInfor1Found;
     };
 
     if (TRGM_VAR_InfTaskCount isEqualTo 0) then {
@@ -602,6 +604,8 @@ while {(TRGM_VAR_InfTaskCount < count _ThisTaskTypes)} do {
     };
     ["Mission Setup: 8-0", true] call TRGM_GLOBAL_fnc_log;
     TRGM_VAR_InfTaskCount = TRGM_VAR_InfTaskCount + 1;
+    sleep 1;
+    TRGM_VAR_InfTaskCount >= count _ThisTaskTypes;
 };
 
 [50, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;

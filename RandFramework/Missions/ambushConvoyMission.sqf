@@ -65,8 +65,9 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         };
 
         _convoyStartPosition = [0,0,0];
-        while {_convoyStartPosition select 0 isEqualTo 0 && _convoyStartPosition select 1 isEqualTo 0} do {
+        waitUntil {
             _convoyStartPosition = [[[getPos _objectiveMainBuilding, 3000]], ["water"], {isOnRoad _this && ((getPos _objectiveMainBuilding) distance _this) > 2000}] call BIS_fnc_randomPos;
+            _convoyStartPosition select 0 isNotEqualTo 0 && _convoyStartPosition select 1 isNotEqualTo 0
         };
         _convoyNearestRoad = [_convoyStartPosition, _roadSearchRange, []] call BIS_fnc_nearestRoad;
         _convoyRoadsConnected = roadsConnectedTo _convoyNearestRoad;
@@ -197,9 +198,10 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _mainHVT = _this select 0;
             _hvtVehicle = _this select 1;
             _mrkMeetingHVTMarker = _this select 2;
-            while {alive _hvtVehicle && alive _mainHVT} do {
+            waitUntil {
                 _mrkMeetingHVTMarker setMarkerPos ([_hvtVehicle] call TRGM_GLOBAL_fnc_getRealPos);
                 sleep 5;
+                !(alive _hvtVehicle) || !(alive _mainHVT);
             };
         };
 
@@ -226,7 +228,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _mainHVT = _this select 0;
             _iTaskIndex = _this select 1;
             _bIsMainObjective = _this select 2;
-            while {alive _mainHVT} do {
+            waitUntil {
                 _mainHVTTrigger = _mainHVT getVariable "TRGM_VAR_hvtTrigger";
                 if (!isNil "_mainHVTTrigger") then {
                     deleteVehicle _mainHVTTrigger;
@@ -239,6 +241,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                 _mainHVTTrigger setTriggerStatements ["this && {(time - TRGM_VAR_TimeSinceLastSpottedAction) > (call TRGM_GETTER_fnc_iGetSpottedDelay)}", format["nul = [%1, %2, %3, thisTrigger, thisList] spawn TRGM_GLOBAL_fnc_callNearbyPatrol;",[_mainHVT] call TRGM_GLOBAL_fnc_getRealPos,_iTaskIndex, _bIsMainObjective], ""];
                 _mainHVT setVariable ["TRGM_VAR_hvtTrigger", _mainHVTTrigger, true];
                 sleep 30;
+                !(alive _mainHVT);
             };
             _mainHVTTrigger = _mainHVT getVariable "TRGM_VAR_hvtTrigger";
             if (!isNil "_mainHVTTrigger") then {

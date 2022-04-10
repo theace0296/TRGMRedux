@@ -389,7 +389,7 @@ if (!_bFriendlyInsurgents) then {
             //spawn wide map checkpoints
             private _iCount = ([10] call TRGM_GETTER_fnc_iMoreEnemies);
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
+            waitUntil {
                 _iCount = _iCount - 1;
                 [_sidePos] spawn {
                     private _sidePos = _this select 0;
@@ -407,6 +407,7 @@ if (!_bFriendlyInsurgents) then {
                     };
                 };
                 sleep 1;
+                _iCount <= 0;
             };
         };
 
@@ -414,53 +415,7 @@ if (!_bFriendlyInsurgents) then {
             //spawn inner random sentrys
             private _iCount = ([30] call TRGM_GETTER_fnc_iMoreEnemies);
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
-                _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 50;
-                    private _checkPointGuidePos = _sidePos;
-                    private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = false;
-                        private _thisSide = TRGM_VAR_EnemySide;
-                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        private _thisAllowBarakade = false;
-                        private _thisIsDirectionAwayFromAO = true;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
-                };
-            };
-
-            _iCount = 1;
-            if (!_bIsMainObjective) then {_iCount = 2;};
-            if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
-                _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 500;
-                    private _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
-                    private _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = true;
-                        private _thisSide = TRGM_VAR_FriendlySide;
-                        private _thisUnitTypes = (call FriendlyCheckpointUnits);
-                        private _thisAllowBarakade = true;
-                        private _thisIsDirectionAwayFromAO = false;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
-                };
-            };
-        }
-        else {
-            //spawn inner random sentrys
-            private _iCount = ([25] call TRGM_GETTER_fnc_iMoreEnemies);
-            if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
+            waitUntil {
                 _iCount = _iCount - 1;
                 [_sidePos] spawn {
                     private _sidePos = _this select 0;
@@ -479,6 +434,57 @@ if (!_bFriendlyInsurgents) then {
                     };
                 };
                 sleep 1;
+                _iCount <= 0;
+            };
+
+            _iCount = 1;
+            if (!_bIsMainObjective) then {_iCount = 2;};
+            if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
+            waitUntil {
+                _iCount = _iCount - 1;
+                [_sidePos] spawn {
+                    private _sidePos = _this select 0;
+                    private _thisAreaRange = 500;
+                    private _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
+                    private _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                        private _thisPosAreaOfCheckpoint = _flatPos;
+                        private _thisRoadOnly = true;
+                        private _thisSide = TRGM_VAR_FriendlySide;
+                        private _thisUnitTypes = (call FriendlyCheckpointUnits);
+                        private _thisAllowBarakade = true;
+                        private _thisIsDirectionAwayFromAO = false;
+                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
+                    };
+                };
+                sleep 1;
+                _iCount <= 0;
+            };
+        }
+        else {
+            //spawn inner random sentrys
+            private _iCount = ([25] call TRGM_GETTER_fnc_iMoreEnemies);
+            if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
+            waitUntil {
+                _iCount = _iCount - 1;
+                [_sidePos] spawn {
+                    private _sidePos = _this select 0;
+                    private _thisAreaRange = 50;
+                    private _checkPointGuidePos = _sidePos;
+                    private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+
+                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                        private _thisPosAreaOfCheckpoint = _flatPos;
+                        private _thisRoadOnly = false;
+                        private _thisSide = TRGM_VAR_EnemySide;
+                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                        private _thisAllowBarakade = false;
+                        private _thisIsDirectionAwayFromAO = true;
+                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
+                    };
+                };
+                sleep 1;
+                _iCount <= 0;
             };
 
             //spawn inner checkpoints
@@ -486,7 +492,7 @@ if (!_bFriendlyInsurgents) then {
             if (!_bIsMainObjective) then {_iCount = ([35] call TRGM_GETTER_fnc_iMoreEnemies);};
             if ((!_bIsMainObjective && !_bHasPatrols) || (call _randomChance)) then {_iCount = ([45] call TRGM_GETTER_fnc_iMoreEnemies);};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
+            waitUntil {
                 _iCount = _iCount - 1;
                 [_sidePos] spawn {
                     private _sidePos = _this select 0;
@@ -504,6 +510,7 @@ if (!_bFriendlyInsurgents) then {
                     };
                 };
                 sleep 1;
+                _iCount <= 0;
             };
 
             //spawn outer but close surrunding checkpoints
@@ -511,7 +518,7 @@ if (!_bFriendlyInsurgents) then {
             if (!_bIsMainObjective) then {_iCount = ([30] call TRGM_GETTER_fnc_iMoreEnemies);};
             if ((!_bIsMainObjective && !_bHasPatrols) || (call _randomChance)) then {_iCount = ([40] call TRGM_GETTER_fnc_iMoreEnemies);};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
+            waitUntil {
                 _iCount = _iCount - 1;
                 [_sidePos] spawn {
                     private _sidePos = _this select 0;
@@ -529,6 +536,7 @@ if (!_bFriendlyInsurgents) then {
                     };
                 };
                 sleep 1;
+                _iCount <= 0;
             };
 
             //spawn outer far checkpoints
@@ -536,7 +544,7 @@ if (!_bFriendlyInsurgents) then {
             if (!_bIsMainObjective) then {_iCount = ([45] call TRGM_GETTER_fnc_iMoreEnemies);};
             if ((!_bIsMainObjective && !_bHasPatrols) || (call _randomChance)) then {_iCount = ([55] call TRGM_GETTER_fnc_iMoreEnemies);};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
+            waitUntil {
                 _iCount = _iCount - 1;
                 [_sidePos] spawn {
                     private _sidePos = _this select 0;
@@ -554,6 +562,7 @@ if (!_bFriendlyInsurgents) then {
                     };
                 };
                 sleep 1;
+                _iCount <= 0;
             };
 
             //spawn outer far sentrys
@@ -561,7 +570,7 @@ if (!_bFriendlyInsurgents) then {
             if (!_bIsMainObjective) then {_iCount = ([55] call TRGM_GETTER_fnc_iMoreEnemies);};
             if ((!_bIsMainObjective && !_bHasPatrols) || (call _randomChance)) then {_iCount = ([65] call TRGM_GETTER_fnc_iMoreEnemies);};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
+            waitUntil {
                 _iCount = _iCount - 1;
                 [_sidePos] spawn {
                     private _sidePos = _this select 0;
@@ -579,6 +588,7 @@ if (!_bFriendlyInsurgents) then {
                     };
                 };
                 sleep 1;
+                _iCount <= 0;
             };
 
 
@@ -587,7 +597,7 @@ if (!_bFriendlyInsurgents) then {
             _iCount = 1;
             if (!_bIsMainObjective || (call _randomChance)) then {_iCount = 2;};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-            while {_iCount > 0} do {
+            waitUntil {
                 _iCount = _iCount - 1;
                 [_sidePos] spawn {
                     private _sidePos = _this select 0;
@@ -604,6 +614,7 @@ if (!_bFriendlyInsurgents) then {
                         [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
                     };
                 };
+                _iCount <= 0;
             };
         };
 
@@ -659,12 +670,14 @@ if (!_bFriendlyInsurgents) then {
                             group _objMan setSpeedMode "LIMITED";
                             group _objMan setBehaviour "SAFE";
 
-                            while {alive(_objMan) && {behaviour _objMan isEqualTo "SAFE"}} do {
+                            waitUntil {
                                 private _walkAroundHandle = [_objManName,_thisInitPos,_objMan,35] spawn TRGM_SERVER_fnc_hvtWalkAround;
                                 sleep 2;
                                 waitUntil {sleep 1; speed _objMan < 0.5};
                                 sleep 10;
                                 waitUntil { sleep 1; scriptDone _walkAroundHandle; };
+                                sleep 5;
+                                !(alive(_objMan)) || behaviour _objMan isNotEqualTo "SAFE";
                             };
                         };
                         [_sCheckpointGuyName,_pos5] spawn TRGM_LOCAL_fnc_walkingGuyLoop;
@@ -697,7 +710,7 @@ if (!_bFriendlyInsurgents) then {
         //spawn inner checkpoints
         private _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
         if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-        while {_iCount > 0} do {
+        waitUntil do {
             _iCount = _iCount - 1;
             [_sidePos] spawn {
                 private _sidePos = _this select 0;
@@ -714,11 +727,13 @@ if (!_bFriendlyInsurgents) then {
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
             };
+            sleep 1;
+            _iCount <= 0;
         };
         //spawn inner sentry
         _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
         if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-        while {_iCount > 0} do {
+        waitUntil {
             _iCount = _iCount - 1;
             [_sidePos] spawn {
                 private _sidePos = _this select 0;
@@ -735,6 +750,8 @@ if (!_bFriendlyInsurgents) then {
                     [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
                 };
             };
+            sleep 1;
+            _iCount <= 0;
         };
     };
 } else {
@@ -749,33 +766,39 @@ if (!_bFriendlyInsurgents) then {
 if (call _randomChance) then {
     private _iAnimalCount = 0;
     private _flatPosInside = [_sidePos , 0, 100, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
-    while {_iAnimalCount < 4} do {
+    waitUntil {
         _iAnimalCount = _iAnimalCount + 1;
         private _myDog1 = createAgent ["Fin_random_F", _flatPosInside, [], 50, "NONE"];
         sleep 0.1;
         _myDog1 playMove "Dog_Sit";
+        sleep 1;
+        _iAnimalCount >= 4;
     };
 };
 
 if (call _randomChance) then {
     private _iAnimalCount = 0;
     private _flatPosInside2 = [_sidePos , 0, 100, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
-    while {_iAnimalCount < 8} do {
+    waitUntil {
         _iAnimalCount = _iAnimalCount + 1;
         private _myGoat1 = createAgent ["Goat_random_F", _flatPosInside2, [], 5, "NONE"];
         sleep 0.1;
         _myGoat1 playMove "Goat_Walk";
+        sleep 1;
+        _iAnimalCount >= 8;
     };
 };
 
 if (call _randomChance) then {
     private _iAnimalCount = 0;
     private _flatPosInside2 = [_sidePos , 500, 1500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,[0,0,0]]] call BIS_fnc_findSafePos;
-    while {_iAnimalCount < 8} do {
+    waitUntil {
         _iAnimalCount = _iAnimalCount + 1;
         private _myGoat2 = createAgent ["Goat_random_F", _flatPosInside2, [], 5, "NONE"];
         sleep 0.1;
         _myGoat2 playMove "Goat_Stop";
+        sleep 1;
+        _iAnimalCount >= 8;
     };
 };
 
@@ -790,8 +813,7 @@ if (call _randomChance) then {
     private _IEDCount = 0;
     private _bHightlightIEDTests = false;
     //will only ever be three IEDs but if 10 is loop then we will have random rubble to confuse player
-    while {_iCount <= _LoopMax} do
-    {
+    waitUntil {
         private _flatPos = [_sidePos , 10, 80, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom TRGM_VAR_IEDClassNames] call TRGM_GLOBAL_fnc_findSafePos;
         if (_IEDCount <= 2) then {
             private _objIED1 = selectRandom TRGM_VAR_IEDClassNames createVehicle _flatPos;
@@ -804,6 +826,8 @@ if (call _randomChance) then {
             _test setMarkerText "IED";
         };
         _iCount = _iCount + 1;
+        sleep 1;
+        _iCount > _LoopMax;
     };
 };
 

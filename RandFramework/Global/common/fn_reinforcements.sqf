@@ -209,10 +209,11 @@ if (_debugMode) then {
     _mrkInf setMarkerColor _color;
 
     [_helo, _infGrp, _mrkHelo, _mrkInf] spawn {
-        while {{alive _x} count units (_this select 1) > 0 || canMove (_this select 0)} do {
+        waitUntil {
             (_this select 2) setMarkerPos getPosATL (_this select 0);
             (_this select 3) setMarkerPos getPosATL leader (_this select 1);
             sleep 1;
+            {alive _x} count units (_this select 1) <= 0 && !(canMove (_this select 0));
         };
     };
 };

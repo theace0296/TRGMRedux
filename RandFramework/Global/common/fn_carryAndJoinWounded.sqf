@@ -34,7 +34,7 @@ if (alive _civ) then {
         private _civP = _this select 0;
         private _playerP = _this select 1;
         private _doLoop = true;
-        while {_doLoop} do {
+        waitUntil {
             sleep 0.1;
             if (!(alive _playerP)) then {
                 _doLoop = false;
@@ -47,8 +47,9 @@ if (alive _civ) then {
                 } forEach attachedObjects _playerP;
             };
             if (!(alive _civP)) then {
-                _doLoop
+                _doLoop = false;
             };
+            !_doLoop;
         };
     };
 

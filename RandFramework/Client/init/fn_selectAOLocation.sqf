@@ -21,7 +21,7 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
         openMap [true, false];
         hintC (localize "STR_TRGM2_tele_SelectPositionAO");
 
-        while {true} do {
+        waitUntil {
             if (TRGM_VAR_MapClicked isEqualTo 1) then { // player has clicked the map
                 OnMapSingleClick "TRGM_VAR_MapClicked = 2; publicVariable ""TRGM_VAR_MapClicked""";
                 hintC (localize "STR_TRGM2_InitClickValidPos");
@@ -45,6 +45,7 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
             };
             if (TRGM_VAR_ManualAOPosFound) exitwith {true;};
             if !(visibleMap) then {openMap [true, false]; hintC (localize "STR_TRGM2_tele_SelectPositionAO");};
+            false;
         };
     };
 };

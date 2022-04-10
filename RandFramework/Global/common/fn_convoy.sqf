@@ -23,7 +23,7 @@ _convoyGroup setFormation "COLUMN";
 
 (vehicle leader _convoyGroup) limitSpeed _convoySpeed;
 
-while { sleep 5; true } do {
+waitUntil {
     {
         if ((speed vehicle _x < 5) && (_pushThrough || (behaviour _x != "COMBAT"))) then {
             (vehicle _x) doFollow(leader _convoyGroup);
@@ -33,4 +33,7 @@ while { sleep 5; true } do {
     {
         (vehicle _x) setConvoySeparation _convoySeparation;
     } forEach(units _convoyGroup);
+
+    sleep 10;
+    false;
 };

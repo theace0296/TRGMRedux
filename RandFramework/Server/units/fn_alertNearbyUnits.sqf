@@ -38,9 +38,7 @@ if (_conditionBool isEqualType {}) then {
 if (_conditionBool) then {
     {
         private _group = _x;
-        while {(count (waypoints _group)) > 0} do {
-            deleteWaypoint ((waypoints _group) select 0);
-        };
+        { deleteWaypoint _x; } forEach waypoints _group;
         if (!(_group in _groupsAlerted) && {(side _group isEqualTo TRGM_VAR_EnemySide || side _group isEqualTo TRGM_VAR_InsSide)}) then {
             private _groupLeader = leader _group;
             if (!((vehicle _groupLeader) isKindOf "Air") && {([_groupLeader] call TRGM_GLOBAL_fnc_getRealPos) distance _centerPos < _radius}) then {

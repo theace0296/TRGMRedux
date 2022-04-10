@@ -29,11 +29,12 @@ KK_fnc_getZoom = {
     )
 };
 
-    while {true} do {
+waitUntil {
     waitUntil {
-    sleep 2;
-    // Adds Effects When NV Enabled
-    ((vehicle player) isEqualTo player) && ((currentVisionMode player) isEqualTo 1)};
+        sleep 2;
+        // Adds Effects When NV Enabled
+        ((vehicle player) isEqualTo player) && ((currentVisionMode player) isEqualTo 1)
+    };
 
     // Effects below. If you wanna know what this stuff means so you can change the effects, go to https://community.bistudio.com/wiki/Post_process_effects
     // Effect modifiers that change based on range like overall blur and film grain size are further down
@@ -64,26 +65,25 @@ KK_fnc_getZoom = {
     ppFilm ppEffectEnable true;
     2501 ppEffectForceInNVG true;
 
-    waitUntil {
-    sleep 2;
     // Scaling effects during Zooming
+    waitUntil {
+        sleep 2;
+        _zoomintensity = (call kk_fnc_getZoom * 10) /30;
 
-    _zoomintensity = (call kk_fnc_getZoom * 10) /30;
+        ppBlur ppEffectAdjust [0.25 + (_zoomIntensity * 0.35)];
+        ppBlur ppEffectCommit 0;
 
+        ppFilm ppEffectAdjust [0.22, 1, _zoomIntensity, 0.4, 0.2, false];
+        ppFilm ppEffectCommit 0;
 
-    ppBlur ppEffectAdjust [0.25 + (_zoomIntensity * 0.35)];
-    ppBlur ppEffectCommit 0;
-
-
-    ppFilm ppEffectAdjust [0.22, 1, _zoomIntensity, 0.4, 0.2, false];
-    ppFilm ppEffectCommit 0;
-
-    //Removes Effects When NV Disabled
-    ((vehicle player) != player) || ((currentVisionMode player) != 1)
+        //Removes Effects When NV Disabled
+        ((vehicle player) != player) || ((currentVisionMode player) != 1)
     };
 
     ppEffectDestroy ppBlur;
     ppEffectDestroy ppRim;
     ppEffectDestroy ppColor;
     ppEffectDestroy ppFilm;
-    };
+
+    false;
+};

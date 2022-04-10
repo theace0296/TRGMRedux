@@ -13,7 +13,7 @@ if (_lastRepPoints < 7) then {_LastRank = 3;};
 if (_lastRepPoints < 5) then {_LastRank = 2;};
 if (_lastRepPoints < 3) then {_LastRank = 1;};
 if (_lastRepPoints < 1) then {_LastRank = 0;};
-while {true} do {
+waitUntil {
     private _dCurrentRep = [TRGM_VAR_MaxBadPoints - TRGM_VAR_BadPoints,1] call BIS_fnc_cutDecimals;
     private _CurrentRank = _LastRank;
     if (_dCurrentRep >= 10) then {_CurrentRank = 5;};
@@ -37,11 +37,12 @@ while {true} do {
             if (_dCurrentRep <= 0 && {TRGM_VAR_iMissionParamRepOption isEqualTo 1}) then {
                 private _iCurrentTaskCount = 0;
                 ["tskKeepAboveAverage", "failed"] call FHQ_fnc_ttSetTaskState;
-                while {_iCurrentTaskCount < count TRGM_VAR_ActiveTasks} do {
+                waitUntil {
                     if (!(TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted)) then {
                         [TRGM_VAR_ActiveTasks select _iCurrentTaskCount, "failed"] call FHQ_fnc_ttSetTaskState;
                         _iCurrentTaskCount = _iCurrentTaskCount + 1;
                     };
+                    _iCurrentTaskCount >= count TRGM_VAR_ActiveTasks;
                 };
                 sleep 2;
 
@@ -90,4 +91,5 @@ while {true} do {
         "transportChopper" setMarkerPos getPos chopper1;
     };
     sleep 5;
+    false;
 };

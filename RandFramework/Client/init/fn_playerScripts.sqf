@@ -50,6 +50,8 @@ if (side player isEqualTo civilian) then {
             player allowDamage false;
             sleep 0.4;
         };
+
+        sleep 10;
     };
 
 };

@@ -28,12 +28,14 @@ waitUntil {time > 0};
 
 [] spawn {
     private _unit = player;
-    while {true} do {
+    waitUntil {
         waitUntil {sleep 5; _unit != player };
         group player selectLeader player;
         //hintSilent " Player has changed";
         [_unit] call TRGM_CLIENT_fnc_transferProviders;
         _unit = player;
+        sleep 10;
+        false;
     };
 };
 

@@ -126,9 +126,10 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         [_flag, _iTaskIndex] spawn {
             params ["_flag", "_iTaskIndex"];
-            while {missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] < 2} do {
+            waitUntil {
                 [true, [_flag] call TRGM_GLOBAL_fnc_getRealPos] spawn TRGM_SERVER_fnc_alertNearbyUnits;
                 sleep 60;
+                missionNamespace getVariable[format["SupplyDropped_%1", _iTaskIndex], 0] >= 2;
             };
         };
 

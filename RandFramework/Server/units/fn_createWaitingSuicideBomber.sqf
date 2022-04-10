@@ -36,7 +36,7 @@ if (count _nearestHidingPlaces > 5) then {
 
     private _bWaiting = true;
     private _unitPos = _triggerArea;
-    while {_bWaiting} do {
+    waitUntil {
         if (floor(damage _objMilUnit) > 0) then {
             _bWaiting = false;
         };
@@ -59,6 +59,7 @@ if (count _nearestHidingPlaces > 5) then {
         } else {
             sleep (30 + (random 120));
         };
+        !_bWaiting;
     };
 
     //after the wait, get the units pos again and move to it
@@ -82,7 +83,7 @@ if (count _nearestHidingPlaces > 5) then {
     _objMilUnit setUnitPos "UP";
 
     private _BombSet = false;
-    while {!_BombSet} do {
+    waitUntil {
         if ((_objMilUnit distance _unitPos) < 10 || !alive _objMilUnit) then {
             if (!alive _objMilUnit) then {sleep 2.5};
             _BombSet = true;
@@ -92,6 +93,8 @@ if (count _nearestHidingPlaces > 5) then {
             sleep 0.1;
             deleteVehicle _objMilUnit;
         };
+        sleep 10;
+        _BombSet;
     };
 
 };

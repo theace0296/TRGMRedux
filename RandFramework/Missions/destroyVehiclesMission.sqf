@@ -79,10 +79,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                 TRGM_LOCAL_fnc_aaaRadioLoop = {
                     _object = _this select 0;
                     _bPlay = true;
-                    while {_bPlay && !isNil "_object"} do {
+                    waitUntil {
                         if (!alive _object) then {_bPlay = false};
                         playSound3D ["A3\Sounds_F\sfx\radio\" + selectRandom TRGM_VAR_EnemyRadioSounds + ".wss", _object, false, getPosASL _object, 0.5, 1, 0];
                         sleep selectRandom [10,15,20,30];
+                        !_bPlay || isNil "_radio";
                     };
                 };
                 [_objVehicle] spawn TRGM_LOCAL_fnc_aaaRadioLoop;
@@ -92,13 +93,14 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                 TRGM_LOCAL_fnc_artiFireLoop = {
                     _vehicle = _this select 0;
                     _Ammo = getArtilleryAmmo [_vehicle] select 0;
-                    while {alive(_vehicle)} do {
+                    waitUntil {
                         _flatPos = [[getMarkerPos "mrkHQ", 2000], [getMarkerPos "mrkHQ", 500]] call BIS_fnc_randomPos;
                         [_vehicle, 1] remoteExec ["setVehicleAmmo", 0, true];
                         if (!isNil "_vehicle" && !isNil "_flatPos" && !isNil "_Ammo") then {
                             [_vehicle, [_flatPos, _Ammo, 1]] remoteExec ["commandArtilleryFire", -2, true];
                         };
                         sleep selectRandom[10,30,60,120,240];
+                        !(alive _vehicle);
                     };
                 };
                 [_objVehicle] spawn TRGM_LOCAL_fnc_artiFireLoop;

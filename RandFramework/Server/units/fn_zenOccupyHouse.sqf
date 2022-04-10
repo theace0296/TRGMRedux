@@ -148,7 +148,7 @@ for [{_j = 0}, {(_unitIndex < count _units) && {(count _buildingPosArray > 0)}},
         _buildingPosArray deleteAt (_j mod (count _buildingPosArray));
     };
 
-    while {(count _posArray) > 0} do {
+    while {(count _posArray) <= 0} do {
         scopeName "while";
         if (_unitIndex >= count _units) exitWith {};
 

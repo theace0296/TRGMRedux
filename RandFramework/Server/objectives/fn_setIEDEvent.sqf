@@ -28,10 +28,12 @@ private _eventLocationPos = [0,0,0]; //getPos (selectRandom _nearestRoads);
 private _eventPosFound = false;
 private _iAttemptLimit = 5;
 if (!isNil "TRGM_VAR_WarzonePos") then {
-    while {!_eventPosFound && _iAttemptLimit > 0} do {
+    waitUntil {
         _eventLocationPos = getPos (selectRandom _nearestRoads);
         if (_eventLocationPos distance TRGM_VAR_WarzonePos > 500) then {_eventPosFound = true;};
         _iAttemptLimit = _iAttemptLimit - 1;
+        sleep 1;
+        _eventPosFound || _iAttemptLimit <= 0;
     };
 } else {
     _eventLocationPos = getPos (selectRandom _nearestRoads);
@@ -55,7 +57,7 @@ if (_eventLocationPos select 0 > 0) then {
     private _PosFound = false;
     private _iAttemptLimit = 5;
 
-    while {!_PosFound && _iAttemptLimit > 0 && count _nearestRoads > 0} do {
+    waitUntil {
         _nearestRoad = selectRandom _nearestRoads;
         _roadConnectedTo = roadsConnectedTo _nearestRoad;
         if (count _roadConnectedTo > 0) then {
@@ -65,6 +67,8 @@ if (_eventLocationPos select 0 > 0) then {
         } else {
             _iAttemptLimit = _iAttemptLimit - 1;
         };
+        sleep 1;
+        _PosFound || _iAttemptLimit <= 0 || count _nearestRoads <= 0;
     };
     if (_PosFound) then {
         private _roadBlockPos =  getPos _nearestRoad;
@@ -112,11 +116,12 @@ if (_eventLocationPos select 0 > 0) then {
                         _thisVeh setVariable ["alarmActive",true, true];
                         private _beepLimit = 20;
                         private _endLoop = false;
-                        while {!_endLoop && alive _thisVeh && _thisVeh getVariable ["alarmActive",false]} do {
+                        waitUntil {
                             playSound3D ["a3\sounds_f\weapons\horns\truck_horn_2.wss", _thisVeh];
                             sleep 1;
                             _beepLimit = _beepLimit - 1;
                             if (_beepLimit < 1) then {_endLoop = true;};
+                            _endLoop || !(alive _thisVeh) || !(_thisVeh getVariable ["alarmActive", false])
                         };
                     };
                 };
@@ -221,8 +226,7 @@ if (_eventLocationPos select 0 > 0) then {
                 private _minesPlaced = false;
                 private _iCountMines = 20;
                 _mainVehPos = ([_mainVeh] call TRGM_GLOBAL_fnc_getRealPos);
-                while {_iCountMines > 0} do {
-
+                waitUntil {
                     private _xPos = (_mainVehPos select 0)-40;
                     private _yPos = (_mainVehPos select 1)-40;
                     private _randomPos = [_xPos+(random 80),_yPos+(random 80),0];
@@ -231,6 +235,8 @@ if (_eventLocationPos select 0 > 0) then {
                         private _objMine = createMine [selectRandom["APERSMine"], _randomPos, [], 0];
                     };
                     _iCountMines = _iCountMines - 1;
+                    sleep 1;
+                    _iCountMines <= 0;
                 };
             };
         };
@@ -247,7 +253,7 @@ if (_eventLocationPos select 0 > 0) then {
             private _bIsTrap = _this select 1;
             private _roadBlockSidePos = _this select 2;
             private _bWaiting = true;
-            while {_bWaiting} do {
+            waitUntil {
                 if (!(alive _mainVeh) || _mainVeh getVariable ["isDefused",false]) then {
                     _bWaiting = false;
                 };
@@ -271,6 +277,7 @@ if (_eventLocationPos select 0 > 0) then {
                 if (_bWaiting) then {
                     sleep 5;
                 };
+                !_bWaiting;
             };
         }
 

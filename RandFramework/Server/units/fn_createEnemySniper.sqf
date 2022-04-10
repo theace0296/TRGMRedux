@@ -52,7 +52,7 @@ deleteVehicle _spawnedTempTarget;
 [group _spawnedUnit] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 if (_foundPlace) then {
-    while {alive(_spawnedUnit)} do {
+    waitUntil {
         sleep 5;
         private _distance = 1000;
         private _fov = 90;
@@ -64,6 +64,8 @@ if (_foundPlace) then {
         _enemies apply {_spawnedUnit reveal [_x,4]};
         TRGM_VAR_SniperRevialTotal = count _enemies;
         //consider loop through _enemies, and confirm sniper has Line of sight, before revealing
+        sleep 10;
+        !(alive _spawnedUnit);
     };
 } else {
     deleteVehicle _spawnedUnit;

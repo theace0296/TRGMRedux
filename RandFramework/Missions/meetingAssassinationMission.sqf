@@ -157,23 +157,22 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _mainHVT moveInDriver _hvtChopper;
 
         _guardUnit3 moveInAny _hvtChopper;
-        _guardUnit3 disableAI "MOVE"; //for some reason, sometimes this guy will just stay in the water???
-         _guardUnit3 disableAI "FSM";
+        _guardUnit3 disableAI "MOVE";
+        _guardUnit3 disableAI "FSM";
 
         _hvtChopper setPos _hvtChopperStartPos;
         sleep 1;
         _unitsAreInChopper = false;
-        while {_unitsAreInChopper} do {
+        waitUntil {
             if (vehicle _mainHVT != _mainHVT && vehicle _guardUnit3 != _guardUnit3) then {
                 _unitsAreInChopper = true;
-            }
-            else {
-                _mainHVT assignAsDriver _hvtChopper;
-                _mainHVT moveInDriver _hvtChopper;
-                sleep 1;
-                _guardUnit3 moveInAny _hvtChopper;
-                sleep 2;
             };
+            _mainHVT assignAsDriver _hvtChopper;
+            _mainHVT moveInDriver _hvtChopper;
+            sleep 1;
+            _guardUnit3 moveInAny _hvtChopper;
+            sleep 2;
+            _unitsAreInChopper;
         };
 
         _mainHVT allowDamage true;
@@ -187,9 +186,10 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [_hvtChopper,_mrkMeetingHVTMarker] spawn {
             _hvtChopper = _this select 0;
             _mrkMeetingHVTMarker = _this select 1;
-            while {alive _hvtChopper} do {
+            waitUntil {
                 _mrkMeetingHVTMarker setMarkerPos ([_hvtChopper] call TRGM_GLOBAL_fnc_getRealPos);
-                sleep 1;
+                sleep 5;
+                !(alive _hvtChopper);
             };
         };
 
@@ -258,7 +258,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         //["waypoint wait"] call TRGM_GLOBAL_fnc_notify;
         _bWalkEnded = false;
-        while {!_bWalkEnded} do {
+        waitUntil {
             _distanceFromMeeting = (_mainHVT distance _guardUnit1);
             if (_distanceFromMeeting < 10) then {
                 sleep 5; //give him some time to get as close to the meeting guy as possible
@@ -271,6 +271,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                 };
             };
             sleep 0.5;
+            _bWalkEnded;
         };
         //["waypoint wait ended"] call TRGM_GLOBAL_fnc_notify;
 
@@ -282,7 +283,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
            [_mainHVT,_guardUnit1] spawn {
                _guardUnit1 = _this select 1;
                _doLoop = true;
-               while {_doLoop} do {
+               waitUntil {
                    if (behaviour (_this select 0) isEqualTo "combat" || !alive(_this select 0) || (TRGM_VAR_TimeSinceLastSpottedAction > (call TRGM_GETTER_fnc_iGetSpottedDelay))) then { //TRGM_VAR_TimeSinceLastSpottedAction : is set to current time when it is called, cooldown is choosen in adv mission settings
                        (_this select 0) call BIS_fnc_ambientAnim__terminate;
                     (_this select 0) enableAI "anim";
@@ -293,13 +294,14 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                     sleep 20;
                    };
                    if (!alive(_this select 0)) then {_doLoop = false};
+                   !_doLoop;
                }
 
         };
         [_guardUnit3,_guardUnit1] spawn {
             _guardUnit1 = _this select 1;
                _doLoop = true;
-               while {_doLoop} do {
+               waitUntil {
                    if (behaviour (_this select 0) isEqualTo "combat" || !alive(_this select 0) || (TRGM_VAR_TimeSinceLastSpottedAction > (call TRGM_GETTER_fnc_iGetSpottedDelay))) then {
                        (_this select 0) call BIS_fnc_ambientAnim__terminate;
                     (_this select 0) enableAI "anim";
@@ -310,6 +312,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                     sleep 20;
                    };
                    if (!alive(_this select 0)) then {_doLoop = false};
+                   !_doLoop;
                }
         };
 
@@ -345,9 +348,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             _mainHVT enableAI "anim";
             _mainHVT playMoveNow "Acts_listeningToRadio_out";
         };
-        while {(count (waypoints _hvtGroup)) > 0} do {
-            deleteWaypoint ((waypoints _hvtGroup) select 0);
-        };
+        { deleteWaypoint _x; } forEach waypoints _hvtGroup;
 
         [_guardUnit3] joinSilent (_hvtGroup);
 

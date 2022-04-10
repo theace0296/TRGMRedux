@@ -13,8 +13,7 @@ private _sAreaMarkerName = nil;
 private _randBuilding = nil;
 
 if (!_bThisMissionCivsOnly) then {
-    while {_iCount <= _unitCount} do
-    {
+    waitUntil {
         _allBuildings = nearestObjects [_sidePos, ["House"] + TRGM_VAR_BasicBuildings, _distFromCent];
         //_allBuildings = nearestObjects [_sidePos, ["house"], _distFromCent];
         _randBuilding = selectRandom _allBuildings;
@@ -39,7 +38,7 @@ if (!_bThisMissionCivsOnly) then {
                 //spawn inner random sentrys
                 //if (!_bIsMainObjective) then {_iCountNoOfCPs = selectRandom [0,1];};
                 if (_iCountNoOfCPs > 0) then {_dAngleAdustPerLoop = 360 / _iCountNoOfCPs;};
-                while {_iCountNoOfCPs > 0} do {
+                waitUntil {
                     private _thisAreaRange = 50;
                     private _checkPointGuidePos = _sidePos;
                     _iCountNoOfCPs = _iCountNoOfCPs - 1;
@@ -54,10 +53,13 @@ if (!_bThisMissionCivsOnly) then {
                         [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50,false] spawn TRGM_SERVER_fnc_setCheckpoint;
                     };
                     sleep 1;
+                    _iCountNoOfCPs <= 0;
                 };
             };
         };
         _iCount = _iCount + 1;
+        sleep 1;
+        _iCount > _unitCount;
     };
 };
 

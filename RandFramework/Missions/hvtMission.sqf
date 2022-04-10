@@ -66,9 +66,10 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
     if (isNil "_objInformant" || {isNull _objInformant}) then {
         private _iterations = 0;
-        while {(isNil "_objInformant" || {isNull _objInformant}) && {_iterations < 20}} do {
+        waitUntil {
             _objInformant = [(createGroup [_sideToUse, true]), _infClassToUse, [0,0,500], [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
+            (!(isNil "_objInformant") && !(isNull _objInformant)) || _iterations >= 20;
         };
     };
 
@@ -170,12 +171,14 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             group _objMan setBehaviour "SAFE";
             sleep 5; //allow five seconds for any scripts to be run on officer before he moves e.g. if set as hostage when friendly rebels)
 
-            while {alive(_objMan) && {behaviour _objMan isEqualTo "SAFE"}} do {
+            waitUntil {
                 private _walkAroundHandle = [_objManName,_thisInitPos,_objMan,75] spawn TRGM_SERVER_fnc_hvtWalkAround;
                 sleep 2;
                 waitUntil {sleep 1; speed _objMan < 0.5};
                 sleep 10;
                 waitUntil { sleep 1; scriptDone _walkAroundHandle; };
+                sleep 2;
+                !(alive _objMan) || behaviour _objMan isNotEqualTo "SAFE";
             };
         };
         [_sInformant1Name,_initPos] spawn TRGM_LOCAL_fnc_walkingGuyLoop;
@@ -230,7 +233,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
             TRGM_LOCAL_fnc_powCheck = {
                 _objMan = _this select 0;
                 _doLoop = true;
-                while {_doLoop} do {
+                waitUntil {
                     if (!alive(_objMan)) then {
                         _doLoop = false;
                         [_objMan, "failed"] call TRGM_SERVER_fnc_updateTask;
@@ -242,6 +245,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                         deleteVehicle _objMan;
 
                     };
+                    !_doLoop;
                 };
             };
             [_objInformant] spawn TRGM_LOCAL_fnc_powCheck;

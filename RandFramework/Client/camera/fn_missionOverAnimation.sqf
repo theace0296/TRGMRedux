@@ -5,7 +5,7 @@ sleep 60;
 waitUntil {sleep 30; TRGM_VAR_AllInitScriptsFinished};
 sleep 60;
 private _bEnd = false;
-while {!_bEnd} do {
+waitUntil {
     private _bMissionEndedAndPlayersOutOfAO = false;
     private _bMissionEnded = false;
     private _bAnyPlayersInAOAndAlive = false;
@@ -63,4 +63,6 @@ while {!_bEnd} do {
             playMusic "";
         };
     };
+    sleep 30;
+    _bEnd;
 };

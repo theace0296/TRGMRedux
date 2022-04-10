@@ -2,7 +2,7 @@
 format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 
-while {true} do {
+waitUntil {
     if (side player != civilian) then {
         if (count TRGM_VAR_ObjectivePositions > 0 && TRGM_VAR_AllowUAVLocateHelp) then {
             private _useAceInteractionForTransport = [false, true] select ((["EnableAceActions", 0] call BIS_fnc_getParamValue) isEqualTo 1);
@@ -68,4 +68,5 @@ while {true} do {
         };
     };
     sleep 10;
+    false;
 };

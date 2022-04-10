@@ -7,7 +7,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 private _bFired = false;
 
-while {alive _thisCiv && !_bFired} do {
+waitUntil {
     private _nearestunits = nearestObjects [([_thisCiv] call TRGM_GLOBAL_fnc_getRealPos),["Man"],10];
     {
         if ((_x in playableunits)) then {
@@ -23,6 +23,7 @@ while {alive _thisCiv && !_bFired} do {
 
     } forEach _nearestunits;
     sleep 2;
+    !(alive _thisCiv) || _bFired;
 };
 
 

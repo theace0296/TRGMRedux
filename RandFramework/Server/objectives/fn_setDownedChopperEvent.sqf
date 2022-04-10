@@ -58,7 +58,7 @@ if (random 1 < .50 && (call TRGM_GETTER_fnc_bAllowAOFires)) then {
 //spawn inner sentry
 private _HasEnemy = false;
 private _iCount = selectRandom[0,1,2];
-while {_iCount > 0} do {
+waitUntil {
     _HasEnemy = true;
     private _thisAreaRange = 20;
     private _checkPointGuidePos = _flatPos;
@@ -73,16 +73,18 @@ while {_iCount > 0} do {
         private _thisIsDirectionAwayFromAO = true;
         [_flatPos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
     };
+    sleep 1;
+    _iCount <= 0;
 };
 
 private _flatPos2 = [_flatPos , 10, 25, 3, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],_sVictim] call TRGM_GLOBAL_fnc_findSafePos;
 private _group = (createGroup [civilian, true]);
 private _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
 private _iterations = 0;
-while {isNil "_downedCiv" || {isNull _downedCiv}} do {
+waitUntil {
     _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-    if (_iterations > 5) exitWith {};
     _iterations = _iterations + 1;
+    (!(isNil "_downedCiv") && !(isNull _downedCiv)) || _iterations >= 5;
 };
 if (isNil "_downedCiv") exitWith {};
 [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
@@ -152,8 +154,7 @@ _markerEventMedi setMarkerText (localize "STR_TRGM2_distressSignal_military");
     private _PointsAdjustMessage = _this select 2;
     if (isNil "_downedCiv") exitWith {};
     private _doLoop = true;
-    while {_doLoop} do
-    {
+    waitUntil {
         if (!(isNil "_downedCiv") && !alive(_downedCiv)) then {
             _doLoop = false;
         };
@@ -165,6 +166,7 @@ _markerEventMedi setMarkerText (localize "STR_TRGM2_distressSignal_military");
             deleteVehicle _downedCiv;
         };
         sleep 10;
+        !_doLoop;
     };
 };
 

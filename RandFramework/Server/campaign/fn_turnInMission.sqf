@@ -37,11 +37,12 @@ if (isMultiplayer) then {
 if (_bAllow) then {
     //Fail current mission
     private _iCurrentTaskCount = 0;
-    while {_iCurrentTaskCount < count TRGM_VAR_ActiveTasks} do {
+    waitUntil {
         if (!(TRGM_VAR_ActiveTasks call FHQ_fnc_ttAreTasksCompleted)) then {
             [TRGM_VAR_ActiveTasks select _iCurrentTaskCount, "canceled"] call FHQ_fnc_ttSetTaskState;
             _iCurrentTaskCount = _iCurrentTaskCount + 1;
         };
+        _iCurrentTaskCount >= count TRGM_VAR_ActiveTasks;
     };
     //lower rep
     [0.3, format[localize "STR_TRGM2_startInfMission_DayTurnedIn",str(TRGM_VAR_iCampaignDay)]] spawn TRGM_GLOBAL_fnc_adjustBadPoints;

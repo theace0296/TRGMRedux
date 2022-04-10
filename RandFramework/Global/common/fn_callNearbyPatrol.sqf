@@ -186,12 +186,12 @@ if (_SpottedUnitCount > 0) then {
             TRGM_LOCAL_fnc_airSiren = {
                 private _firstPosP = _this select 0;
                 private _iLoopSirenCount = 0;
-                while {_iLoopSirenCount < 5} do {
+                waitUntil {
                     _iLoopSirenCount = _iLoopSirenCount + 1;
                     private _missiondir = call { private "_arr"; _arr = toArray str missionConfigFile; _arr resize (count _arr - 15); toString _arr };
                     playSound3D [_missiondir + "RandFramework\Sounds\Siren.ogg",nil,false,_firstPosP,1.5,1,0];
-
                     sleep 40;
+                    _iLoopSirenCount > 5;
                 };
             };
             [_FirstPos] spawn TRGM_LOCAL_fnc_airSiren;
@@ -202,12 +202,12 @@ if (_SpottedUnitCount > 0) then {
             TRGM_LOCAL_fnc_airSiren = {
                 private _firstPosP = _this select 0;
                 private _iLoopSirenCount = 0;
-                while {_iLoopSirenCount < 5} do {
+                waitUntil {
                     _iLoopSirenCount = _iLoopSirenCount + 1;
                     _missiondir = call { private "_arr"; _arr = toArray str missionConfigFile; _arr resize (count _arr - 15); toString _arr };
                     playSound3D [_missiondir + "RandFramework\Sounds\Siren.ogg",nil,false,_firstPosP,1.5,1,0];
-
                     sleep 40;
+                    _iLoopSirenCount > 5;
                 };
             };
             [_FirstPos] spawn TRGM_LOCAL_fnc_airSiren;
@@ -221,9 +221,7 @@ if (_SpottedUnitCount > 0) then {
                 if (count _nearestATs > 0) then {
 
                     private _nearestTL = _nearestATs select 0;
-                    while {(count (waypoints group _nearestTL)) > 0} do {
-                        deleteWaypoint ((waypoints group _nearestTL) select 0);
-                    };
+                    { deleteWaypoint _x; } forEach waypoints group _nearestTL;
 
                     group _nearestTL setCombatMode "RED";
                     group _nearestTL setFormation "WEDGE";
@@ -246,11 +244,7 @@ if (_SpottedUnitCount > 0) then {
                     private _nearestTanks = nearestObjects [_SpottedUnitPos, [(call sTank3Tank)], 4000];
                     if (count _nearestTanks > 0) then {
                         private _nearestTank = selectRandom _nearestTanks;
-                        private _nearestTLTankwPosArray = waypoints group _nearestTank;
-
-                        while {(count (waypoints group _nearestTank)) > 0} do {
-                            deleteWaypoint ((waypoints group _nearestTank) select 0);
-                        };
+                        { deleteWaypoint _x; } forEach waypoints group _nearestTank;
                         private _SpottedWP5a = group _nearestTank addWaypoint [_SpottedUnitPos,10];
                         _SpottedWP5a setWaypointType "SAD";
                         _SpottedWP5a setWaypointSpeed "FULL";
@@ -319,11 +313,12 @@ if (_SpottedUnitCount > 0) then {
                             TRGM_VAR_bMortarFiring = true;
                             publicVariable "TRGM_VAR_bMortarFiring";
                             private _iFiredCount = 0;
-                            while {_iFiredCount < _iRoundsToFire} do {
+                            waitUntil {
                                 _iFiredCount = _iRoundsToFire + 1;
                                 private _TargetPos = [(_SpottedUnitPos select 0)+(75 * sin floor(random 360)),(_SpottedUnitPos select 1)+(75 * cos floor(random 360))];
                                 [_nearestMortar, [_TargetPos, _Ammo, 1]] remoteExec ["commandArtilleryFire", -2, false];
                                 sleep 3;
+                                _iFiredCount > _iRoundsToFire;
                             };
                             TRGM_VAR_bMortarFiring = false;
                             publicVariable "TRGM_VAR_bMortarFiring";
@@ -343,10 +338,7 @@ if (_SpottedUnitCount > 0) then {
         if (!(vehicle _SpottedUnit isKindOf "Car") && !(vehicle _SpottedUnit isKindOf "Air") && _bAllowPatrolChange) then {
 
             if (TRGM_VAR_bBaseHasChopper && {!(isNil "TRGM_VAR_EnemyBaseChopperPilot") && {!(isNull TRGM_VAR_EnemyBaseChopperPilot)}}) then {
-
-                while {(count (waypoints group TRGM_VAR_EnemyBaseChopperPilot)) > 0} do {
-                    deleteWaypoint ((waypoints group TRGM_VAR_EnemyBaseChopperPilot) select 0);
-                };
+                { deleteWaypoint _x; } forEach waypoints group TRGM_VAR_EnemyBaseChopperPilot;
                 //EnemyBaseChopper set waypoint to spotted location then AO then RTB
                 //GETIN NEAREST
                 //EnemyBaseChopperPilot
@@ -374,9 +366,7 @@ if (_SpottedUnitCount > 0) then {
                 private _nearestTLs = nearestObjects [_SpottedUnitPos, [(call sTeamleader),(call sTeamleaderMilitia)], _maxPatrolSearch];
                 if (count _nearestTLs > 0) then {
                     private _nearestTL = _nearestTLs select 0;
-                    while {(count (waypoints group _nearestTL)) > 0} do {
-                        deleteWaypoint ((waypoints group _nearestTL) select 0);
-                    };
+                    { deleteWaypoint _x; } forEach waypoints group _nearestTL;
 
                     group _nearestTL setCombatMode "RED";
                     group _nearestTL setFormation "WEDGE";
@@ -399,11 +389,7 @@ if (_SpottedUnitCount > 0) then {
                     private _nearestTanks = nearestObjects [_SpottedUnitPos, [(call sTank1ArmedCar),(call sTank2APC),(call sTank3Tank),(call sTank1ArmedCarMilitia),(call sTank2APCMilitia),(call sTank3TankMilitia)], 3000];
                     if (count _nearestTanks > 0) then {
                         private _nearestTank = selectRandom _nearestTanks;
-                        private _nearestTLTankwPosArray = waypoints group _nearestTank;
-
-                        while {(count (waypoints group _nearestTank)) > 0} do {
-                            deleteWaypoint ((waypoints group _nearestTank) select 0);
-                        };
+                        { deleteWaypoint _x; } forEach waypoints group _nearestTank;
                         private _SpottedWP5a = group _nearestTank addWaypoint [_SpottedUnitPos,10];
                         _SpottedWP5a setWaypointType "SAD";
                         _SpottedWP5a setWaypointSpeed "FULL";

@@ -10,7 +10,7 @@ private _bFired = false;
 private _bActivated = false;
 
 // continiously watch for players and decide to engage or not
-while {alive _badCiv && !_bFired} do {
+waitUntil {
     {
         if ((_x in playableUnits)) then {
             if (random 1 < .33) then {
@@ -44,6 +44,7 @@ while {alive _badCiv && !_bFired} do {
 
     } forEach (nearestObjects [([_badCiv] call TRGM_GLOBAL_fnc_getRealPos),["Man"],10]);
     sleep 2;
+    !(alive _badCiv) || _bFired;
 };
 
 

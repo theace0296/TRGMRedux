@@ -16,13 +16,15 @@ if (!_isCache && count _nearestRoads > 0) then {
     private _eventLocationPos = [0,0,0];
     private _eventPosFound = false;
     private _iAttemptLimit = 15;
-    while {!_eventPosFound && _iAttemptLimit > 0} do {
+    waitUntil {
         _iAttemptLimit = _iAttemptLimit - 1;
         _eventLocationPos = getPos (selectRandom _nearestRoads);
         private _farEnoughFromAo = _eventLocationPos distance _posOfAO > 500;
         private _farEnoughFromWarzone = true;
         if (!isNil "TRGM_VAR_WarzonePos") then {_farEnoughFromWarzone = (_eventLocationPos distance TRGM_VAR_WarzonePos > 500)};
         if (_isMainTask || (_farEnoughFromWarzone && _farEnoughFromAo)) then {_eventPosFound = true;};
+        sleep 1;
+        _eventPosFound || _iAttemptLimit <= 0;
     };
     if (!_eventPosFound) then {
         _eventLocationPos = getPos (selectRandom _nearestRoads);
@@ -39,7 +41,7 @@ if (!_isCache && count _nearestRoads > 0) then {
         private _PosFound = false;
         private _iAttemptLimit = 5;
 
-        while {!_PosFound && _iAttemptLimit > 0 && count _nearestRoads > 0} do {
+        waitUntil {
             _nearestRoad = selectRandom _nearestRoads;
             _roadConnectedTo = roadsConnectedTo _nearestRoad;
             if (count _roadConnectedTo > 0) then {
@@ -49,6 +51,8 @@ if (!_isCache && count _nearestRoads > 0) then {
             } else {
                 _iAttemptLimit = _iAttemptLimit - 1;
             };
+            sleep 1;
+            _PosFound || _iAttemptLimit <= 0 || count _nearestRoads <= 0;
         };
 
         if (_PosFound) then {
@@ -123,7 +127,7 @@ if (_isCache) then {
     private _infBuilding = selectRandom _buildings;
     private _eventPosFound = false;
     private _iAttemptLimit = 15;
-    while {!_eventPosFound && _iAttemptLimit > 0} do {
+    waitUntil {
         _iAttemptLimit = _iAttemptLimit - 1;
         _infBuilding = selectRandom _buildings;
         private _eventLocationPos = getPos _infBuilding;
@@ -131,6 +135,8 @@ if (_isCache) then {
         private _farEnoughFromWarzone = true;
         if (!isNil "TRGM_VAR_WarzonePos") then {_farEnoughFromWarzone = (_eventLocationPos distance TRGM_VAR_WarzonePos > 500)};
         if (_isMainTask || (_farEnoughFromWarzone && _farEnoughFromAo)) then {_eventPosFound = true;};
+        sleep 1;
+        _eventPosFound || _iAttemptLimit <= 0;
     };
     if (!_eventPosFound) then {
         _infBuilding = selectRandom _buildings;
@@ -189,8 +195,7 @@ if (_isCache) then {
             private _minDis = 7;
             private _doLoop = true;
             private _checkedPositions = [];
-            while {_doLoop && _i < 20} do
-            {
+            waitUntil {
                 private _newPos = (_building buildingExit _i);
                 private _allowed = true;
                 {
@@ -207,6 +212,8 @@ if (_isCache) then {
                     _spawnedUnit2 setFormDir _direction2;
                 };
                 _i = _i + 1;
+                sleep 1;
+                !_doLoop || _i >= 20;
             };
 
             private _spawnedUnit3 = [((createGroup [TRGM_VAR_EnemySide, true])), (call sRiflemanToUse), [-135,-253,0], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
@@ -229,12 +236,14 @@ if (!_objectiveCreated) then {
     } else {
         private _eventPosFound = false;
         private _iAttemptLimit = 15;
-        while {!_eventPosFound && _iAttemptLimit > 0} do {
+        waitUntil {
             _iAttemptLimit = _iAttemptLimit - 1;
             _flatPosPolice1 = [_posOfAO , 500, 1500, 10, 0, 0.5, 0,[],[_posOfAO,_posOfAO]] call TRGM_GLOBAL_fnc_findSafePos;
             private _farEnoughFromWarzone = true;
             if (!isNil "TRGM_VAR_WarzonePos") then {_farEnoughFromWarzone = (_flatPosPolice1 distance TRGM_VAR_WarzonePos > 500)};
             if (_isMainTask || _farEnoughFromWarzone) then {_eventPosFound = true;};
+            sleep 1;
+            _eventPosFound || _iAttemptLimit <= 0;
         };
         if (!_eventPosFound) then {
             _flatPosPolice1 = [_posOfAO , 500, 1500, 10, 0, 0.5, 0,[],[_posOfAO,_posOfAO]] call TRGM_GLOBAL_fnc_findSafePos;

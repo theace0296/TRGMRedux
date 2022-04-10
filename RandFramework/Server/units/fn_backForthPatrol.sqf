@@ -21,54 +21,63 @@ private _wp5Pos = [ _wayX + _distFromCent, _wayY + _distFromCent, 0];
 
 //Adjust waypoints so they are not in water
 private _iToReduce = 10;
-while {surfaceIsWater _wp1Pos} do {
+waitUntil {
     _wp1Pos = [ _wayX + (_distFromCent - _iToReduce), _wayY + (_distFromCent - _iToReduce), 0];
     _wp5Pos = [ _wayX + (_distFromCent - _iToReduce), _wayY + (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
+    !(surfaceIsWater _wp1Pos);
 };
 _iToReduce = 10;
-while {surfaceIsWater _wp2Pos} do {
+waitUntil {
     _wp2Pos = [ _wayX + (_distFromCent - _iToReduce), _wayY - (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
+    !(surfaceIsWater _wp2Pos);
 };
 _iToReduce = 10;
-while {surfaceIsWater _wp3Pos} do {
+waitUntil {
     _wp3Pos = [ _wayX - (_distFromCent - _iToReduce), _wayY - (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
+    !(surfaceIsWater _wp3Pos);
 };
 _iToReduce = 10;
-while {surfaceIsWater _wp4Pos} do {
+waitUntil {
     _wp4Pos = [ _wayX - (_distFromCent - _iToReduce), _wayY + (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
+    !(surfaceIsWater _wp4Pos);
 };
 _iToReduce = 10;
-while {surfaceIsWater _wp1bPos} do {
+waitUntil {
     _wp1bPos = [ _wayX + (_distFromCent - _iToReduce), _wayY, 0];
     _iToReduce = _iToReduce + 10;
+    !(surfaceIsWater _wp1bPos);
 };
 _iToReduce = 10;
-while {surfaceIsWater _wp2bPos} do {
+waitUntil {
     _wp2bPos = [ _wayX, _wayY - (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
+    !(surfaceIsWater _wp2bPos);
 };
 _iToReduce = 10;
-while {surfaceIsWater _wp3bPos} do {
+waitUntil {
     _wp3bPos = [ _wayX - (_distFromCent - _iToReduce), _wayY, 0];
     _iToReduce = _iToReduce + 10;
+    !(surfaceIsWater _wp3bPos);
 };
 _iToReduce = 10;
-while {surfaceIsWater _wp4bPos} do {
+waitUntil {
     _wp4bPos = [ _wayX, _wayY + (_distFromCent - _iToReduce), 0];
     _iToReduce = _iToReduce + 10;
+    !(surfaceIsWater _wp4bPos);
 };
 
 //Spawn in units
 
 _iCount = 0; //_unitCount
-while {_iCount <= _unitCount} do
-{
+waitUntil {
     [_wp1Pos select 0,_wp1Pos select 1,_group,_iCount,_IncludTeamLeader] call TRGM_SERVER_fnc_spawnPatrolUnit;
     _iCount = _iCount + 1;
+    sleep 1;
+    _iCount > _unitCount;
 };
 [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
@@ -76,7 +85,7 @@ while {_iCount <= _unitCount} do
 private _iWaypointCount = selectRandom[1,2,3,4,5,6,7,8,9];
 private _bWaypointsAdded = false;
 private _iWaypointLoopCount = 1;
-while {!_bWaypointsAdded} do {
+waitUntil {
     if (_iWaypointCount isEqualTo 1) then {
         _wp1 = _group addWaypoint [_wp1Pos, 0];
     };
@@ -114,7 +123,7 @@ while {!_bWaypointsAdded} do {
     if (_iWaypointCount isEqualTo 10) then {
         _iWaypointCount = 1;
     };
-
+    _bWaypointsAdded;
 };
 [_group, 0] setWaypointSpeed "LIMITED";
 [_group, 0] setWaypointBehaviour "SAFE";

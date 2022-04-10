@@ -35,7 +35,7 @@ _scan =         true;
 _result = _targetPos;
 
 
-while {_scan} do {
+waitUntil {
     _checkPos = [_centerPos,0,_maxrange,3,0,50,0,[],[]] call TRGM_GLOBAL_fnc_findSafePos;
     _height = (_refObj worldtomodel _checkPos) select 2;
     _dis = _checkPos distance _targetPos;
@@ -58,6 +58,8 @@ while {_scan} do {
     if (_attempts > 300) then {_scan = false};
     if (count _selectedPositions >= 5) then {_scan = false};
     _attempts = _attempts + 1;
+    sleep 1;
+    !_scan;
 };
 
 

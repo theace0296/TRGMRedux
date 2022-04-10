@@ -25,7 +25,7 @@ if (random 1 < .33) then {
 private _thisAreaRange = 50;
 private _iteration = 1;
 
-while {_iteration <= 3} do {
+waitUntil {
     if (_iteration isEqualTo 2) then {
         _thisAreaRange = 50;
     };
@@ -40,17 +40,18 @@ while {_iteration <= 3} do {
     private _PosFound = false;
     private _iAttemptLimit = 5;
 
-    while {!_PosFound && _iAttemptLimit > 0 && count _nearestRoads > 0} do {
+    waitUntil {
         _nearestRoad = selectRandom _nearestRoads;
         _roadConnectedTo = roadsConnectedTo _nearestRoad;
         if (count _roadConnectedTo > 0) then {
             _connectedRoad = _roadConnectedTo select 0;
             _direction = [_nearestRoad, _connectedRoad] call BIS_fnc_DirTo;
             _PosFound = true;
-        }
-        else {
+        } else {
             _iAttemptLimit = _iAttemptLimit - 1;
         };
+        sleep 1;
+        _PosFound || _iAttemptLimit <= 0 || count _nearestRoads <= 0;
     };
     if (_PosFound) then {
         private _roadBlockPos =  getPos _nearestRoad;
@@ -119,10 +120,10 @@ while {_iteration <= 3} do {
         private _group = (createGroup [civilian, true]);
         private _downedCiv = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         private _iterations = 0;
-        while {isNil "_downedCiv" || {isNull _downedCiv}} do {
+        waitUntil {
             _downedCiv = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            if (_iterations > 5) exitWith {};
             _iterations = _iterations + 1;
+            (!(isNil "_downedCiv") && !(isNull _downedCiv)) || _iterations >= 5;
         };
         if (isNil "_downedCiv") exitWith {};
         [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
@@ -153,10 +154,10 @@ while {_iteration <= 3} do {
 
         private _downedCivMedic = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"CAN_COLLIDE"] call TRGM_GLOBAL_fnc_createUnit;
         _iterations = 0;
-        while {isNil "_downedCivMedic" || {isNull _downedCivMedic}} do {
+        waitUntil {
             _downedCivMedic = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"CAN_COLLIDE"] call TRGM_GLOBAL_fnc_createUnit;
-            if (_iterations > 5) exitWith {};
             _iterations = _iterations + 1;
+            (!(isNil "_downedCivMedic") && !(isNull _downedCivMedic)) || _iterations >= 5;
         };
         if !(isNil "_downedCivMedic") then {
             _downedCivMedic playmove "Acts_TreatingWounded02";
@@ -177,8 +178,7 @@ while {_iteration <= 3} do {
             private _downedCiv = _this select 0;
             if (isNil "_downedCiv") exitWith {};
             private _doLoop = true;
-            while {_doLoop} do
-            {
+            waitUntil {
                 if ((isNil "_downedCiv") || !alive(_downedCiv)) then {
                     _doLoop = false;
                 };
@@ -190,7 +190,7 @@ while {_iteration <= 3} do {
                     deleteVehicle _downedCiv;
                 };
                 sleep 10;
-
+                !_doLoop;
             };
         };
 
@@ -199,10 +199,10 @@ while {_iteration <= 3} do {
         if (_iteration isEqualTo 1) then {
             private _downedCivMedic2 = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = 0;
-            while {isNil "_downedCivMedic2" || {isNull _downedCivMedic2}} do {
+            waitUntil {
                 _downedCivMedic2 = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                if (_iterations > 5) exitWith {};
                 _iterations = _iterations + 1;
+                (!(isNil "_downedCivMedic2") && !(isNull _downedCivMedic2)) || _iterations >= 5;
             };
             if !(isNil "_downedCivMedic2") then {
                 _downedCivMedic2 playmove "Acts_CivilListening_2";
@@ -210,10 +210,10 @@ while {_iteration <= 3} do {
                 _downedCivMedic2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_paramedicKilled;}]; //ParamedicKilled
                 private _downedCiv2 = [_group, selectRandom (call FriendlyCheckpointUnits),([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                 _iterations = 0;
-                while {isNil "_downedCiv2" || {isNull _downedCiv2}} do {
+                waitUntil {
                     _downedCiv2 = [_group, selectRandom (call FriendlyCheckpointUnits),([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                    if (_iterations > 5) exitWith {};
                     _iterations = _iterations + 1;
+                    (!(isNil "_downedCiv2") && !(isNull _downedCiv2)) || _iterations >= 5;
                 };
                 if !(isNil "_downedCiv2") then {
                     _downedCiv2 playmove "Acts_CivilTalking_2";
@@ -230,10 +230,10 @@ while {_iteration <= 3} do {
         if (_iteration isEqualTo 2) then {
             private _downedCiv3 = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = 0;
-            while {isNil "_downedCiv3" || {isNull _downedCiv3}} do {
+            waitUntil {
                 _downedCiv3 = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                if (_iterations > 5) exitWith {};
                 _iterations = _iterations + 1;
+                (!(isNil "_downedCiv3") && !(isNull _downedCiv3)) || _iterations >= 5;
             };
             if !(isNil "_downedCiv3") then {
                 _downedCiv3 playmove "Acts_CivilShocked_1";
@@ -261,6 +261,8 @@ while {_iteration <= 3} do {
         };
     };
     _iteration = _iteration + 1;
+    sleep 1;
+    _iteration > 3;
 };
 
 true;

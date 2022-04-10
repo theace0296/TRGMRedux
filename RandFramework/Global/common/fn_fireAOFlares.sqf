@@ -34,21 +34,23 @@ TRGM_PUBLIC_fnc_setFlareLightStuff = {
     _al_flare_light setLightDayLight true;
 
     private _inter_flare = 0;
-    while {_inter_flare<21} do {
+    waitUntil {
         private _int_mic = 0.05 + random 0.1;
         sleep _int_mic;
         _flare_brig = _al_flare_intensity+random 1;
         _al_flare_light setLightIntensity _flare_brig;
         _inter_flare = _inter_flare + _int_mic;
         _al_flare_light setpos (getPosATL _flare1);
+        _inter_flare >= 21
     };
 
     private _int_mic = 3;
-    while {_int_mic>0} do {
+    waitUntil {
         _flare_brig = _flare_brig - 10;
         _al_flare_light setLightIntensity _flare_brig;
         _int_mic = _int_mic-0.03;
         sleep 0.01;
+        _int_mic <= 0;
     };
     deleteVehicle _al_flare_light;
 };

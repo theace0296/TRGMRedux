@@ -81,7 +81,7 @@ TRGM_VAR_WarEventActive = true;
 
 [_eventLocationPos] spawn {
     private _eventLocationPos = _this select 0;
-    while {TRGM_VAR_WarEventActive} do {
+    waitUntil {
         private _type = selectRandom ["Bomb_03_F","Missile_AA_04_F","M_Mo_82mm_AT_LG"];
         private _xPos = (_eventLocationPos select 0)-125;
         private _yPos = (_eventLocationPos select 1)-125;
@@ -101,10 +101,11 @@ TRGM_VAR_WarEventActive = true;
             private _weapon = currentWeapon _tempFireUnit;
             private _ammo = _tempFireUnit ammo _weapon;
             private _sleep = selectRandom [0.05,0.1];
-            while {_shotsToFire > 0} do {
+            waitUntil {
                 _tempFireUnit forceWeaponFire [_weapon, "FullAuto"];
                 _shotsToFire = _shotsToFire - 1;
                 sleep _sleep;
+                _shotsToFire <= 0;
             };
             deleteVehicle _tempFireUnit;
         };
@@ -113,13 +114,14 @@ TRGM_VAR_WarEventActive = true;
         if (_diceRoll isEqualTo 1) then {_sleep = 10 + random 5};
         if (_diceRoll > 6) then {_sleep = 0.5 + random 1};
         sleep _sleep;
-      };
+        !TRGM_VAR_WarEventActive;
+    };
 };
 
 [_eventLocationPos] spawn {
     private _eventLocationPos = _this select 0;
 
-    while {TRGM_VAR_WarEventActive} do {
+    waitUntil {
         waitUntil {sleep 10; TRGM_VAR_bAndSoItBegins && TRGM_VAR_CustomObjectsSet && TRGM_VAR_PlayersHaveLeftStartingArea};
 
         private _AirToUse = selectRandom (call FriendlyJet);
@@ -156,12 +158,14 @@ TRGM_VAR_WarEventActive = true;
         [_WarZoneAir1,_eventLocationPos] spawn {
             private _veh = _this select 0;
             private _eventLocationPos = _this select 1;
-            while {alive _veh} do {
+            waitUntil {
                 private _curDist = _veh distance _eventLocationPos;
                 if (_curDist > 4000) then {
                     {_veh deleteVehicleCrew _x} forEach crew _veh;
                     deleteVehicle _veh;
                 };
+                sleep 10;
+                !(alive _veh);
             };
         };
 
@@ -169,16 +173,19 @@ TRGM_VAR_WarEventActive = true;
             [_WarZoneAir2,_eventLocationPos] spawn {
                 private _veh = _this select 0;
                 private _eventLocationPos = _this select 1;
-                while {alive _veh} do {
+                waitUntil {
                     private _curDist = _veh distance _eventLocationPos;
                     if (_curDist > 4000) then {
                         {_veh deleteVehicleCrew _x} forEach crew _veh;
                         deleteVehicle _veh;
                     };
+                    sleep 10;
+                    !(alive _veh);
                 };
             };
         };
         sleep selectRandom [240,480];
+        !TRGM_VAR_WarEventActive;
     };
 };
 

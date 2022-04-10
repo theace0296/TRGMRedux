@@ -45,7 +45,7 @@ private _PosFound = false;
 private _iAttemptLimit = 5;
 
 if (_thisRoadonly) then {
-    while {!_PosFound && _iAttemptLimit > 0 && count _nearestroads > 0} do {
+    waitUntil {
         _nearestroad = selectRandom _nearestroads;
         _roadConnectedto = roadsConnectedto _nearestroad;
         if (count _roadConnectedto isEqualto 2) then {
@@ -98,11 +98,10 @@ if (_thisRoadonly) then {
             };
             _PosFound = true;
         } else {
-            // run loop again
-            // ["too many roads"] call TRGM_GLOBAL_fnc_notify;
-
             _iAttemptLimit = _iAttemptLimit - 1;
         };
+        sleep 1;
+        _PosFound || _iAttemptLimit <= 0 || count _nearestroads <= 0;
     };
 };
 
@@ -235,13 +234,14 @@ if (!TRGM_VAR_ISUNSUNG) then {
         [_initItem, _thisside] spawn {
             private _initItem = _this select 0;
             private _thisside = _this select 1;
-            while {alive(_initItem)} do {
+            waitUntil {
                 private _soundtoPlay = selectRandom TRGM_VAR_EnemyradioSounds;
                 if (_thisside isEqualto TRGM_VAR_Friendlyside) then {
                     _soundtoPlay = selectRandom TRGM_VAR_FriendlyradioSounds
                 };
                 playSound3D ["A3\Sounds_F\sfx\radio\" + _soundtoPlay + ".wss", _initItem, false, getPosASL _initItem, 0.5, 1, 0];
                 sleep selectRandom [10, 15, 20, 30];
+                !(alive _initItem);
             };
         };
     };
@@ -313,9 +313,10 @@ private _sUnittype = selectRandom _thisUnittypes;
 private _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
 if (isNil "_guardUnit1" || {isNull _guardUnit1}) then {
     private _iterations = 0;
-    while {(isNil "_guardUnit1" || {isNull _guardUnit1}) && {_iterations < 10}} do {
+    waitUntil {
         _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
         _iterations = _iterations + 1;
+        (!(isNil "_guardUnit1") && !(isNull _guardUnit1)) || _iterations >= 10;
     };
 };
 if (!(isNil "_guardUnit1") && {!(isNull _guardUnit1)}) then {
@@ -334,9 +335,10 @@ if (random 1 < .66) then {
     private _guardUnit2 = [_group, _sUnittype, _pos2, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
     if (isNil "_guardUnit2" || {isNull _guardUnit2}) then {
         private _iterations = 0;
-        while {(isNil "_guardUnit2" || {isNull _guardUnit2}) && {_iterations < 10}} do {
+        waitUntil {
             _guardUnit2 = [_group, _sUnittype,_pos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
+            (!(isNil "_guardUnit2") && !(isNull _guardUnit2)) || _iterations >= 10;
         };
     };
     if (!(isNil "_guardUnit2") && {!(isNull _guardUnit2)}) then {
@@ -365,9 +367,10 @@ if (random 1 < .66) then {
     private _guardUnit3 = [_group2, _sUnittype, _pos3, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
     if (isNil "_guardUnit3" || {isNull _guardUnit3}) then {
         private _iterations = 0;
-        while {(isNil "_guardUnit3" || {isNull _guardUnit3}) && {_iterations < 10}} do {
+        waitUntil {
             _guardUnit3 = [_group2, _sUnittype, _pos3, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
+            (!(isNil "_guardUnit3") && !(isNull _guardUnit3)) || _iterations >= 10;
         };
     };
     if (!(isNil "_guardUnit3") && {!(isNull _guardUnit3)}) then {
@@ -383,9 +386,10 @@ if (random 1 < .66) then {
     private _guardUnit4 = [_group3, _sUnittype, _pos4, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
     if (isNil "_guardUnit4" || {isNull _guardUnit4}) then {
         private _iterations = 0;
-        while {(isNil "_guardUnit4" || {isNull _guardUnit4}) && {_iterations < 10}} do {
+        waitUntil {
             _guardUnit4 = [_group3, _sUnittype, _pos4, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
             _iterations = _iterations + 1;
+            (!(isNil "_guardUnit4") && !(isNull _guardUnit4)) || _iterations >= 10;
         };
     };
     [_group3] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
@@ -427,9 +431,10 @@ private _pos5 = [_behindBlockPos2, 0, 10, 10, 0, 0.5, 0, [], [_behindBlockPos2, 
 private _guardUnit5 = [_group4, _sUnittype, _pos5, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
 if (isNil "_guardUnit5" || {isNull _guardUnit5}) then {
     private _iterations = 0;
-    while {(isNil "_guardUnit5" || {isNull _guardUnit5}) && {_iterations < 10}} do {
+    waitUntil {
         _guardUnit5 = [_group4, _sUnittype, _pos5, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
         _iterations = _iterations + 1;
+        (!(isNil "_guardUnit5") && !(isNull _guardUnit5)) || _iterations >= 10;
     };
 };
 [_group4] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
@@ -476,12 +481,14 @@ if (!(isNil "_guardUnit5") && {!(isNull _guardUnit5)}) then {
             group _objMan setBehaviour "SAFE";
         };
 
-        while { alive(_objMan) && {behaviour _objMan isEqualto "SAFE"} } do {
+        waitUntil {
             private _walkAroundHandle = [_objManname, _thisinitPos, _objMan, 35] spawn TRGM_SERVER_fnc_hvtWalkAround;
             sleep 2;
             waitUntil { sleep 1; speed _objMan < 0.5; };
             sleep 10;
             waitUntil { sleep 1; scriptDone _walkAroundHandle; };
+            sleep 10;
+            !(alive _objMan) || behaviour _objMan isNotEqualTo "SAFE";
         };
     };
     [_sCheckpointguyname, _pos5, _thisside] spawn TRGM_local_fnc_walkingGuyLoop;

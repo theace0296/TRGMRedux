@@ -14,7 +14,7 @@ waitUntil {sleep 2; !visibleMap};
 private _countSec = 300; //300 = 5 mins
 
 private _pos = FlarePos;
-while {_countSec > 0} do {
+waitUntil {
     private _xPos = (_pos select 0)-200;
     private _yPos = (_pos select 1)-200;
 
@@ -35,6 +35,7 @@ while {_countSec > 0} do {
     _delaySec = selectRandom[20,25];
     _countSec = _countSec - _delaySec;
     sleep _delaySec;
+    _countSec <= 0;
 };
 
 true;

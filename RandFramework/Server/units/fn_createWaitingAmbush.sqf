@@ -24,7 +24,7 @@ if (count _nearestHidingPlaces > 5) then {
 
     private _groupSize = selectRandom [5,6,7];
     private _iCount = 0;
-    while {_iCount < _groupSize} do {
+    waitUntil {
         _iCount = _iCount + 1;
         private _objMilUnit = [_ambushGroup, selectRandom[(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sRiflemanToUse),(call sATManToUse),(call sMachineGunManToUse)],getPos (selectRandom _nearestHidingPlaces),[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
         doStop _objMilUnit;
@@ -33,10 +33,12 @@ if (count _nearestHidingPlaces > 5) then {
         _objMilUnit setUnitPos selectRandom ["MIDDLE","DOWN","DOWN","DOWN"];
         _objMilUnit setDir ([_objMilUnit, _triggerArea] call BIS_fnc_DirTo);
         _objMilUnit setVariable ["ambushUnit", true];
+        sleep 1;
+        _iCount >= _groupSize;
     };
 
     private _bWaiting = true;
-    while {_bWaiting} do {
+    waitUntil {
         //loop _ambushGroup members, if player near then set _bWaiting to false
         {
             if (floor(damage _x) > 0) then {
@@ -61,6 +63,7 @@ if (count _nearestHidingPlaces > 5) then {
         } else {
             sleep (30 + (random 120));
         };
+        !_bWaiting;
     };
 
     [_ambushGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;

@@ -141,16 +141,6 @@ if (!_isSmallEffect) then {
     inside = false;
 };
 
-/* Testing
-[_endtime] spawn {
-    _endtime = _this select 0;
-    while {time < _endtime} do {
-    hint format ["Time: %1 Endtime: %2",time, _endtime];
-    sleep 2;
-    };
-};
-*/
-
 // Start fog and synch make sure timemultiplier = 1 (see above) to avoid synch and timing issues
     if (_test) then {hint "Start fog"};
     if (isServer) then {

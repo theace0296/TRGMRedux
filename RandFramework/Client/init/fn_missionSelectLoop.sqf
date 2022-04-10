@@ -4,7 +4,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 sleep 3;
 
-while {!TRGM_VAR_bAndSoItBegins} do {
+waitUntil {
     if (TRGM_VAR_AdminPlayer isEqualTo player) then {
         if (!dialog) then {
             sleep 1.5;
@@ -36,5 +36,6 @@ while {!TRGM_VAR_bAndSoItBegins} do {
             };
         };
     };
+    TRGM_VAR_bAndSoItBegins;
 };
 
