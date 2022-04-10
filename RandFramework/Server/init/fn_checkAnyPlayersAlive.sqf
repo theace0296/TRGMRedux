@@ -4,7 +4,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 
 sleep 3;
-private  = false;
+private _bEnded = false;
 waitUntil {
     private _bAnyAlive = false;
     {

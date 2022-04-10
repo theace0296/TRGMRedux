@@ -50,6 +50,8 @@ def string_not_in_exclusions_list(string):
         return False
     if "<Variable(getTextRaw)>" in string:
         return False
+    if "<Variable(isNotEqualTo)>" in string:
+        return False
     if "<Variable(flatten)>" in string:
         return False
     if re.match(r'.+?Variable "_[^"]+" not used', string) is not None:

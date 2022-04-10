@@ -710,7 +710,7 @@ if (!_bFriendlyInsurgents) then {
         //spawn inner checkpoints
         private _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
         if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
-        waitUntil do {
+        waitUntil {
             _iCount = _iCount - 1;
             [_sidePos] spawn {
                 private _sidePos = _this select 0;
