@@ -18,20 +18,20 @@ jobs:
     - uses: arma-actions/bom-check@v1
       name: Check for BOM
 
-  lint:
-    runs-on: ubuntu-latest
-    needs: validate
-    steps:
-    - name: Checkout the source code
-      uses: actions/checkout@master
-    - name: Install SQF Lint
-      run: python3 -m pip install git+https://github.com/LordGolias/sqf.git
-    - name: Lint (sqflint)
-      run: python Tools/sqflint.py -e 'w' -x 'AIS' -x 'fhqtt' -x 'RandFramework/Alias' -x 'RandFramework/Server/units/fn_zenOccupyHouse.sqf'
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   needs: validate
+  #   steps:
+  #   - name: Checkout the source code
+  #     uses: actions/checkout@master
+  #   - name: Install SQF Lint
+  #     run: python3 -m pip install git+https://github.com/LordGolias/sqf.git
+  #   - name: Lint (sqflint)
+  #     run: python Tools/sqflint.py -e 'w' -x 'AIS' -x 'fhqtt' -x 'RandFramework/Alias' -x 'RandFramework/Server/units/fn_zenOccupyHouse.sqf'
 
   build:
     runs-on: windows-latest
-    needs: [validate, lint]
+    needs: [validate]
     steps:
       - uses: actions/checkout@v2
       - name: Copy mission files to templates
