@@ -11,7 +11,7 @@ params ["_ambient_sounds_al"];
 while {al_snowstorm_om} do
 {
 // >> you can tweak sleep value if you want to hear ambient sounds more or less often
-    sleep 120+random _ambient_sounds_al;
+    sleep (120+random _ambient_sounds_al);
     if (pos_p in ["open","in_da_house","player_car"]) then
     {
         _natura = selectRandom ["lup_01","lup_02","lup_03"];

@@ -42,7 +42,7 @@ if ((_combinatie=="sunet_lumina") or (_combinatie=="lumina")) then {
 
     while {_alias_flicker>0} do
     {
-        sleep 0.1+random 0.1;
+        sleep (0.1+random 0.1);
         _lum_fulg_s_l setLightBrightness 30+ random 30;
         sleep 0.2;
         _lum_fulg_s_l setLightBrightness 100+random 100;

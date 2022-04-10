@@ -16,10 +16,10 @@ al_art_sunet_play = false;
 publicVariable "al_art_sunet_play";
 
 [] spawn {
-while {al_art} do {
-    sleep 35 + random 2;
-    al_art_sunet_play = false;
-    publicVariable "al_art_sunet_play";
+    while {al_art} do {
+        sleep (35 + random 2);
+        al_art_sunet_play = false;
+        publicVariable "al_art_sunet_play";
     };
 };
 _range_art = 300;

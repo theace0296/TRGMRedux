@@ -33,7 +33,7 @@ while {al_monsoon_om} do {
     if (_debris_branches) then {_leaves_p_drop = 5+random 10; _leaves_p setDropInterval _leaves_p_drop};
     if (_rain_fog) then {_alias_drop_fog_factor    = 0.01+random 0.05;_alias_local_fog setDropInterval _alias_drop_fog_factor};
 
-    sleep 5 + random 10;
+    sleep (5 + random 10);
     if (_debris_branches) then {deletevehicle _leaves_p};
     if (_rain_fog) then {deletevehicle _alias_local_fog};
 };

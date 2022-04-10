@@ -659,11 +659,7 @@ switch _mode do {
 
             private _configTextures = getarray (_cfg >> "textures");
             private _decals = getarray (_cfg >> "decals");
-            private _selected = ({
-                if !(_forEachIndex in _decals || { [_x, _configTextures param [_forEachIndex, ""]] call _fnc_compareTextures }) exitWith { false };
-                true
-            } forEach _centerTextures);
-
+            private _selected = _centerTextures find { !(_forEachIndex in _decals || { [_x, _configTextures param [_forEachIndex, ""]] call _fnc_compareTextures }) };
             _ctrlListTextures lbsetpicture [_i,_checkboxTextures select _selected];
         };
     };

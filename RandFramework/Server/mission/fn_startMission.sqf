@@ -89,8 +89,10 @@ if (_bAllowStart) then {
             } forEach allMissionObjects "EmptyDetector";
 
             {
-                deleteGroup _x
-            } forEach allGroups select {count units _x isEqualTo 0};
+                if (count units _x isEqualTo 0) then {
+                    deleteGroup _x
+                };
+            } forEach allGroups;
 
             TRGM_VAR_InfTaskCount =  0; publicVariable "TRGM_VAR_InfTaskCount";
             TRGM_VAR_ActiveTasks =  []; publicVariable "TRGM_VAR_ActiveTasks";

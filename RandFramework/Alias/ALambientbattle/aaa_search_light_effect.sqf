@@ -48,9 +48,10 @@ _sound_AAA = _this select 1;
 if (_sound_AAA) then {
     [_vik_aaa] spawn {
         _voice_AAA_search = _this select 0;
-        while {(alive _voice_AAA_search)&&al_search_light} do {
+        waitUntil {
             _voice_AAA_search say3d ["alarma_aeriana_scurt",2500];
             sleep 30;
+            !(alive _voice_AAA_search) || !al_search_light;
         };
     };
 };

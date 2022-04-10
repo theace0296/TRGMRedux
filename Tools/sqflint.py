@@ -46,14 +46,6 @@ def string_not_in_exclusions_list(string):
         return False
     if "_fnc_scriptName" in string or "_fnc_scriptNameParent" in string:
         return False
-    if "<Variable(get)>" in string:
-        return False
-    if "<Variable(getTextRaw)>" in string:
-        return False
-    if "<Variable(isNotEqualTo)>" in string:
-        return False
-    if "<Variable(flatten)>" in string:
-        return False
     if re.match(r'.+?Variable "_[^"]+" not used', string) is not None:
         return False
     return True
@@ -169,7 +161,7 @@ def entry_point(args):
         directory = args.directory.rstrip('/')
         exclude = list(map(lambda x: x if x.startswith(
             '/') else os.path.join(directory, x), args.exclude))
-        analyze_dir(directory, writer, exceptions_list, exclude)
+        analyze_dir(directory, writer, exceptions_list, [os.path.normpath(s) for s in exclude])
 
     with open(f'{args.directory.rstrip("/")}\\sqflint.log', 'a') as log:
         for string in unique_strings:

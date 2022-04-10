@@ -143,7 +143,7 @@ if (_effect_on_objects) then {
         waitUntil {scriptDone _rand_pl};
 
     // interval object blow
-        sleep 60+random 120;
+        sleep (60+random 120);
 
         al_nearobjects = nearestObjects [hunt_alias,[],50];
         ar_obj_eligibl = [];

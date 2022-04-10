@@ -31,7 +31,7 @@ _ps1 setDropInterval 0.002;
 
 _al_rocket setVelocity [0,0,200];
 
-sleep 5+random 3;
+sleep (5+random 3);
 deleteVehicle _ps1;
 deletevehicle _li;
 _al_rocket setPosATL getPosATL _miss_object_name;

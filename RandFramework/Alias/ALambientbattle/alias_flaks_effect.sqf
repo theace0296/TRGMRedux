@@ -54,7 +54,7 @@ while {al_aaa} do
             _li_aaa say3d [_flak_sound,2500];
         };
     };
-    sleep 0.1+random 0.2;
+    sleep (0.1+random 0.2);
     _li_aaa setLightIntensity 0;
 };
 deleteVehicle _li_aaa;

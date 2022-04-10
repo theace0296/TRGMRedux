@@ -14,5 +14,5 @@ while {al_snowstorm_om} do
         sleep (snow_gust#1);
         rafala = false; publicVariable "rafala";
     };
-    sleep 20+random interval_burst;
+    sleep (20+random interval_burst);
 };

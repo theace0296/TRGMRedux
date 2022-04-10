@@ -13,10 +13,10 @@ al_tracers_sunet_play = false;
 publicVariable "al_tracers_sunet_play";
 
 [] spawn {
-while {al_tracer} do {
-    sleep 36 + random 2;
-    al_tracers_sunet_play = false;
-    publicVariable "al_tracers_sunet_play";
+    while {al_tracer} do {
+        sleep (36 + random 2);
+        al_tracers_sunet_play = false;
+        publicVariable "al_tracers_sunet_play";
     };
 };
 
