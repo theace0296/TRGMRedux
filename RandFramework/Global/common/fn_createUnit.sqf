@@ -125,6 +125,14 @@ if !(_unitType isEqualTo "") then {
 };
 
 private _unit = _group createUnit [_tempUnitType, _position, _markers, _placement, _special];
+private _iterations = 0;
+waitUntil {
+    if (!(isNil "_unit") && {!(isNull _unit)}) exitWith {true;};
+    if (_iterations >= 20) exitWith {true;};
+    _unit = _group createUnit [_tempUnitType, _position, _markers, _placement, _special];
+    _iterations = _iterations + 1;
+    false;
+};
 if !(_type isEqualTo _tempUnitType) then {
     [_unit, _type] call TRGM_GLOBAL_fnc_setLoadout;
     private _tempUnit = ((createGroup [CIVILIAN, true])) createUnit [_type, [0,0,0], [], 0, 'NONE'];

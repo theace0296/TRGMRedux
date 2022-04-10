@@ -47,58 +47,60 @@ private _iAttemptLimit = 5;
 if (_thisRoadonly) then {
     waitUntil {
         _nearestroad = selectRandom _nearestroads;
-        _roadConnectedto = roadsConnectedto _nearestroad;
-        if (count _roadConnectedto isEqualto 2) then {
-            _connectedRoad = _roadConnectedto select 0;
-            private _generaldirection = [_thisAOPos, _nearestroad] call BIS_fnc_Dirto;
-            private _direction1 = [_nearestroad, _connectedRoad] call BIS_fnc_Dirto;
-            private _direction2 = _direction1-180;
-            if (_direction2 < 0) then {
-                _direction2 = _direction2 + 360
-            };
-            _direction = 0;
+        if !(isNil "_nearestroad") then {
+            _roadConnectedto = roadsConnectedto _nearestroad;
+            if (count _roadConnectedto isEqualto 2) then {
+                _connectedRoad = _roadConnectedto select 0;
+                private _generaldirection = [_thisAOPos, _nearestroad] call BIS_fnc_Dirto;
+                private _direction1 = [_nearestroad, _connectedRoad] call BIS_fnc_Dirto;
+                private _direction2 = _direction1-180;
+                if (_direction2 < 0) then {
+                    _direction2 = _direction2 + 360
+                };
+                _direction = 0;
 
-            private _dif1 = 0;
-            private _dif1A = _direction1 - _generaldirection;
-            if (_dif1A < 0) then {
-                _dif1A = _dif1A + 360
-            };
-            private _dif1B = _generaldirection - _direction1;
-            if (_dif1B < 0) then {
-                _dif1B = _dif1B + 360
-            };
-            if (_dif1A < _dif1B) then {
-                _dif1 = _dif1A;
+                private _dif1 = 0;
+                private _dif1A = _direction1 - _generaldirection;
+                if (_dif1A < 0) then {
+                    _dif1A = _dif1A + 360
+                };
+                private _dif1B = _generaldirection - _direction1;
+                if (_dif1B < 0) then {
+                    _dif1B = _dif1B + 360
+                };
+                if (_dif1A < _dif1B) then {
+                    _dif1 = _dif1A;
+                } else {
+                    _dif1 = _dif1B;
+                };
+
+                private _dif2 = 0;
+                private _dif2A = _direction2 - _generaldirection;
+                if (_dif2A < 0) then {
+                    _dif2A = _dif2A + 360
+                };
+                private _dif2B = _generaldirection - _direction2;
+                if (_dif2B < 0) then {
+                    _dif2B = _dif2B + 360
+                };
+                if (_dif2A < _dif2B) then {
+                    _dif2 = _dif2A;
+                } else {
+                    _dif2 = _dif2B;
+                };
+
+                // [format["AOAwayDir:%1 - dir1:%2 - dir2:%3 \nDif1:%4 - dif2:%5", _generaldirection, _direction1, _direction2, _dif1, _dif2]] call TRGM_GLOBAL_fnc_notify;
+                // sleep 5;
+
+                if (_dif1 < _dif2) then {
+                    _direction = _direction1
+                } else {
+                    _direction = _direction2
+                };
+                _PosFound = true;
             } else {
-                _dif1 = _dif1B;
+                _iAttemptLimit = _iAttemptLimit - 1;
             };
-
-            private _dif2 = 0;
-            private _dif2A = _direction2 - _generaldirection;
-            if (_dif2A < 0) then {
-                _dif2A = _dif2A + 360
-            };
-            private _dif2B = _generaldirection - _direction2;
-            if (_dif2B < 0) then {
-                _dif2B = _dif2B + 360
-            };
-            if (_dif2A < _dif2B) then {
-                _dif2 = _dif2A;
-            } else {
-                _dif2 = _dif2B;
-            };
-
-            // [format["AOAwayDir:%1 - dir1:%2 - dir2:%3 \nDif1:%4 - dif2:%5", _generaldirection, _direction1, _direction2, _dif1, _dif2]] call TRGM_GLOBAL_fnc_notify;
-            // sleep 5;
-
-            if (_dif1 < _dif2) then {
-                _direction = _direction1
-            } else {
-                _direction = _direction2
-            };
-            _PosFound = true;
-        } else {
-            _iAttemptLimit = _iAttemptLimit - 1;
         };
         sleep 1;
         _PosFound || _iAttemptLimit <= 0 || count _nearestroads <= 0;
@@ -311,14 +313,6 @@ _group setFormDir _direction;
 
 private _sUnittype = selectRandom _thisUnittypes;
 private _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-if (isNil "_guardUnit1" || {isNull _guardUnit1}) then {
-    private _iterations = 0;
-    waitUntil {
-        _guardUnit1 = [_group, _sUnittype, _pos1, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-        _iterations = _iterations + 1;
-        (!(isNil "_guardUnit1") && !(isNull _guardUnit1)) || _iterations >= 10;
-    };
-};
 if (!(isNil "_guardUnit1") && {!(isNull _guardUnit1)}) then {
     if (_thisside isEqualto TRGM_VAR_Friendlyside) then {
         [_guardUnit1] call TRGM_GLOBAL_fnc_makeNPC;
@@ -333,14 +327,6 @@ if (!(isNil "_guardUnit1") && {!(isNull _guardUnit1)}) then {
 if (random 1 < .66) then {
     _sUnittype = selectRandom _thisUnittypes;
     private _guardUnit2 = [_group, _sUnittype, _pos2, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-    if (isNil "_guardUnit2" || {isNull _guardUnit2}) then {
-        private _iterations = 0;
-        waitUntil {
-            _guardUnit2 = [_group, _sUnittype,_pos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = _iterations + 1;
-            (!(isNil "_guardUnit2") && !(isNull _guardUnit2)) || _iterations >= 10;
-        };
-    };
     if (!(isNil "_guardUnit2") && {!(isNull _guardUnit2)}) then {
         if (_thisside isEqualto TRGM_VAR_Friendlyside) then {
             [_guardUnit2] call TRGM_GLOBAL_fnc_makeNPC;
@@ -365,14 +351,6 @@ if (random 1 < .66) then {
 
     private _sUnittype = selectRandom _thisUnittypes;
     private _guardUnit3 = [_group2, _sUnittype, _pos3, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-    if (isNil "_guardUnit3" || {isNull _guardUnit3}) then {
-        private _iterations = 0;
-        waitUntil {
-            _guardUnit3 = [_group2, _sUnittype, _pos3, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = _iterations + 1;
-            (!(isNil "_guardUnit3") && !(isNull _guardUnit3)) || _iterations >= 10;
-        };
-    };
     if (!(isNil "_guardUnit3") && {!(isNull _guardUnit3)}) then {
         if (_thisside isEqualto TRGM_VAR_Friendlyside) then {
             [_guardUnit3] call TRGM_GLOBAL_fnc_makeNPC;
@@ -384,14 +362,6 @@ if (random 1 < .66) then {
 
     _sUnittype = selectRandom _thisUnittypes;
     private _guardUnit4 = [_group3, _sUnittype, _pos4, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-    if (isNil "_guardUnit4" || {isNull _guardUnit4}) then {
-        private _iterations = 0;
-        waitUntil {
-            _guardUnit4 = [_group3, _sUnittype, _pos4, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = _iterations + 1;
-            (!(isNil "_guardUnit4") && !(isNull _guardUnit4)) || _iterations >= 10;
-        };
-    };
     [_group3] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
     if (!(isNil "_guardUnit4") && {!(isNull _guardUnit4)}) then {
         if (_thisside isEqualto TRGM_VAR_Friendlyside) then {
@@ -429,14 +399,6 @@ private _sCheckpointguyname = format["objCheckpointguyname%1", (floor(random 999
 private _pos5 = [_behindBlockPos2, 0, 10, 10, 0, 0.5, 0, [], [_behindBlockPos2, _behindBlockPos2], _sUnittype] call TRGM_GLOBAL_fnc_findSafePos;
 
 private _guardUnit5 = [_group4, _sUnittype, _pos5, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-if (isNil "_guardUnit5" || {isNull _guardUnit5}) then {
-    private _iterations = 0;
-    waitUntil {
-        _guardUnit5 = [_group4, _sUnittype, _pos5, [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
-        _iterations = _iterations + 1;
-        (!(isNil "_guardUnit5") && !(isNull _guardUnit5)) || _iterations >= 10;
-    };
-};
 [_group4] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 if (!(isNil "_guardUnit5") && {!(isNull _guardUnit5)}) then {
     if (_thisside isEqualto TRGM_VAR_Friendlyside) then {

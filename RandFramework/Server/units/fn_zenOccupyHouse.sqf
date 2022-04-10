@@ -10,23 +10,20 @@
 // Multiple buildings can be filled either evenly or to the limit of each sequentially
 // Usage : Call, execVM
 // Params: 1. Array, the building(s) nearest this position is used
-// 2. Array of objects, the units that will garrison the building(s)
-// (opt.) 3. Scalar, radius in which to fill building(s), -1 for only nearest building, (default: -1)
-// (opt.) 4. Boolean, true to put units on the roof, false for only inside, (default: false)
-// (opt.) 5. Boolean, true to fill all buildings in radius evenly, false for one by one, (default: false)
-// (opt.) 6. Boolean, true to fill from the top of the building down, (default: false)
-// (opt.) 7. Boolean, true to order AI units to move to the position instead of teleporting, (default: false)
+//         2. Array of objects, the units that will garrison the building(s)
+//  (opt.) 3. Scalar, radius in which to fill building(s), -1 for only nearest building, (default: -1)
+//  (opt.) 4. Boolean, true to put units on the roof, false for only inside, (default: false)
+//  (opt.) 5. Boolean, true to fill all buildings in radius evenly, false for one by one, (default: false)
+//  (opt.) 6. Boolean, true to fill from the top of the building down, (default: false)
+//  (opt.) 7. Boolean, true to order AI units to move to the position instead of teleporting, (default: false)
 // Return: Array of objects, the units that were not garrisoned
 
-#define I(X) X = X + 1;
 #define EVAL(X) (X call _comparator)
 #define EYE_HEIGHT 1.53
 #define CHECK_DISTANCE 5
 #define FOV_ANGLE 10
 #define ROOF_CHECK 4
 #define ROOF_EDGE 2
-
-format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 private ["_center", "_units", "_buildingRadius", "_putOnRoof", "_fillEvenly", "_Zen_ExtendPosition", "_buildingsArray", "_buildingPosArray", "_buildingPositions", "_posArray", "_unitIndex", "_j", "_building", "_posArray", "_randomIndex", "_housePos", "_startAngle", "_i", "_checkPos", "_hitCount", "_isRoof", "_edge", "_k", "_unUsedUnits", "_array", "_sortHeight", "_Zen_InsertionSort", "_Zen_ArrayShuffle", "_doMove"];
 
@@ -39,13 +36,11 @@ _sortHeight = _this param [5, false, [true]];
 _doMove = _this param [6, false, [true]];
 
 if (_center isEqualTo [0,0,0]) exitWith {
-    player sideChat str "Zen_Occupy House Error : Invalid position given.";
     diag_log "Zen_Occupy House Error : Invalid position given.";
     ([])
 };
 
 if ((count _units == 0) || {isNull (_units select 0)}) exitWith {
-    //player sideChat str "Zen_Occupy House Error : No units given.";
     diag_log "Zen_Occupy House Error : No units given.";
     ([])
 };
@@ -103,19 +98,18 @@ _Zen_ArrayShuffle = {
 if (_buildingRadius < 0) then {
     _buildingsArray = [nearestBuilding _center];
 } else {
-    _buildingsArray0 = nearestObjects [_center, TRGM_VAR_BasicBuildings, _buildingRadius];
+    _buildingsArray0 = nearestObjects [_center, ["house"], _buildingRadius];
     _buildingsArray1 = nearestObjects [_center, ["building"], _buildingRadius];
     _buildingsArray = _buildingsArray0 arrayIntersect _buildingsArray1;
 };
 
 if (count _buildingsArray == 0) exitWith {
-    player sideChat str "Zen_Occupy House Error : No buildings found.";
     diag_log "Zen_Occupy House Error : No buildings found.";
     ([])
 };
 
 _buildingPosArray = [];
-[_buildingsArray] call _Zen_ArrayShuffle;
+0 = [_buildingsArray] call _Zen_ArrayShuffle;
 {
     _posArray = [];
     for "_i" from 0 to 1000 do {
@@ -128,27 +122,27 @@ _buildingPosArray = [];
 
 if (_sortHeight) then {
     {
-        [_x, {-1 * (_this select 2)}] call _Zen_InsertionSort;
+        0 = [_x, {-1 * (_this select 2)}] call _Zen_InsertionSort;
     } forEach _buildingPosArray;
 } else {
     {
-        [_x] call _Zen_ArrayShuffle;
+        0 = [_x] call _Zen_ArrayShuffle;
     } forEach _buildingPosArray;
 };
 
 _unitIndex = 0;
-for [{_j = 0}, {(_unitIndex < count _units) && {(count _buildingPosArray > 0)}}, {I(_j)}] do {
+for [{_j = 0}, {(_unitIndex < count _units) && {(count _buildingPosArray > 0)}}, {_j = _j + 1}] do {
     scopeName "for";
 
-    _building = _buildingsArray select (_j mod (count _buildingsArray));
-    _posArray = _buildingPosArray select (_j mod (count _buildingPosArray));
+    _building = _buildingsArray select (_j % (count _buildingsArray));
+    _posArray = _buildingPosArray select (_j % (count _buildingPosArray));
 
     if (count _posArray == 0) then {
-        _buildingsArray deleteAt (_j mod (count _buildingsArray));
-        _buildingPosArray deleteAt (_j mod (count _buildingPosArray));
+        _buildingsArray deleteAt (_j % (count _buildingsArray));
+        _buildingPosArray deleteAt (_j % (count _buildingPosArray));
     };
 
-    while {(count _posArray) <= 0} do {
+    while {(count _posArray) > 0} do {
         scopeName "while";
         if (_unitIndex >= count _units) exitWith {};
 
@@ -167,7 +161,7 @@ for [{_j = 0}, {(_unitIndex < count _units) && {(count _buildingPosArray > 0)}},
                         for "_k" from 30 to 360 step 30 do {
                             _checkPos = [_housePos, 20, (90 - _k), (_housePos select 2)] call _Zen_ExtendPosition;
                             if (lineIntersects [_housePos, _checkPos, objNull, objNull]) then {
-                                I(_hitCount)
+                                _hitCount = _hitCount + 1;
                             };
 
                             if (_hitCount >= ROOF_CHECK) exitWith {};
@@ -187,54 +181,41 @@ for [{_j = 0}, {(_unitIndex < count _units) && {(count _buildingPosArray > 0)}},
                                 };
                             };
 
-                            if (isNil "OccupiedHousesPos") then {OccupiedHousesPos = []};
-                            _distanceFromBase = getMarkerPos "mrkHQ" distance _housePos;
-                            if (_distanceFromBase > TRGM_VAR_BaseAreaRange && !(_housePos in OccupiedHousesPos)) then {
-                                OccupiedHousesPos = OccupiedHousesPos + [_housePos];
-                                if (!(_isRoof) || {_edge}) then {
-                                    (_units select _unitIndex) doWatch ([_housePos, CHECK_DISTANCE, (90 - _i), (_housePos select 2) - (getTerrainHeightASL _housePos)] call _Zen_ExtendPosition);
+                            if (!(_isRoof) || {_edge}) then {
+                                (_units select _unitIndex) doWatch ([_housePos, CHECK_DISTANCE, (90 - _i), (_housePos select 2) - (getTerrainHeightASL _housePos)] call _Zen_ExtendPosition);
 
-                                    (_units select _unitIndex) disableAI "TARGET";
-                                    if (_doMove) then {
-                                        (_units select _unitIndex) doMove ASLToATL ([(_housePos select 0), (_housePos select 1), (_housePos select 2) - EYE_HEIGHT]);
-                                    } else {
-                                        (_units select _unitIndex) setPosASL [(_housePos select 0), (_housePos select 1), (_housePos select 2) - EYE_HEIGHT];
-                                        (_units select _unitIndex) setDir _i;
+                                (_units select _unitIndex) disableAI "TARGET";
+                                if (_doMove) then {
+                                    (_units select _unitIndex) doMove ASLToATL ([(_housePos select 0), (_housePos select 1), (_housePos select 2) - EYE_HEIGHT]);
+                                } else {
+                                    (_units select _unitIndex) setPosASL [(_housePos select 0), (_housePos select 1), (_housePos select 2) - EYE_HEIGHT];
+                                    (_units select _unitIndex) setDir _i;
 
-                                        doStop (_units select _unitIndex);
-                                        (_units select _unitIndex) forceSpeed 0;
-                                    };
+                                    doStop (_units select _unitIndex);
+                                    (_units select _unitIndex) forceSpeed 0;
+                                };
 
-                                    //** JBOY_UpDown by JohnnyBoy //*/
-                                    JBOY_UpDown = {
-                                        if (!isServer)  exitWith {};
-                                        _dude = _this select 0;
-                                        _stances = _this select 1;
-                                        _dude removeAllEventHandlers "FiredNear";
-                                        while {alive _dude} do {
-                                            if ((unitPos _dude) == (_stances select 0)) then {
-                                                _dude setUnitPos (_stances select 1);
-                                            } else {
-                                                _dude setUnitPos (_stances select 0);
-                                            };
-                                            sleep (1 + (random 7));
-                                        };
-                                    };
+                                //** JBOY_UpDown by JohnnyBoy //*/
+                                #define JBOY_UpDown if ((_this select 0) getVariable ["FIREDLOCKOUT", false]) exitWith {}; (_this select 0) setVariable ["FIREDLOCKOUT", true]; if (!isServer)  exitWith {}; _dude = _this select 0; _stances = _this select 1; _ehid = (_dude getVariable "EHID"); _dude removeEventHandler ["FiredNear",_ehid]; while {alive _dude} do { if ((unitPos _dude) == (_stances select 0)) then { _dude setUnitPos (_stances select 1); } else { _dude setUnitPos (_stances select 0); }; sleep (5 + (random 2)); };
 
-                                    if (_isRoof) then {
-                                        (_units select _unitIndex) setUnitPos "MIDDLE";
-                                       (_units select _unitIndex) addEventHandler ["FiredNear",{[(_this select 0),["DOWN","MIDDLE"]] spawn JBOY_UpDown;}];
-                                    } else {
-                                        (_units select _unitIndex) setUnitPos "UP";
-                                       (_units select _unitIndex) addEventHandler ["FiredNear",{[(_this select 0),["UP","MIDDLE"]] spawn JBOY_UpDown;}];
-                                    };
+                                if (_isRoof) then {
+                                    (_units select _unitIndex) setUnitPos "MIDDLE";
+                                    _eh = (_units select _unitIndex) addEventHandler ["FiredNear",{[(_this select 0),["DOWN","MIDDLE"]] spawn {JBOY_UpDown};}];
+                                    (_units select _unitIndex) setVariable ["EHID", _eh];
 
-                                    I(_unitIndex)
-                                    if (_fillEvenly) then {
-                                        breakTo "for";
-                                    } else {
-                                        breakTo "while";
-                                    };
+                                } else {
+                                    (_units select _unitIndex) setUnitPos "UP";
+                                    _eh = (_units select _unitIndex) addEventHandler ["FiredNear",{[(_this select 0),["UP","MIDDLE"]] spawn {JBOY_UpDown};}];
+                                    (_units select _unitIndex) setVariable ["EHID", _eh];
+
+                                };
+
+
+                                _unitIndex = _unitIndex + 1;
+                                if (_fillEvenly) then {
+                                    breakTo "for";
+                                } else {
+                                    breakTo "while";
                                 };
                             };
                         };
@@ -246,7 +227,7 @@ for [{_j = 0}, {(_unitIndex < count _units) && {(count _buildingPosArray > 0)}},
 };
 
 if (_doMove) then {
-    [_units, _unitIndex] spawn {
+    0 = [_units, _unitIndex] spawn {
         _units = _this select 0;
         _unitIndex = _this select 1;
 
@@ -280,42 +261,3 @@ for "_i" from _unitIndex to (count _units - 1) step 1 do {
 };
 
 (_unUsedUnits)
-
-// Changelog
-// 7/21/15
-// 1. Added: Error reporting for invalid position and unit array arguments
-// 1. Added: Check and error report if no buildings are found
-// 3. Improved: Parameters 3, 4, and 5 are now optional and check for the correct type
-// 4. Improved: Parameters 6 and 7 check for the correct type
-// 5. Improved: AI should now stay in place better (thanks to JohnnyBoy)
-
-// 7/6/15
-// 1. Added: AI now take cover when fired upon (credit to JohnnyBoy)
-// 2. Added: Parameter to order the AI to move to their position
-// 3. Improved: The order of buildings filled is now random
-// 4. Improved: A few minor optimizations
-
-// 6/30/15
-// 1. Added: Parameter to fill buildings from top to bottom
-// 2. Improved: Optimized
-
-// 7/31/14
-// 1. Added: Parameter to cycle through each building in the radius, giving units to each one
-// 2. Improved: Units on roof are only placed at the edge, and face the edge
-// 3. Improved: Optimized roof check
-// 4. Improved: General script cleanup
-
-// 7/28/14
-// 1. Fixed: Units facing the wrong window
-// 2. Added: Parameter for distance to select multiple buildings
-// 3. Added: Parameter for units being on a roof
-// 4. Improved: Now checks that unit has a good FOV from the windows
-// 5. Improved: Units can no longer face a windows greater than 5 meters away
-// 6. Improved: Units on a roof now crouch
-// 7. Tweaked: Height of human eye to the exact value in ArmA
-
-// 7/24/14
-// Initial Release
-
-// Known Issues
-// None

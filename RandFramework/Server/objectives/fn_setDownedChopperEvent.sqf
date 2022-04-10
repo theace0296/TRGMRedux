@@ -80,12 +80,6 @@ waitUntil {
 private _flatPos2 = [_flatPos , 10, 25, 3, 0, 0.5, 0,[],[[0,0,0],[0,0,0]],_sVictim] call TRGM_GLOBAL_fnc_findSafePos;
 private _group = (createGroup [civilian, true]);
 private _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-private _iterations = 0;
-waitUntil {
-    _downedCiv = [_group, _sVictim,_flatPos2,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-    _iterations = _iterations + 1;
-    (!(isNil "_downedCiv") && !(isNull _downedCiv)) || _iterations >= 5;
-};
 if (isNil "_downedCiv") exitWith {};
 [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 

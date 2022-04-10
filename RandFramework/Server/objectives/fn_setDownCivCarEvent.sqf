@@ -115,12 +115,6 @@ if (count _nearestRoads > 0) then {
         //[str(_backOfVehArea)] call TRGM_GLOBAL_fnc_notify;
         private _group = (createGroup [civilian, true]);
         private _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-        private _iterations = 0;
-        waitUntil {
-            _downedCiv = [_group, selectRandom sCivilian,_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = _iterations + 1;
-            (!(isNil "_downedCiv") && !(isNull _downedCiv)) || _iterations >= 5;
-        };
         if (isNil "_downedCiv") exitWith {};
         [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
         [_downedCiv, "Acts_CivilShocked_1"] remoteExec ["switchMove", 0];

@@ -63,16 +63,6 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _sInformant1Name = format["objInformant%1",_iTaskIndex];
 
     _objInformant = [(createGroup [_sideToUse, true]), _infClassToUse, [0,0,500], [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
-
-    if (isNil "_objInformant" || {isNull _objInformant}) then {
-        private _iterations = 0;
-        waitUntil {
-            _objInformant = [(createGroup [_sideToUse, true]), _infClassToUse, [0,0,500], [], 0, "NONE", true] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = _iterations + 1;
-            (!(isNil "_objInformant") && !(isNull _objInformant)) || _iterations >= 20;
-        };
-    };
-
     if (isNil "_objInformant" || {isNull _objInformant}) exitWith {};
 
     _objInformant allowDamage false;

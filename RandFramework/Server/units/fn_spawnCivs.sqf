@@ -103,12 +103,11 @@ waitUntil {
         _iCountWaypoints > 4;
     };
     _sideCivGroup setBehaviour "SAFE";
+    [_sideCivGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
     _iCount = _iCount + 1;
     sleep 5;
     _iCount > _unitCount;
 };
-
-[_sideCivGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
 true;

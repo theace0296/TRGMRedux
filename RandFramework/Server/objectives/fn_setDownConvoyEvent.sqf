@@ -119,12 +119,6 @@ waitUntil {
 
         private _group = (createGroup [civilian, true]);
         private _downedCiv = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-        private _iterations = 0;
-        waitUntil {
-            _downedCiv = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = _iterations + 1;
-            (!(isNil "_downedCiv") && !(isNull _downedCiv)) || _iterations >= 5;
-        };
         if (isNil "_downedCiv") exitWith {};
         [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
@@ -153,12 +147,6 @@ waitUntil {
         };
 
         private _downedCivMedic = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"CAN_COLLIDE"] call TRGM_GLOBAL_fnc_createUnit;
-        _iterations = 0;
-        waitUntil {
-            _downedCivMedic = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],0,"CAN_COLLIDE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = _iterations + 1;
-            (!(isNil "_downedCivMedic") && !(isNull _downedCivMedic)) || _iterations >= 5;
-        };
         if !(isNil "_downedCivMedic") then {
             _downedCivMedic playmove "Acts_TreatingWounded02";
             _downedCivMedic disableAI "anim";
@@ -198,23 +186,11 @@ waitUntil {
 
         if (_iteration isEqualTo 1) then {
             private _downedCivMedic2 = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = 0;
-            waitUntil {
-                _downedCivMedic2 = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],8,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                _iterations = _iterations + 1;
-                (!(isNil "_downedCivMedic2") && !(isNull _downedCivMedic2)) || _iterations >= 5;
-            };
             if !(isNil "_downedCivMedic2") then {
                 _downedCivMedic2 playmove "Acts_CivilListening_2";
                 _downedCivMedic2 disableAI "anim";
                 _downedCivMedic2 addEventHandler ["killed", {_this spawn TRGM_SERVER_fnc_paramedicKilled;}]; //ParamedicKilled
                 private _downedCiv2 = [_group, selectRandom (call FriendlyCheckpointUnits),([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                _iterations = 0;
-                waitUntil {
-                    _downedCiv2 = [_group, selectRandom (call FriendlyCheckpointUnits),([_downedCivMedic2] call TRGM_GLOBAL_fnc_getRealPos),[],2,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                    _iterations = _iterations + 1;
-                    (!(isNil "_downedCiv2") && !(isNull _downedCiv2)) || _iterations >= 5;
-                };
                 if !(isNil "_downedCiv2") then {
                     _downedCiv2 playmove "Acts_CivilTalking_2";
                     _downedCiv2 disableAI "anim";
@@ -229,12 +205,6 @@ waitUntil {
         };
         if (_iteration isEqualTo 2) then {
             private _downedCiv3 = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-            _iterations = 0;
-            waitUntil {
-                _downedCiv3 = [_group, selectRandom (call FriendlyCheckpointUnits),_backOfVehArea,[],25,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
-                _iterations = _iterations + 1;
-                (!(isNil "_downedCiv3") && !(isNull _downedCiv3)) || _iterations >= 5;
-            };
             if !(isNil "_downedCiv3") then {
                 _downedCiv3 playmove "Acts_CivilShocked_1";
                 _downedCiv3 disableAI "anim";

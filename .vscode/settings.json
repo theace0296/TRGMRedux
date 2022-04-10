@@ -17,6 +17,7 @@
         "Pbo-Tools",
         "Mission-Templates",
         "mission.sqm",
+        "fn_zenOccupyHouse.sqf"
     ],
     "sqflint.ignoredVariables": [
         "_fnc_scriptName",
