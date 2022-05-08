@@ -83,7 +83,7 @@ if (_IntelToShow isEqualTo 1) exitWith { //Mortor team location
     };
 };
 if (_IntelToShow isEqualTo 2) exitWith { //AAA team location
-    private _IntelShowPos = allUnits select { (typeof _x) in ([(call sAAAVeh)] + [(call sAAAVehMilitia)] + (call DestroyAAAVeh)) && { (_x distance2D (TRGM_VAR_ObjectivePositions select _iTaskIndex)) < 3000 }; };
+    private _IntelShowPos = allUnits select { (typeof _x) in (TRGM_VAR_EastAntiAir + TRGM_VAR_GuerAntiAir + (call DestroyAAAVeh)) && { (_x distance2D (TRGM_VAR_ObjectivePositions select _iTaskIndex)) < 3000 }; };
     private _iCount = count _IntelShowPos;
     private _iStep = 0;
     if (_iCount > 0) then {
