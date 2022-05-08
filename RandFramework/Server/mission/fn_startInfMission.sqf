@@ -104,7 +104,7 @@ if (TRGM_VAR_iMissionIsCampaign) then {
         _bSideMissionsCivOnly = _bSideMissionsCivOnly + [_civOnly];
     } forEach TRGM_VAR_iMissionParamObjectives;
 
-    if (_HasHiddenObjective) then {
+    if (_HasHiddenObjective || {({ _x in TRGM_VAR_MissionsThatHaveIntel; } count _ThisTaskTypes) < 1}) then {
         _ThisTaskTypes = _ThisTaskTypes + [4];
         _IsMainObjs = _IsMainObjs + [false];
         _MarkerTypes = _MarkerTypes + ["hd_dot"];
