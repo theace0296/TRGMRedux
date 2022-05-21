@@ -4,4 +4,4 @@
 WIP rework of the original TRGM2.
 
 # [Release Canidate](https://github.com/theace0296/TRGMRedux/releases/latest)
-# [Nightly Release](https://github.com/theace0296/TRGMRedux/releases/tag/v3-nightly)
+# [Nightly Release](https://github.com/theace0296/TRGMRedux/releases/tag/nightly)
