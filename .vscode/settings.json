@@ -34,7 +34,11 @@
     "sqf.maxNumberOfProblems": 10000,
     "[ext]": {
       "editor.formatOnPaste": true,
-      "editor.quickSuggestions": true,
+      "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on",
+        "other": "on"
+      },
       "editor.tabSize": 4,
       "editor.insertSpaces": true,
       "editor.detectIndentation": true,
@@ -43,7 +47,11 @@
     },
     "[sqf]": {
       "editor.codeActionsOnSave": { "source.fixAll": true, "source.organizeImports": true },
-      "editor.quickSuggestions": true,
+      "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on",
+        "other": "on"
+      },
       "editor.tabSize": 4,
       "editor.insertSpaces": true,
       "editor.detectIndentation": true,
