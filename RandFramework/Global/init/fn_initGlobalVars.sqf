@@ -42,6 +42,12 @@ if (isNil "TRGM_VAR_LocationVersion") then { TRGM_VAR_LocationVersion = 3;  publ
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
 if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil "TRGM_VAR_AvailableFactions"}}) then {
     format["Get all faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+
+    if (isServer) then {
+        TRGM_VAR_LoadingText = "Gathering available factions..."; publicVariable "TRGM_VAR_LoadingText";
+        TRGM_VAR_LoadingPercent = 15; publicVariable "TRGM_VAR_LoadingPercent";
+    };
+
     private _WestFactionData =  [WEST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
     private _EastFactionData =  [EAST] call TRGM_GLOBAL_fnc_getFactionDataBySide;
     private _GuerFactionData =  [INDEPENDENT] call TRGM_GLOBAL_fnc_getFactionDataBySide;
@@ -69,7 +75,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
 
     if (TRGM_VAR_bRecalculateFactionData || {count TRGM_VAR_AllFactions isEqualTo 0 || {{!(_x in TRGM_VAR_AllFactions)} count TRGM_VAR_AvailableFactions > 0}}) then {
         format["Update saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-        private _factionDataHandles = [];
+        TRGM_factionDataHandles = []; publicVariable "TRGM_factionDataHandles";
         {
             if !((_x select 0) in TRGM_VAR_AllFactions) then {
                 private _handle = [_x select 0, _x select 1] spawn {
@@ -104,11 +110,23 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
                         format["%1", _exception] call TRGM_GLOBAL_fnc_log;
                     }
                 };
-                _factionDataHandles = _factionDataHandles + [_handle];
+                TRGM_factionDataHandles = TRGM_factionDataHandles + [[_x select 0, _x select 1, _handle]]; publicVariable "TRGM_factionDataHandles";
             };
         } forEach TRGM_VAR_AvailableFactions;
 
-        waitUntil { { scriptDone _x; } count _factionDataHandles isEqualTo count _factionDataHandles; };
+        waitUntil {
+            sleep 0.1;
+            private _completedHandles = TRGM_factionDataHandles select { scriptDone (_x select 2); };
+            if (isServer && count TRGM_factionDataHandles > 0) then {
+                private _activeHandles = TRGM_factionDataHandles select { !(_x in _completedHandles); };
+                private _content = ["Loading data for: "] + (flatten (_activeHandles apply { [lineBreak, format["  %1", _x select 1]] }));
+                TRGM_VAR_LoadingText = composeText _content; publicVariable "TRGM_VAR_LoadingText";
+                if (TRGM_VAR_LoadingPercent < 60) then {
+                    TRGM_VAR_LoadingPercent = ceil(15 + ((count _completedHandles / count TRGM_factionDataHandles) * 45)); publicVariable "TRGM_VAR_LoadingPercent";
+                };
+            };
+            count _completedHandles isEqualTo count TRGM_factionDataHandles;
+        };
 
         TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
         TRGM_VAR_AllFactions = (_WestFactionData + _EastFactionData + _GuerFactionData) apply { _x select 0 };
@@ -118,6 +136,10 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
         profileNamespace setVariable ["TRGM_VAR_AllFactionMap", TRGM_VAR_AllFactionMap];
         saveProfileNamespace;
     } else {
+        if (isServer) then {
+            TRGM_VAR_LoadingText = "Loading Faction Data..."; publicVariable "TRGM_VAR_LoadingText";
+            TRGM_VAR_LoadingPercent = 60; publicVariable "TRGM_VAR_LoadingPercent";
+        };
         format["Using saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
     };
 
@@ -127,6 +149,11 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
     publicVariable "TRGM_VAR_AllFactionData";
     publicVariable "TRGM_VAR_AllFactionMap";
     format["Faction data calculated, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
+};
+
+if (isServer) then {
+    TRGM_VAR_LoadingText = "Loading variables..."; publicVariable "TRGM_VAR_LoadingText";
+    TRGM_VAR_LoadingPercent = 70; publicVariable "TRGM_VAR_LoadingPercent";
 };
 
 // Custom Mission

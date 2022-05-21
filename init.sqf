@@ -1,10 +1,17 @@
 "Init.sqf" call TRGM_GLOBAL_fnc_log;
 
-private _initVarsHandle = [] spawn TRGM_GLOBAL_fnc_initGlobalVars;
-waitUntil { sleep 5; scriptDone _initVarsHandle; };
-
+if (isNil "TRGM_VAR_LoadingPercent") then {TRGM_VAR_LoadingPercent = 10; publicVariable "TRGM_VAR_LoadingPercent";};
+if (isNil "TRGM_VAR_LoadingText") then {TRGM_VAR_LoadingText = "Loading..."; publicVariable "TRGM_VAR_LoadingText";};
 if (isNil "TRGM_VAR_serverFinishedInitGlobal")  then {TRGM_VAR_serverFinishedInitGlobal = false; publicVariable "TRGM_VAR_serverFinishedInitGlobal";};
-waitUntil {TRGM_VAR_serverFinishedInitGlobal;};
+
+private _initVarsHandle = [] spawn TRGM_GLOBAL_fnc_initGlobalVars;
+waitUntil {
+   sleep 0.1;
+   [TRGM_VAR_LoadingPercent, false, TRGM_VAR_LoadingText] call TRGM_GLOBAL_fnc_populateLoadingWait;
+   TRGM_VAR_serverFinishedInitGlobal && scriptDone _initVarsHandle;
+};
+
+[80, false, "Finding admin player..."] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 if (isServer) then {
    [] spawn {
@@ -14,6 +21,8 @@ if (isServer) then {
       };
    };
 };
+
+[90, false, "Finishing up..."] call TRGM_GLOBAL_fnc_populateLoadingWait;
 
 TRGM_VAR_iTimeMultiplier call BIS_fnc_paramTimeAcceleration;
 
@@ -34,6 +43,13 @@ call FHQ_fnc_ttiPostInit;
       [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_Credits"), localize "STR_TRGM2_Description_Author"],
       [(localize "STR_TRGM2_Init_TRGM2Engine"), (localize "STR_TRGM2_Init_ScriptsUsed"), localize "STR_TRGM2_TRGMSetUnitGlobalVars_ScriptsUsed"]
 ] call FHQ_fnc_ttAddBriefing;
+
+[] spawn {
+    uiSleep 1;
+    [100, false, "Done"] call TRGM_GLOBAL_fnc_populateLoadingWait;
+    uiSleep 2;
+    TRGM_VAR_PopulateLoadingWait_percentage = 0; publicVariable "TRGM_VAR_PopulateLoadingWait_percentage";
+};
 
 waitUntil { TRGM_VAR_playerIsChoosingHQpos || TRGM_VAR_NeededObjectsAvailable; };
 

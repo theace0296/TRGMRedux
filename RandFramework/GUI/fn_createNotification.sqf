@@ -20,6 +20,17 @@ if !(isNull _ctrlGroup) then {
     private _textControl = _ctrlGroup controlsGroupCtrl 1000;
     _textControl ctrlSetStructuredText _text;
     _textControl ctrlCommit 0;
+    private _ctrlGroupSize = ctrlPosition _ctrlGroup;
+    private _messageHeight = 0.00;
+    _textControl ctrlSetPosition [0, 0.01, _ctrlGroupSize select 2, (ctrlTextHeight _textControl) + 0.01];
+    _textControl ctrlCommit 0;
+    {
+        if !(_forEachIndex isEqualTo 1) then {
+            _messageHeight = _messageHeight + ((ctrlPosition _x) select 3);
+        };
+    } forEach ((allControls _display) select {(ctrlParentControlsGroup _x) isEqualTo _ctrlGroup});
+    _ctrlGroup ctrlSetPosition [0, 0, _mainCtrlGroupW, _messageHeight];
+    _ctrlGroup ctrlCommit 0;
 } else {
     _ctrlGroup = _display ctrlCreate ["RscControlsGroupNoScrollbars", -1, _mainCtrlGroup];
     uiNamespace setVariable [format["TRGM_VAR_notification_%1", _notificationIndex], _ctrlGroup];
