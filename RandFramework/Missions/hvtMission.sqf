@@ -85,6 +85,18 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _objInformant setPos (_flatPosInform);
     };
 
+    if (_hvtType isNotEqualTo "RESCUE") then {
+        [_objInformant, _initPos] spawn {
+            waitUntil {
+                sleep 10;
+                if (((this # 0) distance (_this # 1)) > 100) then {
+                    (this # 0) setPos (_this # 1);
+                };
+                !(alive (_this # 0));
+            };
+        };
+    };
+
     [_objInformant, ["HitPart", {
         (_this select 0) params ["_thisInformant", "_thisShooter", "_projectile", "_position", "_velocity", "_selection", "_ammo", "_vector", "_radius", "_surfaceType", "_isDirect"];
         _hitLocation = _selection select 0;
@@ -131,6 +143,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
                     _thisInformant setDamage 0.8;
                 };
             };
+            _objInformant allowDamage false;
         };
     }]] remoteExec ["addEventHandler", 0, true];
 
