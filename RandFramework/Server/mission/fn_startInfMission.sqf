@@ -132,7 +132,10 @@ private _buildings = nil;
 if (isNil "TRGM_VAR_allLocationPositions") then {
     private _worldName = worldName;
     TRGM_VAR_allLocationPositionsMap = profileNamespace getVariable "TRGM_VAR_allLocationPositionsMap";
-    TRGM_VAR_allLocationPositions = [nil, TRGM_VAR_allLocationPositionsMap get _worldName] select (!(isNil "TRGM_VAR_allLocationPositionsMap"));
+    if !(TRGM_VAR_allLocationPositionsMap isEqualType createHashMap) then {
+        TRGM_VAR_allLocationPositionsMap = createHashMap;
+    };
+    TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositionsMap get _worldName;
     private _LocationVersion = profileNamespace getVariable ["TRGM_VAR_LocationVersion", 0];
 
     TRGM_VAR_bRecalculateLocationData = [false, true] select ((["RecalculateLocationData", 0] call BIS_fnc_getParamValue) isEqualTo 1);
@@ -143,7 +146,6 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
     };
 
     if (isNil "TRGM_VAR_allLocationPositions" || TRGM_VAR_bRecalculateLocationData) then {
-        TRGM_VAR_allLocationPositionsMap = ([createHashMap, TRGM_VAR_allLocationPositionsMap] select (TRGM_VAR_allLocationPositionsMap isEqualType createHashMap));
         TRGM_VAR_allLocationTypes = [];
         "TRGM_VAR_allLocationTypes pushBack configName _x" configClasses (configFile >> "CfgLocationTypes");
         private _allLocations = nearestLocations [(getMarkerPos "mrkHQ"), TRGM_VAR_allLocationTypes, worldSize];
