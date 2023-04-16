@@ -661,10 +661,6 @@ else {
 
 if (TRGM_VAR_IsFullMap) then {
     ["Loading Full Map Events : BEGIN", true] call TRGM_GLOBAL_fnc_log;
-    //worldName call BIS_fnc_mapSize << equals the width in meters
-    //altis is 30720
-    //kujari is 16384 wide
-    //STratis is 8192
     private _mapSizeTxt = "LARGE";
     private _mapSize = worldName call BIS_fnc_mapSize;
     if (_mapSize < 13000) then {
@@ -675,33 +671,26 @@ if (TRGM_VAR_IsFullMap) then {
     };
     private _mainObjPos = TRGM_VAR_ObjectivePositions select 0;
 
-    private _setDownCivCarEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
-    waitUntil { sleep 5; scriptDone _setDownCivCarEventHandle; };
-    private _setDownedChopperEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
-    waitUntil { sleep 5; scriptDone _setDownedChopperEventHandle; };
-    private _setATMineEventHandle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
-    waitUntil { sleep 5; scriptDone _setATMineEventHandle; };
-    private _setIEDEventHandle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-    waitUntil { sleep 5; scriptDone _setIEDEventHandle; };
-    private _setIEDEvent2Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-    waitUntil { sleep 5; scriptDone _setIEDEvent2Handle; };
+    private _fullMapEventsHandles = [];
+
+    _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent);
+    _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent);
+    _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent);
+    _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
+    _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
 
     if (_mapSizeTxt isEqualTo "MEDIUM" || _mapSizeTxt isEqualTo "LARGE") then {
-        private _setIEDEvent3Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-        waitUntil { sleep 5; scriptDone _setIEDEvent3Handle; };
-        private _setIEDEvent4Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-        waitUntil { sleep 5; scriptDone _setIEDEvent4Handle; };
-        private _setATMineEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent;
-        waitUntil { sleep 5; scriptDone _setATMineEvent2Handle; };
+        _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
+        _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
+        _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setATMineEvent);
     };
     if (_mapSizeTxt isEqualTo "LARGE") then {
-        private _setDownCivCarEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent;
-        waitUntil { sleep 5; scriptDone _setDownCivCarEvent2Handle; };
-        private _setDownedChopperEvent2Handle = [_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent;
-        waitUntil { sleep 5; scriptDone _setDownedChopperEvent2Handle; };
-        private _setIEDEvent5Handle = [_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent;
-        waitUntil { sleep 5; scriptDone _setIEDEvent5Handle; };
+        _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownCivCarEvent);
+        _fullMapEventsHandles pushBack ([_mainObjPos,true] spawn TRGM_SERVER_fnc_setDownedChopperEvent);
+        _fullMapEventsHandles pushBack ([_mainObjPos,2000,false,false,nil,nil,true] spawn TRGM_SERVER_fnc_setIEDEvent);
     };
+
+    waitUntil { sleep 1; ({ scriptDone _x; } count _fullMapEventsHandles) isEqualTo (count _fullMapEventsHandles)};
 
     ["Loading Full Map Events : END", true] call TRGM_GLOBAL_fnc_log;
     [95, TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
