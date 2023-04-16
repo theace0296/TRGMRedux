@@ -111,7 +111,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
                     {
                         ["Exception caught while updating faction data:"] call TRGM_GLOBAL_fnc_log;
                         format["%1", _exception] call TRGM_GLOBAL_fnc_log;
-                    }
+                    };
                     TRGM_activeFactionDataHandles = TRGM_activeFactionDataHandles - 1; publicVariable "TRGM_activeFactionDataHandles";
                 };
                 TRGM_factionDataHandles = TRGM_factionDataHandles + [[_x select 0, _x select 1, _handle]]; publicVariable "TRGM_factionDataHandles";
