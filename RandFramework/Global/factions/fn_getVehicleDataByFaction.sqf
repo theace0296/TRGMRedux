@@ -9,19 +9,18 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 if (_factionClassName isEqualTo "any" || _factionDispName isEqualTo "any") exitWith {};
 
-private _vehConfigPaths = [];
-
-private _configPath = (configFile >> "CfgVehicles");
-
-for "_i" from 0 to (count _configPath - 1) do {
-
-    private _element = _configPath select _i;
-
-    if (isclass _element) then {
-        if ((getText(_element >> "faction")) isEqualTo _factionClassName && {(getnumber(_element >> "scope")) isEqualTo 2 && {((configname _element) isKindOf "LandVehicle" || (configname _element) isKindOf "Air"|| (configname _element) isKindOf "Ship")}}) then {
-            _vehConfigPaths pushbackunique _element;
-        };
+if (isNil "TRGM_TEMPVAR_allVehicleUnits") then {
+    TRGM_TEMPVAR_allVehicleUnits = createHashMap;
+    private _configPath = (configFile >> "CfgVehicles");
+    for "_i" from 0 to (count _configPath - 1) do {
+        private _element = _configPath select _i;
+        if !(isClass _element) then { continue; };
+        if (getNumber(_element >> "scope") isNotEqualTo 2) then { continue; };
+        if (!(configName _element isKindOf "LandVehicle") && !(configName _element isKindOf "Air") && !(configName _element isKindOf "Ship")) then { continue; };
+        if ([_element] call TRGM_GLOBAL_fnc_ignoreVehicle) then { continue; };
+        private _factionList = TRGM_TEMPVAR_allVehicleUnits getOrDefault [getText(_element >> "faction"), [], true];
+        _factionList pushBack (configName _element);
     };
+    publicVariable "TRGM_TEMPVAR_allVehicleUnits";
 };
-
-(_vehConfigPaths select {!([_x] call TRGM_GLOBAL_fnc_ignoreVehicle)}) apply {[configName _x, ([configName _x] call TRGM_GLOBAL_fnc_getVehicleType)]};
+(TRGM_TEMPVAR_allVehicleUnits getOrDefault [_factionClassName, []]) apply {[_x, ([_x] call TRGM_GLOBAL_fnc_getVehicleType)]};

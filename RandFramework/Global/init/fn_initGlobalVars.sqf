@@ -132,6 +132,9 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
             count _completedHandles isEqualTo count TRGM_factionDataHandles;
         };
 
+        if !(isNil "TRGM_TEMPVAR_allManUnits") then { TRGM_TEMPVAR_allManUnits = nil; publicVariable "TRGM_TEMPVAR_allManUnits"; };
+        if !(isNil "TRGM_TEMPVAR_allVehicleUnits") then { TRGM_TEMPVAR_allVehicleUnits = nil; publicVariable "TRGM_TEMPVAR_allVehicleUnits"; };
+
         TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
         TRGM_VAR_AllFactions = (_WestFactionData + _EastFactionData + _GuerFactionData) apply { _x select 0 };
         profileNamespace setVariable ["TRGM_VAR_FactionVersion", TRGM_VAR_FactionVersion];
