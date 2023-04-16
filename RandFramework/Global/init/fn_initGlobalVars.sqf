@@ -76,9 +76,12 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
     if (TRGM_VAR_bRecalculateFactionData || {count TRGM_VAR_AllFactions isEqualTo 0 || {{!(_x in TRGM_VAR_AllFactions)} count TRGM_VAR_AvailableFactions > 0}}) then {
         format["Update saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
         TRGM_factionDataHandles = []; publicVariable "TRGM_factionDataHandles";
+        TRGM_activeFactionDataHandles = []; publicVariable "TRGM_activeFactionDataHandles";
         {
             if !((_x select 0) in TRGM_VAR_AllFactions) then {
                 private _handle = [_x select 0, _x select 1] spawn {
+                    waitUntil { sleep 1; TRGM_activeFactionDataHandles < 10 };
+                    TRGM_activeFactionDataHandles = TRGM_activeFactionDataHandles + 1; publicVariable "TRGM_activeFactionDataHandles";
                     try
                     {
                         params ["_className", "_displayName"];
@@ -109,6 +112,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
                         ["Exception caught while updating faction data:"] call TRGM_GLOBAL_fnc_log;
                         format["%1", _exception] call TRGM_GLOBAL_fnc_log;
                     }
+                    TRGM_activeFactionDataHandles = TRGM_activeFactionDataHandles - 1; publicVariable "TRGM_activeFactionDataHandles";
                 };
                 TRGM_factionDataHandles = TRGM_factionDataHandles + [[_x select 0, _x select 1, _handle]]; publicVariable "TRGM_factionDataHandles";
             };
