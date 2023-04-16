@@ -76,7 +76,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
     if (TRGM_VAR_bRecalculateFactionData || {count TRGM_VAR_AllFactions isEqualTo 0 || {{!(_x in TRGM_VAR_AllFactions)} count TRGM_VAR_AvailableFactions > 0}}) then {
         format["Update saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
         TRGM_factionDataHandles = []; publicVariable "TRGM_factionDataHandles";
-        TRGM_activeFactionDataHandles = []; publicVariable "TRGM_activeFactionDataHandles";
+        TRGM_activeFactionDataHandles = 0; publicVariable "TRGM_activeFactionDataHandles";
         {
             if !((_x select 0) in TRGM_VAR_AllFactions) then {
                 private _handle = [_x select 0, _x select 1] spawn {
