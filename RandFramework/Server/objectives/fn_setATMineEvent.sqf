@@ -11,7 +11,7 @@ if (_isFullMap) then {
 };
 
 private _nearestRoads = (_posOfAO nearRoads 3000) select {((getPos _x) distance _posOfAO) >= 1000 && !((getPos _x) in (TRGM_VAR_AreasBlackList + TRGM_VAR_ATFieldPos))};
-if (!(isnil "Istraining") || _isFullMap) then {
+if (_isFullMap) then {
     _nearestRoads = (_posOfAO nearRoads 30000) select {((getPos _x) distance _posOfAO) >= 1000 && !((getPos _x) in (TRGM_VAR_AreasBlackList + TRGM_VAR_ATFieldPos))};
 };
 
@@ -28,14 +28,7 @@ waitUntil {
     private _xPos = (_currentATFieldPos select 0)-100;
     private _yPos = (_currentATFieldPos select 1)-100;
     private _randomPos = [_xPos+(random 200), _yPos+(random 200), 0];
-    // APERSmine ATmine
     private _objmine = createmine [selectRandom["ATmine"], _randomPos, [], 0];
-    if ("TEST" isEqualto "false") then {
-        private _markerstrcache = createMarker [format ["CacheLoc%1", _icountmines], _randomPos];
-        _markerstrcache setMarkerShape "ICON";
-        _markerstrcache setMarkertype "hd_dot";
-        _markerstrcache setMarkertext "";
-    };
     _icountmines = _icountmines + 1;
     if (_icountmines >= 50) then {
         _minesPlaced = true

@@ -18,7 +18,7 @@ If (_IEDType isEqualTo "CAR") then {_ieds = CivCars;};
 If (_IEDType isEqualTo "RUBBLE") then {_ieds = TRGM_VAR_IEDFakeClassNames;};
 
 private _nearestRoads = _posOfAO nearRoads _roadRange;
-if ((!(isNil "IsTraining") || _isFullMap) && _roadRange isEqualTo 2000) then {
+if (_isFullMap && _roadRange isEqualTo 2000) then {
     _nearestRoads = _posOfAO nearRoads 30000;
 };
 

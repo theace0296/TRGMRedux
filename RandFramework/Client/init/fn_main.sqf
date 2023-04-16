@@ -136,28 +136,9 @@ if (TRGM_VAR_iCirclesOfDeath isEqualTo 1) then {
     TRGM_VAR_bCirclesOfDeath = true;
 };
 
-private _isTraining = false;
-if (_isTraining) then {
-    //training
-    [player, 100] call BIS_fnc_respawnTickets;
 
-    private _useAceInteractionForTransport = [false, true] select ((["EnableAceActions", 0] call BIS_fnc_getParamValue) isEqualTo 1);
-    if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
-        myaction = ['TraceBulletAction',localize 'STR_TRGM2_TRGMInitPlayerLocal_TraceBullets','',{},{true}] call ace_interact_menu_fnc_createAction;
-        [player, 1, ["ACE_SelfActions"], myaction] call ace_interact_menu_fnc_addActionToObject;
-
-        myaction = ['TraceBulletEnable',localize 'STR_TRGM2_TRGMInitPlayerLocal_Enable','',{[player, 5] spawn BIS_fnc_traceBullets;},{true}] call ace_interact_menu_fnc_createAction;
-        [player, 1, ["ACE_SelfActions", "TraceBulletAction"], myaction] call ace_interact_menu_fnc_addActionToObject;
-
-        myaction = ['TraceBulletDisable',localize 'STR_TRGM2_TRGMInitPlayerLocal_Disable','',{[player, 0] spawn BIS_fnc_traceBullets;},{true}] call ace_interact_menu_fnc_createAction;
-        [player, 1, ["ACE_SelfActions", "TraceBulletAction"], myaction] call ace_interact_menu_fnc_addActionToObject;
-    };
-
-}
-else {
-    [player, call TRGM_GETTER_fnc_iTicketCount] call BIS_fnc_respawnTickets;
-    setPlayerRespawnTime (call TRGM_GETTER_fnc_iRespawnTimer);
-};
+[player, call TRGM_GETTER_fnc_iTicketCount] call BIS_fnc_respawnTickets;
+setPlayerRespawnTime (call TRGM_GETTER_fnc_iRespawnTimer);
 
 
 [] spawn TRGM_GLOBAL_fnc_animateAnimals;
