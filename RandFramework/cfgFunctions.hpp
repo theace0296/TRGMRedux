@@ -182,6 +182,7 @@ class TRGM_GLOBAL {
         class isMedical {};
         class isRepair {};
         class isTransport {};
+        class prePopulateUnitAndVehicleData {};
     };
 
     class location {

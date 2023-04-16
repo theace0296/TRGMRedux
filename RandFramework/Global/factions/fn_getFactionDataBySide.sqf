@@ -17,9 +17,17 @@ private _vehicles = [];
 for "_i" from 0 to (count _vehiclesConfigPath - 1) do {
     private _element = _vehiclesConfigPath select _i;
     if !(isClass _element) then { continue; };
+    if (getNumber(_element >> "scope") isNotEqualTo 2) then { continue; };
     if (getNumber(_element >> "side") isNotEqualTo _sideNum) then { continue; };
-    if (configName(_element) isKindOf 'Man') then { _men pushBackUnique (getText(_element >> "faction")) };
-    if (configName(_element) isKindOf 'Car') then { _vehicles pushBackUnique (getText(_element >> "faction")) };
+    private _configName = configName _element;
+    if (_configName isKindOf "Man" && !(_configName isKindOf "OPTRE_Spartan2_Soldier_Base")) then {
+        if ([_element] call TRGM_GLOBAL_fnc_ignoreUnit) then { continue; };
+        _men pushBackUnique (getText(_element >> "faction"))
+    };
+    if (_configName isKindOf "LandVehicle") then {
+        if ([_element] call TRGM_GLOBAL_fnc_ignoreVehicle) then { continue; };
+        _vehicles pushBackUnique (getText(_element >> "faction"))
+    };
 };
 
 for "_i" from 0 to (count _configPath - 1) do {
