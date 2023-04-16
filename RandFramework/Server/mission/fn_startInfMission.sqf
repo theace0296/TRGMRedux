@@ -149,8 +149,7 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
         TRGM_VAR_allLocationTypes = [];
         "TRGM_VAR_allLocationTypes pushBack configName _x" configClasses (configFile >> "CfgLocationTypes");
         private _allLocations = nearestLocations [(getMarkerPos "mrkHQ"), TRGM_VAR_allLocationTypes, worldSize];
-        TRGM_VAR_allLocationPositions = _allLocations apply {[locationPosition _x select 0, locationPosition _x select 1]};
-        TRGM_VAR_allLocationPositions = TRGM_VAR_allLocationPositions select {count nearestObjects [_x, TRGM_VAR_BasicBuildings, 200] > 0};
+        TRGM_VAR_allLocationPositions = _allLocations select {count nearestObjects [[locationPosition _x select 0, locationPosition _x select 1], TRGM_VAR_BasicBuildings, 200] > 0};
         private _positionsToKeep = [];
         {
             private _pos = _x;
