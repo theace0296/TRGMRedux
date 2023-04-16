@@ -146,19 +146,19 @@ if (isNil "TRGM_VAR_allLocationPositions") then {
     };
 
     if (isNil "TRGM_VAR_allLocationPositions" || TRGM_VAR_bRecalculateLocationData) then {
-        TRGM_VAR_allLocationTypes = [];
-        "TRGM_VAR_allLocationTypes pushBack configName _x" configClasses (configFile >> "CfgLocationTypes");
-        private _allLocations = nearestLocations [(getMarkerPos "mrkHQ"), TRGM_VAR_allLocationTypes, worldSize];
-        TRGM_VAR_allLocationPositions = _allLocations select {count nearestObjects [[locationPosition _x select 0, locationPosition _x select 1], TRGM_VAR_BasicBuildings, 200] > 0};
-        private _positionsToKeep = [];
+        private _allLocationTypes = ("true" configClasses (configFile >> "CfgLocationTypes")) apply {configName _x;};
+        private _allLocations = nearestLocations [(getMarkerPos "mrkHQ"), _allLocationTypes, worldSize];
+
+        TRGM_VAR_allLocationPositions = [];
         {
-            private _pos = _x;
-            if (!(_pos in _positionsToKeep) && {{(_pos distance _x) < 1000} count _positionsToKeep isEqualTo 0}) then {
-                _positionsToKeep = _positionsToKeep + [_pos];
-            }
-        } forEach TRGM_VAR_allLocationPositions;
-        TRGM_VAR_allLocationPositions = _positionsToKeep;
-        TRGM_VAR_allLocationPositionsMap set [_worldName, TRGM_VAR_allLocationPositions];
+            private _position = [(locationPosition _x) select 0, (locationPosition _x) select 1];
+            if (_position in TRGM_VAR_allLocationPositions) then {continue;};
+            if ({(_position distance _x) < 1000;} count TRGM_VAR_allLocationPositions > 0) then {continue;};
+            if (count nearestObjects [_position, TRGM_VAR_BasicBuildings, 200] <= 0) then {continue;};
+            TRGM_VAR_allLocationPositions pushBack _position;
+        } forEach (_allLocations call TRGM_GLOBAL_fnc_fisherYatesShuffleArray);
+
+        TRGM_VAR_allLocationPositionsMap set [_worldName, +TRGM_VAR_allLocationPositions];
         profileNamespace setVariable ["TRGM_VAR_LocationVersion", TRGM_VAR_LocationVersion];
         profileNamespace setVariable ["TRGM_VAR_allLocationPositionsMap", TRGM_VAR_allLocationPositionsMap];
         profileNamespace setVariable ["TRGM_VAR_allLocationPositions", nil];

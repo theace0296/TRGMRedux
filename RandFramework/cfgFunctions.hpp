@@ -139,6 +139,7 @@ class TRGM_GLOBAL {
         class enemyAirSupport {};
         class fireAOFlares {};
         class fireIllumFlares {};
+        class fisherYatesShuffleArray {};
         class getUnitType {};
         class getVehicleType {};
         class getRealPos {};

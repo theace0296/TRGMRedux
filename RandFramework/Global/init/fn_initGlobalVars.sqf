@@ -75,7 +75,7 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
 
     if (TRGM_VAR_bRecalculateFactionData || {count TRGM_VAR_AllFactions isEqualTo 0 || {{!(_x in TRGM_VAR_AllFactions)} count TRGM_VAR_AvailableFactions > 0}}) then {
         format["Update saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-        TRGM_factionDataHandles = [];
+        private _factionDataHandles = [];
 
         call TRGM_GLOBAL_fnc_prePopulateUnitAndVehicleData;
 
@@ -113,22 +113,22 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
                         format["%1", _exception] call TRGM_GLOBAL_fnc_log;
                     };
                 };
-                TRGM_factionDataHandles = TRGM_factionDataHandles + [[_x select 0, _x select 1, _handle]];
+                _factionDataHandles pushBack [_x select 0, _x select 1, _handle];
             };
         } forEach TRGM_VAR_AvailableFactions;
 
         waitUntil {
             sleep 0.1;
-            private _completedHandles = TRGM_factionDataHandles select { scriptDone (_x select 2); };
-            if (isServer && count TRGM_factionDataHandles > 0) then {
-                private _activeHandles = TRGM_factionDataHandles select { !(_x in _completedHandles); };
+            private _completedHandles = _factionDataHandles select { scriptDone (_x select 2); };
+            if (isServer && count _factionDataHandles > 0) then {
+                private _activeHandles = _factionDataHandles select { !(_x in _completedHandles); };
                 private _content = ["Loading data for: "] + (flatten (_activeHandles apply { [lineBreak, format["  %1", _x select 1]] }));
                 TRGM_VAR_LoadingText = composeText _content; publicVariable "TRGM_VAR_LoadingText";
                 if (TRGM_VAR_LoadingPercent < 60) then {
-                    TRGM_VAR_LoadingPercent = ceil(15 + ((count _completedHandles / count TRGM_factionDataHandles) * 45)); publicVariable "TRGM_VAR_LoadingPercent";
+                    TRGM_VAR_LoadingPercent = ceil(15 + ((count _completedHandles / count _factionDataHandles) * 45)); publicVariable "TRGM_VAR_LoadingPercent";
                 };
             };
-            count _completedHandles isEqualTo count TRGM_factionDataHandles;
+            count _completedHandles isEqualTo count _factionDataHandles;
         };
 
         if !(isNil "TRGM_TEMPVAR_allManUnits") then { TRGM_TEMPVAR_allManUnits = nil; publicVariable "TRGM_TEMPVAR_allManUnits"; };
