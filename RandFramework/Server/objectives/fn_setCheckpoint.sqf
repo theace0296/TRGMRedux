@@ -410,7 +410,7 @@ if (!(isNil "_guardUnit5") && {!(isNull _guardUnit5)}) then {
         private _isHiddenObj = false;
         private _mainAOPos = TRGM_VAR_ObjectivePositions select 0;
         if !(isNil "_mainAOPos") then {
-            if (_mainAOPos in TRGM_VAR_HiddenPossitions) then {
+            if (_mainAOPos in TRGM_VAR_HiddenPositions) then {
                 _isHiddenObj = true;
             };
         };

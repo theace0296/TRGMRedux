@@ -489,8 +489,8 @@ waitUntil {
                     TRGM_VAR_ObjectivePositions pushBack [_inf1X,_inf1Y];
                     publicVariable "TRGM_VAR_ObjectivePositions";
                     if (_bIsHidden) then {
-                        TRGM_VAR_HiddenPossitions pushBack [_inf1X,_inf1Y];
-                        publicVariable "TRGM_VAR_HiddenPossitions";
+                        TRGM_VAR_HiddenPositions pushBack [_inf1X,_inf1Y];
+                        publicVariable "TRGM_VAR_HiddenPositions";
                     };
                     private _sTaskDescription = "";
                     if (TRGM_VAR_ISUNSUNG) then {
@@ -653,7 +653,7 @@ else {
 //now we have all our location positinos, we can set other area stuff
 {
     [80 + (_forEachIndex * 2), TRGM_VAR_iMissionIsCampaign] spawn TRGM_GLOBAL_fnc_populateLoadingWait;
-    if !(_x in TRGM_VAR_HiddenPossitions) then {
+    if !(_x in TRGM_VAR_HiddenPositions) then {
         private _setAreaEventsHandle = [_x, _forEachIndex] spawn TRGM_SERVER_fnc_setOtherAreaStuff;
         waitUntil { sleep 5; scriptDone _setAreaEventsHandle; };
     };
