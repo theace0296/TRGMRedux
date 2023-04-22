@@ -97,6 +97,7 @@ if ((player getVariable ["TRGM_postStartMissionCamRunning", "NOTRUN"]) isNotEqua
 
     [] spawn {
         if (!hasInterface) exitWith {};
+        format[localize "STR_TRGM2_debugFunctionString", "TRGM_CLIENT_fnc_postStartMissionCameraEnd", "TRGM_CLIENT_fnc_postStartMissionCamera", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
         private _timeout = 0;
         waitUntil {
             sleep 1;
