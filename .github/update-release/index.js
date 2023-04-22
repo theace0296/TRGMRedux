@@ -1,3 +1,4 @@
+// @ts-check
 require('dotenv').config();
 const { startGroup, getInput, setSecret, endGroup, setFailed } = require('@actions/core');
 const { context, GitHub } = require('@actions/github');
@@ -17,7 +18,7 @@ const run = async () => {
     const ref = process.env.GITHUB_REF;
 
     let releaseName = getInput('release');
-    if (!releaseName) {
+    if (!releaseName && ref) {
       releaseName = ref
         .replace(/refs\//, '')
         .replace(/heads\//, '')
@@ -54,7 +55,7 @@ const run = async () => {
 
     startGroup('Getting existing release id...');
     const release = releases.find(rel => rel.name === releaseName);
-    if (!release.id || release.id < 0) {
+    if (!release?.id || release.id < 0) {
       throw new Error('Existing release could not be found!');
     }
     endGroup();
@@ -97,7 +98,7 @@ const run = async () => {
       body = body.substr(0, body.indexOf('Change log:') + 11);
       const commits = (await github.repos.listCommits({ ...context.repo })).data;
       const prevRelease = releases.find(rel => Date.parse(rel.created_at) < Date.parse(release.created_at));
-      const prevReleaseDate = Date.parse(prevRelease.created_at);
+      const prevReleaseDate = Date.parse(prevRelease?.created_at ?? '');
       for (const commit of commits) {
         const date = Date.parse(commit.commit.author.date);
         if (date > prevReleaseDate) {

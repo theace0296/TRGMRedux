@@ -17,7 +17,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.5.2
 
       - name: Copy mission files to templates
         run: |
@@ -90,7 +90,7 @@ jobs:
         shell: pwsh
 
       - name: Deploy Nightly Release
-        uses: WebFreak001/deploy-nightly@v1.1.0
+        uses: WebFreak001/deploy-nightly@v2.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

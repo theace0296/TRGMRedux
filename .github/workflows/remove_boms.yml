@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the source code
-      uses: actions/checkout@master
+      uses: actions/checkout@v3.5.2
     - name: Remove BOMs
       run: python3 Tools/remove_bom.py
     - name: Create PR with BOMs removed
