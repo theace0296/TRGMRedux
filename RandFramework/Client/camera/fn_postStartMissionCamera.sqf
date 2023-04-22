@@ -4,8 +4,10 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 params ["_isHiddenObj", "_bMoveToAO"];
 
+if (!hasInterface) exitWith {};
 
-if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "NOTRUN"]) isEqualTo "COMPLETE")}) then {
+
+if ((player getVariable ["TRGM_postStartMissionCamRunning", "NOTRUN"]) isNotEqualTo "COMPLETE") then {
     player setVariable ["TRGM_postStartMissionCamRunning", "RUNNING", true];
     private _locationText = [TRGM_VAR_ObjectivePositions select 0] call TRGM_GLOBAL_fnc_getLocationName;
     private _hour = floor daytime;
@@ -93,6 +95,25 @@ if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "
     _pos1 = [_pos1 select 0,_pos1 select 1,selectRandom[10,20]];
     _pos2 = [_pos2 select 0,_pos2 select 1,selectRandom[10,20]];
 
+    [] spawn {
+        if (!hasInterface) exitWith {};
+        private _timeout = 0;
+        waitUntil {
+            sleep 1;
+            _timeout = _timeout + 1;
+            _timeout > 15 || (player getVariable ["TRGM_postStartMissionCamRunning", "NOTRUN"]) isEqualTo "ENDING";
+        };
+        titleCut ["", "BLACK in", 5];
+        private _camera = player getVariable "TRGM_postStartMissionCam";
+        if !(isNil "_camera") then {
+            _camera cameraEffect ["Terminate","back"];
+            player setVariable ["TRGM_postStartMissionCam", nil, true];
+        };
+        sleep 10;
+        player allowdamage true;
+        player doFollow player;
+        player setVariable ["TRGM_postStartMissionCamRunning", "COMPLETE", true];
+    };
 
     private _camera = "camera" camCreate _pos1;
     player setVariable ["TRGM_postStartMissionCam", _camera, true];
@@ -109,7 +130,7 @@ if (hasInterface && {!((player getVariable ["TRGM_postStartMissionCamRunning", "
     _camera camCommitPrepared 46;
 
     sleep 3;
-    any= [_LineThree,_LineFour]spawn BIS_fnc_infotext;
+    [_LineThree,_LineFour] spawn BIS_fnc_infotext;
 
     sleep 3;
     titleCut ["", "BLACK out", 5];

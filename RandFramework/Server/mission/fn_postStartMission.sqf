@@ -47,8 +47,6 @@ if (_bMoveToAO) then {
     } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
 };
 
-[] remoteExec ["TRGM_CLIENT_fnc_postStartMissionEndCamera", [0, -2] select isMultiplayer, true];
-
 sleep 3;
 saveGame;
 sleep 1;
