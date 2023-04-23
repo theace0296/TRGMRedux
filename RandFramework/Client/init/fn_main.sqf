@@ -70,7 +70,7 @@ call TRGM_CLIENT_fnc_endCamera;
 sleep 3;
 
 if (TRGM_VAR_AdminPlayer isEqualTo player) then {
-    if !(TRGM_VAR_iMissionIsCampaign) then {    //if isCampaign, dont allow to select AO
+    if (!TRGM_VAR_iMissionIsCampaign && !TRGM_VAR_bLoadTest) then {    //if isCampaign or load test, dont allow to select AO
 
         if (call TRGM_GETTER_fnc_bManualAOPlacement) then {
             TRGM_VAR_iMissionParamLocations    = []; publicVariable "TRGM_VAR_iMissionParamLocations";

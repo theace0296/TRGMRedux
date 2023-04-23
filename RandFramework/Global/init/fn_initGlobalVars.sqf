@@ -2,6 +2,9 @@
 /////// Debug Mode ///////
 TRGM_VAR_bDebugMode = [false, true] select ((["DebugMode", 0] call BIS_fnc_getParamValue) isEqualTo 1);
 publicVariable "TRGM_VAR_bDebugMode";
+/////// Load Test ///////
+TRGM_VAR_bLoadTest = [false, true] select ((["LoadTest", 0] call BIS_fnc_getParamValue) isEqualTo 1);
+publicVariable "TRGM_VAR_bLoadTest";
 format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 
@@ -172,6 +175,10 @@ publicVariable "TRGM_VAR_OverrideMissionSetup";
 
 if (TRGM_VAR_OverrideMissionSetup) then {
     call CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars;
+};
+
+if (TRGM_VAR_bLoadTest) then {
+    call CUSTOM_MISSION_fnc_LoadTest;
 };
 
 // if (isNil "TRGM_VAR_TopLeftPos") then { TRGM_VAR_TopLeftPos = [25.4257,8173.69,0]; publicVariable "TRGM_VAR_TopLeftPos"; };
