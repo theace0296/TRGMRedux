@@ -195,9 +195,9 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _mrkMeetingHVTMarker setMarkerType "o_inf";
         _mrkMeetingHVTMarker setMarkerText format["HVT %1",name(_mainHVT)];
         [_mainHVT, _hvtVehicle,_mrkMeetingHVTMarker] spawn {
-            _mainHVT = _this select 0;
-            _hvtVehicle = _this select 1;
-            _mrkMeetingHVTMarker = _this select 2;
+            private _mainHVT = _this select 0;
+            private _hvtVehicle = _this select 1;
+            private _mrkMeetingHVTMarker = _this select 2;
             waitUntil {
                 _mrkMeetingHVTMarker setMarkerPos ([_hvtVehicle] call TRGM_GLOBAL_fnc_getRealPos);
                 sleep 5;
@@ -207,7 +207,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         if (_hasInformant && !isNil "_guardUnit3") then {
             [_guardUnit3] spawn {
-                _guardUnit3 = _this select 0;
+                private _guardUnit3 = _this select 0;
                 waitUntil { sleep 2; vehicle _guardUnit3 isEqualTo _guardUnit3; };
                 _guardUnit3 switchMove "Acts_JetsCrewaidLCrouch_in";
                 _guardUnit3 disableAI "anim";
@@ -225,11 +225,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _mainHVT setVariable ["ObjectiveParams", [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
         missionNamespace setVariable [format ["missionObjectiveParams%1", _iTaskIndex], [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
         [_mainHVT, _iTaskIndex, _bIsMainObjective] spawn {
-            _mainHVT = _this select 0;
-            _iTaskIndex = _this select 1;
-            _bIsMainObjective = _this select 2;
+            private _mainHVT = _this select 0;
+            private _iTaskIndex = _this select 1;
+            private _bIsMainObjective = _this select 2;
             waitUntil {
-                _mainHVTTrigger = _mainHVT getVariable "TRGM_VAR_hvtTrigger";
+                private _mainHVTTrigger = _mainHVT getVariable "TRGM_VAR_hvtTrigger";
                 if (!isNil "_mainHVTTrigger") then {
                     deleteVehicle _mainHVTTrigger;
                 };

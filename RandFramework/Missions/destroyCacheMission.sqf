@@ -57,7 +57,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     [_mainObjPos,100,!(_markerType isEqualTo "empty"),true,_target1, _isCache] spawn TRGM_SERVER_fnc_setTargetEvent;
 
     [_target1] spawn {
-        _target1 = _this select 0;
+        private _target1 = _this select 0;
         waitUntil { !alive _target1; };
         [_target1] spawn TRGM_SERVER_fnc_updateTask;
     };

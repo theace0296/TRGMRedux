@@ -223,7 +223,7 @@ if (_debugMode) then {
 
 if (!_paraDrop) then {
     _helo doMove [(_hPadPos select 0), (_hPadPos select 1), 200];
-    waitUntil {sleep 2; (_helo distance2D [(_hPadPos select 0), (_hPadPos select 1), 200]) < 200;};
+    waitUntil {sleep 2; !(alive _helo) || (_helo distance2D [(_hPadPos select 0), (_hPadPos select 1), 200]) < 200;};
     _helo land "GET OUT";
 
     //wait until the helicopter is touching the ground before ejecting the cargo
@@ -234,7 +234,7 @@ if (!_paraDrop) then {
     {_x disableCollisionWith _helo} forEach units _infGrp;
     _helo flyInHeight 200;
     _helo doMove [(_hPadPos select 0), (_hPadPos select 1), 200];
-    waitUntil {sleep 2; (_helo distance2D [(_hPadPos select 0), (_hPadPos select 1), 200]) < 200;};
+    waitUntil {sleep 2; !(alive _helo) || (_helo distance2D [(_hPadPos select 0), (_hPadPos select 1), 200]) < 200;};
 
     [units _infGrp] spawn TRGM_GLOBAL_fnc_para;
 };
@@ -245,15 +245,16 @@ if (_debugMode) then {player globalChat format ["Helo Cargo Count: %1", {alive _
 
 _helo doMove [0, 0, 200];
 
-[_helo, _heloCrew] spawn {
-    waitUntil {sleep 2; (_helo distance2D [(_hPadPos select 0), (_hPadPos select 1), 200]) > 3000;};
-    private _helo = _this select 0;
-    private _heloGroup = _this select 1;
+[_helo, _heloCrew, _hPadPos] spawn {
+    private _heloLocal = _this select 0;
+    private _heloGroupLocal = _this select 1;
+    private _hPadPosLocal = _this select 3;
+    waitUntil {sleep 2; (_heloLocal distance2D [(_hPadPosLocal select 0), (_hPadPosLocal select 1), 200]) > 3000;};
     {
         deleteVehicle _x;
     }
-    forEach crew _helo + [_helo];
-    deleteGroup _heloGroup;
+    forEach crew _heloLocal + [_heloLocal];
+    deleteGroup _heloGroupLocal;
 };
 
 if (_debugMode) then {

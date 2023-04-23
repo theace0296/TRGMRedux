@@ -90,7 +90,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
     _allTargets = [_target1, _target2, _target3];
     [_allTargets] spawn {
-        _allTargets = _this select 0;
+        private _allTargets = _this select 0;
         waitUntil { ({!alive _x} count _allTargets) isEqualTo (count _allTargets); };
         [_allTargets select 0] spawn TRGM_SERVER_fnc_updateTask;
     };

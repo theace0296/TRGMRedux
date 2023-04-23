@@ -151,8 +151,6 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         //_hvtChopper allowDamage false;
 
-
-
         _mainHVT assignAsDriver _hvtChopper;
         _mainHVT moveInDriver _hvtChopper;
 
@@ -184,8 +182,8 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _mrkMeetingHVTMarker setMarkerType "o_inf";
         _mrkMeetingHVTMarker setMarkerText format[localize "STR_TRGM2_MeetingAssassinationMissionHVTMarker",name(_mainHVT)];
         [_hvtChopper,_mrkMeetingHVTMarker] spawn {
-            _hvtChopper = _this select 0;
-            _mrkMeetingHVTMarker = _this select 1;
+            private _hvtChopper = _this select 0;
+            private _mrkMeetingHVTMarker = _this select 1;
             waitUntil {
                 _mrkMeetingHVTMarker setMarkerPos ([_hvtChopper] call TRGM_GLOBAL_fnc_getRealPos);
                 sleep 5;
@@ -217,44 +215,38 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         [_hvtGroup, 1] setWaypointSpeed "LIMITED";
 
         [_guardUnit3,_meetingPos] spawn {
-               _guardUnit3 = _this select 0;
-               _meetingPos = _this select 1;
-               _moveToPos = (_meetingPos) getPos [3,selectRandom[1, 95, 180, 270]];
-               _hvtGuardGroup = group _guardUnit3;
-               waitUntil {sleep 2; !alive(_guardUnit3) || isTouchingGround (vehicle _guardUnit3)};
-               _guardUnit3 enableAI "MOVE"; //for some reason, sometimes this guy will just stay in the water???
-             _guardUnit3 enableAI "FSM";
-               unassignVehicle _guardUnit3;
-               doGetOut _guardUnit3;
-               _wpHvtGuardMeet1 = _hvtGuardGroup addWaypoint [_moveToPos, 0];
-               [_hvtGuardGroup, 1] setWaypointSpeed "LIMITED";
-           };
+            private _guardUnit3 = _this select 0;
+            private _meetingPos = _this select 1;
+            private _moveToPos = (_meetingPos) getPos [3,selectRandom[1, 95, 180, 270]];
+            private _hvtGuardGroup = group _guardUnit3;
+            waitUntil {sleep 2; !alive(_guardUnit3) || isTouchingGround (vehicle _guardUnit3)};
+            _guardUnit3 enableAI "MOVE"; //for some reason, sometimes this guy will just stay in the water???
+            _guardUnit3 enableAI "FSM";
+            unassignVehicle _guardUnit3;
+            doGetOut _guardUnit3;
+            _wpHvtGuardMeet1 = _hvtGuardGroup addWaypoint [_moveToPos, 0];
+            [_hvtGuardGroup, 1] setWaypointSpeed "LIMITED";
+        };
 
         waitUntil {sleep 1; (currentWaypoint group _mainHVT) >= 6 };
         //sleep 5;
-          _hvtGroup setSpeedMode "LIMITED";
-          _hvtGroup setBehaviour "CARELESS";
+        _hvtGroup setSpeedMode "LIMITED";
+        _hvtGroup setBehaviour "CARELESS";
         _hvtGuardGroup setSpeedMode "LIMITED";
-          _hvtGuardGroup setBehaviour "CARELESS";
-
-
-
+        _hvtGuardGroup setBehaviour "CARELESS";
 
         sleep 9;
-        if (true)  then {
-            [_guardUnit3] spawn {
-                _guardUnit3 = _this select 0;
-                _guardUnit3 switchMove "Acts_JetsCrewaidLCrouch_in";
-                _guardUnit3 disableAI "anim";
-                sleep 2.2;
-                _guardUnit3 switchMove "Acts_JetsCrewaidLCrouch_out";
-                _guardUnit3 enableAI "anim";
-                sleep 3;
-                _guardUnit3 switchMove "";
-                _guardUnit3 call BIS_fnc_ambientAnim__terminate;
-            };
+        [_guardUnit3] spawn {
+            private _guardUnit3 = _this select 0;
+            _guardUnit3 switchMove "Acts_JetsCrewaidLCrouch_in";
+            _guardUnit3 disableAI "anim";
+            sleep 2.2;
+            _guardUnit3 switchMove "Acts_JetsCrewaidLCrouch_out";
+            _guardUnit3 enableAI "anim";
+            sleep 3;
+            _guardUnit3 switchMove "";
+            _guardUnit3 call BIS_fnc_ambientAnim__terminate;
         };
-
 
         //["waypoint wait"] call TRGM_GLOBAL_fnc_notify;
         _bWalkEnded = false;
@@ -281,8 +273,8 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _hvtGroup setBehaviour "SAFE";
         _hvtGuardGroup setBehaviour "SAFE";
            [_mainHVT,_guardUnit1] spawn {
-               _guardUnit1 = _this select 1;
-               _doLoop = true;
+               private _guardUnit1 = _this select 1;
+               private _doLoop = true;
                waitUntil {
                    if (behaviour (_this select 0) isEqualTo "combat" || !alive(_this select 0) || (TRGM_VAR_TimeSinceLastSpottedAction > (call TRGM_GETTER_fnc_iGetSpottedDelay))) then { //TRGM_VAR_TimeSinceLastSpottedAction : is set to current time when it is called, cooldown is choosen in adv mission settings
                        (_this select 0) call BIS_fnc_ambientAnim__terminate;
@@ -299,21 +291,22 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         };
         [_guardUnit3,_guardUnit1] spawn {
-            _guardUnit1 = _this select 1;
-               _doLoop = true;
-               waitUntil {
-                   if (behaviour (_this select 0) isEqualTo "combat" || !alive(_this select 0) || (TRGM_VAR_TimeSinceLastSpottedAction > (call TRGM_GETTER_fnc_iGetSpottedDelay))) then {
-                       (_this select 0) call BIS_fnc_ambientAnim__terminate;
-                    (_this select 0) enableAI "anim";
-                    group (_this select 0) setSpeedMode "FULL";
-                    group (_this select 0) setBehaviour "CARELESS";
+            private _guardUnit3 = _this select 0;
+            private _guardUnit1 = _this select 1;
+            private _doLoop = true;
+            waitUntil {
+                if (behaviour _guardUnit3 isEqualTo "combat" || !(alive _guardUnit3) || (TRGM_VAR_TimeSinceLastSpottedAction > (call TRGM_GETTER_fnc_iGetSpottedDelay))) then {
+                    _guardUnit3 call BIS_fnc_ambientAnim__terminate;
+                    _guardUnit3 enableAI "anim";
+                    group _guardUnit3 setSpeedMode "FULL";
+                    group _guardUnit3 setBehaviour "CARELESS";
                     _smoker = "SmokeShellRed" createVehicle ([_guardUnit1] call TRGM_GLOBAL_fnc_getRealPos);
                     _smoker setDamage 1;
                     sleep 20;
-                   };
-                   if (!alive(_this select 0)) then {_doLoop = false};
-                   !_doLoop;
-               }
+                };
+                if (!(alive _guardUnit3)) then {_doLoop = false};
+                !_doLoop;
+            };
         };
 
         _distanceFromMeeting = (_mainHVT distance _guardUnit1);

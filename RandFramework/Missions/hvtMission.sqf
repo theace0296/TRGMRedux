@@ -87,12 +87,13 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
     if (_hvtType isNotEqualTo "RESCUE") then {
         [_objInformant, _initPos] spawn {
+            params ["_objInformantInner", "_initPosInner"];
             waitUntil {
                 sleep 10;
-                if (((this # 0) distance (_this # 1)) > 100) then {
-                    (this # 0) setPos (_this # 1);
+                if (alive _objInformantInner && (_objInformantInner distance _initPosInner) > 100) then {
+                    _objInformantInner setPos _initPosInner;
                 };
-                !(alive (_this # 0));
+                !(alive _objInformantInner);
             };
         };
     };
@@ -194,7 +195,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         if (!_bIsMainObjective && _hvtType isEqualTo "KILL") then {
             [_objInformant] spawn {
-                _objInformant = _this select 0;
+                private _objInformant = _this select 0;
                 waitUntil { !alive(_objInformant) };
                 _objInformant spawn TRGM_SERVER_fnc_updateTask;
             };
