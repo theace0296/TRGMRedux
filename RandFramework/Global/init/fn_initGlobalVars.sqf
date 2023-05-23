@@ -288,8 +288,6 @@ if (isNil "TRGM_VAR_ForceEndSandStorm")                       then {TRGM_VAR_For
 if (isNil "TRGM_VAR_ForceMissionSetup")                       then {TRGM_VAR_ForceMissionSetup = false;                               publicVariable "TRGM_VAR_ForceMissionSetup";};
 if (isNil "TRGM_VAR_HiddenPositions")                         then {TRGM_VAR_HiddenPositions = [];                                    publicVariable "TRGM_VAR_HiddenPositions";};
 if (isNil "TRGM_VAR_ISUNSUNG")                                then {TRGM_VAR_ISUNSUNG = false;                                        publicVariable "TRGM_VAR_ISUNSUNG";};
-if (isNil "TRGM_VAR_InfTaskCount")                            then {TRGM_VAR_InfTaskCount = 0;                                        publicVariable "TRGM_VAR_InfTaskCount";};
-if (isNil "TRGM_VAR_InfTaskStarted")                          then {TRGM_VAR_InfTaskStarted = false;                                  publicVariable "TRGM_VAR_InfTaskStarted";};
 if (isNil "TRGM_VAR_IntroMusic")                              then {TRGM_VAR_IntroMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic;   publicVariable "TRGM_VAR_IntroMusic";};
 if (isNil "TRGM_VAR_IsFullMap")                               then {TRGM_VAR_IsFullMap = false;                                       publicVariable "TRGM_VAR_IsFullMap";};
 if (isNil "TRGM_VAR_IsSnowMap")                               then {TRGM_VAR_IsSnowMap = false;                                       publicVariable "TRGM_VAR_IsSnowMap";};

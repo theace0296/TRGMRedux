@@ -94,7 +94,6 @@ if (_bAllowStart) then {
                 };
             } forEach allGroups;
 
-            TRGM_VAR_InfTaskCount =  0; publicVariable "TRGM_VAR_InfTaskCount";
             TRGM_VAR_ActiveTasks =  []; publicVariable "TRGM_VAR_ActiveTasks";
             TRGM_VAR_ObjectivePositions =  []; publicVariable "TRGM_VAR_ObjectivePositions";
             TRGM_VAR_bCommsBlocked =  [false]; publicVariable "TRGM_VAR_bCommsBlocked";

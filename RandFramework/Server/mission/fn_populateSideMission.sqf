@@ -10,7 +10,8 @@ params [
 ];
 format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
-private _populateSideMissionHandles = [];
+[format ["Mission Setup: Task: %1 - Populating Side Mission", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 50]; };
 
 call TRGM_SERVER_fnc_initMissionVars;
 
@@ -145,11 +146,11 @@ if (!_bFriendlyInsurgents) then {
         //Spawn patrol
         //if main need a couple of these and always have 2 or 3
 
-        ["InitSniperCreator", true] call TRGM_GLOBAL_fnc_log;
         if (call _randomChance) then {
-            _populateSideMissionHandles pushBack ([_sidePos] spawn TRGM_SERVER_fnc_createEnemySniper);
+            [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding sniper positions", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+            if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 52]; };
+            [_sidePos] call TRGM_SERVER_fnc_createEnemySniper;
         };
-        ["EndSniperCreator", true] call TRGM_GLOBAL_fnc_log;
         private _bHasPatrols = false;
         if (_bIsMainObjective) then {_bHasPatrols = true};
 
@@ -158,10 +159,14 @@ if (!_bFriendlyInsurgents) then {
         if (_minimission) then {
             if (random 1 < .50) then {
                 if (random 1 < .50) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 54]; };
+                    [_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
                 }
                 else {
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [300,0],180 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 54]; };
+                    [_sidePos getPos [300,0],180 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                 };
             };
         }
@@ -174,38 +179,89 @@ if (!_bFriendlyInsurgents) then {
                 };
 
                 if (_bIsMainObjective) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,250 + (floor random 400),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos,250 + (floor random 100),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [300,0],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [300,90],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [300,180],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [300,270],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [600,45],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [600,135],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [600,225],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [600,315],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 56]; };
+                    [_sidePos,250 + (floor random 400),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 58]; };
+                    [_sidePos,250 + (floor random 100),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 60]; };
+                    [_sidePos getPos [300,0],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 62]; };
+                    [_sidePos getPos [300,90],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 64]; };
+                    [_sidePos getPos [300,180],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 66]; };
+                    [_sidePos getPos [300,270],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 68]; };
+                    [_sidePos getPos [600,45],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 70]; };
+                    [_sidePos getPos [600,135],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 72]; };
+                    [_sidePos getPos [600,225],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 74]; };
+                    [_sidePos getPos [600,315],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                 }
                 else {
-                    _populateSideMissionHandles pushBack ([_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos,800 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 200] spawn TRGM_SERVER_fnc_buildingPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [400,0],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [400,90],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [400,180],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
-                    _populateSideMissionHandles pushBack ([_sidePos getPos [400,270],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 56]; };
+                    [_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 59]; };
+                    [_sidePos,800 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 200] call TRGM_SERVER_fnc_buildingPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 62]; };
+                    [_sidePos getPos [400,0],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 68]; };
+                    [_sidePos getPos [400,90],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 70]; };
+                    [_sidePos getPos [400,180],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 74]; };
+                    [_sidePos getPos [400,270],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                 };
 
 
             }
             else {
                 if (_bIsMainObjective) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 74]; };
+                    [_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                     if ((call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective)) then {
-                        _populateSideMissionHandles pushBack ([_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                        [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                        [_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                     };
                 };
                 if (call _randomChance) then {
                     //not adding a teamleader to small patrol as we need long dist to have teamleader for CallNearbyPatrols (3rd param for RadiusPatrol is false)
-                    _populateSideMissionHandles pushBack ([_sidePos,15 + (floor random 50),[2,3],false,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 74]; };
+                    [_sidePos,15 + (floor random 50),[2,3],false,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                     _bHasPatrols = true
                 };
 
@@ -213,18 +269,24 @@ if (!_bFriendlyInsurgents) then {
                 //Spawn wide patrol
                 //if main, need a couple of these and always have 2 or 3
                 if (_bIsMainObjective) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,500 + (floor random 250),[7,8,9],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 76]; };
+                    [_sidePos,500 + (floor random 250),[7,8,9],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                 }
                 else {
                     if (call _randomChance) then {
-                        _populateSideMissionHandles pushBack ([_sidePos,500 + (floor random 250),[4,5,6],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                        [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                        if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 76]; };
+                        [_sidePos,500 + (floor random 250),[4,5,6],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                         _bHasPatrols = true
                     };
                 };
 
                 if ((_bIsMainObjective && (call _randomChance))) then {
                     if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
-                        _populateSideMissionHandles pushBack ([_sidePos,900 + (floor random 250),[7,8,9,10],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_radiusPatrol);
+                        [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                        if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 78]; };
+                        [_sidePos,900 + (floor random 250),[7,8,9,10],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
                     };
                 };
 
@@ -232,20 +294,28 @@ if (!_bFriendlyInsurgents) then {
 
                 //Spawn patrol to move from building to building
                 if (_bIsMainObjective || (call _randomChance)) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 80]; };
+                    [_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
                     _bHasPatrols = true
                 };
                 if (_bIsMainObjective && call TRGM_GETTER_fnc_bAllowLargerPatrols) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10] spawn TRGM_SERVER_fnc_buildingPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 82]; };
+                    [_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
                 };
 
                 //Spawn distant patrol ready to move in (will need to spawn trigger)
                 if (_bIsMainObjective || (call _randomChance) ) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,1000 + (floor random 500),[5,6],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_backForthPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 84]; };
+                    [_sidePos,1000 + (floor random 500),[5,6],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_backForthPatrol;
                     _bHasPatrols = true
                 };
                 if (_bIsMainObjective && call TRGM_GETTER_fnc_bAllowLargerPatrols) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,1000 + (floor random 500),[5,6,7],true,TRGM_VAR_EnemySide] spawn TRGM_SERVER_fnc_backForthPatrol);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 86]; };
+                    [_sidePos,1000 + (floor random 500),[5,6,7],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_backForthPatrol;
                 };
             };
         };
@@ -341,21 +411,34 @@ if (!_bFriendlyInsurgents) then {
 
         if (_minimission) then {
             if (call _randomChance) then {
-                _populateSideMissionHandles pushBack ([_sidePos,100,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses);
+                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 88]; };
+                [_sidePos,100,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
             };
         } else {
             //if main then 100% occupie houses, and increase number and range
-            _populateSideMissionHandles pushBack ([_sidePos,10,[1],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses);
+            [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+            [_sidePos,10,[1],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
             if (_bIsMainObjective || (call _randomChance)) then {
-                _populateSideMissionHandles pushBack ([_sidePos,200,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses);
-                _populateSideMissionHandles pushBack ([_sidePos,500,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses);
+                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 88]; };
+                [_sidePos,200,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
+                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 89]; };
+                [_sidePos,500,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
-                    _populateSideMissionHandles pushBack ([_sidePos,1000,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses);
+                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 90]; };
+                    [_sidePos,1000,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
                 };
             }
             else {
-                _populateSideMissionHandles pushBack ([_sidePos,100,[1,2],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses);
-                _populateSideMissionHandles pushBack ([_sidePos,1000,[1,2,3,4],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] spawn TRGM_SERVER_fnc_occupyHouses);
+                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 88]; };
+                [_sidePos,100,[1,2],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
+                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 90]; };
+                [_sidePos,1000,[1,2,3,4],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
             };
         };
 
@@ -755,13 +838,16 @@ if (!_bFriendlyInsurgents) then {
         };
     };
 } else {
-    _populateSideMissionHandles pushBack ([_sidePos,200,true] spawn TRGM_SERVER_fnc_spawnCivs); //3rd param of true says these are rebels and function will set rebels instead of civs
+    [format ["Mission Setup: Task: %1 - Populating Side Mission - Spawning civilians", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+    [_sidePos,200,true] call TRGM_SERVER_fnc_spawnCivs; //3rd param of true says these are rebels and function will set rebels instead of civs
     private _lapPos = _sidePos getPos [50, 180];
     private _markerFriendlyRebs = createMarker [format["mrkFriendlyRebs%1",_iTaskIndex], _lapPos];
     _markerFriendlyRebs setMarkerShape "ICON";
     _markerFriendlyRebs setMarkerType "hd_dot";
     _markerFriendlyRebs setMarkerText (localize "STR_TRGM2_trendFunctions_OccupiedByFriendRebel");
 };
+
+if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 92]; };
 
 if (call _randomChance) then {
     private _iAnimalCount = 0;
@@ -834,9 +920,11 @@ if (call _randomChance) then {
 
 if ((call _randomChance) || _bThisMissionCivsOnly) then {
     TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["\n\ntrendFunctions.sqf - Populate Civs : _bFriendlyInsurgents: %1 - _bThisMissionCivsOnly: %2 ",str(_bFriendlyInsurgents),str(_bThisMissionCivsOnly)];
-    _populateSideMissionHandles pushBack ([_sidePos,200,false] spawn TRGM_SERVER_fnc_spawnCivs);
+    [format ["Mission Setup: Task: %1 - Populating Side Mission - Spawning civilians", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
+    [_sidePos,200,false] call TRGM_SERVER_fnc_spawnCivs;
 };
 
+if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 95]; };
 
 //Spawn AT Mine on road if not vehicles and hack data mission
 if (_sideType isEqualTo 1 && random 1 < .50) then {
@@ -848,9 +936,5 @@ if (_sideType isEqualTo 1 && random 1 < .50) then {
         };
     };
 };
-
-private _startTime = time;
-private _timeout = 300 min (count _populateSideMissionHandles);
-waitUntil { sleep 5; (({scriptDone _x;} count _populateSideMissionHandles) isEqualTo (count _populateSideMissionHandles)) || time - _startTime >= _timeout; };
 
 true;

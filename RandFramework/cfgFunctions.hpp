@@ -25,6 +25,7 @@ class TRGM_SERVER {
         file = "RandFramework\Server\mission";
         class attemptEndMission {};
         class finalSetupCleaner {};
+        class generateObjective {};
         class initMissionVars {};
         class populateSideMission {};
         class postStartMission {};
