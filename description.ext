@@ -274,35 +274,35 @@ class Params
         title = "Enable Debugging Mode";
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
-        default = 1;
+        default = 0;
     };
     class ResetMissionSettings
     {
         title = "Reset all saved mission settings to default values";
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
-        default = 1;
+        default = 0;
     };
     class RecalculateFactionData
     {
         title = "Ignores faction data saved in profile and re-parses config";
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
-        default = 1;
+        default = 0;
     };
     class RecalculateLocationData
     {
         title = "Ignores location data saved in profile and re-parses config";
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
-        default = 1;
+        default = 0;
     };
     class LoadTest
     {
         title = "Enable Load Test";
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
-        default = 1;
+        default = 0;
     };
 };
 
