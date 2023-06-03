@@ -212,7 +212,7 @@ while {count _populateObjectiveArgs > 0 || count _activeObjectiveHandles > 0} do
 
     _activeObjectiveHandles = _activeObjectiveHandles - _handlesToRemove;
 
-    if (count _activeObjectiveHandles <= 3) then {
+    if (count _activeObjectiveHandles <= 3 && count _populateObjectiveArgs > 0) then {
         private _args = _populateObjectiveArgs # 0;
         _populateObjectiveArgs = _populateObjectiveArgs - [_args];
         _activeObjectiveHandles pushBack [_args # 0, (_args spawn TRGM_SERVER_fnc_generateObjective)];

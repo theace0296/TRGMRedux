@@ -85,7 +85,7 @@ if (count _TowersNear > 0) then {
 
 ["Mission Events: CommsEND", true] call TRGM_GLOBAL_fnc_log;
 
-private _chanceOfOccurance = 0.2;
+private _chanceOfOccurance = selectRandom [0, 0.1, 0.2];
 private _setOtherEventsHandles = [];
 
 if (random 1 < _chanceOfOccurance) then {
@@ -151,34 +151,40 @@ if (random 1 < _chanceOfOccurance) then {
 
 //these are more likely to show (instead of using TRGM_VAR_ChanceOfOccurance), as a lot of times, these are not a trap, just an empty vehicle or a pile of rubbish
 
-private _chanceOfIEDEvent = 0.66;
+private _chanceOfIEDEvent = selectRandom [0, 0.33, 0.66];
 
 if (random 1 < _chanceOfIEDEvent) then {
+    _chanceOfIEDEvent = _chanceOfIEDEvent - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     _setOtherEventsHandles pushBack _handle;
 };
 
 if (random 1 < _chanceOfIEDEvent) then {
+    _chanceOfIEDEvent = _chanceOfIEDEvent - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     _setOtherEventsHandles pushBack _handle;
 };
 
 if (random 1 < _chanceOfIEDEvent) then {
+    _chanceOfIEDEvent = _chanceOfIEDEvent - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     _setOtherEventsHandles pushBack _handle;
 };
 
 if (random 1 < _chanceOfIEDEvent) then {
+    _chanceOfIEDEvent = _chanceOfIEDEvent - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     _setOtherEventsHandles pushBack _handle;
 };
 
 if (random 1 < _chanceOfIEDEvent) then {
+    _chanceOfIEDEvent = _chanceOfIEDEvent - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     _setOtherEventsHandles pushBack _handle;
 };
 
 if (random 1 < _chanceOfIEDEvent) then {
+    _chanceOfIEDEvent = _chanceOfIEDEvent - 0.05;
     private _handle = [_mainObjPos] spawn TRGM_SERVER_fnc_setIEDEvent;
     _setOtherEventsHandles pushBack _handle;
 };

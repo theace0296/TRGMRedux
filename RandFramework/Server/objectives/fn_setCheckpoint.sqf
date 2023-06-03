@@ -157,11 +157,7 @@ if (_thisRoadonly) then {
     };
 };
 
-if ({
-    _x distance _roadBlockPos < 250 && side _x != _thisside
-} count allunits > 0) exitwith {
-    false;
-};
+if ({ _x distance _roadBlockPos < 250 && side _x != _thisside } count allunits > 0) exitwith { false; };
 
 if (_thisIsCheckPoint && _thisside isEqualto TRGM_VAR_Enemyside) then {
     // TRGM_VAR_CheckPointAreas

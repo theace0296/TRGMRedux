@@ -127,6 +127,7 @@ class TRGM_GLOBAL {
         file = "RandFramework\Global\common";
         class addPlayerActionPersistent {};
         class animateAnimals {};
+        class callbackWhenPlayersNearby {};
         class callNearbyPatrol {};
         class callUAVFindObjective {};
         class carryAndJoinWounded {};

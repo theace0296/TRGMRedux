@@ -15,6 +15,14 @@ if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMi
 
 call TRGM_SERVER_fnc_initMissionVars;
 
+// percent range is 50-95
+private _fnc_setPopulateSideMissionCompletionPercent = {
+    private _percent = _this # 0;
+    private _message = _this # 1;
+    [format ["Mission Setup: Task: %1 - Populating Side Mission - %2", _iTaskIndex, _message], true] call TRGM_GLOBAL_fnc_log;
+    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, _percent]; };
+};
+
 private _dAngleAdustPerLoop = 0;
 private _bHasVehicle = false;
 
@@ -147,9 +155,8 @@ if (!_bFriendlyInsurgents) then {
         //if main need a couple of these and always have 2 or 3
 
         if (call _randomChance) then {
-            [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding sniper positions", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-            if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 52]; };
-            [_sidePos] call TRGM_SERVER_fnc_createEnemySniper;
+            [52, "Adding sniper positions"] call _fnc_setPopulateSideMissionCompletionPercent;
+            [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_createEnemySniper; }, [_sidePos]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
         };
         private _bHasPatrols = false;
         if (_bIsMainObjective) then {_bHasPatrols = true};
@@ -159,14 +166,12 @@ if (!_bFriendlyInsurgents) then {
         if (_minimission) then {
             if (random 1 < .50) then {
                 if (random 1 < .50) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 54]; };
-                    [_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+                    [53, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_buildingPatrol; }, [_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 }
                 else {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 54]; };
-                    [_sidePos getPos [300,0],180 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [53, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [300,0],180 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
             };
         }
@@ -179,89 +184,71 @@ if (!_bFriendlyInsurgents) then {
                 };
 
                 if (_bIsMainObjective) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 56]; };
-                    [_sidePos,250 + (floor random 400),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+                    [54, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_buildingPatrol; }, [_sidePos,250 + (floor random 400),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 58]; };
-                    [_sidePos,250 + (floor random 100),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+                    [55, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_buildingPatrol; }, [_sidePos,250 + (floor random 100),_patrolUnitCounts,true,TRGM_VAR_EnemySide, 10]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 60]; };
-                    [_sidePos getPos [300,0],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [56, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [300,0],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 62]; };
-                    [_sidePos getPos [300,90],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [57, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [300,90],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 64]; };
-                    [_sidePos getPos [300,180],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [58, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [300,180],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 66]; };
-                    [_sidePos getPos [300,270],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [59, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [300,270],180 + (floor random 20),_patrolUnitCounts,true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 68]; };
-                    [_sidePos getPos [600,45],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [60, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [600,45],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 70]; };
-                    [_sidePos getPos [600,135],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [61, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [600,135],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 72]; };
-                    [_sidePos getPos [600,225],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [62, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [600,225],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 74]; };
-                    [_sidePos getPos [600,315],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [63, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [600,315],200 + (floor random 50),_patrolUnitCounts,true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 }
                 else {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 56]; };
-                    [_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+                    [54, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_buildingPatrol; }, [_sidePos,250 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 10]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 59]; };
-                    [_sidePos,800 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 200] call TRGM_SERVER_fnc_buildingPatrol;
+                    [56, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_buildingPatrol; }, [_sidePos,800 + (floor random 100),[2,3],true,TRGM_VAR_EnemySide, 200]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 62]; };
-                    [_sidePos getPos [400,0],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [58, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [400,0],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 68]; };
-                    [_sidePos getPos [400,90],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [60, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [400,90],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 70]; };
-                    [_sidePos getPos [400,180],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [61, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [400,180],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
 
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 74]; };
-                    [_sidePos getPos [400,270],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [63, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos getPos [400,270],250 + (floor random 20),[2,3],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
 
 
             }
             else {
                 if (_bIsMainObjective) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 74]; };
-                    [_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [64, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                     if ((call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective)) then {
-                        [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                        [_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                        [64, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                        [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos,15 + (floor random 150),[2,3],false,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                     };
                 };
                 if (call _randomChance) then {
                     //not adding a teamleader to small patrol as we need long dist to have teamleader for CallNearbyPatrols (3rd param for RadiusPatrol is false)
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 74]; };
-                    [_sidePos,15 + (floor random 50),[2,3],false,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [64, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos,15 + (floor random 50),[2,3],false,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                     _bHasPatrols = true
                 };
 
@@ -269,24 +256,21 @@ if (!_bFriendlyInsurgents) then {
                 //Spawn wide patrol
                 //if main, need a couple of these and always have 2 or 3
                 if (_bIsMainObjective) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 76]; };
-                    [_sidePos,500 + (floor random 250),[7,8,9],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                    [65, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos,500 + (floor random 250),[7,8,9],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 }
                 else {
                     if (call _randomChance) then {
-                        [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                        if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 76]; };
-                        [_sidePos,500 + (floor random 250),[4,5,6],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                        [65, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                        [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos,500 + (floor random 250),[4,5,6],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                         _bHasPatrols = true
                     };
                 };
 
                 if ((_bIsMainObjective && (call _randomChance))) then {
                     if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
-                        [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                        if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 78]; };
-                        [_sidePos,900 + (floor random 250),[7,8,9,10],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_radiusPatrol;
+                        [66, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                        [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_radiusPatrol; }, [_sidePos,900 + (floor random 250),[7,8,9,10],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                     };
                 };
 
@@ -294,28 +278,24 @@ if (!_bFriendlyInsurgents) then {
 
                 //Spawn patrol to move from building to building
                 if (_bIsMainObjective || (call _randomChance)) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 80]; };
-                    [_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+                    [67, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_buildingPatrol; }, [_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                     _bHasPatrols = true
                 };
                 if (_bIsMainObjective && call TRGM_GETTER_fnc_bAllowLargerPatrols) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 82]; };
-                    [_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10] call TRGM_SERVER_fnc_buildingPatrol;
+                    [68, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_buildingPatrol; }, [_sidePos,1000 + (floor random 500),[3,4,5],true,TRGM_VAR_EnemySide, 10]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
 
                 //Spawn distant patrol ready to move in (will need to spawn trigger)
                 if (_bIsMainObjective || (call _randomChance) ) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 84]; };
-                    [_sidePos,1000 + (floor random 500),[5,6],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_backForthPatrol;
+                    [69, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_backForthPatrol; }, [_sidePos,1000 + (floor random 500),[5,6],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                     _bHasPatrols = true
                 };
                 if (_bIsMainObjective && call TRGM_GETTER_fnc_bAllowLargerPatrols) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Adding patrol", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 86]; };
-                    [_sidePos,1000 + (floor random 500),[5,6,7],true,TRGM_VAR_EnemySide] call TRGM_SERVER_fnc_backForthPatrol;
+                    [70, "Adding patrol"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_backForthPatrol; }, [_sidePos,1000 + (floor random 500),[5,6,7],true,TRGM_VAR_EnemySide]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
             };
         };
@@ -328,7 +308,9 @@ if (!_bFriendlyInsurgents) then {
             private _flatPos = _sidePos;
             _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[_sidePos,_sidePos]] call TRGM_GLOBAL_fnc_findSafePos;
             private _vehicle = createVehicle [selectRandom (call sMortarToUse), _flatPos, [], 0, "NONE"];
-            [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+            private _group = createGroup [TRGM_VAR_EnemySide, true];
+            [_group, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+            [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
         };
 
         //Spawn vehicle
@@ -340,27 +322,37 @@ if (!_bFriendlyInsurgents) then {
             if (_minimission) then {
                 private _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sTank1ArmedCarToUse)] call TRGM_GLOBAL_fnc_findSafePos;
                 private _vehicle = createVehicle [(call sTank1ArmedCarToUse), _flatPos, [], 0, "NONE"];
-                [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                private _group = createGroup [TRGM_VAR_EnemySide, true];
+                [_group, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
             } else {
                 private _vehiclesToUse = [(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)];
                 if (_bIsMainObjective && (call _randomChance)) then {
                     private _flatPos = [_sidePos , 10, 200, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
-                    [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    private _group = createGroup [TRGM_VAR_EnemySide, true];
+                    [_group, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
                 };
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective && (call _randomChance)) then {
                     private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
-                    [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    private _group = createGroup [TRGM_VAR_EnemySide, true];
+                    [_group, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
                 };
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
                     private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
-                    [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    private _group = createGroup [TRGM_VAR_EnemySide, true];
+                    [_group, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
                     private _flatPos = [_sidePos , 300, 1000, 8, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
-                    [(createGroup [TRGM_VAR_EnemySide, true]), _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    private _group = createGroup [TRGM_VAR_EnemySide, true];
+                    [_group, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
+                    [_group] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
                 };
             };
@@ -370,19 +362,21 @@ if (!_bFriendlyInsurgents) then {
             if (_bIsMainObjective || (call _randomChance)) then {
                 private _vehiclesToUse = [(call sTank1ArmedCarToUse),(call sTank2APCToUse),(call sTank3TankToUse)];
                 private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
-                private _vehOneGroup = (createGroup [TRGM_VAR_EnemySide, true]);
+                private _vehOneGroup = createGroup [TRGM_VAR_EnemySide, true];
                 private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
                 [_vehOneGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                 [_vehOneGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                 _vehOneGroup setSpeedMode "LIMITED";
+                [_vehOneGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
                 if (_bIsMainObjective && (call _randomChance)) then {
                     private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom _vehiclesToUse] call TRGM_GLOBAL_fnc_findSafePos;
-                    private _vehTwoGroup = (createGroup [TRGM_VAR_EnemySide, true]);
+                    private _vehTwoGroup = createGroup [TRGM_VAR_EnemySide, true];
                     private _vehicle = createVehicle [selectRandom _vehiclesToUse, _flatPos, [], 0, "NONE"];
                     [_vehTwoGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                     [_vehTwoGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                     _vehTwoGroup setSpeedMode "LIMITED";
+                    [_vehTwoGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
                 };
                 _bHasVehicle = true;
             };
@@ -391,19 +385,21 @@ if (!_bFriendlyInsurgents) then {
         if (_bIsMainObjective || (call _randomChance)) then {
             if (!_minimission || (_minimission && (call _randomChance))) then {
                 private _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
-                private _vehScountOneGroup = (createGroup [TRGM_VAR_EnemySide, true]);
+                private _vehScountOneGroup = createGroup [TRGM_VAR_EnemySide, true];
                 private _vehicle = createVehicle [selectRandom (call UnarmedScoutVehicles), _flatPos, [], 0, "NONE"];
                 [_vehScountOneGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                 [_vehScountOneGroup, _sidePos, 3000 ] call bis_fnc_taskPatrol;
                 _vehScountOneGroup setSpeedMode "LIMITED";
+                [_vehScountOneGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
             };
             if (_bIsMainObjective && (call _randomChance)) then {
                 private _flatPos = [_sidePos , 10, 500, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],selectRandom (call UnarmedScoutVehicles)] call TRGM_GLOBAL_fnc_findSafePos;
-                private _vehScoutTwoGroup = (createGroup [TRGM_VAR_EnemySide, true]);
+                private _vehScoutTwoGroup = createGroup [TRGM_VAR_EnemySide, true];
                 private _vehicle = createVehicle [selectRandom (call UnarmedScoutVehicles), _flatPos, [], 0, "NONE"];
                 [_vehScoutTwoGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                 [_vehScoutTwoGroup, _sidePos, 2000 ] call bis_fnc_taskPatrol;
                 _vehScoutTwoGroup setSpeedMode "LIMITED";
+                [_vehScoutTwoGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
             };
             _bHasVehicle = true;
 
@@ -411,44 +407,38 @@ if (!_bFriendlyInsurgents) then {
 
         if (_minimission) then {
             if (call _randomChance) then {
-                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 88]; };
-                [_sidePos,100,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
+                [74, "Occupying buildings with units"] call _fnc_setPopulateSideMissionCompletionPercent;
+                [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_occupyHouses; }, [_sidePos,100,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
             };
         } else {
             //if main then 100% occupie houses, and increase number and range
-            [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-            [_sidePos,10,[1],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
+            [71, "Occupying buildings with units"] call _fnc_setPopulateSideMissionCompletionPercent;
+            [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_occupyHouses; }, [_sidePos,10,[1],TRGM_VAR_EnemySide,_bThisMissionCivsOnly]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
             if (_bIsMainObjective || (call _randomChance)) then {
-                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 88]; };
-                [_sidePos,200,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
-                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 89]; };
-                [_sidePos,500,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
+                [72, "Occupying buildings with units"] call _fnc_setPopulateSideMissionCompletionPercent;
+                [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_occupyHouses; }, [_sidePos,200,[1,2,3],TRGM_VAR_EnemySide,_bThisMissionCivsOnly]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
+                [73, "Occupying buildings with units"] call _fnc_setPopulateSideMissionCompletionPercent;
+                [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_occupyHouses; }, [_sidePos,500,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 if (call TRGM_GETTER_fnc_bAllowLargerPatrols && _bIsMainObjective) then {
-                    [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                    if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 90]; };
-                    [_sidePos,1000,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
+                    [74, "Occupying buildings with units"] call _fnc_setPopulateSideMissionCompletionPercent;
+                    [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_occupyHouses; }, [_sidePos,1000,[4,5,6],TRGM_VAR_EnemySide,_bThisMissionCivsOnly]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
             }
             else {
-                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 88]; };
-                [_sidePos,100,[1,2],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
-                [format ["Mission Setup: Task: %1 - Populating Side Mission - Occupying buildings with units", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-                if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 90]; };
-                [_sidePos,1000,[1,2,3,4],TRGM_VAR_EnemySide,_bThisMissionCivsOnly] call TRGM_SERVER_fnc_occupyHouses;
+                [72, "Occupying buildings with units"] call _fnc_setPopulateSideMissionCompletionPercent;
+                [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_occupyHouses; }, [_sidePos,100,[1,2],TRGM_VAR_EnemySide,_bThisMissionCivsOnly]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
+                [74, "Occupying buildings with units"] call _fnc_setPopulateSideMissionCompletionPercent;
+                [_sidePos, 2500, { _this spawn TRGM_SERVER_fnc_occupyHouses; }, [_sidePos,1000,[1,2,3,4],TRGM_VAR_EnemySide,_bThisMissionCivsOnly]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
             };
         };
 
 
         if (!_minimission || (call _randomChance)) then {
-        //Spawn nasty surprise (AAA, IEDs, wider patrol)
+            //Spawn nasty surprise (AAA, IEDs, wider patrol)
             if ((_bIsMainObjective && (call _randomChance)) || (!_bIsMainObjective && (call _randomChance))) then {
                 if ((call sAAAVehMilitia) != "") then {
                     private _flatPos = [_sidePos , 10, 200, 4, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[[0,0,0],[0,0,0]],(call sAAAVehToUse)] call TRGM_GLOBAL_fnc_findSafePos;
-                    private _AAAGroup = (createGroup [TRGM_VAR_EnemySide, true]);
+                    private _AAAGroup = createGroup [TRGM_VAR_EnemySide, true];
                     private _vehicle = createVehicle [(call sAAAVehToUse), _flatPos, [], 0, "NONE"];
                     [_AAAGroup, _vehicle] call TRGM_GLOBAL_fnc_createVehicleCrew;
                     {
@@ -463,6 +453,7 @@ if (!_bFriendlyInsurgents) then {
                         _x setskill ["endurance",1.0];
                         _x setskill ["reloadSpeed",0.5];
                     } forEach units _AAAGroup;
+                    [_AAAGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
                 };
             };
         };
@@ -474,24 +465,22 @@ if (!_bFriendlyInsurgents) then {
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _checkPointGuidePos = _sidePos;
-                    private _thisAreaRange = 20000;
-                    private _flatPos = [_checkPointGuidePos , 400, _thisAreaRange, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = false;
-                        private _thisSide = TRGM_VAR_EnemySide;
-                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        private _thisAllowBarakade = (call _randomChance);
-                        private _thisIsDirectionAwayFromAO = true;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                private _checkPointGuidePos = _sidePos;
+                private _thisAreaRange = 20000;
+                private _flatPos = [_checkPointGuidePos , 400, _thisAreaRange, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = false;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = (call _randomChance);
+                    private _thisIsDirectionAwayFromAO = true;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
-                sleep 1;
+                sleep 0.1;
                 _iCount <= 0;
             };
+            [76, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
         };
 
         if (_minimission) then {
@@ -500,75 +489,68 @@ if (!_bFriendlyInsurgents) then {
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 50;
-                    private _checkPointGuidePos = _sidePos;
-                    private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _thisAreaRange = 50;
+                private _checkPointGuidePos = _sidePos;
+                private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
 
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = false;
-                        private _thisSide = TRGM_VAR_EnemySide;
-                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        private _thisAllowBarakade = false;
-                        private _thisIsDirectionAwayFromAO = true;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = false;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = false;
+                    private _thisIsDirectionAwayFromAO = true;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
-                sleep 1;
+                sleep 0.1;
                 _iCount <= 0;
             };
+            [78, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
 
             _iCount = 1;
             if (!_bIsMainObjective) then {_iCount = 2;};
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 500;
-                    private _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
-                    private _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = true;
-                        private _thisSide = TRGM_VAR_FriendlySide;
-                        private _thisUnitTypes = (call FriendlyCheckpointUnits);
-                        private _thisAllowBarakade = true;
-                        private _thisIsDirectionAwayFromAO = false;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                private _thisAreaRange = 500;
+                private _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
+                private _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_FriendlySide;
+                    private _thisUnitTypes = (call FriendlyCheckpointUnits);
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = false;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
-                sleep 1;
+                sleep 0.1;
                 _iCount <= 0;
             };
-        }
-        else {
+            [80, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
+        } else {
             //spawn inner random sentrys
             private _iCount = ([25] call TRGM_GETTER_fnc_iMoreEnemies);
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 50;
-                    private _checkPointGuidePos = _sidePos;
-                    private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                private _thisAreaRange = 50;
+                private _checkPointGuidePos = _sidePos;
+                private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
 
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = false;
-                        private _thisSide = TRGM_VAR_EnemySide;
-                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        private _thisAllowBarakade = false;
-                        private _thisIsDirectionAwayFromAO = true;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = false;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = false;
+                    private _thisIsDirectionAwayFromAO = true;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),50]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
-                sleep 1;
+                sleep 0.1;
                 _iCount <= 0;
             };
+            [76, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
 
             //spawn inner checkpoints
             _iCount = ([25] call TRGM_GETTER_fnc_iMoreEnemies);
@@ -577,24 +559,22 @@ if (!_bFriendlyInsurgents) then {
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 50;
-                    private _checkPointGuidePos = _sidePos;
-                    private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = true;
-                        private _thisSide = TRGM_VAR_EnemySide;
-                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        private _thisAllowBarakade = true;
-                        private _thisIsDirectionAwayFromAO = true;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                private _thisAreaRange = 50;
+                private _checkPointGuidePos = _sidePos;
+                private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = true;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
-                sleep 1;
+                sleep 0.1;
                 _iCount <= 0;
             };
+            [78, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
 
             //spawn outer but close surrunding checkpoints
             _iCount = ([15] call TRGM_GETTER_fnc_iMoreEnemies);
@@ -603,24 +583,22 @@ if (!_bFriendlyInsurgents) then {
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 75;
-                    private _checkPointGuidePos = _sidePos getPos [250, floor(random 360)];
-                    private _flatPos = [_checkPointGuidePos , 0, 75, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = true;
-                        private _thisSide = TRGM_VAR_EnemySide;
-                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        private _thisAllowBarakade = true;
-                        private _thisIsDirectionAwayFromAO = true;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),300] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                private _thisAreaRange = 75;
+                private _checkPointGuidePos = _sidePos getPos [250, floor(random 360)];
+                private _flatPos = [_checkPointGuidePos , 0, 75, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = true;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),300]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
-                sleep 1;
+                sleep 0.1;
                 _iCount <= 0;
             };
+            [80, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
 
             //spawn outer far checkpoints
             _iCount = ([35] call TRGM_GETTER_fnc_iMoreEnemies);
@@ -629,24 +607,22 @@ if (!_bFriendlyInsurgents) then {
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 250;
-                    private _checkPointGuidePos = _sidePos getPos [1000, floor(random 360)];
-                    private _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = true;
-                        private _thisSide = TRGM_VAR_EnemySide;
-                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        private _thisAllowBarakade = true;
-                        private _thisIsDirectionAwayFromAO = true;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                private _thisAreaRange = 250;
+                private _checkPointGuidePos = _sidePos getPos [1000, floor(random 360)];
+                private _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = true;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),500]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
-                sleep 1;
+                sleep 0.1;
                 _iCount <= 0;
             };
+            [82, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
 
             //spawn outer far sentrys
             _iCount = ([45] call TRGM_GETTER_fnc_iMoreEnemies);
@@ -655,24 +631,22 @@ if (!_bFriendlyInsurgents) then {
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 250;
-                    private _checkPointGuidePos = _sidePos getPos [1200, floor(random 360)];
-                    private _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = false;
-                        private _thisSide = TRGM_VAR_EnemySide;
-                        private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                        private _thisAllowBarakade = false;
-                        private _thisIsDirectionAwayFromAO = true;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                private _thisAreaRange = 250;
+                private _checkPointGuidePos = _sidePos getPos [1200, floor(random 360)];
+                private _flatPos = [_checkPointGuidePos , 0, 250, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = false;
+                    private _thisSide = TRGM_VAR_EnemySide;
+                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                    private _thisAllowBarakade = false;
+                    private _thisIsDirectionAwayFromAO = true;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,false,(call UnarmedScoutVehicles),500]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
-                sleep 1;
+                sleep 0.1;
                 _iCount <= 0;
             };
+            [84, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
 
 
             //future update... player faction here, or frienly rebels
@@ -682,23 +656,22 @@ if (!_bFriendlyInsurgents) then {
             if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
             waitUntil {
                 _iCount = _iCount - 1;
-                [_sidePos] spawn {
-                    private _sidePos = _this select 0;
-                    private _thisAreaRange = 500;
-                    private _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
-                    private _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                    if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                        private _thisPosAreaOfCheckpoint = _flatPos;
-                        private _thisRoadOnly = true;
-                        private _thisSide = TRGM_VAR_FriendlySide;
-                        private _thisUnitTypes = (call FriendlyCheckpointUnits);
-                        private _thisAllowBarakade = true;
-                        private _thisIsDirectionAwayFromAO = false;
-                        [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500] spawn TRGM_SERVER_fnc_setCheckpoint;
-                    };
+                private _thisAreaRange = 500;
+                private _checkPointGuidePos = _sidePos getPos [1250, floor(random 360)];
+                private _flatPos = [_checkPointGuidePos , 0, 500, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+                if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                    private _thisPosAreaOfCheckpoint = _flatPos;
+                    private _thisRoadOnly = true;
+                    private _thisSide = TRGM_VAR_FriendlySide;
+                    private _thisUnitTypes = (call FriendlyCheckpointUnits);
+                    private _thisAllowBarakade = true;
+                    private _thisIsDirectionAwayFromAO = false;
+                    [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call FriendlyScoutVehicles),500]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
                 };
+                sleep 0.1;
                 _iCount <= 0;
             };
+            [86, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
         };
 
         //Spawn Mil occupy units
@@ -719,13 +692,14 @@ if (!_bFriendlyInsurgents) then {
                 private _distanceFromBase = getMarkerPos "mrkHQ" distance getPos _x;
                 if (SelectRandom _milOccupyOdds && _distanceFromBase > TRGM_VAR_BaseAreaRange && !(_thisMilBuilPos in TRGM_VAR_OccupiedHousesPos)) then {
                     _iCount = _iCount + 1;
-                    private _MilGroup1 = (createGroup [TRGM_VAR_EnemySide, true]);
+                    private _MilGroup1 = createGroup [TRGM_VAR_EnemySide, true];
                     private _objMilUnit1 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1000,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                     private _objMilUnit2 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1002,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
                     private _objMilUnit3 = [_MilGroup1, selectRandom[(call sRiflemanToUse),(call sMachineGunManToUse)],[-1003,0,0],[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                    [_MilGroup1] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
                     TRGM_VAR_OccupiedHousesPos = TRGM_VAR_OccupiedHousesPos + [_thisMilBuilPos];
                     [getPos _x, [_objMilUnit1,_objMilUnit2,_objMilUnit3], -1, true, false,true] spawn TRGM_SERVER_fnc_zenOccupyHouse;
-                    sleep 0.2;
+                    sleep 0.1;
                     _objMilUnit1 setUnitPos "up";
                     _objMilUnit2 setUnitPos "up";
                     _objMilUnit3 setUnitPos "up";
@@ -739,10 +713,11 @@ if (!_bFriendlyInsurgents) then {
                     };
 
                     if (call _randomChance) then {
-                        private _MilGroup4 = (createGroup [TRGM_VAR_EnemySide, true]);
+                        private _MilGroup4 = createGroup [TRGM_VAR_EnemySide, true];
                         private _sCheckpointGuyName = format["objMilGuyName%1",(floor(random 999999))];
                         private _pos5 = [getpos _x , 0, 30, 5, 0, 0.5, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]],[getpos _x,getpos _x]] call TRGM_GLOBAL_fnc_findSafePos;
                         private _guardUnit5 = [_MilGroup4, (call sRiflemanToUse),_pos5,[],0,"NONE"] call TRGM_GLOBAL_fnc_createUnit;
+                        [_MilGroup4] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
                         _guardUnit5 setVariable [_sCheckpointGuyName, _guardUnit5, true];
                         missionNamespace setVariable [_sCheckpointGuyName, _guardUnit5];
                         TRGM_LOCAL_fnc_walkingGuyLoop = {
@@ -770,7 +745,7 @@ if (!_bFriendlyInsurgents) then {
                     if (count _HeliPads > 0 && !TRGM_VAR_bBaseHasChopper && (call _randomChance)) then {
                         TRGM_VAR_baseHeliPad =  selectRandom _HeliPads; publicVariable "TRGM_VAR_baseHeliPad";
                         TRGM_VAR_bBaseHasChopper =  true; publicVariable "TRGM_VAR_bBaseHasChopper";
-                        private _BaseChopperGroup = (createGroup [TRGM_VAR_EnemySide, true]);
+                        private _BaseChopperGroup = createGroup [TRGM_VAR_EnemySide, true];
                         private _EnemyBaseChopper = selectRandom (call EnemyBaseChoppers) createVehicle getPosATL TRGM_VAR_baseHeliPad;
                         _EnemyBaseChopper setDir direction TRGM_VAR_baseHeliPad;
                         [_BaseChopperGroup, call sEnemyHeliPilotToUse, [(getPos TRGM_VAR_baseHeliPad select 0)+10,(getPos TRGM_VAR_baseHeliPad select 1)+10], [], 0, "NONE"] call TRGM_GLOBAL_fnc_createUnit;
@@ -778,6 +753,7 @@ if (!_bFriendlyInsurgents) then {
                         {
                             [_x,"STAND","ASIS"] call BIS_fnc_ambientAnimCombat;
                         } forEach units _BaseChopperGroup;
+                        [_BaseChopperGroup] call TRGM_GLOBAL_fnc_loadbalancer_setGroupOwner;
 
                         //EnemyBaseChopperPilot = getNEAREST (call sEnemyHeliPilot) to chopper
                         private _EnemyBaseChopperPilots = nearestObjects [getPos TRGM_VAR_baseHeliPad, [(call sEnemyHeliPilotToUse)], 250];
@@ -789,57 +765,56 @@ if (!_bFriendlyInsurgents) then {
                 if (_iCount > 10) exitWith {};
             } forEach _allMilBuildings;
         };
+
+        [88, "Occupying buildings with units"] call _fnc_setPopulateSideMissionCompletionPercent;
     } else { //else if _bThisMissionCivsOnly
         //spawn inner checkpoints
         private _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
         if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
         waitUntil {
             _iCount = _iCount - 1;
-            [_sidePos] spawn {
-                private _sidePos = _this select 0;
-                private _thisAreaRange = 50;
-                private _checkPointGuidePos = _sidePos;
-                private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    private _thisPosAreaOfCheckpoint = _flatPos;
-                    private _thisRoadOnly = true;
-                    private _thisSide = TRGM_VAR_EnemySide;
-                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    private _thisAllowBarakade = true;
-                    private _thisIsDirectionAwayFromAO = true;
-                    [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
-                };
+            private _thisAreaRange = 50;
+            private _checkPointGuidePos = _sidePos;
+            private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+            if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                private _thisPosAreaOfCheckpoint = _flatPos;
+                private _thisRoadOnly = true;
+                private _thisSide = TRGM_VAR_EnemySide;
+                private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                private _thisAllowBarakade = true;
+                private _thisIsDirectionAwayFromAO = true;
+                [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
             };
-            sleep 1;
+            sleep 0.1;
             _iCount <= 0;
         };
+        [58, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
+
         //spawn inner sentry
         _iCount = ([50] call TRGM_GETTER_fnc_iMoreEnemies);
         if (_iCount > 0) then {_dAngleAdustPerLoop = 360 / _iCount;};
         waitUntil {
             _iCount = _iCount - 1;
-            [_sidePos] spawn {
-                private _sidePos = _this select 0;
-                private _thisAreaRange = 50;
-                private _checkPointGuidePos = _sidePos;
-                private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
-                if !(_flatPos isEqualTo _checkPointGuidePos) then {
-                    private _thisPosAreaOfCheckpoint = _flatPos;
-                    private _thisRoadOnly = false;
-                    private _thisSide = TRGM_VAR_EnemySide;
-                    private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
-                    private _thisAllowBarakade = false;
-                    private _thisIsDirectionAwayFromAO = true;
-                    [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100] spawn TRGM_SERVER_fnc_setCheckpoint;
-                };
+            private _thisAreaRange = 50;
+            private _checkPointGuidePos = _sidePos;
+            private _flatPos = [_checkPointGuidePos , 0, 50, 10, 0, 0.2, 0,[[getMarkerPos "mrkHQ", TRGM_VAR_BaseAreaRange]] + TRGM_VAR_CheckPointAreas + TRGM_VAR_SentryAreas,[_checkPointGuidePos,_checkPointGuidePos]] call TRGM_GLOBAL_fnc_findSafePos;
+            if !(_flatPos isEqualTo _checkPointGuidePos) then {
+                private _thisPosAreaOfCheckpoint = _flatPos;
+                private _thisRoadOnly = false;
+                private _thisSide = TRGM_VAR_EnemySide;
+                private _thisUnitTypes = [(call sRiflemanToUse), (call sRiflemanToUse),(call sRiflemanToUse),(call sMachineGunManToUse), (call sEngineerToUse), (call sGrenadierToUse), (call sMedicToUse),(call sAAManToUse),(call sATManToUse)];
+                private _thisAllowBarakade = false;
+                private _thisIsDirectionAwayFromAO = true;
+                [_thisPosAreaOfCheckpoint, 2500, { _this spawn TRGM_SERVER_fnc_setCheckpoint; }, [_sidePos,_thisPosAreaOfCheckpoint,_thisAreaRange,_thisRoadOnly,_thisSide,_thisUnitTypes,_thisAllowBarakade,_thisIsDirectionAwayFromAO,true,(call UnarmedScoutVehicles),100]] spawn TRGM_GLOBAL_fnc_callbackWhenPlayersNearby;
             };
-            sleep 1;
+            sleep 0.1;
             _iCount <= 0;
         };
+        [76, "Adding checkpoints"] call _fnc_setPopulateSideMissionCompletionPercent;
     };
 } else {
-    [format ["Mission Setup: Task: %1 - Populating Side Mission - Spawning civilians", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-    [_sidePos,200,true] call TRGM_SERVER_fnc_spawnCivs; //3rd param of true says these are rebels and function will set rebels instead of civs
+    [86, "Spawning civilians"] call _fnc_setPopulateSideMissionCompletionPercent;
+    [_sidePos,200,true] spawn TRGM_SERVER_fnc_spawnCivs; //3rd param of true says these are rebels and function will set rebels instead of civs
     private _lapPos = _sidePos getPos [50, 180];
     private _markerFriendlyRebs = createMarker [format["mrkFriendlyRebs%1",_iTaskIndex], _lapPos];
     _markerFriendlyRebs setMarkerShape "ICON";
@@ -847,7 +822,7 @@ if (!_bFriendlyInsurgents) then {
     _markerFriendlyRebs setMarkerText (localize "STR_TRGM2_trendFunctions_OccupiedByFriendRebel");
 };
 
-if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 92]; };
+[92, "Finishing up"] call _fnc_setPopulateSideMissionCompletionPercent;
 
 if (call _randomChance) then {
     private _iAnimalCount = 0;
@@ -912,7 +887,7 @@ if (call _randomChance) then {
             _test setMarkerText "IED";
         };
         _iCount = _iCount + 1;
-        sleep 1;
+        sleep 0.1;
         _iCount > _LoopMax;
     };
 };
@@ -921,10 +896,10 @@ if (call _randomChance) then {
 if ((call _randomChance) || _bThisMissionCivsOnly) then {
     TRGM_VAR_debugMessages = TRGM_VAR_debugMessages + format["\n\ntrendFunctions.sqf - Populate Civs : _bFriendlyInsurgents: %1 - _bThisMissionCivsOnly: %2 ",str(_bFriendlyInsurgents),str(_bThisMissionCivsOnly)];
     [format ["Mission Setup: Task: %1 - Populating Side Mission - Spawning civilians", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
-    [_sidePos,200,false] call TRGM_SERVER_fnc_spawnCivs;
+    [_sidePos,200,false] spawn TRGM_SERVER_fnc_spawnCivs;
 };
 
-if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 95]; };
+[95, "Population complete"] call _fnc_setPopulateSideMissionCompletionPercent;
 
 //Spawn AT Mine on road if not vehicles and hack data mission
 if (_sideType isEqualTo 1 && random 1 < .50) then {

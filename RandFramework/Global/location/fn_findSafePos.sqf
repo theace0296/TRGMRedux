@@ -12,6 +12,8 @@ but any class or object can be passed after the default pos parameter
 to use something else.
 ******************************************************/
 
+// TODO: Speed this up
+
 params [
     ["_checkPos",[]],
     ["_minDistance",0],
