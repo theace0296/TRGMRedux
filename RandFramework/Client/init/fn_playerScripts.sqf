@@ -64,3 +64,8 @@ private _trg = createTrigger["EmptyDetector", [player] call TRGM_GLOBAL_fnc_getR
 _trg setTriggerActivation["ALPHA", "PRESENT", true];
 _trg setTriggerText (localize "STR_TRGM2_IlluminatePosition_Text");
 _trg setTriggerStatements["this", "[player] spawn TRGM_GLOBAL_fnc_fireIllumFlares;", ""];
+
+private _trg2 = createTrigger["EmptyDetector", [player] call TRGM_GLOBAL_fnc_getRealPos];
+_trg2 setTriggerActivation["BRAVO", "PRESENT", true];
+_trg2 setTriggerText (localize "STR_TRGM2_adminOption_openObjectiveStatusManager");
+_trg2 setTriggerStatements["_this && [player] call TRGM_CLIENT_fnc_isAdmin", "[player] spawn TRGM_GUI_fnc_openDialogObjectiveManager;", ""];

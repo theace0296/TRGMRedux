@@ -244,6 +244,7 @@ class TRGM_GUI {
         class missionTypeSelection {};
         class openDialogAdvancedMissionSettings {};
         class openDialogMissionSelection {};
+        class openDialogObjectiveManager {};
         class openDialogRequests {};
         class openVehicleCustomizationDialog {};
         class removeObjective {};

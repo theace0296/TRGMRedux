@@ -383,6 +383,9 @@ if (_iThisTaskType isEqualTo 99999 || _bNewTaskSetup) then {
     if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 20]; };
     [_sMarkerType, _infBuilding, _inf1X, _inf1Y, _roadSearchRange, _bCreateTask, _iTaskIndex, _bIsMainObjective, _args] call _MISSION_LOCAL_fnc_CustomMission;
 };
+private _missionObjectives = missionNamespace getVariable ["TRGM_VAR_Objectives", []];
+_missionObjectives set [_iTaskIndex, [_sMarkerType, _infBuilding, _inf1X, _inf1Y, _roadSearchRange, _bCreateTask, _iTaskIndex, _bIsMainObjective, _args]];
+missionNamespace setVariable ["TRGM_VAR_Objectives", _missionObjectives, true];
 //############################################################################################
 [format ["Mission Setup: Task: %1 - Finalizing mission", _iTaskIndex], true] call TRGM_GLOBAL_fnc_log;
 if (!(isNil "TRGM_VAR_GenerateMissionPercentCompletions") && TRGM_VAR_GenerateMissionPercentCompletions isEqualType []) then { TRGM_VAR_GenerateMissionPercentCompletions set [_iTaskIndex, 45]; };
