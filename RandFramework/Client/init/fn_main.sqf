@@ -76,14 +76,22 @@ if (TRGM_VAR_AdminPlayer isEqualTo player) then {
             TRGM_VAR_iMissionParamLocations    = []; publicVariable "TRGM_VAR_iMissionParamLocations";
             TRGM_VAR_iMissionParamSubLocations = []; publicVariable "TRGM_VAR_iMissionParamSubLocations";
             for [{private _i = 0;}, {_i < count TRGM_VAR_iMissionParamObjectives}, {_i = _i + 1}] do {
-                TRGM_VAR_iMissionParamLocations pushBack [0,0,0]; publicVariable "TRGM_VAR_iMissionParamLocations";
-                TRGM_VAR_iMissionParamSubLocations pushBack [0,0,0]; publicVariable "TRGM_VAR_iMissionParamSubLocations";
-                [player] spawn TRGM_CLIENT_fnc_selectAOLocation;
-                waitUntil { TRGM_VAR_ManualAOPosFound };
-                TRGM_VAR_iMissionParamLocations set [_i, TRGM_VAR_foundManualAOPos];
-                publicVariable "TRGM_VAR_iMissionParamLocations";
-                TRGM_VAR_foundManualAOPos = [0,0,0]; publicVariable "TRGM_VAR_foundManualAOPos";
-                TRGM_VAR_ManualAOPosFound = false; publicVariable "TRGM_VAR_ManualAOPosFound";
+                (TRGM_VAR_iMissionParamObjectives select _i) params ["_taskType", "_isHeavy", "_isHidden", "_sameAOAsPrev"];
+                if (_sameAOAsPrev) then {
+                    TRGM_VAR_iMissionParamLocations pushBack (TRGM_VAR_iMissionParamLocations select (_i - 1)); publicVariable "TRGM_VAR_iMissionParamLocations";
+                    TRGM_VAR_iMissionParamSubLocations pushBack (TRGM_VAR_iMissionParamSubLocations select (_i - 1)); publicVariable "TRGM_VAR_iMissionParamSubLocations";
+                } else {
+                    TRGM_VAR_iMissionParamLocations pushBack [0,0,0]; publicVariable "TRGM_VAR_iMissionParamLocations";
+                    TRGM_VAR_iMissionParamSubLocations pushBack [0,0,0]; publicVariable "TRGM_VAR_iMissionParamSubLocations";
+                    if (!_isHidden) then {
+                        [player] spawn TRGM_CLIENT_fnc_selectAOLocation;
+                        waitUntil { TRGM_VAR_ManualAOPosFound };
+                        TRGM_VAR_iMissionParamLocations set [_i, TRGM_VAR_foundManualAOPos];
+                        publicVariable "TRGM_VAR_iMissionParamLocations";
+                        TRGM_VAR_foundManualAOPos = [0,0,0]; publicVariable "TRGM_VAR_foundManualAOPos";
+                        TRGM_VAR_ManualAOPosFound = false; publicVariable "TRGM_VAR_ManualAOPosFound";
+                    };
+                };
             };
         };
 
