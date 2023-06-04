@@ -60,8 +60,8 @@ private _MISSION_LOCAL_fnc_CustomMission = { //This function is the main script 
         params ["_taskIndex", "_targetIndex", "_truckType", "_inf1X", "_inf1Y", "_blackListPos"];
         _flatPos = nil;
         _posFound = false;
-        for [{private _i = 1}, {_i < 6 && !_posFound}, {_i = _i + 1}] do {
-            _flatPos = [[_inf1X,_inf1Y,0], 5, 50 * _i, sizeOf _truckType, 0, 0.5, 0, _blackListPos, [[_inf1X,_inf1Y,0],[_inf1X,_inf1Y,0]], _truckType] call TRGM_GLOBAL_fnc_findSafePos;
+        for [{private _i = 1}, {_i < 20 && !_posFound}, {_i = _i + 1}] do {
+            _flatPos = [[_inf1X,_inf1Y,0], 5, 50 * _i, sizeOf _truckType + (.5 * (sizeOf _truckType)), 0, 0.5, 0, _blackListPos, [[_inf1X,_inf1Y,0],[_inf1X,_inf1Y,0]], _truckType] call TRGM_GLOBAL_fnc_findSafePos;
             if (!isNil "_flatPos" && {!(_flatPos select 0 isEqualTo _inf1X) && {!(_flatPos select 1 isEqualTo _inf1Y)}}) then {
                 _posFound = true;
             };
