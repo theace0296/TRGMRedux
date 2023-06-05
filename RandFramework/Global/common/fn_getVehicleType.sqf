@@ -1,12 +1,17 @@
 // private _fnc_scriptName = "TRGM_GLOBAL_fnc_getVehicleType";
 params [["_type", "", [""]]];
 
+private _returnType = "UnarmedCars";
+if (isNil "_type" || { _type isEqualTo ""}) exitWith {_returnType;};
 
 private _configPath = (configFile >> "CfgVehicles" >> _type);
+if (isNil "_configPath") exitWith {_returnType;};
+
 private _vehData = [_configPath] call TRGM_GLOBAL_fnc_getVehicleData;
+if (isNil "_vehData" || {!(_vehData isEqualType [])}) exitWith {_returnType;};
+
 _vehData params ["_className", "_dispName", "_rawDispName", "_calloutName", "_rawCalloutName", "_editorSubcategory", "_category", "_rawCategory", "_isTransport", "_isArmed"];
 
-private _returnType = "UnarmedCars";
 if (isNil "_className" || isNil "_dispName" || isNil "_calloutName" || isNil "_rawCategory" || [_configPath] call TRGM_GLOBAL_fnc_ignoreVehicle) then {
     _returnType = "UnarmedCars";
 } else {

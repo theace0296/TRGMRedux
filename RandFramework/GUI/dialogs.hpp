@@ -700,16 +700,19 @@ class TRGM_VAR_DialogSetupParamsAdvanced
             action = "[] spawn TRGM_GUI_fnc_openDialogMissionSelection; false";
         };
 
-
-
-
         ////////////////////////////////////////////////////////
         // GUI EDITOR OUTPUT END
         ////////////////////////////////////////////////////////
 
-
-
     };
+};
+
+
+class TRGM_VAR_DialogObjectiveManager
+{
+    idd = 9000;
+    movingEnabled = false;
+    class controls {};
 };
 
 

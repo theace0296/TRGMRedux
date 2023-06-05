@@ -98,6 +98,7 @@ if (isServer) then {
 "transportChopper" setMarkerTextLocal (localize "STR_TRGM2_Init_MarkerText_TransportChopper"); //Transport Chopper marker localize
 
 if (isServer) then {
+   [] spawn TRGM_GLOBAL_fnc_loadbalancer_init;
    [laptop1, [localize "STR_TRGM2_openDialogRequests_RequestUnitsVehicles", {player call TRGM_GUI_fnc_openDialogRequests;}, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
    // [laptop1, [localize "STR_TRGM2_openDialogRequests_RequestUnitsVehicles", {
    //    player setVariable ["TRGM_VAR_SpawningCrew", true];
@@ -108,7 +109,8 @@ if (isServer) then {
    //    };
    // }, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
    // [laptop1, [localize "STR_TRGM2_logMissionInfo", {player call TRGM_GLOBAL_fnc_copyMissionInfo;}, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
-   [laptop1, ["Debug: Re-add transport actions", {if !(isNil "TRGM_VAR_transportHelosToGetActions") then {[TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;};}, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
+   [laptop1, [localize "STR_TRGM2_debugOption_ReAddTransportActions", {if !(isNil "TRGM_VAR_transportHelosToGetActions") then {[TRGM_VAR_transportHelosToGetActions] call TRGM_GLOBAL_fnc_addTransportActions;};}, [], 0, true, true, "", "_this isEqualTo player"]] remoteExec ["addAction", 0, true];
+   [laptop1, [localize "STR_TRGM2_adminOption_openObjectiveStatusManager", {player call TRGM_GUI_fnc_openDialogObjectiveManager;}, [], 0, true, true, "", "_this isEqualTo player && [player] call TRGM_CLIENT_fnc_isAdmin"]] remoteExec ["addAction", 0, true];
    [] spawn TRGM_SERVER_fnc_main;
 };
 

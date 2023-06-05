@@ -1043,6 +1043,10 @@
                 <Spanish>Día %1 tarea completada</Spanish>
                 <Korean>%1 일의 작업 완료</Korean>
             </Key>
+            <Key ID="STR_TRGM2_Objective_X_UpdatedTo_Y">
+                <Original>Objective %1 updated to %2.</Original>
+                <English>Objective %1 updated to %2.</English>
+            </Key>
             <Key ID="STR_TRGM2_ObjectiveComplete">
                 <Original>Objective Completed.</Original>
                 <English>Objective Completed.</English>
@@ -1054,6 +1058,10 @@
             <Key ID="STR_TRGM2_ObjectiveFailed">
                 <Original>Objective Failed.</Original>
                 <English>Objective Failed.</English>
+            </Key>
+            <Key ID="STR_TRGM2_ObjectiveCanceled">
+                <Original>Objective Canceled.</Original>
+                <English>Objective Canceled.</English>
             </Key>
             <Key ID="STR_TRGM2_startInfMission_HoldReputation_Desc">
                 <Original>Make too many mistakes, kill civs, lose too many units, your reputation will lower.  Try not to make too many errors</Original>
@@ -4395,6 +4403,56 @@
             <Key ID="STR_TRGM2_spawnCrewInVehicle_notAHelicopter">
                 <Original>The target is not a helicopter!</Original>
                 <English>The target is not a helicopter!</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_debugOption_ReAddTransportActions">
+                <Original>Debug: Re-add transport actions</Original>
+                <English>Debug: Re-add transport actions</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_adminOption_openObjectiveStatusManager">
+                <Original>Admin: Open Objective Status Manager</Original>
+                <English>Admin: Open Objective Status Manager</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_close">
+                <Original>Close</Original>
+                <English>Close</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_update">
+                <Original>Update</Original>
+                <English>Update</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_succeeded">
+                <Original>Succeeded</Original>
+                <English>Succeeded</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_failed">
+                <Original>Failed</Original>
+                <English>Failed</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_canceled">
+                <Original>Canceled</Original>
+                <English>Canceled</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_in_progress">
+                <Original>In Progress</Original>
+                <English>In Progress</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_objectiveStatusReason">
+                <Original>Status Reason (Text displayed on Reputation Board)</Original>
+                <English>Status Reason (Text displayed on Reputation Board)</English>
+            </Key>
+
+            <Key ID="STR_TRGM2_objectiveReputationAmount">
+                <Original>Reputation Amount (Amount of reputation gained/lossed)</Original>
+                <English>Reputation Amount (Amount of reputation gained/lossed)</English>
             </Key>
 
             <Key ID="STR_TRGM2_openDialogRequests_RequestUnitsVehicles">

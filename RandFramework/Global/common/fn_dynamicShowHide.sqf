@@ -23,7 +23,7 @@ if !(_dynamicSimDisabled) then {
                 [_x, true] remoteExec ["hideObjectGlobal", _objectOwner];
             } forEach ([[_object], units group _object] select (_object isKindOf "Man"));
         };
-        sleep floor random [20, 30, 60];
+        sleep 10;
         !(alive _object);
     };
     {

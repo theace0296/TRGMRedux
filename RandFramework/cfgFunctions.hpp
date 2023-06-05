@@ -25,6 +25,7 @@ class TRGM_SERVER {
         file = "RandFramework\Server\mission";
         class attemptEndMission {};
         class finalSetupCleaner {};
+        class generateObjective {};
         class initMissionVars {};
         class populateSideMission {};
         class postStartMission {};
@@ -126,6 +127,7 @@ class TRGM_GLOBAL {
         file = "RandFramework\Global\common";
         class addPlayerActionPersistent {};
         class animateAnimals {};
+        class callbackWhenPlayersNearby {};
         class callNearbyPatrol {};
         class callUAVFindObjective {};
         class carryAndJoinWounded {};
@@ -139,6 +141,7 @@ class TRGM_GLOBAL {
         class enemyAirSupport {};
         class fireAOFlares {};
         class fireIllumFlares {};
+        class fisherYatesShuffleArray {};
         class getUnitType {};
         class getVehicleType {};
         class getRealPos {};
@@ -182,6 +185,7 @@ class TRGM_GLOBAL {
         class isMedical {};
         class isRepair {};
         class isTransport {};
+        class prePopulateUnitAndVehicleData {};
     };
 
     class location {
@@ -240,6 +244,7 @@ class TRGM_GUI {
         class missionTypeSelection {};
         class openDialogAdvancedMissionSettings {};
         class openDialogMissionSelection {};
+        class openDialogObjectiveManager {};
         class openDialogRequests {};
         class openVehicleCustomizationDialog {};
         class removeObjective {};
@@ -274,7 +279,6 @@ class TRGM_CLIENT {
         class missionOverAnimation {};
         class missionSetupCamera {};
         class postStartMissionCamera {};
-        class postStartMissionEndCamera {};
     };
 
     class supports {

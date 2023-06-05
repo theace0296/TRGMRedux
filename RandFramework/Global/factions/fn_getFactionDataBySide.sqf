@@ -8,31 +8,40 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 // Return format: [[faction1_className, faction1_displayName], [faction2_className, faction2_displayName], ... , [factionN_className, factionN_displayName]]
 
 private _sideNum = [_side] call BIS_fnc_sideID;
-private _factionConfigPaths = [];
+private _configPath = configFile >> "CfgFactionClasses";
+private _vehiclesConfigPath = configFile >> "CfgVehicles";
+private _factions = [];
+private _men = [];
+private _vehicles = [];
 
-private _configPath = (configFile >> "CfgFactionClasses");
-
-for "_i" from 0 to (count _configPath - 1) do {
-
-    private _element = _configPath select _i;
-
-    if (isClass _element) then {
-        if ((getNumber(_element >> "side")) isEqualTo _sideNum) then {
-            _factionConfigPaths pushBackUnique _element;
-        };
+for "_i" from 0 to (count _vehiclesConfigPath - 1) do {
+    private _element = _vehiclesConfigPath select _i;
+    if !(isClass _element) then { continue; };
+    if (getNumber(_element >> "scope") isNotEqualTo 2) then { continue; };
+    if (getNumber(_element >> "side") isNotEqualTo _sideNum) then { continue; };
+    private _configName = configName _element;
+    if (_configName isKindOf "Man" && !(_configName isKindOf "OPTRE_Spartan2_Soldier_Base")) then {
+        if ([_element] call TRGM_GLOBAL_fnc_ignoreUnit) then { continue; };
+        _men pushBackUnique (getText(_element >> "faction"))
+    };
+    if (_configName isKindOf "LandVehicle") then {
+        if ([_element] call TRGM_GLOBAL_fnc_ignoreVehicle) then { continue; };
+        _vehicles pushBackUnique (getText(_element >> "faction"))
     };
 };
 
-private _factions = [];
+for "_i" from 0 to (count _configPath - 1) do {
+    private _element = _configPath select _i;
+    if !(isClass _element) then { continue; };
+    if (getNumber(_element >> "side") isNotEqualTo _sideNum) then { continue; };
 
-{
-    private _faction = (configName _x);
-    private _hasMan = count ("((getNumber(_x >> 'scope') isEqualTo 2) && {(getNumber(_x >> 'side') isEqualTo _sideNum) && {(getText(_x >> 'faction') isEqualTo _faction) && {(configName(_x) isKindOf 'Man')}}})" configClasses (configFile >> "CfgVehicles")) > 0;
-    private _hasCar = count ("((getNumber(_x >> 'scope') isEqualTo 2) && {(getNumber(_x >> 'side') isEqualTo _sideNum) && {(getText(_x >> 'faction') isEqualTo _faction) && {(configName(_x) isKindOf 'Car')}}})" configClasses (configFile >> "CfgVehicles")) > 0;
+    private _faction = (configName _element);
+    private _hasMan = _faction in _men;
+    private _hasCar = _faction in _vehicles;
     if (_hasMan && _hasCar) then {
-        _factions pushBack [(configName _x), getText(_x >> "displayName")];
+        _factions pushBack [_faction, getText(_element >> "displayName")];
     };
-} forEach _factionConfigPaths;
+};
 
 _factions;
 

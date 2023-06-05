@@ -2,6 +2,9 @@
 /////// Debug Mode ///////
 TRGM_VAR_bDebugMode = [false, true] select ((["DebugMode", 0] call BIS_fnc_getParamValue) isEqualTo 1);
 publicVariable "TRGM_VAR_bDebugMode";
+/////// Load Test ///////
+TRGM_VAR_bLoadTest = [false, true] select ((["LoadTest", 0] call BIS_fnc_getParamValue) isEqualTo 1);
+publicVariable "TRGM_VAR_bLoadTest";
 format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNameParent, (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
 
 
@@ -36,8 +39,8 @@ if (TRGM_Var_iTimeMultiplier isEqualTo 50) then {
 publicVariable "TRGM_VAR_iTimeMultiplier";
 
 if (isNil "TRGM_VAR_SaveDataVersion") then { TRGM_VAR_SaveDataVersion = 3;  publicVariable "TRGM_VAR_SaveDataVersion"; };
-if (isNil "TRGM_VAR_FactionVersion")  then { TRGM_VAR_FactionVersion  = 8;  publicVariable "TRGM_VAR_FactionVersion"; };
-if (isNil "TRGM_VAR_LocationVersion") then { TRGM_VAR_LocationVersion = 3;  publicVariable "TRGM_VAR_LocationVersion"; };
+if (isNil "TRGM_VAR_FactionVersion")  then { TRGM_VAR_FactionVersion  = 9;  publicVariable "TRGM_VAR_FactionVersion"; };
+if (isNil "TRGM_VAR_LocationVersion") then { TRGM_VAR_LocationVersion = 4;  publicVariable "TRGM_VAR_LocationVersion"; };
 
 //// These must be declared BEFORE either initUnitVars or CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars!!!
 if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil "TRGM_VAR_AvailableFactions"}}) then {
@@ -75,7 +78,10 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
 
     if (TRGM_VAR_bRecalculateFactionData || {count TRGM_VAR_AllFactions isEqualTo 0 || {{!(_x in TRGM_VAR_AllFactions)} count TRGM_VAR_AvailableFactions > 0}}) then {
         format["Update saved faction data, called on %1", (["Client", "Server"] select isServer)] call TRGM_GLOBAL_fnc_log;
-        TRGM_factionDataHandles = []; publicVariable "TRGM_factionDataHandles";
+        private _factionDataHandles = [];
+
+        call TRGM_GLOBAL_fnc_prePopulateUnitAndVehicleData;
+
         {
             if !((_x select 0) in TRGM_VAR_AllFactions) then {
                 private _handle = [_x select 0, _x select 1] spawn {
@@ -108,25 +114,28 @@ if (isNil "TRGM_VAR_AllFactionData" || {isNil "TRGM_VAR_AllFactionMap" || {isNil
                     {
                         ["Exception caught while updating faction data:"] call TRGM_GLOBAL_fnc_log;
                         format["%1", _exception] call TRGM_GLOBAL_fnc_log;
-                    }
+                    };
                 };
-                TRGM_factionDataHandles = TRGM_factionDataHandles + [[_x select 0, _x select 1, _handle]]; publicVariable "TRGM_factionDataHandles";
+                _factionDataHandles pushBack [_x select 0, _x select 1, _handle];
             };
         } forEach TRGM_VAR_AvailableFactions;
 
         waitUntil {
             sleep 0.1;
-            private _completedHandles = TRGM_factionDataHandles select { scriptDone (_x select 2); };
-            if (isServer && count TRGM_factionDataHandles > 0) then {
-                private _activeHandles = TRGM_factionDataHandles select { !(_x in _completedHandles); };
+            private _completedHandles = _factionDataHandles select { scriptDone (_x select 2); };
+            if (isServer && count _factionDataHandles > 0) then {
+                private _activeHandles = _factionDataHandles select { !(_x in _completedHandles); };
                 private _content = ["Loading data for: "] + (flatten (_activeHandles apply { [lineBreak, format["  %1", _x select 1]] }));
                 TRGM_VAR_LoadingText = composeText _content; publicVariable "TRGM_VAR_LoadingText";
                 if (TRGM_VAR_LoadingPercent < 60) then {
-                    TRGM_VAR_LoadingPercent = ceil(15 + ((count _completedHandles / count TRGM_factionDataHandles) * 45)); publicVariable "TRGM_VAR_LoadingPercent";
+                    TRGM_VAR_LoadingPercent = ceil(15 + ((count _completedHandles / count _factionDataHandles) * 45)); publicVariable "TRGM_VAR_LoadingPercent";
                 };
             };
-            count _completedHandles isEqualTo count TRGM_factionDataHandles;
+            count _completedHandles isEqualTo count _factionDataHandles;
         };
+
+        if !(isNil "TRGM_TEMPVAR_allManUnits") then { TRGM_TEMPVAR_allManUnits = nil; publicVariable "TRGM_TEMPVAR_allManUnits"; };
+        if !(isNil "TRGM_TEMPVAR_allVehicleUnits") then { TRGM_TEMPVAR_allVehicleUnits = nil; publicVariable "TRGM_TEMPVAR_allVehicleUnits"; };
 
         TRGM_VAR_AllFactionData = [TRGM_VAR_AllFactionData, [], { _x select 1 }, "ASCEND"] call BIS_fnc_sortBy;
         TRGM_VAR_AllFactions = (_WestFactionData + _EastFactionData + _GuerFactionData) apply { _x select 0 };
@@ -166,6 +175,10 @@ publicVariable "TRGM_VAR_OverrideMissionSetup";
 
 if (TRGM_VAR_OverrideMissionSetup) then {
     call CUSTOM_MISSION_fnc_SetDefaultMissionSetupVars;
+};
+
+if (TRGM_VAR_bLoadTest) then {
+    call CUSTOM_MISSION_fnc_LoadTest;
 };
 
 // if (isNil "TRGM_VAR_TopLeftPos") then { TRGM_VAR_TopLeftPos = [25.4257,8173.69,0]; publicVariable "TRGM_VAR_TopLeftPos"; };
@@ -273,10 +286,8 @@ if (isNil "TRGM_VAR_FlareCounter")                            then {TRGM_VAR_Fla
 if (isNil "TRGM_VAR_FireFlares")                              then {TRGM_VAR_FireFlares = random 1 < .50;                             publicVariable "TRGM_VAR_FireFlares";};
 if (isNil "TRGM_VAR_ForceEndSandStorm")                       then {TRGM_VAR_ForceEndSandStorm = false;                               publicVariable "TRGM_VAR_ForceEndSandStorm";};
 if (isNil "TRGM_VAR_ForceMissionSetup")                       then {TRGM_VAR_ForceMissionSetup = false;                               publicVariable "TRGM_VAR_ForceMissionSetup";};
-if (isNil "TRGM_VAR_HiddenPossitions")                        then {TRGM_VAR_HiddenPossitions = [];                                   publicVariable "TRGM_VAR_HiddenPossitions";};
+if (isNil "TRGM_VAR_HiddenPositions")                         then {TRGM_VAR_HiddenPositions = [];                                    publicVariable "TRGM_VAR_HiddenPositions";};
 if (isNil "TRGM_VAR_ISUNSUNG")                                then {TRGM_VAR_ISUNSUNG = false;                                        publicVariable "TRGM_VAR_ISUNSUNG";};
-if (isNil "TRGM_VAR_InfTaskCount")                            then {TRGM_VAR_InfTaskCount = 0;                                        publicVariable "TRGM_VAR_InfTaskCount";};
-if (isNil "TRGM_VAR_InfTaskStarted")                          then {TRGM_VAR_InfTaskStarted = false;                                  publicVariable "TRGM_VAR_InfTaskStarted";};
 if (isNil "TRGM_VAR_IntroMusic")                              then {TRGM_VAR_IntroMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic;   publicVariable "TRGM_VAR_IntroMusic";};
 if (isNil "TRGM_VAR_IsFullMap")                               then {TRGM_VAR_IsFullMap = false;                                       publicVariable "TRGM_VAR_IsFullMap";};
 if (isNil "TRGM_VAR_IsSnowMap")                               then {TRGM_VAR_IsSnowMap = false;                                       publicVariable "TRGM_VAR_IsSnowMap";};
@@ -286,19 +297,19 @@ if (isNil "TRGM_VAR_MainMissionTitle")                        then {TRGM_VAR_Mai
 if (isNil "TRGM_VAR_MaxBadPoints")                            then {TRGM_VAR_MaxBadPoints = 1;                                        publicVariable "TRGM_VAR_MaxBadPoints";};
 if (isNil "TRGM_VAR_MissionLoaded")                           then {TRGM_VAR_MissionLoaded = false;                                   publicVariable "TRGM_VAR_MissionLoaded";};
 if (isNil "TRGM_VAR_MissionParamsSet")                        then {TRGM_VAR_MissionParamsSet = false;                                publicVariable "TRGM_VAR_MissionParamsSet";};
-if (isNil "TRGM_VAR_NewMissionMusic")                            then {TRGM_VAR_NewMissionMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic; publicVariable "TRGM_VAR_NewMissionMusic";};
-if (isNil "TRGM_VAR_ObjectivePositions")                     then {TRGM_VAR_ObjectivePositions = [];                                publicVariable "TRGM_VAR_ObjectivePositions";};
-if (isNil "TRGM_VAR_OccupiedHousesPos")                        then {TRGM_VAR_OccupiedHousesPos =   [];                               publicVariable "TRGM_VAR_OccupiedHousesPos"; };
+if (isNil "TRGM_VAR_NewMissionMusic")                         then {TRGM_VAR_NewMissionMusic = selectRandom TRGM_VAR_ThemeAndIntroMusic; publicVariable "TRGM_VAR_NewMissionMusic";};
+if (isNil "TRGM_VAR_ObjectivePositions")                      then {TRGM_VAR_ObjectivePositions = [];                                 publicVariable "TRGM_VAR_ObjectivePositions";};
+if (isNil "TRGM_VAR_OccupiedHousesPos")                       then {TRGM_VAR_OccupiedHousesPos =   [];                                publicVariable "TRGM_VAR_OccupiedHousesPos"; };
 if (isNil "TRGM_VAR_ParaDropped")                             then {TRGM_VAR_ParaDropped = false;                                     publicVariable "TRGM_VAR_ParaDropped";};
-if (isNil "TRGM_VAR_PatrolType")                               then {TRGM_VAR_PatrolType =   0;                                       publicVariable "TRGM_VAR_PatrolType";};
+if (isNil "TRGM_VAR_PatrolType")                              then {TRGM_VAR_PatrolType =   0;                                        publicVariable "TRGM_VAR_PatrolType";};
 if (isNil "TRGM_VAR_PlayersHaveLeftStartingArea")             then {TRGM_VAR_PlayersHaveLeftStartingArea = false;                     publicVariable "TRGM_VAR_PlayersHaveLeftStartingArea";};
-if (isNil "TRGM_VAR_ReinforcementsCalled")                       then {TRGM_VAR_ReinforcementsCalled = 0;                             publicVariable "TRGM_VAR_ReinforcementsCalled";};
+if (isNil "TRGM_VAR_ReinforcementsCalled")                    then {TRGM_VAR_ReinforcementsCalled = 0;                                publicVariable "TRGM_VAR_ReinforcementsCalled";};
 if (isNil "TRGM_VAR_SaveType")                                then {TRGM_VAR_SaveType = 0;                                            publicVariable "TRGM_VAR_SaveType";};
 if (isNil "TRGM_VAR_SentryAreas")                             then {TRGM_VAR_SentryAreas = [];                                        publicVariable "TRGM_VAR_SentryAreas";};
 if (isNil "TRGM_VAR_TimeLastReinforcementsCalled")            then {TRGM_VAR_TimeLastReinforcementsCalled = time;                     publicVariable "TRGM_VAR_TimeLastReinforcementsCalled";};
 if (isNil "TRGM_VAR_TimeSinceAdditionalReinforcementsCalled") then {TRGM_VAR_TimeSinceAdditionalReinforcementsCalled = time;          publicVariable "TRGM_VAR_TimeSinceAdditionalReinforcementsCalled";};
 if (isNil "TRGM_VAR_TimeSinceLastSpottedAction")              then {TRGM_VAR_TimeSinceLastSpottedAction = time;                       publicVariable "TRGM_VAR_TimeSinceLastSpottedAction";};
-if (isNil "TRGM_VAR_ToUseMilitia_Side")                        then {TRGM_VAR_ToUseMilitia_Side = false;                              publicVariable "TRGM_VAR_ToUseMilitia_Side";};
+if (isNil "TRGM_VAR_ToUseMilitia_Side")                       then {TRGM_VAR_ToUseMilitia_Side = false;                               publicVariable "TRGM_VAR_ToUseMilitia_Side";};
 if (isNil "TRGM_VAR_bAndSoItBegins")                          then {TRGM_VAR_bAndSoItBegins = false;                                  publicVariable "TRGM_VAR_bAndSoItBegins";};
 if (isNil "TRGM_VAR_bBaseHasChopper")                         then {TRGM_VAR_bBaseHasChopper = false;                                 publicVariable "TRGM_VAR_bBaseHasChopper";};
 if (isNil "TRGM_VAR_bBreifingPrepped")                        then {TRGM_VAR_bBreifingPrepped = false;                                publicVariable "TRGM_VAR_bBreifingPrepped";};

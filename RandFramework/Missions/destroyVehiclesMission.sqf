@@ -8,7 +8,7 @@
 //checkpoint locations and sentry postions
 //cleared locations (i.e. AOs that had a task completed)
 
-MISSION_fnc_CustomRequired = { //used to set any required details for the AO (example, a wide open space or factory nearby)... if this is not found in AO, the engine will scrap the area and loop around again with a different location
+private _MISSION_LOCAL_fnc_CustomRequired = { //used to set any required details for the AO (example, a wide open space or factory nearby)... if this is not found in AO, the engine will scrap the area and loop around again with a different location
 //be careful about using this, some maps may not have what you require, so the engine will never satisfy the requirements here (example, if no airports are on a map and that is what you require)
     private ["_objectiveMainBuilding", "_centralAO_x", "_centralAO_y", "_result", "_flatPos"];
     _objectiveMainBuilding = _this select 0;
@@ -25,14 +25,14 @@ MISSION_fnc_CustomRequired = { //used to set any required details for the AO (ex
     _result; //return value
 };
 
-MISSION_fnc_CustomVars = { //This is called before the mission function is called below, and the variables below can be adjusted for your mission
+private _MISSION_LOCAL_fnc_CustomVars = { //This is called before the mission function is called below, and the variables below can be adjusted for your mission
     _RequiresNearbyRoad = true;
     _roadSearchRange = 100; //this is how far out the engine will check to make sure a road is within range (if your objective requires a nearby road)
     _MissionTitle = _this select 0; // The destroy X vehicle mission takes the mission title as a parameter to allow all the destory X vehicle missions to use the same function
     _allowFriendlyIns = false;
 };
 
-MISSION_fnc_CustomMission = { //This function is the main script for your mission, some if the parameters passed in must not be changed!!!
+private _MISSION_LOCAL_fnc_CustomMission = { //This function is the main script for your mission, some if the parameters passed in must not be changed!!!
     /*
      * Parameter Descriptions
      * --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
      * _objectiveMainBuilding      : DO NOT EDIT THIS VALUE (this is the main building location selected within your AO)
      * _centralAO_x                : DO NOT EDIT THIS VALUE (this is the X coord of the AO)
      * _centralAO_y                : DO NOT EDIT THIS VALUE (this is the Y coord of the AO)
-     * _roadSearchRange            : DO NOT EDIT THIS VALUE (this is the search range for a valid road, set previously in MISSION_fnc_CustomVars)
+     * _roadSearchRange            : DO NOT EDIT THIS VALUE (this is the search range for a valid road, set previously in _MISSION_LOCAL_fnc_CustomVars)
      * _bCreateTask                : DO NOT EDIT THIS VALUE (this is determined by the player, if the player selected to play a hidden mission, the task is not created!)
      * _iTaskIndex                 : DO NOT EDIT THIS VALUE (this is determined by the engine, and is the index of the task used to determine mission/task completion!)
      * _bIsMainObjective           : DO NOT EDIT THIS VALUE (this is determined by the engine, and is the boolean if the mission is a Heavy or Standard mission!)
@@ -60,8 +60,8 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         params ["_taskIndex", "_targetIndex", "_truckType", "_inf1X", "_inf1Y", "_blackListPos"];
         _flatPos = nil;
         _posFound = false;
-        for [{private _i = 1}, {_i < 6 && !_posFound}, {_i = _i + 1}] do {
-            _flatPos = [[_inf1X,_inf1Y,0], 5, 50 * _i, sizeOf _truckType, 0, 0.5, 0, _blackListPos, [[_inf1X,_inf1Y,0],[_inf1X,_inf1Y,0]], _truckType] call TRGM_GLOBAL_fnc_findSafePos;
+        for [{private _i = 1}, {_i < 20 && !_posFound}, {_i = _i + 1}] do {
+            _flatPos = [[_inf1X,_inf1Y,0], 5, 50 * _i, sizeOf _truckType + (.5 * (sizeOf _truckType)), 0, 0.5, 0, _blackListPos, [[_inf1X,_inf1Y,0],[_inf1X,_inf1Y,0]], _truckType] call TRGM_GLOBAL_fnc_findSafePos;
             if (!isNil "_flatPos" && {!(_flatPos select 0 isEqualTo _inf1X) && {!(_flatPos select 1 isEqualTo _inf1Y)}}) then {
                 _posFound = true;
             };
@@ -134,8 +134,8 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     };
 
     [_allTargets, _firstTarget] spawn {
-        _allTargets = _this select 0;
-        _firstTarget = _this select 1;
+        private _allTargets = _this select 0;
+        private _firstTarget = _this select 1;
         waitUntil { ({!alive(_x)} count _allTargets) isEqualTo (count _allTargets); };
         [_firstTarget] spawn TRGM_SERVER_fnc_updateTask;
     };
@@ -143,6 +143,4 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _sTaskDescription = selectRandom _missionDescriptions;
 };
 
-publicVariable "MISSION_fnc_CustomRequired";
-publicVariable "MISSION_fnc_CustomVars";
-publicVariable "MISSION_fnc_CustomMission";
+[_MISSION_LOCAL_fnc_CustomRequired, _MISSION_LOCAL_fnc_CustomVars, _MISSION_LOCAL_fnc_CustomMission];

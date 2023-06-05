@@ -70,20 +70,28 @@ call TRGM_CLIENT_fnc_endCamera;
 sleep 3;
 
 if (TRGM_VAR_AdminPlayer isEqualTo player) then {
-    if !(TRGM_VAR_iMissionIsCampaign) then {    //if isCampaign, dont allow to select AO
+    if (!TRGM_VAR_iMissionIsCampaign && !TRGM_VAR_bLoadTest) then {    //if isCampaign or load test, dont allow to select AO
 
         if (call TRGM_GETTER_fnc_bManualAOPlacement) then {
             TRGM_VAR_iMissionParamLocations    = []; publicVariable "TRGM_VAR_iMissionParamLocations";
             TRGM_VAR_iMissionParamSubLocations = []; publicVariable "TRGM_VAR_iMissionParamSubLocations";
             for [{private _i = 0;}, {_i < count TRGM_VAR_iMissionParamObjectives}, {_i = _i + 1}] do {
-                TRGM_VAR_iMissionParamLocations pushBack [0,0,0]; publicVariable "TRGM_VAR_iMissionParamLocations";
-                TRGM_VAR_iMissionParamSubLocations pushBack [0,0,0]; publicVariable "TRGM_VAR_iMissionParamSubLocations";
-                [player] spawn TRGM_CLIENT_fnc_selectAOLocation;
-                waitUntil { TRGM_VAR_ManualAOPosFound };
-                TRGM_VAR_iMissionParamLocations set [_i, TRGM_VAR_foundManualAOPos];
-                publicVariable "TRGM_VAR_iMissionParamLocations";
-                TRGM_VAR_foundManualAOPos = [0,0,0]; publicVariable "TRGM_VAR_foundManualAOPos";
-                TRGM_VAR_ManualAOPosFound = false; publicVariable "TRGM_VAR_ManualAOPosFound";
+                (TRGM_VAR_iMissionParamObjectives select _i) params ["_taskType", "_isHeavy", "_isHidden", "_sameAOAsPrev"];
+                if (_sameAOAsPrev) then {
+                    TRGM_VAR_iMissionParamLocations pushBack (TRGM_VAR_iMissionParamLocations select (_i - 1)); publicVariable "TRGM_VAR_iMissionParamLocations";
+                    TRGM_VAR_iMissionParamSubLocations pushBack (TRGM_VAR_iMissionParamSubLocations select (_i - 1)); publicVariable "TRGM_VAR_iMissionParamSubLocations";
+                } else {
+                    TRGM_VAR_iMissionParamLocations pushBack [0,0,0]; publicVariable "TRGM_VAR_iMissionParamLocations";
+                    TRGM_VAR_iMissionParamSubLocations pushBack [0,0,0]; publicVariable "TRGM_VAR_iMissionParamSubLocations";
+                    if (!_isHidden) then {
+                        [player] spawn TRGM_CLIENT_fnc_selectAOLocation;
+                        waitUntil { TRGM_VAR_ManualAOPosFound };
+                        TRGM_VAR_iMissionParamLocations set [_i, TRGM_VAR_foundManualAOPos];
+                        publicVariable "TRGM_VAR_iMissionParamLocations";
+                        TRGM_VAR_foundManualAOPos = [0,0,0]; publicVariable "TRGM_VAR_foundManualAOPos";
+                        TRGM_VAR_ManualAOPosFound = false; publicVariable "TRGM_VAR_ManualAOPosFound";
+                    };
+                };
             };
         };
 
@@ -136,28 +144,9 @@ if (TRGM_VAR_iCirclesOfDeath isEqualTo 1) then {
     TRGM_VAR_bCirclesOfDeath = true;
 };
 
-private _isTraining = false;
-if (_isTraining) then {
-    //training
-    [player, 100] call BIS_fnc_respawnTickets;
 
-    private _useAceInteractionForTransport = [false, true] select ((["EnableAceActions", 0] call BIS_fnc_getParamValue) isEqualTo 1);
-    if (_useAceInteractionForTransport && call TRGM_GLOBAL_fnc_isAceLoaded) then {
-        myaction = ['TraceBulletAction',localize 'STR_TRGM2_TRGMInitPlayerLocal_TraceBullets','',{},{true}] call ace_interact_menu_fnc_createAction;
-        [player, 1, ["ACE_SelfActions"], myaction] call ace_interact_menu_fnc_addActionToObject;
-
-        myaction = ['TraceBulletEnable',localize 'STR_TRGM2_TRGMInitPlayerLocal_Enable','',{[player, 5] spawn BIS_fnc_traceBullets;},{true}] call ace_interact_menu_fnc_createAction;
-        [player, 1, ["ACE_SelfActions", "TraceBulletAction"], myaction] call ace_interact_menu_fnc_addActionToObject;
-
-        myaction = ['TraceBulletDisable',localize 'STR_TRGM2_TRGMInitPlayerLocal_Disable','',{[player, 0] spawn BIS_fnc_traceBullets;},{true}] call ace_interact_menu_fnc_createAction;
-        [player, 1, ["ACE_SelfActions", "TraceBulletAction"], myaction] call ace_interact_menu_fnc_addActionToObject;
-    };
-
-}
-else {
-    [player, call TRGM_GETTER_fnc_iTicketCount] call BIS_fnc_respawnTickets;
-    setPlayerRespawnTime (call TRGM_GETTER_fnc_iRespawnTimer);
-};
+[player, call TRGM_GETTER_fnc_iTicketCount] call BIS_fnc_respawnTickets;
+setPlayerRespawnTime (call TRGM_GETTER_fnc_iRespawnTimer);
 
 
 [] spawn TRGM_GLOBAL_fnc_animateAnimals;

@@ -63,6 +63,12 @@ class CfgFunctions {
                 file = "CustomMission\SetMilitiaFaction.sqf";
             };
         };
+
+        class loadtest {
+            class LoadTest {
+                file = "CustomMission\LoadTest.sqf";
+            };
+        };
     };
     #ifndef AIS_Core_Progress_BarDlg
         #include "AIS\cfgFunctions.hpp"
@@ -287,6 +293,13 @@ class Params
     class RecalculateLocationData
     {
         title = "Ignores location data saved in profile and re-parses config";
+        values[] = {0,1};
+        texts[] = {"Disable","Enable"};
+        default = 0;
+    };
+    class LoadTest
+    {
+        title = "Enable Load Test";
         values[] = {0,1};
         texts[] = {"Disable","Enable"};
         default = 0;

@@ -8,19 +8,8 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 if (_factionClassName isEqualTo "any" || _factionDispName isEqualTo "any") exitWith {};
 
-private _unitConfigPaths = [];
-
-private _configPath = (configFile >> "CfgVehicles");
-
-for "_i" from 0 to (count _configPath - 1) do {
-
-    private _element = _configPath select _i;
-
-    if (isclass _element) then {
-        if ((getText(_element >> "faction")) isEqualTo _factionClassName && {(getnumber(_element >> "scope")) isEqualTo 2 && {(configname _element) isKindOf "Man" && {!((configname _element) isKindOf "OPTRE_Spartan2_Soldier_Base")}}}) then {
-            _unitConfigPaths pushbackunique _element;
-        };
-    };
+if (isNil "TRGM_TEMPVAR_allManUnits") then {
+    call TRGM_GLOBAL_fnc_prePopulateUnitAndVehicleData;
 };
 
-(_unitConfigPaths select {!([_x] call TRGM_GLOBAL_fnc_ignoreUnit)}) apply {[configName _x, ([configName _x] call TRGM_GLOBAL_fnc_getUnitType)]};
+(TRGM_TEMPVAR_allManUnits getOrDefault [_factionClassName, []]) apply {[_x, ([_x] call TRGM_GLOBAL_fnc_getUnitType)]};

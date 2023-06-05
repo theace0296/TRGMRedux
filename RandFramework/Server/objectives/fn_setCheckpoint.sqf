@@ -157,11 +157,7 @@ if (_thisRoadonly) then {
     };
 };
 
-if ({
-    _x distance _roadBlockPos < 250 && side _x != _thisside
-} count allunits > 0) exitwith {
-    false;
-};
+if ({ _x distance _roadBlockPos < 250 && side _x != _thisside } count allunits > 0) exitwith { false; };
 
 if (_thisIsCheckPoint && _thisside isEqualto TRGM_VAR_Enemyside) then {
     // TRGM_VAR_CheckPointAreas
@@ -410,7 +406,7 @@ if (!(isNil "_guardUnit5") && {!(isNull _guardUnit5)}) then {
         private _isHiddenObj = false;
         private _mainAOPos = TRGM_VAR_ObjectivePositions select 0;
         if !(isNil "_mainAOPos") then {
-            if (_mainAOPos in TRGM_VAR_HiddenPossitions) then {
+            if (_mainAOPos in TRGM_VAR_HiddenPositions) then {
                 _isHiddenObj = true;
             };
         };

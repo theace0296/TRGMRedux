@@ -8,7 +8,7 @@
 //checkpoint locations and sentry postions
 //cleared locations (i.e. AOs that had a task completed)
 
-MISSION_fnc_CustomRequired = { //used to set any required details for the AO (example, a wide open space or factory nearby)... if this is not found in AO, the engine will scrap the area and loop around again with a different location
+private _MISSION_LOCAL_fnc_CustomRequired = { //used to set any required details for the AO (example, a wide open space or factory nearby)... if this is not found in AO, the engine will scrap the area and loop around again with a different location
 //be careful about using this, some maps may not have what you require, so the engine will never satisfy the requirements here (example, if no airports are on a map and that is what you require)
     private ["_objectiveMainBuilding", "_centralAO_x", "_centralAO_y", "_result", "_flatPos"];
     _objectiveMainBuilding = _this select 0;
@@ -25,14 +25,14 @@ MISSION_fnc_CustomRequired = { //used to set any required details for the AO (ex
     _result; //return value
 };
 
-MISSION_fnc_CustomVars = { //This is called before the mission function is called below, and the variables below can be adjusted for your mission
+private _MISSION_LOCAL_fnc_CustomVars = { //This is called before the mission function is called below, and the variables below can be adjusted for your mission
     _RequiresNearbyRoad = true;
     _roadSearchRange = 100; //this is how far out the engine will check to make sure a road is within range (if your objective requires a nearby road)
     _MissionTitle = localize "STR_TRGM2_startInfMission_MissionTitle6";
     _allowFriendlyIns = false;
 };
 
-MISSION_fnc_CustomMission = { //This function is the main script for your mission, some if the parameters passed in must not be changed!!!
+private _MISSION_LOCAL_fnc_CustomMission = { //This function is the main script for your mission, some if the parameters passed in must not be changed!!!
     /*
      * Parameter Descriptions
      * --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
      * _objectiveMainBuilding      : DO NOT EDIT THIS VALUE (this is the main building location selected within your AO)
      * _centralAO_x                : DO NOT EDIT THIS VALUE (this is the X coord of the AO)
      * _centralAO_y                : DO NOT EDIT THIS VALUE (this is the Y coord of the AO)
-     * _roadSearchRange            : DO NOT EDIT THIS VALUE (this is the search range for a valid road, set previously in MISSION_fnc_CustomVars)
+     * _roadSearchRange            : DO NOT EDIT THIS VALUE (this is the search range for a valid road, set previously in _MISSION_LOCAL_fnc_CustomVars)
      * _bCreateTask                : DO NOT EDIT THIS VALUE (this is determined by the player, if the player selected to play a hidden mission, the task is not created!)
      * _iTaskIndex                 : DO NOT EDIT THIS VALUE (this is determined by the engine, and is the index of the task used to determine mission/task completion!)
      * _bIsMainObjective           : DO NOT EDIT THIS VALUE (this is determined by the engine, and is the boolean if the mission is a Heavy or Standard mission!)
@@ -80,6 +80,4 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _sTaskDescription = selectRandom[(localize "STR_TRGM2_startInfMission_MissionTitle6_Desc")];
 };
 
-publicVariable "MISSION_fnc_CustomRequired";
-publicVariable "MISSION_fnc_CustomVars";
-publicVariable "MISSION_fnc_CustomMission";
+[_MISSION_LOCAL_fnc_CustomRequired, _MISSION_LOCAL_fnc_CustomVars, _MISSION_LOCAL_fnc_CustomMission];

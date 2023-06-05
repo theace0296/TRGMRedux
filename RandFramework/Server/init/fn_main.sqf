@@ -27,54 +27,23 @@ TRGM_VAR_SpotterCount = 0; publicVariable "TRGM_VAR_SpotterCount";
 TRGM_VAR_SpotterAttemptCount = 0; publicVariable "TRGM_VAR_SpotterAttemptCount";
 TRGM_VAR_friendlySentryCheckpointPos = []; publicVariable "TRGM_VAR_friendlySentryCheckpointPos";
 
-if (isNil "tracer1") then {
-    tracer1 = (group (missionNamespace getvariable ["BIS_functions_mainscope",objnull])) createUnit ["ModuleTracers_F",[0,0,0],[],0,"CAN_COLLIDE"];
-    tracer1 setVehicleVarName "tracer1";
-    tracer1 setVariable ['Side',"0",true];
-    tracer1 setVariable ['Min',"10",true];
-    tracer1 setVariable ['Max',"20",true];
-    tracer1 setVariable ['Weapon',"",true];
-    tracer1 setVariable ['Magazine',"",true];
-    tracer1 setVariable ['Target',"",true];
-    tracer1 setvariable ["BIS_fnc_initModules_disableAutoActivation",true];
-};
-if (isNil "tracer2") then {
-    tracer2 = (group (missionNamespace getvariable ["BIS_functions_mainscope",objnull])) createUnit ["ModuleTracers_F",[0,0,0],[],0,"CAN_COLLIDE"];
-    tracer2 setVehicleVarName "tracer2";
-    tracer2 setVariable ['Side',"2",true];
-    tracer2 setVariable ['Min',"10",true];
-    tracer2 setVariable ['Max',"20",true];
-    tracer2 setVariable ['Weapon',"",true];
-    tracer2 setVariable ['Magazine',"",true];
-    tracer2 setVariable ['Target',"",true];
-    tracer2 setvariable ["BIS_fnc_initModules_disableAutoActivation",true];
-};
-if (isNil "tracer3") then {
-    tracer3 = (group (missionNamespace getvariable ["BIS_functions_mainscope",objnull])) createUnit ["ModuleTracers_F",[0,0,0],[],0,"CAN_COLLIDE"];
-    tracer3 setVehicleVarName "tracer3";
-    tracer3 setVariable ['Side',"0",true];
-    tracer3 setVariable ['Min',"10",true];
-    tracer3 setVariable ['Max',"20",true];
-    tracer3 setVariable ['Weapon',"",true];
-    tracer3 setVariable ['Magazine',"",true];
-    tracer3 setVariable ['Target',"",true];
-    tracer3 setvariable ["BIS_fnc_initModules_disableAutoActivation",true];
-};
-if (isNil "tracer4") then {
-    tracer4 = (group (missionNamespace getvariable ["BIS_functions_mainscope",objnull])) createUnit ["ModuleTracers_F",[0,0,0],[],0,"CAN_COLLIDE"];
-    tracer4 setVehicleVarName "tracer4";
-    tracer4 setVariable ['Side',"0",true];
-    tracer4 setVariable ['Min',"10",true];
-    tracer4 setVariable ['Max',"20",true];
-    tracer4 setVariable ['Weapon',"",true];
-    tracer4 setVariable ['Magazine',"",true];
-    tracer4 setVariable ['Target',"",true];
-    tracer4 setvariable ["BIS_fnc_initModules_disableAutoActivation",true];
-};
-tracer1 setPos [99999,99999];
-tracer2 setPos [99999,99999];
-tracer3 setPos [99999,99999];
-tracer4 setPos [99999,99999];
+private _tracers = ["tracer1", "tracer2", "tracer3", "tracer4"];
+{
+    private _name = _x;
+    if (isNil _name) then {
+        private _tracer = (group (missionNamespace getvariable ["BIS_functions_mainscope",objnull])) createUnit ["ModuleTracers_F",[0,0,0],[],0,"CAN_COLLIDE"];
+        _tracer setVehicleVarName _name;
+        _tracer setVariable ['Side', '0', true];
+        _tracer setVariable ['Min', 10, true];
+        _tracer setVariable ['Max', 20, true];
+        _tracer setVariable ['Weapon', '', true];
+        _tracer setVariable ['Magazine', '', true];
+        _tracer setVariable ['Target', '', true];
+        _tracer setVariable ["BIS_fnc_initModules_disableAutoActivation", true];
+        _tracer setPos [99999,99999];
+        missionNamespace setVariable [_name, _tracer];
+    };
+} forEach _tracers;
 
 [true] call TRGM_SERVER_fnc_setTimeAndWeather;
 
@@ -85,16 +54,11 @@ _trgRatingAdjust setTriggerArea [0, 0, 0, false];
 _trgRatingAdjust setTriggerStatements ["((rating player) < 0)", "player addRating -(rating player)", ""];
 
 // Instead of only doing this in SP, check if the HCs are empty and delete the unused ones.
-if (!isNil "vs1")  then { deleteVehicle vs1; };
-if (!isNil "vs2")  then { deleteVehicle vs2; };
-if (!isNil "vs3")  then { deleteVehicle vs3; };
-if (!isNil "vs4")  then { deleteVehicle vs4; };
-if (!isNil "vs5")  then { deleteVehicle vs5; };
-if (!isNil "vs6")  then { deleteVehicle vs6; };
-if (!isNil "vs7")  then { deleteVehicle vs7; };
-if (!isNil "vs8")  then { deleteVehicle vs8; };
-if (!isNil "vs9")  then { deleteVehicle vs9; };
-if (!isNil "vs10") then { deleteVehicle vs10; };
+{
+    if (!isNil {_x}) then {
+        deleteVehicle _x;
+    };
+} forEach [vs1, vs2, vs3, vs4, vs5, vs6, vs7, vs8, vs9, vs10];
 
 waitUntil { TRGM_VAR_bAndSoItBegins };
 

@@ -1,7 +1,7 @@
 // private _fnc_scriptName = "MISSIONS_fnc_ambushConvoyMission";
 //These are only ever called by the server!
 
-MISSION_fnc_CustomRequired = { //used to set any required details for the AO (example, a wide open space or factory nearby)... if this is not found in AO, the engine will scrap the area and loop around again with a different location
+private _MISSION_LOCAL_fnc_CustomRequired = { //used to set any required details for the AO (example, a wide open space or factory nearby)... if this is not found in AO, the engine will scrap the area and loop around again with a different location
 //be careful about using this, some maps may not have what you require, so the engine will never satisfy the requirements here (example, if no airports are on a map and that is what you require)
     private ["_objectiveMainBuilding", "_centralAO_x", "_centralAO_y", "_result", "_flatPos"];
     _objectiveMainBuilding = _this select 0;
@@ -18,14 +18,14 @@ MISSION_fnc_CustomRequired = { //used to set any required details for the AO (ex
     _result; //return value
 };
 
-MISSION_fnc_CustomVars = { //This is called before the mission function is called below, and the variables below can be adjusted for your mission
+private _MISSION_LOCAL_fnc_CustomVars = { //This is called before the mission function is called below, and the variables below can be adjusted for your mission
     _RequiresNearbyRoad = true;
     _roadSearchRange = 20; //this is how far out the engine will check to make sure a road is within range (if your objective requires a nearby road)
     _allowFriendlyIns = false;
     _MissionTitle = localize "STR_TRGM2_AmbushConvoyMissionTitle"; //this is what shows in dialog mission selection
 };
 
-MISSION_fnc_CustomMission = { //This function is the main script for your mission, some if the parameters passed in must not be changed!!!
+private _MISSION_LOCAL_fnc_CustomMission = { //This function is the main script for your mission, some if the parameters passed in must not be changed!!!
     /*
      * Parameter Descriptions
      * --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
      * _objectiveMainBuilding      : DO NOT EDIT THIS VALUE (this is the main building location selected within your AO)
      * _centralAO_x                : DO NOT EDIT THIS VALUE (this is the X coord of the AO)
      * _centralAO_y                : DO NOT EDIT THIS VALUE (this is the Y coord of the AO)
-     * _roadSearchRange            : DO NOT EDIT THIS VALUE (this is the search range for a valid road, set previously in MISSION_fnc_CustomVars)
+     * _roadSearchRange            : DO NOT EDIT THIS VALUE (this is the search range for a valid road, set previously in _MISSION_LOCAL_fnc_CustomVars)
      * _bCreateTask                : DO NOT EDIT THIS VALUE (this is determined by the player, if the player selected to play a hidden mission, the task is not created!)
      * _iTaskIndex                 : DO NOT EDIT THIS VALUE (this is determined by the engine, and is the index of the task used to determine mission/task completion!)
      * _bIsMainObjective           : DO NOT EDIT THIS VALUE (this is determined by the engine, and is the boolean if the mission is a Heavy or Standard mission!)
@@ -195,9 +195,9 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _mrkMeetingHVTMarker setMarkerType "o_inf";
         _mrkMeetingHVTMarker setMarkerText format["HVT %1",name(_mainHVT)];
         [_mainHVT, _hvtVehicle,_mrkMeetingHVTMarker] spawn {
-            _mainHVT = _this select 0;
-            _hvtVehicle = _this select 1;
-            _mrkMeetingHVTMarker = _this select 2;
+            private _mainHVT = _this select 0;
+            private _hvtVehicle = _this select 1;
+            private _mrkMeetingHVTMarker = _this select 2;
             waitUntil {
                 _mrkMeetingHVTMarker setMarkerPos ([_hvtVehicle] call TRGM_GLOBAL_fnc_getRealPos);
                 sleep 5;
@@ -207,7 +207,7 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
 
         if (_hasInformant && !isNil "_guardUnit3") then {
             [_guardUnit3] spawn {
-                _guardUnit3 = _this select 0;
+                private _guardUnit3 = _this select 0;
                 waitUntil { sleep 2; vehicle _guardUnit3 isEqualTo _guardUnit3; };
                 _guardUnit3 switchMove "Acts_JetsCrewaidLCrouch_in";
                 _guardUnit3 disableAI "anim";
@@ -225,11 +225,11 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
         _mainHVT setVariable ["ObjectiveParams", [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
         missionNamespace setVariable [format ["missionObjectiveParams%1", _iTaskIndex], [_markerType,_objectiveMainBuilding,_centralAO_x,_centralAO_y,_roadSearchRange,_bCreateTask,_iTaskIndex,_bIsMainObjective,_args]];
         [_mainHVT, _iTaskIndex, _bIsMainObjective] spawn {
-            _mainHVT = _this select 0;
-            _iTaskIndex = _this select 1;
-            _bIsMainObjective = _this select 2;
+            private _mainHVT = _this select 0;
+            private _iTaskIndex = _this select 1;
+            private _bIsMainObjective = _this select 2;
             waitUntil {
-                _mainHVTTrigger = _mainHVT getVariable "TRGM_VAR_hvtTrigger";
+                private _mainHVTTrigger = _mainHVT getVariable "TRGM_VAR_hvtTrigger";
                 if (!isNil "_mainHVTTrigger") then {
                     deleteVehicle _mainHVTTrigger;
                 };
@@ -270,6 +270,4 @@ MISSION_fnc_CustomMission = { //This function is the main script for your missio
     _sTaskDescription = _sTaskDescription + (localize "STR_TRGM2_AmbushConvoyMissionDescription4");
 };
 
-publicVariable "MISSION_fnc_CustomRequired";
-publicVariable "MISSION_fnc_CustomVars";
-publicVariable "MISSION_fnc_CustomMission";
+[_MISSION_LOCAL_fnc_CustomRequired, _MISSION_LOCAL_fnc_CustomVars, _MISSION_LOCAL_fnc_CustomMission];

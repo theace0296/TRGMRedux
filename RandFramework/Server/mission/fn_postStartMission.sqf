@@ -21,7 +21,7 @@ TRGM_VAR_MissionLoaded = true; publicVariable "TRGM_VAR_MissionLoaded";
 private _isHiddenObj = false;
 private _mainAOPos = TRGM_VAR_ObjectivePositions select 0;
 if (! isNil "_mainAOPos") then {
-    if (_mainAOPos in TRGM_VAR_HiddenPossitions ) then {
+    if (_mainAOPos in TRGM_VAR_HiddenPositions) then {
         _isHiddenObj = true;
     };
 };
@@ -46,8 +46,6 @@ if (_bMoveToAO) then {
         };
     } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
 };
-
-[] remoteExec ["TRGM_CLIENT_fnc_postStartMissionEndCamera", [0, -2] select isMultiplayer, true];
 
 sleep 3;
 saveGame;

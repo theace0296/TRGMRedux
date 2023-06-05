@@ -6,7 +6,7 @@ format[localize "STR_TRGM2_debugFunctionString", _fnc_scriptName, _fnc_scriptNam
 
 if (!hasInterface) exitWith {};
 
-private _redZonePositions = TRGM_VAR_ObjectivePositions-TRGM_VAR_ClearedPositions-TRGM_VAR_HiddenPossitions;
+private _redZonePositions = TRGM_VAR_ObjectivePositions-TRGM_VAR_ClearedPositions-TRGM_VAR_HiddenPositions;
 private _radius = 900;
 private _minimumDistance = 300;
 private _markers = [];

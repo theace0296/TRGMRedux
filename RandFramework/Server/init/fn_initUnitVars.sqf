@@ -417,8 +417,7 @@ TRGM_VAR_MissionParamObjectives       pushBack localize "STR_TRGM2_DestroyArmore
 TRGM_VAR_MissionParamObjectivesValues pushBack 20;
 
 if (TRGM_VAR_UseCustomMission) then {
-    private _MissionTitle = [] call CUSTOM_MISSION_fnc_CustomMission;
-    TRGM_VAR_MissionParamObjectives       pushBack _MissionTitle;
+    TRGM_VAR_MissionParamObjectives       pushBack "Custom Mission";
     TRGM_VAR_MissionParamObjectivesValues pushBack 99999;
 };
 

@@ -16,7 +16,7 @@ if !(_vehicle isKindOf "Helicopter") exitWith {};
     {_target lockTurret [_x, true]} forEach _totalTurrets;
     { _x disableAI "MOVE"; _x allowDamage false; } forEach crew _target;
     [_target] spawn {
-        params ["_vehicle"];
+        private _vehicle = _this select 0;
         waitUntil { !([_vehicle] call TRGM_GLOBAL_fnc_helicopterIsFlying); };
         { _x enableAI "MOVE"; } forEach crew _vehicle;
         [_vehicle] call TRGM_GLOBAL_fnc_setVehicleUpright;
