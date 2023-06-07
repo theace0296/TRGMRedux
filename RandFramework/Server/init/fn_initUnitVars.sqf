@@ -189,9 +189,35 @@ publicVariable "TRGM_GETTER_fnc_bAllowLargerPatrols";
 TRGM_GETTER_fnc_bMoreEnemies = { random 1 < ((TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX) / 100) };
 publicVariable "TRGM_GETTER_fnc_bMoreEnemies";
 TRGM_GETTER_fnc_iMoreEnemies = {
-    params [["_modifier", 25]];
-    private _enemyDensity = floor ((TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX) / 2);
-    _enemyDensity mod _modifier;
+    /**
+     * Calculates the number of enemies based on the number of players and enemy density options.
+     * We use a logarithmic scale so that we don't grow the number of enemies linearly with
+     * each additional player. The option in the mission setup screen allows for fine-tuning
+     * to increase or decrease the number of enemies spawned.
+     * Examples:
+     * 1 player, 25 base, lowest more enemies option: 5
+     * 1 player, 25 base, default more enemies option: 24
+     * 1 player, 25 base, highest more enemies option: 28
+     * 12 players, 25 base, lowest more enemies option: 5
+     * 12 players, 25 base, default more enemies option: 28
+     * 12 players, 25 base, highest more enemies option: 33
+     * 32 players, 25 base, lowest more enemies option: 18
+     * 32 players, 25 base, default more enemies option: 99
+     * 32 players, 25 base, highest more enemies option: 116
+     */
+    params [["_baseNumberOfEnemies", 25]];
+    private _maximumNumberOfPlayers = 32;
+    private _numberOfPlayers = 0;
+    {
+        if (isPlayer _x) then {
+            _numberOfPlayers = _numberOfPlayers + 1;
+        }
+    } forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});
+    private _playerCountWeight = log (1 max (_maximumNumberOfPlayers - _numberOfPlayers + 1));
+    private _playerCountWeightedNumberOfEnemies = ceil (_baseNumberOfEnemies / _playerCountWeight);
+    private _enemyDensityOptionWeight = log (1 max (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX));
+    private _numberOfEnemies = ceil (_playerCountWeightedNumberOfEnemies * _enemyDensityOptionWeight);
+    _numberOfEnemies;
 };
 publicVariable "TRGM_GETTER_fnc_iMoreEnemies";
 TRGM_GETTER_fnc_bMoreReinforcements = { (TRGM_VAR_AdvancedSettings select TRGM_VAR_ADVSET_HIGHER_ENEMY_COUNT_IDX) > 70 };
