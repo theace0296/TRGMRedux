@@ -105,10 +105,13 @@ if (_bReplaceFriendlyVehicles) then {
         if (!isNil "chopper1" && {!(isNil "_airTransClassName") && {_airTransClassName != typeOf chopper1}}) then {
             {deleteVehicle _x;} forEach crew chopper1 + [chopper1];
             private _helipadPos = [heliPad1] call TRGM_GLOBAL_fnc_getRealPos;
-            private _safePos = _helipadPos findEmptyPosition [0, 20, _airTransClassName];
+            private _safePos = [_helipadPos, 0, 20, 10, 0, 0.5, 0, [], [_helipadPos,_helipadPos], _airTransClassName] call TRGM_GLOBAL_fnc_findSafePos;
+            if (_safePos isEqualTo _helipadPos) then {
+                _safePos = _helipadPos findEmptyPosition [0, 20, _airTransClassName];
+            };
             if !(count _safePos isEqualTo 3) then {
                 if (count _safePos isEqualTo 2) then {
-                    _safePos = [_safePos # 0, _safePos # 1, _helipadPos # 2];
+                    _safePos = [_safePos # 0, _safePos # 1, getTerrainHeight _safePos];
                 } else {
                     _safePos = _helipadPos;
                 };
@@ -197,7 +200,13 @@ TRGM_VAR_transportHelosToGetActions = [chopper1];
                     if ((crew _x) isEqualTo []) then {
                         deleteVehicle _x;
                         sleep 0.01;
-                        private _safePos = _pos findEmptyPosition [0, 20, _newVehClass];
+                        private _safePos = [_pos, 0, 20, 10, 0, 0.5, 0, [], [_pos,_pos], _newVehClass] call TRGM_GLOBAL_fnc_findSafePos;
+                        if (count _safePos < 3) then {
+                            _safePos = _pos findEmptyPosition [0, 20, _newVehClass];
+                        };
+                        if (count _safePos < 3) then {
+                            _safePos = _pos;
+                        };
                         private _newVeh = createVehicle [_newVehClass, _safePos, [], 0, "NONE"];
                         _newVeh setDir _dir;
                         _newVeh allowDamage false;
@@ -207,7 +216,13 @@ TRGM_VAR_transportHelosToGetActions = [chopper1];
                         if (({isPlayer _x || _x in playableUnits || _x in switchableUnits || !(side _x isEqualTo TRGM_VAR_FriendlySide)} count (crew _x)) isEqualTo 0) then {
                             {deleteVehicle _x;} forEach crew _x + [_x];
                             sleep 0.01;
-                            private _safePos = _pos findEmptyPosition [0, 20, _newVehClass];
+                            private _safePos = [_pos, 0, 20, 10, 0, 0.5, 0, [], [_pos,_pos], _newVehClass] call TRGM_GLOBAL_fnc_findSafePos;
+                            if (count _safePos < 3) then {
+                                _safePos = _pos findEmptyPosition [0, 20, _newVehClass];
+                            };
+                            if (count _safePos < 3) then {
+                                _safePos = _pos;
+                            };
                             private _newVeh = createVehicle [_newVehClass, _safePos, [], 0, "NONE"];
                             [TRGM_VAR_FriendlySide, _newVeh, true] call TRGM_GLOBAL_fnc_createVehicleCrew;
                             _newVeh setDir _dir;
