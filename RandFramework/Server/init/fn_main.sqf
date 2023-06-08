@@ -111,7 +111,7 @@ if (_bReplaceFriendlyVehicles) then {
             };
             if !(count _safePos isEqualTo 3) then {
                 if (count _safePos isEqualTo 2) then {
-                    _safePos = [_safePos # 0, _safePos # 1, getTerrainHeight _safePos];
+                    _safePos = [_safePos # 0, _safePos # 1, _helipadPos # 2];
                 } else {
                     _safePos = _helipadPos;
                 };
