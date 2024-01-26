@@ -46,7 +46,10 @@
       "editor.autoClosingBrackets": "always"
     },
     "[sqf]": {
-      "editor.codeActionsOnSave": { "source.fixAll": true, "source.organizeImports": true },
+      "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+      },
       "editor.quickSuggestions": {
         "comments": "on",
         "strings": "on",
