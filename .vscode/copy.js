@@ -24,6 +24,21 @@ console.log({
   makePbos,
 });
 
+const ensuredCopy = async (from, to) => {
+  if (!fs.existsSync(from)) {
+    throw new Error(`From file/directory does not exist! ${from}`);
+  }
+  const stat = await fsp.stat(from);
+  if (stat.isDirectory()) {
+    await fsp.cp(from, to, { recursive: true, force: true });
+  } else {
+    if (!fs.existsSync(path.dirname(to))) {
+      await fsp.mkdir(path.dirname(to), { recursive: true });
+    }
+    await fsp.copyFile(from, to);
+  }
+}
+
 if (!folderParentDir || !fs.existsSync(folderParentDir)) {
   throw new Error('Parent dir not provided or does not exist!');
 }
@@ -39,16 +54,12 @@ const copyTrgmReduxFiles = async (folder, parentFolder) => {
   );
   await Promise.all(
     filesToCopy.map(async file => {
-      if (fs.lstatSync(path.join(cwd, file)).isDirectory()) {
-        await fsp.cp(path.join(cwd, file), path.join(folderPath, file), { recursive: true, force: true });
-      } else {
-        await fsp.copyFile(path.join(cwd, file), path.join(folderPath, file));
-      }
+      await ensuredCopy(path.join(cwd, file), path.join(folderPath, file));
     })
   );
   if (makePbos) {
     execSync(`makepbo -P -A -$ -B -X=".bak,.txt" "${folderPath}"`, { cwd: parentFolder });
-    await fsp.copyFile(path.join(parentFolder, `${folder}.pbo`), path.join(destinationDir, `${folder}.pbo`));
+    await ensuredCopy(path.join(parentFolder, `${folder}.pbo`), path.join(destinationDir, `${folder}.pbo`));
     await fsp.rm(path.join(parentFolder, `${folder}.pbo`), { force: true });
   }
   console.log(`-----------------------------------------------------\nMission Folder: ${folder}\n-----------------------------------------------------`);
@@ -64,7 +75,7 @@ const copyTrgmReduxFiles = async (folder, parentFolder) => {
           await copyTrgmReduxFiles(missionFolder, parentFolder);
         }
         if (makeTemplates && secondaryFolder !== 'TRGM-Custom') {
-          await fsp.copyFile(path.join(parentFolder, missionFolder, 'mission.sqm'), path.join(templateFolder, missionFolder, 'mission.sqm'));
+          await ensuredCopy(path.join(parentFolder, missionFolder, 'mission.sqm'), path.join(templateFolder, missionFolder, 'mission.sqm'));
         }
       })
     );
