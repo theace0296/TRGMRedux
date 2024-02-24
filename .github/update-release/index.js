@@ -13,7 +13,28 @@ const run = async () => {
     const token = getInput('token', { required: true });
     setSecret(token);
 
-    const github = getOctokit(token, undefined, retry, throttling);
+    const github = getOctokit(
+      token,
+      {
+        throttle: {
+          onRateLimit: (retryAfter, options, octokit, retryCount) => {
+            octokit.log.warn(`Request quota exhausted for request ${options.method} ${options.url}`);
+
+            if (retryCount < 1) {
+              // only retries once
+              octokit.log.info(`Retrying after ${retryAfter} seconds!`);
+              return true;
+            }
+          },
+          onSecondaryRateLimit: (retryAfter, options, octokit) => {
+            // does not retry, only logs a warning
+            octokit.log.warn(`SecondaryRateLimit detected for request ${options.method} ${options.url}`);
+          },
+        },
+      },
+      retry,
+      throttling,
+    );
     const ref = process.env.GITHUB_REF;
 
     let releaseName = getInput('release');
@@ -58,7 +79,7 @@ const run = async () => {
     endGroup();
 
     startGroup('Release info:');
-    console.log(
+    github.log.info(
       JSON.stringify(
         {
           release,
@@ -87,7 +108,7 @@ const run = async () => {
             try {
               await github.rest.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
             } catch (error) {
-              console.warn(`Unexpected error occured during asset deletion: ${error}`);
+              github.log.warn(`Unexpected error occured during asset deletion: ${error}`);
             }
             endGroup();
           }
