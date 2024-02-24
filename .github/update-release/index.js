@@ -1,7 +1,6 @@
-// @ts-check
 require('dotenv').config();
 const { startGroup, getInput, setSecret, endGroup, setFailed } = require('@actions/core');
-const { context, GitHub } = require('@actions/github');
+const { context, getOctokit } = require('@actions/github');
 const { readdirSync, existsSync, statSync, readFileSync } = require('fs');
 const { normalize, extname, isAbsolute, resolve, basename } = require('path');
 const { retry } = require('@octokit/plugin-retry');
@@ -14,7 +13,7 @@ const run = async () => {
     const token = getInput('token', { required: true });
     setSecret(token);
 
-    const github = new GitHub(token, { retry, throttling });
+    const github = getOctokit(token, undefined, retry, throttling);
     const ref = process.env.GITHUB_REF;
 
     let releaseName = getInput('release');
@@ -39,9 +38,7 @@ const run = async () => {
     const releaseAssetsPath = getInput('path', { required: true });
     const releaseAssets = readdirSync(normalize(releaseAssetsPath))
       .filter(file => extname(file).toLowerCase().includes('pbo') || extname(file).toLowerCase().includes('zip'))
-      .map(file =>
-        isAbsolute(file) ? normalize(file) : normalize(resolve(releaseAssetsPath, file))
-      )
+      .map(file => (isAbsolute(file) ? normalize(file) : normalize(resolve(releaseAssetsPath, file))))
       .filter(file => existsSync(file));
 
     let body = getInput('body');
@@ -50,7 +47,7 @@ const run = async () => {
     }
 
     startGroup('Getting list of repositories...');
-    const releases = (await github.repos.listReleases({ ...context.repo })).data;
+    const releases = (await github.rest.repos.listReleases({ ...context.repo })).data;
     endGroup();
 
     startGroup('Getting existing release id...');
@@ -61,27 +58,34 @@ const run = async () => {
     endGroup();
 
     startGroup('Release info:');
-    console.log(JSON.stringify({
-      release,
-      body,
-      releaseAssets,
-      releaseAssetsPath,
-      prerelease,
-      tag,
-      releaseName,
-    }, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          release,
+          body,
+          releaseAssets,
+          releaseAssetsPath,
+          prerelease,
+          tag,
+          releaseName,
+        },
+        null,
+        2,
+      ),
+    );
     endGroup();
 
     let newAssetsExistAlready = true;
     while (newAssetsExistAlready) {
       const releaseAssetNames = releaseAssets.map(file => basename(file));
-      const existingAssets = (await github.repos.listAssetsForRelease({ ...context.repo, release_id: release.id })).data;
+      const existingAssets = (await github.rest.repos.listReleaseAssets({ ...context.repo, release_id: release.id }))
+        .data;
       if (existingAssets.find(existingAsset => releaseAssetNames.includes(existingAsset.name))) {
         for (const existingAsset of existingAssets) {
           if (releaseAssetNames.includes(existingAsset.name)) {
             startGroup('Deleting existing asset: ' + existingAsset.name + '...');
             try {
-              await github.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
+              await github.rest.repos.deleteReleaseAsset({ ...context.repo, asset_id: existingAsset.id });
             } catch (error) {
               console.warn(`Unexpected error occured during asset deletion: ${error}`);
             }
@@ -95,25 +99,30 @@ const run = async () => {
 
     if (body.includes('Change log:')) {
       startGroup('Adding commit messages to body...');
-      body = body.substr(0, body.indexOf('Change log:') + 11);
-      const commits = (await github.repos.listCommits({ ...context.repo })).data;
+      body = body.substring(0, body.indexOf('Change log:') + 11);
+      const commits = (await github.rest.repos.listCommits({ ...context.repo })).data;
       const prevRelease = releases.find(rel => Date.parse(rel.created_at) < Date.parse(release.created_at));
       const prevReleaseDate = Date.parse(prevRelease && prevRelease.created_at ? prevRelease.created_at : '');
-      for (const commit of commits) {
-        const date = Date.parse(commit.commit.author.date);
+      for (const { commit, html_url } of commits) {
+        const date = Date.parse(commit.author?.date ?? commit.committer?.date ?? '01/01/1970');
         if (date > prevReleaseDate) {
-          const commitMessage = commit.commit.message.includes('[') || commit.commit.message.includes('#') ? commit.commit.message : `[${commit.commit.message}](${commit.html_url})`;
-          body = `${body}\n* ${commitMessage.includes('\n') ? commitMessage.substr(0, commitMessage.indexOf('\n')) : commitMessage}`;
+          const commitMessage =
+            commit.message.includes('[') || commit.message.includes('#')
+              ? commit.message
+              : `[${commit.message}](${html_url})`;
+          body = `${body}\n* ${
+            commitMessage.includes('\n') ? commitMessage.substring(0, commitMessage.indexOf('\n')) : commitMessage
+          }`;
         }
       }
-      await github.repos.updateRelease({
+      await github.rest.repos.updateRelease({
         ...context.repo,
         release_id: release.id,
         tag_name: tag,
         name: releaseName,
         body: body,
         draft: true,
-        prerelease: prerelease
+        prerelease: prerelease,
       });
       endGroup();
     }
@@ -121,23 +130,29 @@ const run = async () => {
     const contentType = 'application/octet-stream';
     for (const releaseAsset of releaseAssets) {
       const contentLength = statSync(releaseAsset).size;
-      const headers = { 'content-type': contentType, 'content-length': contentLength };
       startGroup('Uploading release asset: ' + basename(releaseAsset) + '...');
-      await github.repos.uploadReleaseAsset({
-        url: release.upload_url,
-        headers,
+      await github.rest.repos.uploadReleaseAsset({
         name: basename(releaseAsset),
-        data: readFileSync(releaseAsset),
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        release_id: release.id,
+        headers: { 'content-type': contentType, 'content-length': contentLength },
+        data: /** @type {string} */ (/** @type {any} */ (readFileSync(releaseAsset))),
       });
       endGroup();
     }
 
     endGroup();
-  } catch (error) {
+  } catch (e) {
+    const error = typeof e === 'string' || e instanceof Error ? e : new Error(`${e}`);
     console.error('An error occured while updating release assets:');
-    console.error(error.name);
-    console.error(error.message);
-    console.error(error.stack);
+    if (error instanceof Error) {
+      console.error(error.name);
+      console.error(error.message);
+      console.error(error.stack);
+    } else {
+      console.error(error);
+    }
     setFailed(error);
     process.exit(2);
   }
